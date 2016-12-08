@@ -15,7 +15,6 @@ tags:
 Github Pages 支持两种级别的部署：
 
 1. **user / organization** 方式
-
     * repo 名字必须为 `<user-name or org-name>.github.io`
     * pages build branch 固定为 `master`
     * 部署后的发布域名即为 repo 名
