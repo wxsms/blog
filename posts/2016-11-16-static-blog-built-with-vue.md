@@ -18,6 +18,4 @@ categories:
 
 图片资源从本地服务器搬迁到免费云。 写作使用 Markdown，从此 IDE 写博客不是梦。
 
-代码地址：
-
-[https://github.com/edisond/wxsm-space/](https://github.com/edisond/wxsm-space/)
+代码地址：[https://github.com/wxsms/wxsms.github.io/tree/src](https://github.com/wxsms/wxsms.github.io/tree/src)
