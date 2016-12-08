@@ -19,7 +19,6 @@
   interests: ['JavaScript', 'DOTA', 'Movie']
 }</code></pre>
           <br/>
-          <p>Blog built with vue and love. Hosted By Aliyun.</p>
           <p>* If the comment box can't be loaded, it probably blocked by <abbr title="Great Fire Wall">GFW</abbr>.</p>
         </div>
       </div>
