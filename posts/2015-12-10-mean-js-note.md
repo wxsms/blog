@@ -2,7 +2,6 @@
 id: mean-js-note
 title: MEAN.js 学习笔记
 date: 2015-12-10T16:35:33+00:00
-image: /wp-content/uploads/2015/12/meanjs-logo.png
 categories:
   - JavaScript
 tags:
