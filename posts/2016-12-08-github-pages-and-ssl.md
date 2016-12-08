@@ -1,7 +1,7 @@
 ---
 id: github-pages-and-ssl
 title: 'Github Pages and SSL'
-date: 2016-12-05 17:00:00
+date: 2016-12-08 17:00:00
 categories:
   - Personal
 tags:
