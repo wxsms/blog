@@ -38,7 +38,7 @@ let div = d3.select('body')
 
 `enter` 其实是一个选择集（selection），与其对应的还有 `update` 与 `exit`，选择集中的元素由原始选择集与绑定的数据决定。
 
-![](http://7xjbxm.com1.z0.glb.clouddn.com/4-4-81.png)
+![](/static/images/4-4-81.png)
 
 ## selection.enter
 

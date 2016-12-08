@@ -11,6 +11,6 @@ tags:
   1. goto 'File | Settings | Appearance & Behavior | System Settings';
   2. uncheck 'Use save write' option
 
-![](http://7xjbxm.com1.z0.glb.clouddn.com/hmr-idea-issue.jpg)
+![](/static/images/hmr-idea-issue.jpg)
 
 Problem solved.

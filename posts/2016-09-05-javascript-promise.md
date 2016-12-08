@@ -153,7 +153,7 @@ promise
 
 该代码块实际流程如图所示：
 
-![](http://7xjbxm.com1.z0.glb.clouddn.com/promise-then-catch-flow.png)
+![](/static/images/promise-then-catch-flow.png)
 
 &nbsp;
 

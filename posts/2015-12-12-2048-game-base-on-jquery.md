@@ -8,7 +8,7 @@ tags:
   - jQuery
 ---
 
-![2048](http://7xjbxm.com1.z0.glb.clouddn.com/20151212214138.jpg)
+![2048](/static/images/20151212214138.jpg)
 
 Game：<a href="http://anubarak.com/others/games/2048/" target="_blank">http://anubarak.com/others/games/2048/</a>
 
