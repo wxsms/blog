@@ -32,6 +32,6 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 ## LICENSE
 
-Codes: **MIT**
+Codes: MIT
 
-Posts: **CC BY 4.0**
+Posts: CC BY 4.0
