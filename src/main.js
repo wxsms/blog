@@ -20,6 +20,7 @@ import About from './components/pages/About.vue'
 import Guestbook from './components/pages/Guestbook.vue'
 import Search from './components/pages/search/Search.vue'
 import Result from './components/pages/search/Result.vue'
+import Cv from './components/pages/Cv.vue'
 
 Vue.component('PageWrapper', PageWrapper)
 
@@ -38,6 +39,7 @@ let routes = [
   { path: '/q/:q', component: Result },
   { path: '/a', component: About },
   { path: '/g', component: Guestbook },
+  { path: '/o/cv', component: Cv },
   { path: '*', component: NotFound }
 ]
 
