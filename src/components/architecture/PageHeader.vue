@@ -31,6 +31,7 @@
     border-bottom: 1px solid darken(@gray, 10%);
     margin-bottom: 50px;
     position: relative;
+    background: rgba(236,239,241,0.24);
 
     h1, h2, h3, h4, h5, h6 {
       margin: 0;

@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="page-footer">
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
@@ -28,17 +28,17 @@
 <style lang="less" rel="stylesheet/less" scoped>
   @import "./../../assets/css/variables";
 
-  section {
+  .page-footer {
     flex-basis: @footer-height;
     display: flex;
     align-items: center;
-    border-top: 1px solid darken(@gray, 10%);
+    background: #263238;
 
     a {
-      color: @site-color;
+      color: #fff;
 
       &:hover {
-        color: @site-color;
+        color: #fff;
         text-decoration: none;
       }
     }

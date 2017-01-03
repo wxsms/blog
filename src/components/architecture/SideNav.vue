@@ -56,9 +56,9 @@
     height: 100vh;
     flex-shrink: 0;
     overflow-y: auto;
-    box-shadow: 0 0 3px rgba(0, 0, 0, .35), 0 2px 2px rgba(0, 0, 0, .2);
     z-index: 5;
     background: @aside-bg;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
 
     .brand {
       padding: 0 15px;
@@ -92,20 +92,22 @@
     .nav {
       li {
         margin: 0;
+        border-bottom: 1px solid rgba(207, 216, 220, 0.56);
 
         a {
-          color: @site-color;
+          color: #607D8B;
           transition: all .3s ease-in-out;
           text-align: left;
           text-transform: none;
 
           &.router-link-active {
-            background: @gray;
-            box-shadow: inset -5px 0 0 darken(@gray, 20%);
+            background: rgba(207, 216, 220, 0.24);
+            color: @blue;
+            font-weight: 600;
           }
 
           &:hover {
-            background: @gray;
+            background: rgba(207, 216, 220, 0.24);
           }
         }
       }

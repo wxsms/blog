@@ -35,6 +35,8 @@
   nav {
     z-index: auto;
     display: none;
+    margin-bottom: 0;
+    background: @aside-bg;
   }
 
   @media (max-width: @screen-xs-max) {
