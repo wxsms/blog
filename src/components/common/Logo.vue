@@ -27,7 +27,7 @@
 <style lang="less" rel="stylesheet/less" scoped>
   @import "./../../assets/css/variables";
 
-  @spin-speed: 2s;
+  @spin-speed: 3s;
 
   .cube-wrapper {
     width: 100%;
@@ -64,12 +64,12 @@
           width: 75pt;
           height: 75pt;
           backface-visibility: hidden;
-          background-color: fade(@gray, 50%);
+          background-color: fade(@blue, 20%);
         }
       }
 
       .back, .front, .left, .right, .top {
-        background: radial-gradient(transparent 30%, fade(darken(@gray, 30%), 50%) 100%)
+        background: radial-gradient(transparent 30%, fade(darken(@blue, 30%), 20%) 100%)
       }
 
       .front {
@@ -92,7 +92,7 @@
         transform: rotateX(90deg) translateZ(50px);
 
         &:after {
-          background-color: fade(@gray, 50%)
+          background-color: fade(@blue, 20%)
         }
       }
 
@@ -143,12 +143,12 @@
           width: 50px;
           height: 50px;
           backface-visibility: hidden;
-          background-color: fade(darken(@gray, 70%), 50%);
+          background-color: fade(darken(@blue, 70%), 20%);
         }
       }
 
       .back, .front, .left, .right, .top {
-        background: radial-gradient(transparent 30%, fade(darken(@gray, 100%), 50%) 100%)
+        background: radial-gradient(transparent 30%, fade(darken(@blue, 100%), 20%) 100%)
       }
 
       .front {
@@ -171,7 +171,7 @@
         transform: rotateX(90deg) translateZ(25px);
 
         &:after {
-          background-color: fade(darken(@gray, 70%), 50%)
+          background-color: fade(darken(@blue, 70%), 20%)
         }
       }
 

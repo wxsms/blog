@@ -1,6 +1,11 @@
 <template>
   <aside :class="{'show':isAsideShow}">
     <div class="brand">
+      <div class="logo" @click="toggleAside(false)">
+        <router-link to="/">
+          <logo></logo>
+        </router-link>
+      </div>
       <h4 @click="toggleAside(false)" class="brand-link">
         <router-link to="/">wxsm's space</router-link>
       </h4>
