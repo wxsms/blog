@@ -32,13 +32,14 @@
     flex-basis: @footer-height;
     display: flex;
     align-items: center;
-    background: #263238;
+    background: @footer-bg;
+    border-top: 1px solid darken(@gray, 10%);
 
     a {
-      color: #fff;
+      color: #888;
 
       &:hover {
-        color: #fff;
+        color: #888;
         text-decoration: none;
       }
     }

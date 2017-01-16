@@ -3,7 +3,7 @@
     <div class="form-group">
       <input type="search"
              class="form-control"
-             placeholder="Try search..."
+             placeholder="SEARCH POSTS..."
              v-model="query"
              required="required"
              minlength="2">
