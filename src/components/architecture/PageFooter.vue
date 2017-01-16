@@ -3,6 +3,16 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
+          <p class="text-muted">
+            <span>Friend Links:</span>
+            <span v-for="friend in friends">
+              <a :href="friend.href" target="_blank">{{friend.label}}</a>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
           <a href="http://wxsm.space">© {{year}} WXSM</a>
           <span>/</span>
           <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow" target="_blank">
@@ -19,7 +29,13 @@
     props: ['title'],
     data () {
       return {
-        year: new Date().getFullYear()
+        year: new Date().getFullYear(),
+        friends: [
+          {
+            href: 'http://aquariuslt.com/',
+            label: 'Aquariuslt Home'
+          }
+        ]
       }
     }
   }
@@ -38,7 +54,7 @@
     a {
       color: #888;
 
-      &:hover {
+      &:hover, &:active, &:focus {
         color: #888;
         text-decoration: none;
       }
