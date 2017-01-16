@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-xs-12">
           <p>
-<pre><code>let me = {
+          <pre><code>let me = {
   id: 9527,
   name: 'wxsm',
   gender: 'M',
@@ -19,7 +19,23 @@
   interests: ['JavaScript', 'DOTA', 'Movie']
 }</code></pre>
           <br/>
-          <p>* If the comment box can't be loaded, it probably blocked by <abbr title="Great Fire Wall">GFW</abbr>.</p>
+          <p>Powered by
+            <a href="https://vuejs.org/" target="_blank">Vue.js</a>
+            and
+            <a href="https://webpack.github.io/" target="_blank">webpack</a>
+          </p>
+          <p>
+            Hosted by
+            <a href="https://pages.github.com/" target="_blank">Github Pages</a>
+          </p>
+          <p>
+            SSL supported by
+            <a href="https://www.cloudflare.com/" target="_blank">Cloudflare</a>
+          </p>
+          <p>
+            * If the comment box can't be loaded, it probably blocked by
+            <abbr title="Great Fire Wall">GFW</abbr>
+          </p>
         </div>
       </div>
     </div>
