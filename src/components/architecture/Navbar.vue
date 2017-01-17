@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" @click="toggleAside()">
@@ -8,7 +8,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">wxsm's space</a>
+        <router-link class="navbar-brand" to="/">wxsm's space</router-link>
       </div>
 
       <div class="collapse navbar-collapse">
@@ -33,7 +33,7 @@
   @import "./../../assets/css/variables";
 
   nav {
-    z-index: auto;
+    z-index: 4;
     display: none;
     margin-bottom: 0;
     background: @aside-bg;
