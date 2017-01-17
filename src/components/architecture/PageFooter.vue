@@ -5,7 +5,7 @@
         <div class="col-xs-12">
           <p class="text-muted">
             <span>Friend Links:</span>
-            <span v-for="friend in friends">
+            <span v-for="friend in friendLinks">
               <a :href="friend.href" target="_blank">{{friend.label}}</a>
             </span>
           </p>
@@ -25,17 +25,14 @@
 </template>
 
 <script>
+  import config from './../../config/global'
+
   export default {
     props: ['title'],
     data () {
       return {
         year: new Date().getFullYear(),
-        friends: [
-          {
-            href: 'http://aquariuslt.com/',
-            label: 'Aquariuslt Home'
-          }
-        ]
+        friendLinks: config.friendLinks
       }
     }
   }

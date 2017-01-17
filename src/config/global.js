@@ -1,5 +1,11 @@
 'use strict'
 
 export default {
-  disqusShortName: 'wxsm'
+  disqusShortName: 'wxsm',
+  friendLinks: [
+    {
+      href: 'http://aquariuslt.com/',
+      label: 'Aquariuslt Home'
+    }
+  ]
 }
