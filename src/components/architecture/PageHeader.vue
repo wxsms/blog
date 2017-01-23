@@ -5,7 +5,7 @@
         <div class="col-xs-12">
           <h4>
             <router-link :to="backTo" v-if="backTo" class="btn btn-link">
-              <i class="glyphicon glyphicon-chevron-left"></i>
+              <i class="glyphicon glyphicon-menu-left"></i>
             </router-link>
             <span class="title-text">{{title}}</span>
           </h4>

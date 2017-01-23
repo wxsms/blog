@@ -28,6 +28,11 @@
         <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
       </li>
     </ul>
+    <div class="social-links">
+      <a href="javascript:void(0)" target="_blank">
+        <i class="iconfont icon-zhihu"></i>
+      </a>
+    </div>
   </aside>
 </template>
 
@@ -80,10 +85,14 @@
     z-index: 5;
     background: @aside-bg;
     box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+    display: flex;
+    flex-direction: column;
 
     .brand {
       padding: 0 15px;
       height: @brand-height;
+      flex-basis: @brand-height;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       border-bottom: 1px solid darken(@gray, 10%);
@@ -106,6 +115,8 @@
     }
 
     .nav {
+      flex: 1;
+
       li {
         margin: 0;
         border-bottom: 1px solid rgba(207, 216, 220, 0.56);
@@ -166,6 +177,29 @@
           &:hover {
             background: @side-nav-item-active-bg;
           }
+        }
+      }
+    }
+
+    .social-links {
+      flex-basis: 50px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+
+      a {
+        color: #888;
+        text-decoration: none;
+
+        &:hover, &:active, &:focus {
+          text-decoration: none;
+        }
+
+        i {
+          font-size: x-large;
         }
       }
     }

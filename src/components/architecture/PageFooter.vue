@@ -15,6 +15,10 @@
         <div class="col-xs-12">
           <a href="http://wxsm.space">© {{year}} WXSM</a>
           <span>/</span>
+          <a href="/feed.xml" rel="nofollow" target="_blank">
+            FEED
+          </a>
+          <span>/</span>
           <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow" target="_blank">
             <abbr title="LICENSE">CC BY 4.0</abbr>
           </a>

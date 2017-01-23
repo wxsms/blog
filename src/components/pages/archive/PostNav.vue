@@ -5,14 +5,14 @@
     </div>
     <div class="col-md-6 text-left">
       <router-link v-if="prevPost" class="btn btn-link" :to="'/p/'+prevPost.meta.id" title="Prev post">
-        <i class="glyphicon glyphicon-chevron-left"></i>
+        <i class="glyphicon glyphicon-menu-left"></i>
         <span>{{prevPost.meta.title}}</span>
       </router-link>
     </div>
     <div class="col-md-6 text-right">
       <router-link v-if="nextPost" class="btn btn-link" :to="'/p/'+nextPost.meta.id" title="Next post">
         <span>{{nextPost.meta.title}}</span>
-        <i class="glyphicon glyphicon-chevron-right"></i>
+        <i class="glyphicon glyphicon-menu-right"></i>
       </router-link>
     </div>
     <div class="col-xs-12">
