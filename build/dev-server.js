@@ -61,6 +61,7 @@ app.use(staticPath, express.static('./static'))
 
 // serve static posts
 app.use('/posts', express.static(__dirname + '/../dist/posts/'))
+app.use('/feed.xml', express.static(__dirname + '/../dist/feed.xml'))
 
 module.exports = app.listen(port, function (err) {
   if (err) {

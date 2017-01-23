@@ -2,12 +2,15 @@
 
 const fs = require('fs')
 const utils = require('./utils')
+const ejs = require('ejs')
 
 const JSON_EXT = '.json'
 const POSTS_PATH = './posts/'
 const DIST_PATH = './dist/'
 const POSTS_DIST_PATH = './dist/posts/'
 const POSTS_INDEX_FILE_NAME = 'index' + JSON_EXT
+const POST_FEED_FILE_NAME = 'feed.xml'
+
 
 /**
  * Marked processor
@@ -37,7 +40,7 @@ let prepareMarked = () => {
 /**
  * Before writing files into disk, need some insurance
  */
-let generateDir = function () {
+let generateDir = () => {
   try {
     fs.accessSync(POSTS_PATH, fs.F_OK)
   } catch (e) {
@@ -60,7 +63,7 @@ let generateDir = function () {
  * Generate post index file (json) and save to the posts folder
  * This function should run before webpack starts
  */
-exports.generatePosts = function () {
+exports.generatePosts = () => {
   let count = 0
   let postIndex = []
   let marked = prepareMarked()
@@ -91,6 +94,18 @@ exports.generatePosts = function () {
     let _b = new Date(b.meta.date).getTime()
     return _b - _a
   })
+
+  // generate feed
+  let data = {
+    title: 'wxsm\'s blog',
+    url: 'https://wxsm.space',
+    description: 'wxsm\'s personal blog.',
+    posts: postIndex
+  }
+  let str = fs.readFileSync('./server/feed.xml.ejs', 'utf8')
+  str = ejs.render(str, data)
+  fs.writeFileSync(DIST_PATH + POST_FEED_FILE_NAME, str)
+
   postIndex = postIndex.map((v, i) => {
     if (i >= 10) {
       delete v.meta.excerpt
