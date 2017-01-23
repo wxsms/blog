@@ -76,7 +76,7 @@ exports.generatePosts = () => {
         let excerptIndex = post.html.indexOf('<!--more-->')
         excerptIndex = excerptIndex >= 0 ? excerptIndex : post.html.length
         post.meta['excerpt'] = post.html.substr(0, excerptIndex);
-        postIndex.push({ meta: JSON.parse(JSON.stringify(post.meta)) })
+        postIndex.push(JSON.parse(JSON.stringify(post)))
         delete post.markdown
         delete post.meta['excerpt']
         fs.writeFileSync(POSTS_DIST_PATH + post.meta.id + JSON_EXT, JSON.stringify(post))
@@ -107,6 +107,7 @@ exports.generatePosts = () => {
   fs.writeFileSync(DIST_PATH + POST_FEED_FILE_NAME, str)
 
   postIndex = postIndex.map((v, i) => {
+    delete v.html
     if (i >= 10) {
       delete v.meta.excerpt
     }
