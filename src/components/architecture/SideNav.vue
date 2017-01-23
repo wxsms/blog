@@ -28,11 +28,7 @@
         <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
       </li>
     </ul>
-    <div class="social-links">
-      <a href="javascript:void(0)" target="_blank">
-        <i class="iconfont icon-zhihu"></i>
-      </a>
-    </div>
+    <div class="social-links"></div>
   </aside>
 </template>
 
