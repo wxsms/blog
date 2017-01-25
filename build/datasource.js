@@ -108,6 +108,7 @@ exports.generatePosts = () => {
 
   postIndex = postIndex.map((v, i) => {
     delete v.html
+    delete v.markdown
     if (i >= 10) {
       delete v.meta.excerpt
     }
