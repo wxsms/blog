@@ -10,8 +10,8 @@
         <router-link to="/">wxsm's space</router-link>
       </h4>
     </div>
-    <ul class="nav nav-pills nav-stacked" role="tablist" v-show="!isAsideTocShow" :key="0">
-      <li role="presentation" class="search-box">
+    <div class="search-container">
+      <div role="presentation" class="search-box">
         <form @submit.prevent="doSearch()">
           <div class="form-group">
             <input type="search"
@@ -23,27 +23,31 @@
             <button type="submit" class="btn btn-primary hidden"></button>
           </div>
         </form>
-      </li>
-      <li role="presentation" v-for="item in asideItems" @click="toggleAside(false)">
-        <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
-      </li>
-    </ul>
-    <div class="toc-container" v-show="isAsideTocShow" :key="1">
-      <h3>Index</h3>
-      <ul class="toc">
-        <li v-for="h2 in asideTocItems">
-          <a :href="'#' + h2.href">
-            <b>{{h2.label}}</b>
-          </a>
-          <ul v-if="h2.items && h2.items.length">
-            <li v-for="h3 in h2.items">
-              <a :href="'#' + h3.href">{{h3.label}}</a>
-            </li>
-          </ul>
+      </div>
+    </div>
+    <div class="nav-container">
+      <ul class="nav nav-pills nav-stacked" role="tablist" :class="{'show':!isAsideTocShow}">
+        <li role="presentation" v-for="item in asideItems" @click="toggleAside(false)">
+          <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
         </li>
       </ul>
+      <div class="toc" :class="{'show':isAsideTocShow}">
+        <h3>Index</h3>
+        <ul class="toc-ul">
+          <li v-for="h2 in asideTocItems">
+            <a :href="'#' + h2.href">
+              <b>{{h2.label}}</b>
+            </a>
+            <ul v-if="h2.items && h2.items.length">
+              <li v-for="h3 in h2.items">
+                <a :href="'#' + h3.href">{{h3.label}}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="social-links"></div>
+    <!--<div class="social-links"></div>-->
   </aside>
 </template>
 
@@ -131,86 +135,123 @@
       }
     }
 
-    .nav {
-      flex: 1;
+    .search-container {
+      flex-basis: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(207, 216, 220, 0.56);
 
-      li {
-        margin: 0;
-        border-bottom: 1px solid rgba(207, 216, 220, 0.56);
+      .search-box {
+        background: @side-nav-item-active-bg;
+        box-sizing: border-box;
+        box-shadow: none;
+        padding: 8px;
+        height: 100%;
+        position: relative;
 
-        &.search-box {
-          background: @side-nav-item-active-bg;
+        input {
+          background: #fff;
+          border: none;
+          border-radius: 200px;
           box-sizing: border-box;
-          box-shadow: none;
-          padding: 8px;
-          height: 42px;
-          position: relative;
-
-          input {
-            background: #fff;
-            border: none;
-            border-radius: 200px;
-            box-sizing: border-box;
-            color: #888;
-            display: inline-block;
-            font-size: 14px;
-            height: 26px;
-            margin: 0;
-            padding: 0 8px;
-            width: 100%;
-            outline: 0;
-
-            &::-webkit-input-placeholder {
-              .search-box-placeholder-mixin();
-            }
-
-            &::-moz-placeholder {
-              .search-box-placeholder-mixin();
-            }
-
-            &:-ms-input-placeholder {
-              .search-box-placeholder-mixin();
-            }
-
-            &:-moz-placeholder {
-              .search-box-placeholder-mixin();
-            }
-          }
-        }
-
-        a {
           color: #888;
-          transition: all .3s ease-in-out;
-          text-align: left;
-          text-transform: none;
+          display: inline-block;
+          font-size: 14px;
+          height: 26px;
+          margin: 0;
+          padding: 0 8px;
+          width: 100%;
+          outline: 0;
 
-          &.router-link-active {
-            background: @side-nav-item-active-bg;
-            color: @blue;
-            font-weight: 600;
-            box-shadow: -6px 0 0 @blue inset;
+          &::-webkit-input-placeholder {
+            .search-box-placeholder-mixin();
           }
 
-          &:hover {
-            background: @side-nav-item-active-bg;
+          &::-moz-placeholder {
+            .search-box-placeholder-mixin();
+          }
+
+          &:-ms-input-placeholder {
+            .search-box-placeholder-mixin();
+          }
+
+          &:-moz-placeholder {
+            .search-box-placeholder-mixin();
           }
         }
       }
     }
 
-    .toc-container {
-      padding: 0 20px;
+    .nav-container {
       flex: 1;
+      position: relative;
+      overflow: auto;
+
+      .nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 50px;
+        opacity: 0;
+        z-index: -1;
+        transition: all .5s ease-in-out;
+
+        &.show {
+          opacity: 1;
+          z-index: auto;
+        }
+
+        li {
+          margin: 0;
+          border-bottom: 1px solid rgba(207, 216, 220, 0.56);
+
+          a {
+            color: #888;
+            transition: all .3s ease-in-out;
+            text-align: left;
+            text-transform: none;
+
+            &.router-link-active {
+              background: @side-nav-item-active-bg;
+              color: @blue;
+              font-weight: 600;
+              box-shadow: -6px 0 0 @blue inset;
+            }
+
+            &:hover {
+              background: @side-nav-item-active-bg;
+            }
+          }
+        }
+      }
 
       .toc {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+        padding: 0 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 50px;
+        opacity: 0;
+        z-index: -1;
+        transition: all .5s ease-in-out;
 
-        ul {
+        &.show {
+          opacity: 1;
+          z-index: auto;
+        }
+
+        .toc-ul {
           list-style: none;
+          padding: 0;
           margin: 0;
-          padding-left: 20px;
+
+          ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 20px;
+          }
         }
       }
     }
