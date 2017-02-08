@@ -10,7 +10,7 @@
         <router-link to="/">wxsm's space</router-link>
       </h4>
     </div>
-    <ul class="nav nav-pills nav-stacked" role="tablist">
+    <ul class="nav nav-pills nav-stacked" role="tablist" v-show="!isAsideTocShow" :key="0">
       <li role="presentation" class="search-box">
         <form @submit.prevent="doSearch()">
           <div class="form-group">
@@ -28,6 +28,21 @@
         <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
       </li>
     </ul>
+    <div class="toc-container" v-show="isAsideTocShow" :key="1">
+      <h3>Index</h3>
+      <ul class="toc">
+        <li v-for="h2 in asideTocItems">
+          <a :href="'#' + h2.href">
+            <b>{{h2.label}}</b>
+          </a>
+          <ul v-if="h2.items && h2.items.length">
+            <li v-for="h3 in h2.items">
+              <a :href="'#' + h3.href">{{h3.label}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
     <div class="social-links"></div>
   </aside>
 </template>
@@ -49,6 +64,12 @@
       },
       asideItems () {
         return this.$store.state.asideItems
+      },
+      isAsideTocShow () {
+        return this.$store.state.asideShowToc
+      },
+      asideTocItems () {
+        return this.$store.state.asideToc
       }
     },
     methods: {
@@ -173,6 +194,23 @@
           &:hover {
             background: @side-nav-item-active-bg;
           }
+        }
+      }
+    }
+
+    .toc-container {
+      padding: 0 20px;
+      flex: 1;
+
+      .toc {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding-left: 20px;
         }
       }
     }

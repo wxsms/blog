@@ -27,7 +27,9 @@ const state = {
   }, {
     path: '/a',
     label: 'About'
-  }]
+  }],
+  asideShowToc: false,
+  asideToc: []
 }
 
 export default new Vuex.Store({

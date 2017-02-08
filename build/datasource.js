@@ -21,10 +21,8 @@ let prepareMarked = () => {
   let renderer = new marked.Renderer();
   renderer.heading = (text, level) => {
     let escapedText = text.replace(/[ .,\/#!$%\^&*;:{}=\-_`~()]+/g, '-');
-    return `<h${level}>
-            <a name="${escapedText}" role="anchor">
-              <span>${text}</span>
-            </a>
+    return `<h${level} role="anchor">
+            <a name="${escapedText}" role="anchor">${text}</a>
           </h${level}>`
   }
 

@@ -42,6 +42,8 @@
   import PostNav from './PostNav.vue'
   import Loading from './../../common/Loading.vue'
   import SearchForm from './../../common/SearchForm.vue'
+  import {getAnchors} from './../../../util/DomUtils'
+  import Vue from 'vue'
 
   export default {
     components: { PageHeader, Disqus, PostMeta, PostNav, Loading, SearchForm },
@@ -49,6 +51,10 @@
       if (!this.posts.hasOwnProperty(this.id) && this.validId) {
         this.initPostById(this.id)
       }
+    },
+    beforeDestroy () {
+      this.$store.commit(types.ASIDE_TOGGLE_TOC, false)
+      this.$store.commit(types.ASIDE_SET_TOC, [])
     },
     methods: {
       initPostById (id) {
@@ -67,7 +73,18 @@
         return this.$store.state.posts
       },
       post () {
+        let self = this
         if (this.posts.hasOwnProperty(this.id)) {
+          if (this.posts[this.id].meta && this.posts[this.id].meta.index) {
+            Vue.nextTick(function () {
+              let anchors = getAnchors()
+              self.$store.commit(types.ASIDE_TOGGLE_TOC, true)
+              self.$store.commit(types.ASIDE_SET_TOC, anchors)
+            })
+          } else {
+            self.$store.commit(types.ASIDE_TOGGLE_TOC, false)
+            self.$store.commit(types.ASIDE_SET_TOC, [])
+          }
           return this.posts[this.id]
         } else {
           return undefined

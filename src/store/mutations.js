@@ -16,5 +16,15 @@ export default {
   },
   [types.GET_POST_SINGLE_ERROR] (state) {
     // TODO
+  },
+  [types.ASIDE_TOGGLE_TOC] (state, show) {
+    if (typeof show !== 'undefined') {
+      state.asideShowToc = !!show
+    } else {
+      state.asideShowToc = !state.asideShowToc
+    }
+  },
+  [types.ASIDE_SET_TOC] (state, toc) {
+    state.asideToc = toc
   }
 }
