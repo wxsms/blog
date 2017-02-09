@@ -11,6 +11,8 @@ tags:
 
 React 学习笔记（基础篇）。
 
+<!--more-->
+
 ## 安装
 
 ```bash
@@ -208,7 +210,7 @@ ReactDOM.render(
 
 ### 参数只读
 
-简单地说，React 不允许在控件内修改参数（包括值的修改以及对象修改）。
+简单地说，React 不允许在控件内修改参数（包括值的修改以及对象修改）。允许修改的称之为“状态”（约等于 Vue 中的 component data）
 
 ## 状态管理与生命周期
 
@@ -299,9 +301,11 @@ ReactDOM.render(
 
 ### 正确使用状态
 
-跟 Vue 一样，出于性能等因素，直接更改 state 属性是不会触发 UI 更新的。因此，有一些规则需要遵守。
+直接更改 state 属性是不会触发 UI 更新的。因此，有一些规则需要遵守。
 
 #### 不直接修改状态
+
+在组件内进行修改状态操作，使用 `setState` 方法：
 
 ```js
 // Wrong
@@ -416,4 +420,162 @@ class LoggingButton extends React.Component {
 }
 ```
 
-（未完待续）
+## 条件渲染
+
+例子：
+
+```js
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  
+  let button = null;
+  if (isLoggedIn) {
+    button = <LogoutButton onClick={this.handleLogoutClick} />;
+  } else {
+    button = <LoginButton onClick={this.handleLoginClick} />;
+  }
+  
+  return (
+    <div>
+      <Greeting isLoggedIn={isLoggedIn} />
+      {button}
+    </div>
+  );
+}
+```
+
+### 行内判断
+
+例子：
+
+```js
+function Mailbox(props) {
+  const unreadMessages = props.unreadMessages;
+  return (
+    <div>
+      <h1>Hello!</h1>
+      {unreadMessages.length > 0 &&
+        <h2>
+          You have {unreadMessages.length} unread messages.
+        </h2>
+      }
+    </div>
+  );
+}
+
+const messages = ['React', 'Re: React', 'Re:Re: React'];
+ReactDOM.render(
+  <Mailbox unreadMessages={messages} />,
+  document.getElementById('root')
+);
+```
+
+这段代码的工作方式跟 JavaScript 一致：
+
+* `true && expression` -> `expression`
+* `false && expression` -> `false`
+
+因此，当 `unreadMessages.length > 0` 为真时，后面的 JSX 会被渲染，反则不会。
+
+除此以外还有三元表达式：
+
+```js
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  return (
+    <div>
+      The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.
+    </div>
+  );
+}
+```
+
+### 阻止渲染
+
+在组件的 `render` 方法内 `return null` 会阻止组件的渲染，但是其生命周期不受影响。
+
+
+## 循环
+
+一个简单的例子：
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li>{number}</li>
+);
+
+ReactDOM.render(
+  <ul>{listItems}</ul>,
+  document.getElementById('root')
+);
+```
+
+### 循环组件
+
+一个列表组件示例：
+
+```js
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <li key={number.toString()}>
+      {number}
+    </li>
+  );
+  return (
+    <ul>{listItems}</ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+```
+
+注意，这里对列表项添加了一个 `key` 属性。
+
+### Key
+
+`Key` 是 React 用来追踪列表项的一个属性。跟 angular 以及 vue 中 `track-by` 的概念一样。
+
+如果列表项没有唯一标识，也可以用索引作为 key （不推荐）：
+
+```js
+const todoItems = todos.map((todo, index) =>
+  // Only do this if items have no stable IDs
+  <li key={index}>
+    {todo.text}
+  </li>
+);
+```
+
+注意：`Key` 只能直接在数组循环体内定义。如：
+
+```js
+function ListItem(props) {
+  const value = props.value;
+  return (
+    // Wrong! There is no need to specify the key here:
+    <li key={value.toString()}>
+      {value}
+    </li>
+  );
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // Wrong! The key should have been specified here:
+    <ListItem value={number} />
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+```
+
