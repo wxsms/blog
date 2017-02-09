@@ -26,13 +26,14 @@
       </div>
     </div>
     <div class="nav-container">
-      <ul class="nav nav-pills nav-stacked" role="tablist" :class="{'show':!isAsideTocShow}">
-        <li role="presentation" v-for="item in asideItems" @click="toggleAside(false)">
-          <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
-        </li>
-      </ul>
-      <div class="toc" :class="{'show':isAsideTocShow}">
-        <h3>Index</h3>
+      <div class="nav-div">
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+          <li role="presentation" v-for="item in asideItems" @click="toggleAside(false)">
+            <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="toc-div">
         <ul class="toc-ul">
           <li v-for="h2 in asideTocItems">
             <a :href="'#' + h2.href">
@@ -187,21 +188,11 @@
       position: relative;
       overflow: auto;
 
+      .nav-div {
+        position: relative;
+      }
+
       .nav {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 50px;
-        opacity: 0;
-        z-index: -1;
-        transition: all .5s ease-in-out;
-
-        &.show {
-          opacity: 1;
-          z-index: auto;
-        }
-
         li {
           margin: 0;
           border-bottom: 1px solid rgba(207, 216, 220, 0.56);
@@ -226,25 +217,13 @@
         }
       }
 
-      .toc {
-        padding: 0 20px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 50px;
-        opacity: 0;
-        z-index: -1;
-        transition: all .5s ease-in-out;
-
-        &.show {
-          opacity: 1;
-          z-index: auto;
-        }
+      .toc-div {
+        padding: 0;
+        position: relative;
 
         .toc-ul {
           list-style: none;
-          padding: 0;
+          padding: 20px 20px;
           margin: 0;
 
           ul {
