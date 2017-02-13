@@ -33,7 +33,7 @@
           reload: true,
           config: function () {
             this.page.identifier = (self.$route.path || window.location.pathname)
-            this.page.url = self.$el.baseURI
+            this.page.url = 'https://wxsm.space' + this.page.identifier
           }
         })
       },
@@ -41,7 +41,7 @@
         const self = this
         window.disqus_config = function () {
           this.page.identifier = (self.$route.path || window.location.pathname)
-          this.page.url = self.$el.baseURI
+          this.page.url = 'https://wxsm.space' + this.page.identifier
         }
         setTimeout(() => {
           let d = document
