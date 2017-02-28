@@ -45,7 +45,7 @@
             </p>
             <p>担任岗位：ATE（助理工程师）</p>
             <p>参与开发、维护公司核心业务平台系统 cargosmart.com 以及新产品（如 bigschedules.com），以及各种公司内部工具。涉及的技术栈有 Java (EE) / OC4J / Ant /
-              OracleDB / Weblogic / Maven / OracleDB，NodeJS / Express / NPM / MongoDB 等。了解自动测试、持续集成以及产品部署相关技术。</p>
+              OracleDB / Weblogic / Maven，NodeJS / Express / NPM / MongoDB 等。了解自动测试、持续集成以及产品部署相关技术。</p>
             <p>前端方面，常用技术有 Angular / Vue / jQuery 等，辅以 Grunt / Gulp / Webpack 等自动化工具进行开发。在公司团队中大力推广 ES6 的使用。</p>
           </div>
           <div>
@@ -57,7 +57,7 @@
                 <i class="glyphicon glyphicon-link"></i>
               </a>
             </p>
-            <p>公司核心业务平台，大型集成系统，Git 仓库超 10 GB，开发维护时间超过 10 年。系统集成了世界范围内的多家船公司，基本包含船运业所有业务模块，为客户提供一站式服务。</p>
+            <p>公司核心业务平台，大型集成系统。系统集成了世界范围内的多家船公司，基本包含船运业所有业务模块，为客户提供一站式服务。</p>
             <p>系统技术栈为 jQuery / JSF / Java 1.5 / Ant / OC4J / OracleDB，使用 JMS (Tibco EMS + Tibco WORKER) 进行集成，使用 Jenkins
               实现持续集成、部署。</p>
             <p>在任期间，主要担任系统维护角色。主要负责了 Shipment Plan （船运计划）以及 Shipping Instruction（装船指示）模块项目的开发及维护。同时，参与了 2016 年新业务项目 SOLAS
@@ -75,13 +75,6 @@
               <li>第一阶段为实习期，参与了大部分项目原型页面以及一些重点自定义控件的开发，属于纯前端工作</li>
               <li>第二阶段为正式工作期，加入了 BigSchedules 团队，并且开始开发维护整个系统。由于个人能力关系，经常参与的是一些较为新颖的前端任务。</li>
             </ul>
-            <p>
-              <b>ASAP</b>
-            </p>
-            <p>公司最新产品，尚未上线（预计上线日期为 2017 年 1 月，预计域名为 asap.cargosmart.com）。出于保密原由，无法透露系统业务相关信息。</p>
-            <p>系统使用 Vue + D3 + NodeJs + MongoDB 作为技术栈，使用 Webpack 作为前端打包工具，是公司第一个大力推广使用 ES6 等新技术的对外大数据可视化产品。</p>
-            <p>个人参与此项目作为前端开发主力。负责了所有页面基本框架的搭建，以及页面基本元素的实现（Header / Footer / Menu 等）。在此基础上，负责了大部分复杂模块（多为画图、地图或 3D
-              效果相关）以及过渡动画的开发。除此以外，一并负责项目整体 UI 风格的统一与实现。</p>
           </div>
           <div>
             <h4 class="page-header">个人其他</h4>
