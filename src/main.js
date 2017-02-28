@@ -20,7 +20,7 @@ import About from './components/pages/About.vue'
 import Guestbook from './components/pages/Guestbook.vue'
 import Search from './components/pages/search/Search.vue'
 import Result from './components/pages/search/Result.vue'
-import Cv from './components/pages/Cv.vue'
+const Cv = resolve => require(['./components/pages/Cv.vue'], resolve)
 
 Vue.component('PageWrapper', PageWrapper)
 
