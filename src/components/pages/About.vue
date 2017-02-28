@@ -11,16 +11,16 @@
   gender: 'M',
   born: 1991,
   education: {
-    graduated: 'CNJNU', // China Jinan University
-    major: 'SE' // Software Engineering
+    graduated: 'Jinan University Zhuhai Campus',
+    major: 'Software Engineering'
   },
-  location: 'CNZHA', // China Zhuhai
+  location: 'Zhuhai, China',
   profession: 'IT Engineer',
   interests: ['JavaScript', 'DOTA', 'Movie']
   contact: {
     mail: 'edisond#qq.com', // Replace '#' as '@'
     wechat: 'Edisondplus',
-    zhihu: 'wxsm',
+    zhihu: 'wxsm'
   }
 }</code></pre>
           <br/>
