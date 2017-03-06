@@ -20,10 +20,15 @@
   contact: {
     mail: 'edisond#qq.com', // Replace '#' as '@'
     wechat: 'Edisondplus',
-    zhihu: 'wxsm'
+    github: 'https://github.com/wxsms'
+    zhihu: 'https://www.zhihu.com/people/wxsm'
   }
 }</code></pre>
           <br/>
+          <p>
+            <span>Project:</span>
+            <a href="https://github.com/wxsms/wxsms.github.io" target="_blank">https://github.com/wxsms/wxsms.github.io</a>
+          </p>
           <p>Powered by
             <a href="https://vuejs.org/" target="_blank">Vue.js</a>
             and
