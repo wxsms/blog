@@ -57,7 +57,7 @@
   import Logo from './../common/Logo.vue'
 
   export default {
-    components: { Logo },
+    components: {Logo},
     data () {
       return {
         query: ''
@@ -104,17 +104,14 @@
     height: 100vh;
     flex-shrink: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 5;
     background: @aside-bg;
     box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
-    display: flex;
-    flex-direction: column;
 
     .brand {
       padding: 0 15px;
       height: @brand-height;
-      flex-basis: @brand-height;
-      flex-shrink: 0;
       display: flex;
       align-items: center;
       border-bottom: 1px solid darken(@gray, 10%);
@@ -137,9 +134,7 @@
     }
 
     .search-container {
-      flex-basis: 42px;
       height: 42px;
-      flex-shrink: 0;
       border-bottom: 1px solid rgba(207, 216, 220, 0.56);
 
       .search-box {
@@ -184,9 +179,7 @@
     }
 
     .nav-container {
-      flex: 1;
       position: relative;
-      overflow: auto;
 
       .nav-div {
         position: relative;
@@ -202,12 +195,13 @@
             transition: all .3s ease-in-out;
             text-align: left;
             text-transform: none;
+            padding-left: 20px;
 
             &.router-link-active {
               background: @side-nav-item-active-bg;
               color: @blue;
               font-weight: 600;
-              box-shadow: -6px 0 0 @blue inset;
+              box-shadow: 6px 0 0 @blue inset;
             }
 
             &:hover {
@@ -262,11 +256,11 @@
   @media (max-width: @screen-xs-max) {
     aside {
       left: -275px;
+      z-index: 1002;
       transition: left .3s ease-in-out;
 
       &.show {
         left: 0;
-        z-index: 1002;
       }
     }
   }

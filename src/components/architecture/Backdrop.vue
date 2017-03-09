@@ -1,5 +1,7 @@
 <template>
-  <section :class="{'show':isAsideShow}" @click="toggleAside()"></section>
+  <transition name="fade">
+    <section v-show="isAsideShow" @click="toggleAside()"></section>
+  </transition>
 </template>
 
 <script>
@@ -29,12 +31,15 @@
     right: 0;
     top: 0;
     bottom: 0;
-    display: none;
     z-index: 1001;
     background: rgba(0, 0, 0, .5);
+  }
 
-    &.show {
-      display: block;
-    }
+  .fade-enter-active, .fade-leave-active {
+    transition: all .3s ease-in-out;
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0;
   }
 </style>
