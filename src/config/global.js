@@ -4,8 +4,8 @@ export default {
   disqusShortName: 'wxsm',
   friendLinks: [
     {
-      href: 'http://aquariuslt.com/',
-      label: 'Aquariuslt Home'
+      href: 'https://blog.aquariuslt.com/',
+      label: 'Aquariuslt'
     }
   ]
 }
