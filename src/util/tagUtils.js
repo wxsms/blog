@@ -3,8 +3,8 @@
 export function getLabelClassByTagName (tag) {
   let danger = ['angular', 'error']
   let info = ['bootstrap', 'php']
-  let success = ['express', 'extjs', 'node', 'mongo']
-  let primary = ['css', 'sql', 'idea', 'webpack', 'jquery']
+  let success = ['express', 'extjs', 'node', 'mongo', 'vue']
+  let primary = ['css', 'sql', 'idea', 'webpack', 'jquery', 'react']
   let warning = ['d3', 'git', 'grunt']
   if (typeof tag === 'string') {
     tag = tag.toLowerCase()
