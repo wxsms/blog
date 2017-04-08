@@ -44,4 +44,10 @@
       display: block;
     }
   }
+
+  @media print {
+    nav {
+      display: none;
+    }
+  }
 </style>

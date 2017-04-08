@@ -264,4 +264,10 @@
       }
     }
   }
+
+  @media print {
+    aside {
+      display: none;
+    }
+  }
 </style>

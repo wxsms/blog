@@ -21,7 +21,7 @@
   import Tag from './../../common/Tag.vue'
 
   export default {
-    components: { Tag },
+    components: {Tag},
     props: ['post'],
     computed: {
       postDate () {
@@ -65,5 +65,11 @@
   a.text-muted {
     color: #bbbbbb !important;
     text-decoration: none !important;
+  }
+
+  @media print {
+    section {
+      display: none;
+    }
   }
 </style>

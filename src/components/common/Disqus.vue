@@ -58,3 +58,11 @@
     }
   }
 </script>
+
+<style lang="less" rel="stylesheet/less" scoped>
+  @media print {
+    #disqus_thread {
+      display: none;
+    }
+  }
+</style>

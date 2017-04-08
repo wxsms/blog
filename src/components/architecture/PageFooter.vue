@@ -61,4 +61,10 @@
       }
     }
   }
+
+  @media print {
+    .page-footer {
+      display: none;
+    }
+  }
 </style>
