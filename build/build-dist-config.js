@@ -16,10 +16,8 @@ const ensureDir = () => {
 ensureDir()
 
 // write CNAME
-fs.writeFileSync(DIST_PATH + 'CNANE', 'wxsm.space')
+fs.writeFileSync(DIST_PATH + 'CNAME', 'wxsm.space')
 
 // write README.md
-
 let readme = fs.readFileSync('README.md', 'utf8')
-console.log(readme)
 fs.writeFileSync(DIST_PATH + 'README.md', readme)
