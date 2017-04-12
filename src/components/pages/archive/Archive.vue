@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
-          <tabs>
+          <tabs v-model="openIndex">
             <tab v-for="(r,index) in reduce" :title="r.year.toString()" :group="index>=maxTabNum?'OLDER':''">
               <ul class="archives-list">
                 <li v-for="post in r.posts">
@@ -57,7 +57,8 @@
     data () {
       return {
         activeIndex: 0,
-        maxTabNum: 4
+        maxTabNum: 4,
+        openIndex: 0
       }
     }
   }
