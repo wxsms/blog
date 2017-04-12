@@ -1,5 +1,6 @@
 This is my personal blog. You can also use it* as yours as well. Just simply remove my posts / pictures and add your own, then build it & enjoy.
 
+Master branch is serving generated files, checkout `src` branch for source code.
 
 _\* **it** means the program, which do not include the `posts` and `static` folder._
 
