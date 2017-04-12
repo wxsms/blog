@@ -11,7 +11,7 @@ const routes = [
   {path: '/q', component: require('./../components/pages/search/Search.vue')},
   {path: '/q/:q', component: require('./../components/pages/search/Result.vue')},
   {path: '/a', component: require('./../components/pages/About.vue')},
-  {path: '/g', component: require('./../components/pages/GuestBook.vue')},
+  {path: '/g', component: require('./../components/pages/Guestbook.vue')},
   {path: '/o/cv', component: resolve => require(['./../components/pages/Cv.vue'], resolve)},
   {path: '*', component: require('./../components/pages/NotFound.vue')}
 ]
