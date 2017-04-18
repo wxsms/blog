@@ -17,7 +17,3 @@ ensureDir()
 
 // write CNAME
 fs.writeFileSync(DIST_PATH + 'CNAME', 'wxsm.space')
-
-// write README.md
-let readme = fs.readFileSync('README.md', 'utf8')
-fs.writeFileSync(DIST_PATH + 'README.md', readme)
