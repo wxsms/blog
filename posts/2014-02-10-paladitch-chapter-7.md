@@ -3,7 +3,7 @@ id: paladitch-chapter-7
 title: 第七章 · 梅尔
 date: 2014-02-10T19:41:17+00:00
 categories:
-  - 圣骑士与女巫
+  - Paladitch
 ---
 <div>
 </div>

@@ -5,9 +5,7 @@ cache:
 node_js:
   - "node"
 script:
-  - npm run post
   - npm run build
-  - npm run dist-config
 deploy:
   - provider: pages
     skip_cleanup: true

@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const config = require('../config')
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -7,22 +8,42 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const PrerenderSpaPlugin = require('prerender-spa-plugin')
+const SitemapPlugin = require('sitemap-webpack-plugin')
+
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
 
 // Generate url list for pre-render
-let urls = []
+let staticPaths = ['/', '/a', '/g', '/t', '/c', '/q', '/o/cv', '/p']
+let categories = []
+let tags = []
+let postIndex = fs.readFileSync('./dist/posts/index.json').toString()
+postIndex = JSON.parse(postIndex)
+postIndex.forEach((post) => {
+  if (post.meta) {
+    if (post.meta.categories) categories = categories.concat(post.meta.categories)
+    if (post.meta.tags) tags = tags.concat(post.meta.tags)
+  }
+})
+categories = [...new Set(categories)]
+tags = [...new Set(tags)]
+categories.forEach((c) => {
+  staticPaths.push(`/c/${encodeURI(c)}`)
+})
+tags.forEach((t) => {
+  staticPaths.push(`/t/${encodeURI(t)}`)
+})
+
+let ajaxPaths = []
 utils.readFilesFromDirSync('./dist/posts/', (filename, content) => {
   if (filename === 'index.json') return
-  urls.push('/p/' + filename.replace('.json', ''))
+  ajaxPaths.push('/p/' + filename.replace('.json', ''))
 }, (err) => {
   console.error(err)
 })
 
 let processProgress = 0
-
-// urls = ['/p/travis-ci-in-github']
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -113,24 +134,28 @@ const webpackConfig = merge(baseWebpackConfig, {
       // (REQUIRED) Absolute path to static root
       path.join(__dirname, './../dist'),
       // (REQUIRED) List of routes to prerender
-      ['/', '/a', '/g', '/t', '/c', '/q', '/o/cv', '/p']
+      staticPaths
     ),
     // ajax routes
     new PrerenderSpaPlugin(
       // (REQUIRED) Absolute path to static root
       path.join(__dirname, './../dist'),
       // (REQUIRED) List of routes to prerender
-      urls,
+      ajaxPaths,
       // Options
       {
         captureAfterElementExists: '#post-content',
         navigationLocked: true,
         postProcessHtml: function (context) {
-          console.log(`${++processProgress}/${urls.length} ${context.route}`)
+          console.log(`${++processProgress}/${ajaxPaths.length} ${context.route}`)
           return context.html
         }
       }
-    )
+    ),
+    new SitemapPlugin('https://wxsm.space', [].concat(staticPaths, ajaxPaths), {
+      skipGzip: true,
+      changeFreq: 'weekly'
+    })
   ]
 })
 

@@ -3,7 +3,7 @@ id: matrix-chapter-0
 title: 楔子
 date: 2015-10-29T02:13:44+00:00
 categories:
-  - 母体
+  - Matrix
 ---
 <p style="text-align: left;">
   刘依。

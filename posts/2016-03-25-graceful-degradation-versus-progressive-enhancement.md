@@ -3,7 +3,7 @@ id: graceful-degradation-versus-progressive-enhancement
 title: “渐进增强”与“优雅降级”
 date: 2016-03-25T09:35:10+00:00
 categories:
-  - Web Front-end
+  - Web-Front-end
 tags:
   - CSS3
   - User-Experience

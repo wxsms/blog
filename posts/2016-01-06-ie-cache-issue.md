@@ -3,7 +3,7 @@ id: ie-cache-issue
 title: IE Cache Issue
 date: 2016-01-06T17:12:47+00:00
 categories:
-  - Web Front-end
+  - Web-Front-end
 tags:
   - ExpressJs
   - IE

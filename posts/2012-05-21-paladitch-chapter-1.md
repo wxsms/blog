@@ -3,8 +3,9 @@ id: paladitch-chapter-1
 title: 第一章 · 噩梦
 date: 2012-05-21T19:43:09+00:00
 categories:
-  - 圣骑士与女巫
+  - Paladitch
 ---
+
 连载作者：Loolorl_lar@qq.com
 
 **本目录下之连载作品，未经授权，禁止转载**

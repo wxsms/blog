@@ -5,9 +5,9 @@ date: 2017-02-22 16:17:00
 index: true
 categories:
   - JavaScript
-  - Game Engine
+  - Game-Engine
 tags:
-  - Egret Engine
+  - Egret-Engine
 ---
 
 Egret Engine 的学习笔记。
