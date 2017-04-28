@@ -1,5 +1,5 @@
 <template>
-  <section class="wrapper">
+  <section id="app">
     <backdrop></backdrop>
     <side-nav></side-nav>
     <page></page>
@@ -18,7 +18,7 @@
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
-  .wrapper {
+  #app {
     max-width: 100vw;
     overflow: hidden;
   }

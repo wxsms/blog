@@ -23,6 +23,7 @@
     "vuex": "^2.0.0"
   },
   "devDependencies": {
+    "prerender-spa-plugin": "^2.0.1",
     "autoprefixer": "^6.4.0",
     "babel-core": "^6.0.0",
     "babel-eslint": "^7.0.0",

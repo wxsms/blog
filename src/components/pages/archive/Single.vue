@@ -2,7 +2,7 @@
   <section>
     <page-header :title="headerText"></page-header>
     <div class="container-fluid" v-if="validId">
-      <div class="row" v-if="post">
+      <div class="row" v-if="post" id="post-content">
         <div class="col-xs-12">
           <div class="post-container" v-html="post.html" ref="post"></div>
           <post-meta :post="post"></post-meta>

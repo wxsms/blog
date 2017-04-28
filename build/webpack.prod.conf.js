@@ -1,18 +1,32 @@
-var path = require('path')
-var config = require('../config')
-var utils = require('./utils')
-var webpack = require('webpack')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var env = process.env.NODE_ENV === 'testing'
+const path = require('path')
+const config = require('../config')
+const utils = require('./utils')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.base.conf')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PrerenderSpaPlugin = require('prerender-spa-plugin')
+const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
 
-var webpackConfig = merge(baseWebpackConfig, {
+// Generate url list for pre-render
+let urls = []
+utils.readFilesFromDirSync('./dist/posts/', (filename, content) => {
+  if (filename === 'index.json') return
+  urls.push('/p/' + filename.replace('.json', ''))
+}, (err) => {
+  console.error(err)
+})
+
+let processProgress = 0
+
+// urls = ['/p/travis-ci-in-github']
+
+const webpackConfig = merge(baseWebpackConfig, {
   module: {
-    loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
+    loaders: utils.styleLoaders({sourceMap: config.build.productionSourceMap, extract: true})
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
@@ -47,7 +61,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         ? 'index.html'
         : config.build.index,
       template: 'index.html',
-      inject: true,
+      inject: 'head',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -93,12 +107,35 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    })
+    }),
+    // static routes (no ajax)
+    new PrerenderSpaPlugin(
+      // (REQUIRED) Absolute path to static root
+      path.join(__dirname, './../dist'),
+      // (REQUIRED) List of routes to prerender
+      ['/', '/a', '/g', '/t', '/c', '/q', '/o/cv', '/p']
+    ),
+    // ajax routes
+    new PrerenderSpaPlugin(
+      // (REQUIRED) Absolute path to static root
+      path.join(__dirname, './../dist'),
+      // (REQUIRED) List of routes to prerender
+      urls,
+      // Options
+      {
+        captureAfterElementExists: '#post-content',
+        navigationLocked: true,
+        postProcessHtml: function (context) {
+          console.log(`${++processProgress}/${urls.length} ${context.route}`)
+          return context.html
+        }
+      }
+    )
   ]
 })
 
 if (config.build.productionGzip) {
-  var CompressionWebpackPlugin = require('compression-webpack-plugin')
+  const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({

@@ -15,9 +15,11 @@ Vue.component('PageWrapper', PageWrapper)
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-new Vue({
-  store,
-  router,
-  template: '<PageWrapper/>',
-  components: { PageWrapper }
-}).$mount('#app')
+document.addEventListener('DOMContentLoaded', () => {
+  new Vue({
+    store,
+    router,
+    template: '<PageWrapper/>',
+    components: {PageWrapper}
+  }).$mount('#app')
+})
