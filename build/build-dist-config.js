@@ -17,3 +17,6 @@ ensureDir()
 
 // write CNAME
 fs.writeFileSync(DIST_PATH + 'CNAME', 'wxsm.space')
+
+// write baidu verify file
+fs.writeFileSync(DIST_PATH + 'baidu_verify_8DQ16h4fKq.html', '8DQ16h4fKq')
