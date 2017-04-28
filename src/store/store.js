@@ -9,6 +9,7 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
+  baseTitle: 'wxsm\'s space',
   posts: {},
   postList: posts,
   asideShow: false,

@@ -42,11 +42,11 @@
   import PostNav from './PostNav.vue'
   import Loading from './../../common/Loading.vue'
   import SearchForm from './../../common/SearchForm.vue'
-  import {getAnchors} from './../../../util/DomUtils'
+  import { getAnchors } from './../../../util/DomUtils'
   import Vue from 'vue'
 
   export default {
-    components: { PageHeader, Disqus, PostMeta, PostNav, Loading, SearchForm },
+    components: {PageHeader, Disqus, PostMeta, PostNav, Loading, SearchForm},
     mounted () {
       if (!this.posts.hasOwnProperty(this.id) && this.validId) {
         this.initPostById(this.id)
