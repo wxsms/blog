@@ -18,11 +18,11 @@ tags:
 
 打开Tools -> Deployment -> Configuration
 
-![](/static/images/20160203160541.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607298/6729d606-2f48-11e7-9d5d-42dc00f95567.png)
 
 在弹出的界面中点击 `+` 按钮，添加一个服务器。
 
-![](/static/images/20160203161409.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607299/672a5b44-2f48-11e7-8659-e69096653ad3.png)
 
 如下图所示，填写主机地址，端口（如果不一样），用户名与密码以后，就可以点 `Test FTP connection` 按钮进行连接测试，如果连接成功，IDEA会有相应的提示。以下的步骤需要以此为前提。
 
@@ -30,7 +30,7 @@ tags:
 
 最下面的 `Web server root URL` 字段可以填写网站的实际访问地址，这样在使用IDEA的实时预览功能时，浏览器就会以该Domain为基准进行路由。
 
-![](/static/images/20160203161627.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607300/6733d02a-2f48-11e7-89e0-88ef441391c7.png)
 
 切换到 `Mappings` 标签，我们需要填写的字段也如下图。
 
@@ -38,14 +38,14 @@ tags:
 
 `Deployment path`则是FTP服务器上实际同步的位置，在此选择代码所处的文件夹即可。以上都填好后点击 `OK` 按钮。
 
-![](/static/images/20160203162340.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607301/673f8c76-2f48-11e7-8dc9-1e5ae9278d3a.png)
 
 现在就大功告成了。我们可以选中一些文件或者文件夹，右键，然后就可以看到 Deployment 菜单，其子菜单有 Upload，Download，Compare，Sync四个。其中 Sync 就是我们所期望的功能，IDEA 会帮我们完成文件比较，与 VCS 的文件比较系统非常相似，确认无误后点击绿色的向右箭头按钮，代码就同步到服务器上去了。如下所示。
 
-![](/static/images/20160203163356.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607302/67671cd2-2f48-11e7-96ce-b6f9b9b35d11.png)
 
 当然每次都要右键然后找到 Sync 选项可能会有点太麻烦。我们可以把这个功能放到主工具栏上去，以后每次点它就行了。
 
-![](/static/images/20160203164053.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607303/6778eb10-2f48-11e7-9e1a-b93cce976c41.png)
 
 接下来就可以享受愉快的开发体验了。唯一需要注意的是在网络不是非常理想的情况下，Sync 的时候不要选择项目根目录，选择真正有改变的文件或者文件夹即可，因为它毕竟不是 VCS，所有文件一个个比对的话实在是太慢。当然我们也可以配合 VCS 使用，效果更佳，这里就不再赘述。

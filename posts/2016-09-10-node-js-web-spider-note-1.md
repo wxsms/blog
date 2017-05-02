@@ -18,7 +18,7 @@ tags:
 
 ## 执行流程
 
-![](/static/images/Flowchart.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607274/6606d6ca-2f48-11e7-9165-2b205935f54c.png)
 
 蓝色部分的任一流程出现失败或错误，程序都会直接返回到“从种子队列取出一个用户ID”这一步。因为作为一个完整的知乎用户来说，它应该是包含了个人信息，关注以及话题的，缺失一项会导致其失去很大部分的意义。
 
@@ -100,7 +100,7 @@ tags:
 
 整个过程虽然简单，但是由于经验匮乏，还是走了不少弯路。最终总结出来的必须步骤如下：
 
-![](/static/images/loginflow.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607279/662f6022-2f48-11e7-9b7f-e6364f3a75b3.png)
 
 代码如下：
 

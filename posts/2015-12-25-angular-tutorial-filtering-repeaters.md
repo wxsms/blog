@@ -58,7 +58,7 @@ tags:
 
 `ngRepeat`在`filter`过滤器返回的数组改变之时会自动更新视图，这之中的过程对开发者来说是完全不可见的。
 
-![](/static/images/tutorial_03.png)
+![](https://cloud.githubusercontent.com/assets/5960988/25607284/666fac04-2f48-11e7-8757-172c83b4aa77.png)
 
 * * *
 

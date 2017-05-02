@@ -187,6 +187,6 @@ svg.selectAll('rect')
 
 `rectWidth` 表示柱子的宽度，至于坐标、宽高则分别通过 x / y 以及 height / width 属性来控制，效果如下：
 
-![](/static/images/d3-chart.gif)
+![](https://cloud.githubusercontent.com/assets/5960988/25607275/6607e470-2f48-11e7-8762-bf4ffdf965d9.gif)
 
 可以发现，这里并没有指定需要插入的 `rect` 个数，但 D3 却根据数据量自动地把图画出来了，这个工作是通过 `enter` 语句完成的。关于其工作原理，下回分解。
