@@ -13,10 +13,10 @@
               <a href="mailto:edisond@qq.com">edisond@qq.com</a>
             </p>
             <p>博客：
-              <a href="https://wxsm.space" target="_blank">https://wxsm.space</a>
+              <a href="https://wxsm.space">https://wxsm.space</a>
             </p>
             <p>Github：
-              <a href="https://github.com/wxsms" target="_blank">https://github.com/wxsms</a>
+              <a href="https://github.com/wxsms" rel="nofollow">https://github.com/wxsms</a>
             </p>
           </div>
           <div>
@@ -53,18 +53,19 @@
             <p>以下为部分项目经历。</p>
             <p>
               <b>My CargoSmart Center (CS2)</b>
-              <a href="http://cargosmart.com" target="_blank">
+              <a href="http://cargosmart.com" rel="nofollow">
                 <i class="glyphicon glyphicon-link"></i>
               </a>
             </p>
             <p>公司核心业务平台，大型集成系统。系统集成了世界范围内的多家船公司，基本包含船运业所有业务模块，为客户提供一站式服务。</p>
             <p>系统技术栈为 jQuery / JSF / Java 1.5 / Ant / OC4J / OracleDB，使用 JMS (Tibco EMS + Tibco WORKER) 进行集成，使用 Jenkins
               实现持续集成、部署。</p>
-            <p>在任期间，主要担任系统维护角色。主要负责了 Shipment Plan （船运计划）以及 Shipping Instruction（装船指示）模块项目的开发及维护。同时，参与了 2016 年新业务项目 SOLAS
+            <p>
+              在任期间，主要担任系统维护角色。主要负责了 Shipment Plan （船运计划）以及 Shipping Instruction（装船指示）模块项目的开发及维护。同时，参与了 2016 年新业务项目 SOLAS
               VGM （海上人命公约称重须求）的开发。</p>
             <p>
               <b>BigSchedules.com</b>
-              <a href="http://bigschedules.com" target="_blank">
+              <a href="http://bigschedules.com" rel="nofollow">
                 <i class="glyphicon glyphicon-link"></i>
               </a>
             </p>
@@ -91,7 +92,7 @@
   import PageHeader from './../architecture/PageHeader.vue'
 
   export default {
-    components: { PageHeader }
+    components: {PageHeader}
   }
 </script>
 

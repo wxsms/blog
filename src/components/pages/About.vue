@@ -27,20 +27,22 @@
           <br/>
           <p>
             <span>Project:</span>
-            <a href="https://github.com/wxsms/wxsms.github.io" target="_blank">https://github.com/wxsms/wxsms.github.io</a>
+            <a href="https://github.com/wxsms/wxsms.github.io" rel="nofollow">
+              https://github.com/wxsms/wxsms.github.io
+            </a>
           </p>
           <p>Powered by
-            <a href="https://vuejs.org/" target="_blank">Vue.js</a>
+            <a href="https://vuejs.org/" rel="nofollow">Vue.js</a>
             and
-            <a href="https://webpack.github.io/" target="_blank">webpack</a>
+            <a href="https://webpack.github.io/" rel="nofollow">webpack</a>
           </p>
           <p>
             Hosted by
-            <a href="https://pages.github.com/" target="_blank">Github Pages</a>
+            <a href="https://pages.github.com/" rel="nofollow">Github Pages</a>
           </p>
           <p>
             SSL supported by
-            <a href="https://www.cloudflare.com/" target="_blank">Cloudflare</a>
+            <a href="https://www.cloudflare.com/" rel="nofollow">Cloudflare</a>
           </p>
           <p>
             * If the comment box can't be loaded, it probably blocked by
@@ -57,7 +59,7 @@
   import hljs from './../../util/hljsUtils'
 
   export default {
-    components: { PageHeader },
+    components: {PageHeader},
     mounted () {
       let blocks = this.$refs.container.querySelectorAll('pre code')
       for (let i = 0; i < blocks.length; i++) {

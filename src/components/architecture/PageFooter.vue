@@ -6,7 +6,7 @@
           <p class="text-muted">
             <span>Friend Links:</span>
             <span v-for="friend in friendLinks">
-              <a :href="friend.href" target="_blank">{{friend.label}}</a>
+              <a :href="friend.href">{{friend.label}}</a>
             </span>
           </p>
         </div>
@@ -15,11 +15,11 @@
         <div class="col-xs-12">
           <a href="http://wxsm.space">© {{year}} WXSM</a>
           <span>/</span>
-          <a href="/feed.xml" rel="nofollow" target="_blank">
+          <a href="/feed.xml" rel="nofollow">
             FEED
           </a>
           <span>/</span>
-          <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow" target="_blank">
+          <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">
             <abbr title="LICENSE">CC BY 4.0</abbr>
           </a>
         </div>
