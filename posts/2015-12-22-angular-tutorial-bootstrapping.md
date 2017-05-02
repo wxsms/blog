@@ -102,7 +102,7 @@ Angular 表达式是由 Angular 在当前模型作用域（model scope）的上�
 
 现在我们的应用程序的结构非常简单。模板只包含了一条指令以及一个静态绑定，模型也是空的。在接下来的教程中就会发生变化。
 
-![](https://cloud.githubusercontent.com/assets/5960988/25607282/6652b338-2f48-11e7-8d95-72497e2134d3.png)
+![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/tutorial_00.png)
 
 * * *
 

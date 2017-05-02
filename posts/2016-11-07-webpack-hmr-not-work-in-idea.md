@@ -11,6 +11,6 @@ tags:
   1. goto 'File | Settings | Appearance & Behavior | System Settings';
   2. uncheck 'Use save write' option
 
-![](https://cloud.githubusercontent.com/assets/5960988/25607276/661e3392-2f48-11e7-9b49-137893607de0.jpg)
+![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/hmr-idea-issue.jpg)
 
 Problem solved.

@@ -74,7 +74,7 @@ BFC 对浮动元素的定位与清除都很重要：
 
 效果：
 
-![](https://cloud.githubusercontent.com/assets/5960988/25607268/65d01810-2f48-11e7-802e-4897f2423033.jpg)
+![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/20160328171800.jpg)
 
 在这种情况下，二者共享了同一个 BFC，即 `body` 根元素，因此，右边元素的定位受到了浮动的影响。
 
@@ -88,7 +88,7 @@ BFC 对浮动元素的定位与清除都很重要：
 
 效果：
 
-![](https://cloud.githubusercontent.com/assets/5960988/25607269/65d26192-2f48-11e7-9594-31d3c9d15d98.jpg)
+![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/20160328172031.jpg)
 
 这就是一个自适应两栏布局了。主栏的宽度是随父节点而自动变化的。
 
@@ -137,7 +137,7 @@ BFC 对浮动元素的定位与清除都很重要：
 
 效果：
 
-![](https://cloud.githubusercontent.com/assets/5960988/25607270/65d36132-2f48-11e7-9642-3c6dc929bd4c.jpg)
+![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/20160328173455.jpg)
 
 ### 清除 margin 重叠
 
