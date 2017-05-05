@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "highlight.js": "^9.8.0",
-    "uiv": "0.11.0",
+    "uiv": "^0.11.3",
     "vue": "^2.3.0",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.5.2",
