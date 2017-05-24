@@ -1,17 +1,17 @@
 <template>
   <section>
     <div class="meta-block">
-      <span class="text-muted">{{postDate}}</span>
+      <i class="glyphicon glyphicon-calendar"></i>
+      <span>{{postDate}}</span>
     </div>
     <div class="meta-block" v-if="post.meta.categories && post.meta.categories.length">
-      <span class="text-muted">/</span>
+      <i class="glyphicon glyphicon-folder-open"></i>
       <template v-for="(c,index) in postCategories">
-        <router-link :to="'/c/'+c" class="text-muted" :title="'Category: '+c">{{c}}</router-link>
-        <span class="text-muted" v-show="index!==postCategories.length-1">,&nbsp;</span>
+        <span v-show="index>0">,&nbsp;</span>
+        <router-link :to="'/c/'+c" class="cate-link">{{c}}</router-link>
       </template>
     </div>
     <div class="meta-block">
-      <span>&nbsp;</span>
       <tag v-for="tag in postTags" :tag="tag"></tag>
     </div>
   </section>
@@ -57,13 +57,18 @@
     margin: 20px 0;
   }
 
+  .glyphicon {
+    margin-right: 5px;
+  }
+
   .meta-block {
     display: inline-block;
     vertical-align: center;
+    margin-right: 20px;
   }
 
-  a.text-muted {
-    color: #bbbbbb !important;
+  .cate-link {
+    color: #666 !important;
     text-decoration: none !important;
   }
 

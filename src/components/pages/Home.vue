@@ -6,7 +6,7 @@
           <post-excerpt v-for="post in postsWithExcerpt" :post="post"></post-excerpt>
           <br/>
           <div>
-            <router-link class="btn btn-default" to="/p">Visit Archive for Older Posts</router-link>
+            <router-link to="/p"><i class="glyphicon glyphicon-chevron-left"></i> Older Posts</router-link>
           </div>
         </div>
       </div>
@@ -18,7 +18,7 @@
   import PostExcerpt from './archive/PostExcerpt.vue'
 
   export default {
-    components: { PostExcerpt },
+    components: {PostExcerpt},
     computed: {
       postsWithExcerpt () {
         return this.postList.filter(v => {

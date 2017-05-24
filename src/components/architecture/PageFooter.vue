@@ -5,23 +5,22 @@
         <div class="col-xs-12">
           <p class="text-muted">
             <span>Friend Links:</span>
-            <span v-for="friend in friendLinks">
+            <template v-for="(friend,index) in friendLinks">
+              <span v-if="index>0">&nbsp;/</span>
               <a :href="friend.href">{{friend.label}}</a>
-            </span>
+            </template>
           </p>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <a href="http://wxsm.space">© {{year}} WXSM</a>
+          <a href="https://wxsm.space">© {{year}} WXSM</a>
           <span>/</span>
-          <a href="/feed.xml" rel="nofollow">
-            FEED
-          </a>
+          <a href="/feed.xml" rel="nofollow">FEED</a>
           <span>/</span>
-          <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">
-            <abbr title="LICENSE">CC BY 4.0</abbr>
-          </a>
+          <tooltip text="LICENSE">
+            <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">CC BY 4.0</a>
+          </tooltip>
         </div>
       </div>
     </div>
@@ -30,9 +29,11 @@
 
 <script>
   import config from './../../config/global'
+  import { Tooltip } from 'uiv'
 
   export default {
     props: ['title'],
+    components: {Tooltip},
     data () {
       return {
         year: new Date().getFullYear(),
