@@ -15,6 +15,8 @@ tags:
 1. 用户可以自定义组件使用的措辞
 1. 兼容 `vue-i18n` 这个库
 
+<!--more-->
+
 ## 关键代码
 
 ### src/locale/lang/en-US.js
