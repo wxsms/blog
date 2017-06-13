@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header title="Tags"></page-header>
+    <page-header title="标签"></page-header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">

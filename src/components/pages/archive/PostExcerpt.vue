@@ -7,7 +7,7 @@
     <post-meta :post="post"></post-meta>
     <p>
       <router-link :to="'/p/'+post.meta.id" class="btn btn-primary">
-        <span>Read more</span>
+        <span>继续阅读</span>
         <i class="glyphicon glyphicon-chevron-right"></i>
       </router-link>
     </p>

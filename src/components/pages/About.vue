@@ -1,21 +1,21 @@
 <template>
   <section>
-    <page-header title="About"></page-header>
+    <page-header title="关于"></page-header>
     <div class="container-fluid" ref="container">
       <div class="row">
         <div class="col-xs-12">
-          <p>
+          <h3 class="page-header">作者</h3>
           <pre><code>let me = {
   id: 9527,
   name: 'wxsm',
   gender: 'M',
   born: 1991,
   education: {
-    graduated: 'Jinan University Zhuhai Campus',
-    major: 'Software Engineering'
+    graduated: '暨南大学',
+    major: '软件工程'
   },
-  location: 'Zhuhai, China',
-  profession: 'IT Engineer',
+  location: '中国珠海',
+  profession: '码农',
   interests: ['JavaScript', 'DOTA', 'Movie']
   contact: {
     mail: 'edisond#qq.com', // Replace '#' as '@'
@@ -24,30 +24,24 @@
     zhihu: 'https://www.zhihu.com/people/wxsm'
   }
 }</code></pre>
-          <br/>
+          <h3 class="page-header">博客</h3>
           <p>
-            <span>Project:</span>
+            <span>项目地址：</span>
             <a href="https://github.com/wxsms/wxsms.github.io" rel="nofollow">
               https://github.com/wxsms/wxsms.github.io
             </a>
           </p>
-          <p>Powered by
+          <p>
+            <span>基于</span>
             <a href="https://vuejs.org/" rel="nofollow">Vue.js</a>
-            and
+            <span>与</span>
             <a href="https://webpack.github.io/" rel="nofollow">webpack</a>
-          </p>
-          <p>
-            Hosted by
+            <span>搭建，</span>
+            <span>由</span>
             <a href="https://pages.github.com/" rel="nofollow">Github Pages</a>
+            <span>托管。</span>
           </p>
-          <p>
-            SSL supported by
-            <a href="https://www.cloudflare.com/" rel="nofollow">Cloudflare</a>
-          </p>
-          <p>
-            * If the comment box can't be loaded, it probably blocked by
-            <abbr title="Great Fire Wall">GFW</abbr>
-          </p>
+          <p>如果评论框无法显示，那估计是被墙了。</p>
         </div>
       </div>
     </div>

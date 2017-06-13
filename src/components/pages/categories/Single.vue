@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header :title="'Category: '+category" back-to="/c"></page-header>
+    <page-header :title="'目录：'+category" back-to="/c"></page-header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">

@@ -8,6 +8,9 @@ import mutations from './mutations'
 
 Vue.use(Vuex)
 
+// path: '/m',
+// label: '电影'
+
 const state = {
   baseTitle: 'wxsm\'s space',
   posts: {},
@@ -15,19 +18,19 @@ const state = {
   asideShow: false,
   asideItems: [{
     path: '/p',
-    label: 'Archive'
+    label: '归档'
   }, {
     path: '/c',
-    label: 'Categories'
+    label: '目录'
   }, {
     path: '/t',
-    label: 'Tags'
+    label: '标签'
   }, {
     path: '/g',
-    label: 'Guestbook'
+    label: '留言'
   }, {
     path: '/a',
-    label: 'About'
+    label: '关于'
   }],
   asideShowToc: false,
   asideToc: []

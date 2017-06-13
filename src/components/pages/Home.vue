@@ -6,7 +6,7 @@
           <post-excerpt v-for="post in postsWithExcerpt" :post="post"></post-excerpt>
           <br/>
           <div>
-            <router-link to="/p"><i class="glyphicon glyphicon-chevron-left"></i> Older Posts</router-link>
+            <router-link to="/p"><i class="glyphicon glyphicon-chevron-left"></i> 更早的文章</router-link>
           </div>
         </div>
       </div>

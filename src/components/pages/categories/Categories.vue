@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header title="Categories"></page-header>
+    <page-header title="目录"></page-header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">

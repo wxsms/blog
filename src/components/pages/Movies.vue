@@ -1,10 +1,10 @@
 <template>
   <section>
-    <page-header title="留言"></page-header>
-    <div class="container-fluid">
+    <page-header title="电影"></page-header>
+    <div class="container-fluid" ref="container">
       <div class="row">
         <div class="col-xs-12">
-          <disqus></disqus>
+
         </div>
       </div>
     </div>
@@ -13,10 +13,9 @@
 
 <script>
   import PageHeader from './../architecture/PageHeader.vue'
-  import Disqus from './../common/Disqus.vue'
 
   export default {
-    components: { PageHeader, Disqus }
+    components: {PageHeader}
   }
 </script>
 

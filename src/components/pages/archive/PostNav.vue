@@ -4,20 +4,16 @@
       <hr/>
     </div>
     <div class="col-md-6 text-left">
-      <tooltip text="Prev post">
-        <router-link v-if="prevPost" class="btn btn-link" :to="'/p/'+prevPost.meta.id">
-          <i class="glyphicon glyphicon-menu-left"></i>
-          <span>{{prevPost.meta.title}}</span>
-        </router-link>
-      </tooltip>
+      <router-link v-if="prevPost" class="btn btn-link" :to="'/p/'+prevPost.meta.id">
+        <i class="glyphicon glyphicon-menu-left"></i>
+        <span>{{prevPost.meta.title}}</span>
+      </router-link>
     </div>
     <div class="col-md-6 text-right">
-      <tooltip text="Next post">
-        <router-link v-if="nextPost" class="btn btn-link" :to="'/p/'+nextPost.meta.id">
-          <span>{{nextPost.meta.title}}</span>
-          <i class="glyphicon glyphicon-menu-right"></i>
-        </router-link>
-      </tooltip>
+      <router-link v-if="nextPost" class="btn btn-link" :to="'/p/'+nextPost.meta.id">
+        <span>{{nextPost.meta.title}}</span>
+        <i class="glyphicon glyphicon-menu-right"></i>
+      </router-link>
     </div>
     <div class="col-xs-12">
       <hr/>
@@ -26,11 +22,8 @@
 </template>
 
 <script>
-  import { Tooltip } from 'uiv'
-
   export default {
     props: ['post'],
-    components: {Tooltip},
     computed: {
       postList () {
         return this.$store.state.postList

@@ -12,23 +12,80 @@ const routeNames = {
   QUERY_RESULT: 'queryResult',
   ABOUT: 'about',
   GUESTBOOK: 'guestbook',
-  CV: 'cv'
+  CV: 'cv',
+  MOVIES: 'movies'
 }
 
 const routes = [
-  {path: '/', name: routeNames.HOME, component: require('./../components/pages/Home.vue')},
-  {path: '/p', name: routeNames.ARCHIVE, component: require('./../components/pages/archive/Archive.vue')},
-  {path: '/p/:p', name: routeNames.POST, component: require('./../components/pages/archive/Single.vue')},
-  {path: '/t', name: routeNames.TAGS, component: require('./../components/pages/tags/Tags.vue')},
-  {path: '/t/:t', name: routeNames.TAG, component: require('./../components/pages/tags/Single.vue')},
-  {path: '/c', name: routeNames.CATEGORIES, component: require('./../components/pages/categories/Categories.vue')},
-  {path: '/c/:c', name: routeNames.CATEGORY, component: require('./../components/pages/categories/Single.vue')},
-  {path: '/q', name: routeNames.QUERY, component: require('./../components/pages/search/Search.vue')},
-  {path: '/q/:q', name: routeNames.QUERY_RESULT, component: require('./../components/pages/search/Result.vue')},
-  {path: '/a', name: routeNames.ABOUT, component: require('./../components/pages/About.vue')},
-  {path: '/g', name: routeNames.GUESTBOOK, component: require('./../components/pages/Guestbook.vue')},
-  {path: '/o/cv', name: routeNames.CV, component: resolve => require(['./../components/pages/Cv.vue'], resolve)},
-  {path: '*', component: require('./../components/pages/NotFound.vue')}
+  {
+    path: '/',
+    name: routeNames.HOME,
+    component: require('./../components/pages/Home.vue')
+  },
+  {
+    path: '/p',
+    name: routeNames.ARCHIVE,
+    component: resolve => require(['./../components/pages/archive/Archive.vue'], resolve)
+  },
+  {
+    path: '/p/:p',
+    name: routeNames.POST,
+    component: resolve => require(['./../components/pages/archive/Single.vue'], resolve)
+  },
+  {
+    path: '/t',
+    name: routeNames.TAGS,
+    component: resolve => require(['./../components/pages/tags/Tags.vue'], resolve)
+  },
+  {
+    path: '/t/:t',
+    name: routeNames.TAG,
+    component: resolve => require(['./../components/pages/tags/Single.vue'], resolve)
+  },
+  {
+    path: '/c',
+    name: routeNames.CATEGORIES,
+    component: resolve => require(['./../components/pages/categories/Categories.vue'], resolve)
+  },
+  {
+    path: '/c/:c',
+    name: routeNames.CATEGORY,
+    component: resolve => require(['./../components/pages/categories/Single.vue'], resolve)
+  },
+  {
+    path: '/q',
+    name: routeNames.QUERY,
+    component: resolve => require(['./../components/pages/search/Search.vue'], resolve)
+  },
+  {
+    path: '/q/:q',
+    name: routeNames.QUERY_RESULT,
+    component: resolve => require(['./../components/pages/search/Result.vue'], resolve)
+  },
+  {
+    path: '/a',
+    name: routeNames.ABOUT,
+    component: resolve => require(['./../components/pages/About.vue'], resolve)
+  },
+  {
+    path: '/m',
+    name: routeNames.MOVIES,
+    component: resolve => require(['./../components/pages/Movies.vue'], resolve)
+  },
+  {
+    path: '/g',
+    name: routeNames.GUESTBOOK,
+    component: resolve => require(['./../components/pages/Guestbook.vue'], resolve)
+  },
+  {
+    path: '/o/cv',
+    name: routeNames.CV,
+    component: resolve => require(['./../components/pages/Cv.vue'], resolve)
+  },
+  {
+    path: '*',
+    component: require('./../components/pages/NotFound.vue')
+  }
 ]
 
 const router = new VueRouter({
@@ -60,31 +117,34 @@ router.beforeEach((to, from, next) => {
       }
       break
     case routeNames.ARCHIVE:
-      buildTitle(store.state.baseTitle, 'Archive')
+      buildTitle(store.state.baseTitle, '归档')
       break
     case routeNames.CATEGORIES:
-      buildTitle(store.state.baseTitle, 'Categories')
+      buildTitle(store.state.baseTitle, '目录')
       break
     case routeNames.CATEGORY:
-      buildTitle(store.state.baseTitle, `Category ${path.replace('/c/', '')}`)
+      buildTitle(store.state.baseTitle, `目录 ${path.replace('/c/', '')}`)
       break
     case routeNames.TAGS:
-      buildTitle(store.state.baseTitle, 'Tags')
+      buildTitle(store.state.baseTitle, '标签')
       break
     case routeNames.TAG:
-      buildTitle(store.state.baseTitle, `Tag ${path.replace('/t/', '')}`)
+      buildTitle(store.state.baseTitle, `标签 ${path.replace('/t/', '')}`)
       break
     case routeNames.GUESTBOOK:
-      buildTitle(store.state.baseTitle, 'Guestbook')
+      buildTitle(store.state.baseTitle, '留言')
       break
     case routeNames.ABOUT:
-      buildTitle(store.state.baseTitle, 'About')
+      buildTitle(store.state.baseTitle, '关于')
+      break
+    case routeNames.MOVIES:
+      buildTitle(store.state.baseTitle, '电影')
       break
     case routeNames.QUERY:
-      buildTitle(store.state.baseTitle, 'Search')
+      buildTitle(store.state.baseTitle, '搜索')
       break
     case routeNames.QUERY_RESULT:
-      buildTitle(store.state.baseTitle, 'Search Result')
+      buildTitle(store.state.baseTitle, '搜索结果')
       break
     default:
       buildTitle(store.state.baseTitle)

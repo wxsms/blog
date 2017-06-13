@@ -1,11 +1,11 @@
 <template>
   <section>
-    <page-header title="Archive"></page-header>
+    <page-header title="归档"></page-header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
           <tabs v-model="openIndex">
-            <tab v-for="(r,index) in reduce" :title="r.year.toString()" :group="index>=maxTabNum?'OLDER':''">
+            <tab v-for="(r,index) in reduce" :title="r.year.toString()" :group="index>=maxTabNum?'往年':''">
               <ul class="archives-list">
                 <li v-for="post in r.posts">
                   <list-item :post="post"></list-item>
