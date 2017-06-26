@@ -9,7 +9,7 @@
   import Loading from './Loading.vue'
 
   export default {
-    components: { Loading },
+    components: {Loading},
     mounted () {
       let self = this
       if (window.DISQUS) {
@@ -40,7 +40,11 @@
       init () {
         const self = this
         window.disqus_config = function () {
-          this.page.identifier = (self.$route.path || window.location.pathname)
+          let identifier = (self.$route.path || window.location.pathname)
+          if (identifier.indexOf('/', identifier.length - 1) !== -1) {
+            identifier = identifier.substr(0, identifier.length - 1)
+          }
+          this.page.identifier = identifier
           this.page.url = 'https://wxsm.space' + this.page.identifier
         }
         setTimeout(() => {
