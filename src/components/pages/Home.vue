@@ -1,5 +1,8 @@
 <template>
   <section>
+    <div class="visible-xs">
+      <page-header title="wxsm's space"></page-header>
+    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
@@ -16,9 +19,10 @@
 
 <script>
   import PostExcerpt from './archive/PostExcerpt.vue'
+  import PageHeader from './../architecture/PageHeader.vue'
 
   export default {
-    components: {PostExcerpt},
+    components: {PostExcerpt, PageHeader},
     computed: {
       postsWithExcerpt () {
         return this.postList.filter(v => {
