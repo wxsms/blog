@@ -43,6 +43,7 @@ utils.readFilesFromDirSync('./dist/posts/', (filename, content) => {
   console.error(err)
 })
 
+let finishedAjaxPaths = []
 let processProgress = 0
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -147,6 +148,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         captureAfterElementExists: '#post-content',
         navigationLocked: true,
         postProcessHtml: function (context) {
+          finishedAjaxPaths.push(context.route)
+          // console.log('Not Finish:', ajaxPaths.filter(path => finishedAjaxPaths.indexOf(path) < 0).join(', '))
           console.log(`${++processProgress}/${ajaxPaths.length} ${context.route}`)
           return context.html
         }

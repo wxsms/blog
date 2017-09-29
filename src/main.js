@@ -1,5 +1,6 @@
 import './assets/bootstrap/css/paper.css'
 import 'highlight.js/styles/github-gist.css'
+import 'nprogress/nprogress.css'
 import './assets/css/common.less'
 
 import Vue from 'vue'

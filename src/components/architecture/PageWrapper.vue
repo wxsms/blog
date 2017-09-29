@@ -12,14 +12,20 @@
   import Backdrop from './Backdrop.vue'
 
   export default {
-    components: { SideNav, Page, Backdrop },
+    components: {SideNav, Page, Backdrop},
     events: {}
   }
 </script>
 
-<style lang="less" rel="stylesheet/less" scoped>
+<style lang="less" rel="stylesheet/less">
+  @import "./../../assets/css/variables";
+
   #app {
     max-width: 100vw;
     overflow: hidden;
+  }
+
+  #nprogress .bar {
+    background: @blue !important;
   }
 </style>

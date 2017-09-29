@@ -4,7 +4,9 @@
     <div class="container-fluid" ref="container">
       <div class="row">
         <div class="col-xs-12">
-
+          <div class="jumbotron">
+            <h2>建设中......</h2>
+          </div>
         </div>
       </div>
     </div>

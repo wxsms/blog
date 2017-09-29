@@ -1,4 +1,7 @@
 import VueRouter from 'vue-router'
+import NProgress from 'nprogress'
+
+NProgress.configure({showSpinner: false})
 
 const routeNames = {
   HOME: 'home',
@@ -25,57 +28,57 @@ const routes = [
   {
     path: '/p',
     name: routeNames.ARCHIVE,
-    component: require('./../components/pages/archive/Archive.vue')
+    component: resolve => require(['./../components/pages/archive/Archive.vue'], resolve)
   },
   {
     path: '/p/:p',
     name: routeNames.POST,
-    component: require('./../components/pages/archive/Single.vue')
+    component: resolve => require(['./../components/pages/archive/Single.vue'], resolve)
   },
   {
     path: '/t',
     name: routeNames.TAGS,
-    component: require('./../components/pages/tags/Tags.vue')
+    component: resolve => require(['./../components/pages/tags/Tags.vue'], resolve)
   },
   {
     path: '/t/:t',
     name: routeNames.TAG,
-    component: require('./../components/pages/tags/Single.vue')
+    component: resolve => require(['./../components/pages/tags/Single.vue'], resolve)
   },
   {
     path: '/c',
     name: routeNames.CATEGORIES,
-    component: require('./../components/pages/categories/Categories.vue')
+    component: resolve => require(['./../components/pages/categories/Categories.vue'], resolve)
   },
   {
     path: '/c/:c',
     name: routeNames.CATEGORY,
-    component: require('./../components/pages/categories/Single.vue')
+    component: resolve => require(['./../components/pages/categories/Single.vue'], resolve)
   },
   {
     path: '/q',
     name: routeNames.QUERY,
-    component: require('./../components/pages/search/Search.vue')
+    component: resolve => require(['./../components/pages/search/Search.vue'], resolve)
   },
   {
     path: '/q/:q',
     name: routeNames.QUERY_RESULT,
-    component: require('./../components/pages/search/Result.vue')
+    component: resolve => require(['./../components/pages/search/Result.vue'], resolve)
   },
   {
     path: '/a',
     name: routeNames.ABOUT,
-    component: require('./../components/pages/About.vue')
+    component: resolve => require(['./../components/pages/About.vue'], resolve)
   },
   {
     path: '/m',
     name: routeNames.MOVIES,
-    component: require('./../components/pages/Movies.vue')
+    component: resolve => require(['./../components/pages/Movies.vue'], resolve)
   },
   {
     path: '/g',
     name: routeNames.GUESTBOOK,
-    component: require('./../components/pages/Guestbook.vue')
+    component: resolve => require(['./../components/pages/Guestbook.vue'], resolve)
   },
   {
     path: '/o/cv',
@@ -102,6 +105,9 @@ const buildTitle = (base, desc) => {
 }
 
 router.beforeEach((to, from, next) => {
+  // Start progressbar
+  NProgress.start()
+  // Build page title
   let store = router.app.$store
   let path = to.path
   switch (to.name) {
@@ -150,6 +156,11 @@ router.beforeEach((to, from, next) => {
       buildTitle(store.state.baseTitle)
   }
   next()
+})
+
+router.afterEach(() => {
+  // Finish progress
+  setTimeout(() => NProgress.done(), 300)
 })
 
 export default router
