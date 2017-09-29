@@ -17,7 +17,12 @@
   import PageHeader from './../architecture/PageHeader.vue'
 
   export default {
-    components: {PageHeader}
+    components: {PageHeader},
+    data () {
+      return {
+        movieList: []
+      }
+    }
   }
 </script>
 

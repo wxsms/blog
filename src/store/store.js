@@ -20,6 +20,9 @@ const state = {
     path: '/p',
     label: '归档'
   }, {
+    path: '/m',
+    label: '电影'
+  }, {
     path: '/c',
     label: '目录'
   }, {
