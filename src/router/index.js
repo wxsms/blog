@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/',
     name: routeNames.HOME,
-    component: require('./../components/pages/Home.vue')
+    component: resolve => require(['./../components/pages/Home.vue'], resolve)
   },
   {
     path: '/p',
