@@ -1,19 +1,18 @@
 <template>
   <router-link :to="'/t/'+tag" class="label-tag">
-    <span :class="'label label-'+getLabelClassByTagName(tag)">
-      <i class="glyphicon glyphicon-tag"></i>
-      <span>{{tag}}</span>
-    </span>
+    <span :class="labelClass">{{tag}}</span>
   </router-link>
 </template>
 
 <script>
-  import { getLabelClassByTagName } from './../../util/tagUtils'
+  import * as tagUtils from './../../util/tagUtils'
 
   export default {
     props: ['tag'],
-    methods: {
-      getLabelClassByTagName
+    computed: {
+      labelClass () {
+        return `label label-${tagUtils.getLabelClassByTagName(this.tag)}`
+      }
     }
   }
 </script>

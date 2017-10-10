@@ -82,12 +82,10 @@
         if (this.post.meta && this.post.meta.index) {
           this.$nextTick(() => {
             let anchors = getAnchors()
-            this.$store.commit(types.ASIDE_TOGGLE_TOC, true)
             this.$store.commit(types.ASIDE_SET_TOC, anchors)
           })
         } else {
-          this.$store.commit(types.ASIDE_TOGGLE_TOC, false)
-          this.$store.commit(types.ASIDE_SET_TOC, [])
+          this.$store.commit(types.ASIDE_SET_TOC, null)
         }
       }
     },
@@ -98,10 +96,8 @@
       fetchPost(to, from, next)
     },
     beforeDestroy () {
-      this.$store.commit(types.ASIDE_TOGGLE_TOC, false)
-      this.$store.commit(types.ASIDE_SET_TOC, [])
+      this.$store.commit(types.ASIDE_SET_TOC, null)
     },
-    methods: {},
     computed: {
       headerText () {
         return this.post && this.post.meta ? this.post.meta.title : 'Not Found'

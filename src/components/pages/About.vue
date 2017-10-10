@@ -4,7 +4,6 @@
     <div class="container-fluid" ref="container">
       <div class="row">
         <div class="col-xs-12">
-          <h3 class="page-header">作者</h3>
           <pre><code>let me = {
   id: 9527,
   name: 'wxsm',
@@ -24,7 +23,7 @@
     zhihu: 'https://www.zhihu.com/people/wxsm'
   }
 }</code></pre>
-          <h3 class="page-header">博客</h3>
+          <br/>
           <p>
             <span>项目地址：</span>
             <a href="https://github.com/wxsms/wxsms.github.io" rel="nofollow">

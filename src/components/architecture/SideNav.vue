@@ -11,19 +11,7 @@
       </h4>
     </div>
     <div class="search-container">
-      <div role="presentation" class="search-box">
-        <form @submit.prevent="doSearch()">
-          <div class="form-group">
-            <input type="search"
-                   name="search"
-                   placeholder="SEARCH POSTS..."
-                   v-model="query"
-                   required="required"
-                   minlength="2">
-            <button type="submit" class="btn btn-primary hidden"></button>
-          </div>
-        </form>
-      </div>
+      <search-form :box="true"></search-form>
     </div>
     <div class="nav-container">
       <div class="nav-div">
@@ -33,7 +21,7 @@
           </li>
         </ul>
       </div>
-      <div class="toc-div">
+      <div class="toc-div" v-if="asideTocItems">
         <ul class="toc-ul">
           <li v-for="h2 in asideTocItems">
             <a :href="'#' + h2.href">
@@ -55,9 +43,10 @@
 <script>
   import types from '../../store/mutationTypes'
   import Logo from './../common/Logo.vue'
+  import SearchForm from './../common/SearchForm.vue'
 
   export default {
-    components: {Logo},
+    components: {Logo, SearchForm},
     data () {
       return {
         query: ''
@@ -70,9 +59,6 @@
       asideItems () {
         return this.$store.state.asideItems
       },
-      isAsideTocShow () {
-        return this.$store.state.asideShowToc
-      },
       asideTocItems () {
         return this.$store.state.asideToc
       }
@@ -80,9 +66,6 @@
     methods: {
       toggleAside (show) {
         this.$store.commit(types.TOGGLE_ASIDE, show)
-      },
-      doSearch () {
-        this.$router.push(`/q/${this.query}`)
       }
     }
   }
@@ -90,11 +73,6 @@
 
 <style lang="less" rel="stylesheet/less" scoped>
   @import "./../../assets/css/variables";
-
-  .search-box-placeholder-mixin {
-    color: #CFD8DC;
-    font-size: 12px
-  }
 
   aside {
     position: fixed;
@@ -136,45 +114,11 @@
     .search-container {
       height: 42px;
       border-bottom: 1px solid rgba(207, 216, 220, 0.56);
-
-      .search-box {
-        background: #fff;
-        box-sizing: border-box;
-        box-shadow: none;
-        padding: 8px;
-        height: 100%;
-        position: relative;
-
-        input {
-          background: #fff;
-          border: none;
-          box-sizing: border-box;
-          color: #888;
-          display: inline-block;
-          font-size: 14px;
-          height: 26px;
-          margin: 0;
-          padding: 0 8px;
-          width: 100%;
-          outline: 0;
-
-          &::-webkit-input-placeholder {
-            .search-box-placeholder-mixin();
-          }
-
-          &::-moz-placeholder {
-            .search-box-placeholder-mixin();
-          }
-
-          &:-ms-input-placeholder {
-            .search-box-placeholder-mixin();
-          }
-
-          &:-moz-placeholder {
-            .search-box-placeholder-mixin();
-          }
-        }
-      }
+      background: #fff;
+      box-sizing: border-box;
+      box-shadow: none;
+      padding: 8px 20px;
+      position: relative;
     }
 
     .nav-container {

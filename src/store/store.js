@@ -35,8 +35,7 @@ const state = {
     path: '/a',
     label: '关于'
   }],
-  asideShowToc: false,
-  asideToc: []
+  asideToc: null
 }
 
 export default new Vuex.Store({

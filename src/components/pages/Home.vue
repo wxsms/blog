@@ -25,12 +25,9 @@
     components: {PostExcerpt, PageHeader},
     computed: {
       postsWithExcerpt () {
-        return this.postList.filter(v => {
+        return this.$store.state.postList.filter(v => {
           return !!v.meta.excerpt
         })
-      },
-      postList () {
-        return this.$store.state.postList
       }
     }
   }

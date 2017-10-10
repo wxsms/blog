@@ -12,8 +12,7 @@
   import Backdrop from './Backdrop.vue'
 
   export default {
-    components: {SideNav, Page, Backdrop},
-    events: {}
+    components: {SideNav, Page, Backdrop}
   }
 </script>
 

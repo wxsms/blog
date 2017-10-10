@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header :title="'Search: '+query" back-to="/q"></page-header>
+    <page-header :title="'搜索：'+query" back-to="/q"></page-header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
@@ -12,7 +12,7 @@
             </ul>
           </div>
           <div v-else>
-            <p>(No result)</p>
+            <p>（无结果）</p>
           </div>
         </div>
       </div>

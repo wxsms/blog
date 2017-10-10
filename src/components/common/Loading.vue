@@ -3,13 +3,13 @@
     <div v-show="status===0">
       <p>
         <i class="glyphicon glyphicon-refresh icon-spin"></i>
-        <span>{{loadingText || 'Loading...'}}</span>
+        <span>{{loadingText}}</span>
       </p>
     </div>
     <div v-show="status===-1">
       <p>
         <i class="glyphicon glyphicon-exclamation-sign"></i>
-        <span>{{errorText || 'Error. Pls refresh to try again.'}}</span>
+        <span>{{errorText}}</span>
       </p>
     </div>
   </div>
@@ -17,7 +17,19 @@
 
 <script>
   export default {
-    props: ['status', 'loadingText', 'errorText']
+    props: {
+      status: {
+        type: Number
+      },
+      loadingText: {
+        type: String,
+        'default': '加载中......'
+      },
+      errorText: {
+        type: String,
+        'default': '加载失败，请刷新重试。'
+      }
+    }
   }
 </script>
 

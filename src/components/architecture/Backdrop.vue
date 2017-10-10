@@ -8,9 +8,6 @@
   import types from '../../store/mutationTypes'
 
   export default {
-    data () {
-      return {}
-    },
     computed: {
       isAsideShow () {
         return this.$store.state.asideShow
