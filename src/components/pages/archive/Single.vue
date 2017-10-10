@@ -22,11 +22,17 @@
     <div class="container-fluid" v-else>
       <div class="row">
         <div class="col-xs-12">
-          <h5>
+          <h4>
             <i class="glyphicon glyphicon-exclamation-sign"></i>
-            This post is never or no longer exist.
-          </h5>
+            <span>没有找到该文章。</span>
+          </h4>
           <br/>
+          <p>可能的原因：</p>
+          <ul>
+            <li>文章不存在，或已被删除；</li>
+            <li>网络连接故障。</li>
+          </ul>
+          <p>尝试搜索？</p>
           <search-form></search-form>
         </div>
       </div>

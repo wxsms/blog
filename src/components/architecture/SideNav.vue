@@ -138,7 +138,7 @@
       border-bottom: 1px solid rgba(207, 216, 220, 0.56);
 
       .search-box {
-        background: @side-nav-item-active-bg;
+        background: #fff;
         box-sizing: border-box;
         box-shadow: none;
         padding: 8px;
@@ -148,7 +148,6 @@
         input {
           background: #fff;
           border: none;
-          border-radius: 200px;
           box-sizing: border-box;
           color: #888;
           display: inline-block;
