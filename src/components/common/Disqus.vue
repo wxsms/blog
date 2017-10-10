@@ -28,6 +28,7 @@
     },
     methods: {
       reset (dsq) {
+        // console.log('disqus reset')
         const self = this
         dsq.reset({
           reload: true,
@@ -38,6 +39,7 @@
         })
       },
       init () {
+        // console.log('disqus init')
         const self = this
         window.disqus_config = function () {
           let identifier = (self.$route.path || window.location.pathname)

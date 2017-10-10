@@ -1,8 +1,8 @@
 <template>
   <section>
     <page-header :title="headerText"></page-header>
-    <div class="container-fluid" v-if="validId">
-      <div class="row" v-if="post" id="post-content">
+    <div class="container-fluid" v-if="post">
+      <div class="row" id="post-content">
         <div class="col-xs-12">
           <div class="post-container" v-html="post.html" ref="post"></div>
           <post-meta :post="post"></post-meta>
@@ -40,69 +40,65 @@
   import Disqus from './../../common/Disqus.vue'
   import PostMeta from './PostMeta.vue'
   import PostNav from './PostNav.vue'
-  import Loading from './../../common/Loading.vue'
   import SearchForm from './../../common/SearchForm.vue'
+  import store from './../../../store/store'
   import { getAnchors } from './../../../util/DomUtils'
-  import Vue from 'vue'
+
+  const fetchPost = (to, from, next) => {
+    let postList = store.state.posts
+    let postId = to.params.p
+    if (postList.hasOwnProperty(postId)) {
+      next()
+    } else {
+      store.dispatch(types.GET_POST_BY_ID, postId)
+        .then(() => {
+          next()
+        })
+        .catch(err => {
+          console.error(err)
+          next()
+        })
+    }
+  }
 
   export default {
-    components: {PageHeader, Disqus, PostMeta, PostNav, Loading, SearchForm},
-    mounted () {
-      if (!this.posts.hasOwnProperty(this.id) && this.validId) {
-        this.initPostById(this.id)
+    components: {PageHeader, Disqus, PostMeta, PostNav, SearchForm},
+    data () {
+      return {
+        id: this.$route.params.p,
+        post: null
       }
+    },
+    mounted () {
+      let postList = this.$store.state.posts
+      if (postList.hasOwnProperty(this.id)) {
+        this.post = postList[this.id]
+        if (this.post.meta && this.post.meta.index) {
+          this.$nextTick(() => {
+            let anchors = getAnchors()
+            this.$store.commit(types.ASIDE_TOGGLE_TOC, true)
+            this.$store.commit(types.ASIDE_SET_TOC, anchors)
+          })
+        } else {
+          this.$store.commit(types.ASIDE_TOGGLE_TOC, false)
+          this.$store.commit(types.ASIDE_SET_TOC, [])
+        }
+      }
+    },
+    beforeRouteEnter (to, from, next) {
+      fetchPost(to, from, next)
+    },
+    beforeRouteUpdate (to, from, next) {
+      fetchPost(to, from, next)
     },
     beforeDestroy () {
       this.$store.commit(types.ASIDE_TOGGLE_TOC, false)
       this.$store.commit(types.ASIDE_SET_TOC, [])
     },
-    methods: {
-      initPostById (id) {
-        this.$store.dispatch(types.GET_POST_BY_ID, id)
-      }
-    },
+    methods: {},
     computed: {
       headerText () {
-        if (!this.validId) {
-          return 'Error'
-        } else {
-          return this.post && this.post.meta ? this.post.meta.title : 'Loading...'
-        }
-      },
-      posts () {
-        return this.$store.state.posts
-      },
-      post () {
-        let self = this
-        if (this.posts.hasOwnProperty(this.id)) {
-          if (this.posts[this.id].meta && this.posts[this.id].meta.index) {
-            Vue.nextTick(function () {
-              let anchors = getAnchors()
-              self.$store.commit(types.ASIDE_TOGGLE_TOC, true)
-              self.$store.commit(types.ASIDE_SET_TOC, anchors)
-            })
-          } else {
-            self.$store.commit(types.ASIDE_TOGGLE_TOC, false)
-            self.$store.commit(types.ASIDE_SET_TOC, [])
-          }
-          return this.posts[this.id]
-        } else {
-          return undefined
-        }
-      },
-      validId () {
-        let list = this.$store.state.postList
-        for (let i = 0, l = list.length; i < l; i++) {
-          if (list[i].meta && list[i].meta.id === this.id) {
-            return true
-          }
-        }
-        return false
-      }
-    },
-    data () {
-      return {
-        id: this.$route.params.p
+        return this.post && this.post.meta ? this.post.meta.title : 'Not Found'
       }
     }
   }

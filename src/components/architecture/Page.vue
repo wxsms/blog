@@ -2,7 +2,7 @@
   <section class="page">
     <div class="page-body">
       <navbar></navbar>
-      <router-view class="router" :key="$route.path"></router-view>
+      <router-view :key="$route.path"></router-view>
     </div>
     <page-footer></page-footer>
   </section>
