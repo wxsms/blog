@@ -2,9 +2,7 @@
   <section class="page">
     <div class="page-body">
       <navbar></navbar>
-      <transition name="router-transition" @after-leave="scrollTop" mode="out-in">
-        <router-view class="router" :key="$route.path"></router-view>
-      </transition>
+      <router-view class="router" :key="$route.path"></router-view>
     </div>
     <page-footer></page-footer>
   </section>
@@ -15,7 +13,7 @@
   import PageFooter from './PageFooter.vue'
 
   export default {
-    components: { Navbar, PageFooter },
+    components: {Navbar, PageFooter},
     methods: {
       scrollTop () {
         window.scrollTo(0, 0)
