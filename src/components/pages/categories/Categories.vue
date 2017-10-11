@@ -7,10 +7,10 @@
           <div>
             <ul>
               <li v-for="c in categories">
-                <h6>
+                <h5>
                   <router-link :to="'/c/'+c.name">{{c.name}}</router-link>
                   <small>({{c.num}})</small>
-                </h6>
+                </h5>
               </li>
             </ul>
           </div>

@@ -1,6 +1,4 @@
-import './assets/bootstrap/css/paper.css'
-import 'highlight.js/styles/github-gist.css'
-import 'nprogress/nprogress.css'
+import './assets/css/vender.less'
 import './assets/css/common.less'
 
 import 'es6-promise/auto'

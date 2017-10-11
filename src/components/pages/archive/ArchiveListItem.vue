@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h6>
+    <h5>
       <router-link :to="'/p/'+post.meta.id">{{post.meta.title}}</router-link>
       <small>{{postDate}}</small>
-    </h6>
+    </h5>
   </div>
 </template>
 

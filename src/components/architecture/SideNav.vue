@@ -143,7 +143,6 @@
             &.router-link-active {
               background: @side-nav-item-active-bg;
               color: @blue;
-              font-weight: 600;
               box-shadow: -6px 0 0 @blue inset;
             }
 

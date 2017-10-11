@@ -25,6 +25,6 @@
 
 <style lang="less" rel="stylesheet/less" scoped>
   .post-box {
-    margin: 0 0 80px;
+    margin: 0 0 50px;
   }
 </style>
