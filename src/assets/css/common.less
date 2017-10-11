@@ -51,18 +51,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 code.hljs {
-  padding: 0;
   background: transparent;
 }
 
-pre, code {
+pre {
   border-radius: 0;
   border: none;
-}
+  padding: 0;
 
-pre {
   code {
-    white-space: pre !important;
+    white-space: pre;
+    word-wrap: normal;
+    display: block;
+    overflow-x: auto;
+    border-radius: 0;
+    border: none;
+    padding: 12px !important;
   }
 }
 
