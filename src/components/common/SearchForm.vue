@@ -19,6 +19,11 @@
         'default': false
       }
     },
+    data () {
+      return {
+        query: ''
+      }
+    },
     computed: {
       classes () {
         return {
@@ -30,11 +35,8 @@
     methods: {
       doSearch () {
         this.$router.push(`/q/${this.query}`)
-      }
-    },
-    data () {
-      return {
-        query: ''
+        this.query = ''
+        this.$emit('search')
       }
     }
   }

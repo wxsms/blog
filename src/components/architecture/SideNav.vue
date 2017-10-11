@@ -11,7 +11,7 @@
       </h4>
     </div>
     <div class="search-container">
-      <search-form :box="true"></search-form>
+      <search-form :box="true" @search="toggleAside(false)"></search-form>
     </div>
     <div class="nav-container">
       <div class="nav-div">

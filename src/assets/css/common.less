@@ -12,7 +12,7 @@
 }
 
 body, html {
-  max-width: 100vw;
+  max-width: 100%;
 }
 
 body {
@@ -35,6 +35,8 @@ a {
 }
 
 .post-container, .post-excerpt {
+  font-size: 1.2em;
+
   img {
     max-width: 100%;
   }
@@ -105,6 +107,12 @@ code.hljs {
 pre, code {
   border-radius: 0;
   border: none;
+}
+
+pre {
+  code {
+    white-space: pre !important;
+  }
 }
 
 .icon-spin {

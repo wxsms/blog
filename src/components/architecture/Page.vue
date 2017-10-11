@@ -31,6 +31,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    max-width: 100%;
 
     .page-body {
       flex: 1 0 auto;
