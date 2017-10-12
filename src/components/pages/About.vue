@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header title="关于"></page-header>
+    <page-header title="About"></page-header>
     <div class="container-fluid" ref="container">
       <div class="row">
         <div class="col-xs-12">
@@ -9,38 +9,32 @@
   name: 'wxsm',
   gender: 'M',
   born: 1991,
-  education: {
-    graduated: '暨南大学',
-    major: '软件工程'
-  },
-  location: '中国珠海',
-  profession: '码农',
+  graduated: 'JNU, China',
+  location: 'Zhuhai, China',
+  profession: 'IT Engineer',
   interests: ['JavaScript', 'DOTA', 'Movie']
   contact: {
     mail: 'edisond#qq.com', // Replace '#' as '@'
-    wechat: 'Edisondplus',
-    github: 'https://github.com/wxsms'
+    github: 'https://github.com/wxsms',
+    steam: 'http://steamcommunity.com/id/wxsm/',
     zhihu: 'https://www.zhihu.com/people/wxsm'
   }
 }</code></pre>
           <br/>
           <p>
-            <span>项目地址：</span>
+            <span>Project:</span>
             <a href="https://github.com/wxsms/wxsms.github.io" rel="nofollow">
               https://github.com/wxsms/wxsms.github.io
             </a>
           </p>
           <p>
-            <span>基于</span>
+            <span>Base on</span>
             <a href="https://vuejs.org/" rel="nofollow">Vue.js</a>
-            <span>与</span>
+            <span>&</span>
             <a href="https://webpack.github.io/" rel="nofollow">webpack</a>
-            <span>搭建，</span>
-            <span>由</span>
+            <span>Hosted by</span>
             <a href="https://pages.github.com/" rel="nofollow">Github Pages</a>
-            <span>托管。</span>
           </p>
-          <p>如果评论框无法显示，那估计是被墙了。</p>
         </div>
       </div>
     </div>

@@ -125,34 +125,34 @@ router.beforeEach((to, from, next) => {
       }
       break
     case routeNames.ARCHIVE:
-      buildTitle(store.state.baseTitle, '归档')
+      buildTitle(store.state.baseTitle, 'Archive')
       break
     case routeNames.CATEGORIES:
-      buildTitle(store.state.baseTitle, '目录')
+      buildTitle(store.state.baseTitle, 'Categories')
       break
     case routeNames.CATEGORY:
-      buildTitle(store.state.baseTitle, `目录 ${path.replace('/c/', '')}`)
+      buildTitle(store.state.baseTitle, `Category ${path.replace('/c/', '')}`)
       break
     case routeNames.TAGS:
-      buildTitle(store.state.baseTitle, '标签')
+      buildTitle(store.state.baseTitle, 'Tags')
       break
     case routeNames.TAG:
-      buildTitle(store.state.baseTitle, `标签 ${path.replace('/t/', '')}`)
+      buildTitle(store.state.baseTitle, `Tag ${path.replace('/t/', '')}`)
       break
     case routeNames.GUESTBOOK:
-      buildTitle(store.state.baseTitle, '留言')
+      buildTitle(store.state.baseTitle, 'Guestbook')
       break
     case routeNames.ABOUT:
-      buildTitle(store.state.baseTitle, '关于')
+      buildTitle(store.state.baseTitle, 'About')
       break
     case routeNames.MOVIES:
-      buildTitle(store.state.baseTitle, '电影')
+      buildTitle(store.state.baseTitle, 'Movies')
       break
     case routeNames.QUERY:
-      buildTitle(store.state.baseTitle, '搜索')
+      buildTitle(store.state.baseTitle, 'Search')
       break
     case routeNames.QUERY_RESULT:
-      buildTitle(store.state.baseTitle, '搜索结果')
+      buildTitle(store.state.baseTitle, 'Search Results')
       break
     default:
       buildTitle(store.state.baseTitle)

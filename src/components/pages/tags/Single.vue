@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header :title="'标签：'+tag" back-to="/t"></page-header>
+    <page-header :title="'Tag '+tag" back-to="/t"></page-header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">

@@ -23,11 +23,11 @@
       },
       loadingText: {
         type: String,
-        'default': '加载中......'
+        'default': 'Loading...'
       },
       errorText: {
         type: String,
-        'default': '加载失败，请刷新重试。'
+        'default': 'Load fail. Please refresh to try again.'
       }
     }
   }

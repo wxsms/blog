@@ -18,22 +18,22 @@ const state = {
   asideShow: false,
   asideItems: [{
     path: '/p',
-    label: '归档'
+    label: 'Archive'
   }, {
     path: '/m',
-    label: '电影'
+    label: 'Movies'
   }, {
     path: '/c',
-    label: '目录'
+    label: 'Categories'
   }, {
     path: '/t',
-    label: '标签'
+    label: 'Tags'
   }, {
     path: '/g',
-    label: '留言'
+    label: 'Guestbook'
   }, {
     path: '/a',
-    label: '关于'
+    label: 'About'
   }],
   asideToc: null
 }

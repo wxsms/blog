@@ -3,7 +3,7 @@
     <div class="form-group">
       <input type="search"
              class="form-control"
-             placeholder="搜索......"
+             placeholder="Search..."
              v-model="query"
              required="required"
              minlength="2">

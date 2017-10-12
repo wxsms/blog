@@ -1,6 +1,6 @@
 <template>
   <section>
-    <page-header title="搜索"></page-header>
+    <page-header title="Search"></page-header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">

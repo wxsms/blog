@@ -1,6 +1,6 @@
 <template>
   <div id="disqus_thread" ref="container">
-    <loading :status="0" loading-text="评论加载中......"></loading>
+    <loading :status="0" loading-text="Loading Disqus..."></loading>
   </div>
 </template>
 

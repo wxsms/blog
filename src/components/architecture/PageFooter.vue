@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-xs-12">
           <p class="text-muted">
-            <span>友链：</span>
+            <span>Links:</span>
             <template v-for="(friend,index) in friendLinks">
               <span v-if="index>0">&nbsp;/</span>
               <a :href="friend.href">{{friend.label}}</a>
