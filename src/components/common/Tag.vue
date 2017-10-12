@@ -22,5 +22,9 @@
     display: inline-block;
     margin: 0 10px 10px 0;
     text-decoration: none !important;
+
+    .label {
+      font-weight: normal;
+    }
   }
 </style>
