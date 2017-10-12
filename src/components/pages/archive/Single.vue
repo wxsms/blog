@@ -24,15 +24,15 @@
         <div class="col-xs-12">
           <h4>
             <i class="glyphicon glyphicon-exclamation-sign"></i>
-            <span>没有找到该文章。</span>
+            <span>Post not found.</span>
           </h4>
           <br/>
-          <p>可能的原因：</p>
+          <p>Possible reasons:</p>
           <ul>
-            <li>文章不存在，或已被删除；</li>
-            <li>网络连接故障。</li>
+            <li>Post deleted or never exist.</li>
+            <li>Network connection issue.</li>
           </ul>
-          <p>尝试搜索？</p>
+          <p>Try search?</p>
           <search-form></search-form>
         </div>
       </div>

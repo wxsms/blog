@@ -6,16 +6,15 @@
         <div class="col-xs-12">
           <h4>
             <i class="glyphicon glyphicon-exclamation-sign"></i>
-            没有找到该页面。
+            <span>Page not found.</span>
           </h4>
           <br/>
-          <p>可能的原因：</p>
+          <p>Possible reasons:</p>
           <ul>
-            <li>页面不存在，或已被删除；</li>
-            <li>网络连接故障。</li>
+            <li>Page deleted or never exist.</li>
+            <li>Network connection issue.</li>
           </ul>
-          <br/>
-          <p>尝试搜索？</p>
+          <p>Try search?</p>
           <search-form></search-form>
         </div>
       </div>
@@ -28,7 +27,7 @@
   import SearchForm from './../common/SearchForm.vue'
 
   export default {
-    components: { PageHeader, SearchForm }
+    components: {PageHeader, SearchForm}
   }
 </script>
 
