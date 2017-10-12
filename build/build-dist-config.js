@@ -1,8 +1,4 @@
-'use strict'
-
 const fs = require('fs')
-const utils = require('./utils')
-
 const DIST_PATH = './dist/'
 
 const ensureDir = () => {

@@ -1,12 +1,10 @@
-'use strict'
-
-var path = require('path')
-var fs = require('fs')
-var config = require('../config')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
+const fs = require('fs')
+const config = require('../config')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 exports.assetsPath = function (_path) {
-  var assetsSubDirectory = process.env.NODE_ENV === 'production'
+  let assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
     : config.dev.assetsSubDirectory
   return path.posix.join(assetsSubDirectory, _path)
@@ -16,8 +14,8 @@ exports.cssLoaders = function (options) {
   options = options || {}
   // generate loader string to be used with extract text plugin
   function generateLoaders (loaders) {
-    var sourceLoader = loaders.map(function (loader) {
-      var extraParamChar
+    let sourceLoader = loaders.map(function (loader) {
+      let extraParamChar
       if (/\?/.test(loader)) {
         loader = loader.replace(/\?/, '-loader?')
         extraParamChar = '&'
@@ -51,10 +49,10 @@ exports.cssLoaders = function (options) {
 
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
-  var output = []
-  var loaders = exports.cssLoaders(options)
-  for (var extension in loaders) {
-    var loader = loaders[extension]
+  let output = []
+  let loaders = exports.cssLoaders(options)
+  for (let extension in loaders) {
+    let loader = loaders[extension]
     output.push({
       test: new RegExp('\\.' + extension + '$'),
       loader: loader
