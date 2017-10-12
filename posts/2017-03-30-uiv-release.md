@@ -11,13 +11,15 @@ tags:
 
 一点微小的工作。
 
-先放演示链接：[https://wxsm.space/uiv/](https://wxsm.space/uiv/)
+Demo: [https://wxsm.space/uiv/](https://wxsm.space/uiv/)
 
-Github 链接：[https://github.com/wxsms/uiv](https://github.com/wxsms/uiv)
+Github: [https://github.com/wxsms/uiv](https://github.com/wxsms/uiv)
 
-NPM 搜索 `uiv`
+NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
-项目使用 MIT 许可，随便用~
+项目使用 MIT 许可，随便用。
+
+<!--more-->
 
 ## 简单介绍
 
@@ -79,4 +81,4 @@ NPM 搜索 `uiv`
 
 有问题请提 issue，一定尽快解决。同时也欢迎 PR
 
-最后，欢迎使用~ 
+最后，欢迎使用。
