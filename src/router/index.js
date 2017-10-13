@@ -2,7 +2,9 @@ import VueRouter from 'vue-router'
 import NProgress from 'nprogress'
 
 NProgress.configure({
-  showSpinner: false
+  showSpinner: false,
+  trickleSpeed: 250,
+  minimum: 0.15
 })
 
 const routeNames = {
@@ -109,6 +111,14 @@ const buildTitle = (base, desc) => {
 router.beforeEach((to, from, next) => {
   // Start progressbar
   NProgress.start()
+  next()
+})
+
+router.afterEach((to, from) => {
+  // Finish progress
+  NProgress.done()
+  // Scroll top
+  window.scrollTo(0, 0)
   // Build page title
   let store = router.app.$store
   let path = to.path
@@ -157,13 +167,6 @@ router.beforeEach((to, from, next) => {
     default:
       buildTitle(store.state.baseTitle)
   }
-  next()
-})
-
-router.afterEach(() => {
-  // Finish progress
-  NProgress.done()
-  window.scrollTo(0, 0)
 })
 
 export default router

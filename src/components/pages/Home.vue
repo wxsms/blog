@@ -8,7 +8,7 @@
         <div class="col-xs-12">
           <post-excerpt v-for="post in postsWithExcerpt" :post="post"></post-excerpt>
           <div>
-            <router-link to="/p" class="btn btn-default">Older Posts</router-link>
+            <router-link to="/p" class="btn btn-default">PREVIOUSLY ON SPACE</router-link>
           </div>
         </div>
       </div>

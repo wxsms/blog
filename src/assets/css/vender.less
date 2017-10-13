@@ -1,7 +1,8 @@
 // Bootstrap
 @import "~bootstrap/less/bootstrap.less";
-@import "~bootswatch/paper/variables.less";
-@import "~bootswatch/paper/bootswatch.less";
+// Need to manually remove Google font from Paper theme
+@import "./paper/variables.less";
+@import "./paper/bootswatch.less";
 // Others
 @import "~highlight.js/styles/github-gist.css";
 @import "~nprogress/nprogress.css";
@@ -18,7 +19,7 @@
   font-style: normal;
 }
 
-@font-family-sans-serif: 'robotoregular', 'Arial', 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+@font-family-sans-serif: robotoregular, "Helvetica Neue", Helvetica, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
 @font-size-base: 14px;
 @font-size-large: ceil((@font-size-base * 1.25)); // ~18px
 @font-size-small: ceil((@font-size-base * 0.85)); // ~12px
