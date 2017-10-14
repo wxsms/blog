@@ -12,7 +12,7 @@
       </template>
     </div>
     <div class="meta-block">
-      <tag v-for="tag in postTags" :tag="tag"></tag>
+      <tag v-for="tag in postTags" :tag="tag" :key="tag"></tag>
     </div>
   </section>
 </template>

@@ -24,4 +24,3 @@ export function getAnchors() {
   }
   return anchors
 }
-

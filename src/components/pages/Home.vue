@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
-          <post-excerpt v-for="post in postsWithExcerpt" :post="post"></post-excerpt>
+          <post-excerpt v-for="post in postsWithExcerpt" :key="post.meta.id" :post="post"></post-excerpt>
           <div>
             <router-link to="/p" class="btn btn-default">PREVIOUSLY ON SPACE</router-link>
           </div>

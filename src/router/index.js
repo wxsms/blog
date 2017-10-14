@@ -27,67 +27,67 @@ const routes = [
   {
     path: '/',
     name: routeNames.HOME,
-    component: resolve => require(['./../components/pages/Home.vue'], resolve)
+    component: () => import('./../components/pages/Home.vue')
   },
   {
     path: '/p',
     name: routeNames.ARCHIVE,
-    component: resolve => require(['./../components/pages/archive/Archive.vue'], resolve)
+    component: () => import('./../components/pages/archive/Archive.vue')
   },
   {
     path: '/p/:p',
     name: routeNames.POST,
-    component: resolve => require(['./../components/pages/archive/Single.vue'], resolve)
+    component: () => import('./../components/pages/archive/Single.vue')
   },
   {
     path: '/t',
     name: routeNames.TAGS,
-    component: resolve => require(['./../components/pages/tags/Tags.vue'], resolve)
+    component: () => import('./../components/pages/tags/Tags.vue')
   },
   {
     path: '/t/:t',
     name: routeNames.TAG,
-    component: resolve => require(['./../components/pages/tags/Single.vue'], resolve)
+    component: () => import('./../components/pages/tags/Single.vue')
   },
   {
     path: '/c',
     name: routeNames.CATEGORIES,
-    component: resolve => require(['./../components/pages/categories/Categories.vue'], resolve)
+    component: () => import('./../components/pages/categories/Categories.vue')
   },
   {
     path: '/c/:c',
     name: routeNames.CATEGORY,
-    component: resolve => require(['./../components/pages/categories/Single.vue'], resolve)
+    component: () => import('./../components/pages/categories/Single.vue')
   },
   {
     path: '/q',
     name: routeNames.QUERY,
-    component: resolve => require(['./../components/pages/search/Search.vue'], resolve)
+    component: () => import('./../components/pages/search/Search.vue')
   },
   {
     path: '/q/:q',
     name: routeNames.QUERY_RESULT,
-    component: resolve => require(['./../components/pages/search/Result.vue'], resolve)
+    component: () => import('./../components/pages/search/Result.vue')
   },
   {
     path: '/a',
     name: routeNames.ABOUT,
-    component: resolve => require(['./../components/pages/About.vue'], resolve)
+    component: () => import('./../components/pages/About.vue')
   },
   {
     path: '/m',
     name: routeNames.MOVIES,
-    component: resolve => require(['./../components/pages/Movies.vue'], resolve)
+    component: () => import('./../components/pages/Movies.vue')
   },
   {
     path: '/g',
     name: routeNames.GUESTBOOK,
-    component: resolve => require(['./../components/pages/Guestbook.vue'], resolve)
+    component: () => import('./../components/pages/Guestbook.vue')
   },
   {
     path: '/o/cv',
     name: routeNames.CV,
-    component: resolve => require(['./../components/pages/Cv.vue'], resolve)
+    component: () => import('./../components/pages/Cv.vue')
   },
   {
     path: '*',

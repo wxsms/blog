@@ -1,6 +1,18 @@
 {
   "presets": [
-    "es2015",
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "> 1%",
+            "last 2 versions",
+            "not ie <= 8"
+          ]
+        }
+      }
+    ],
     "stage-2"
   ],
   "plugins": [
@@ -8,5 +20,15 @@
     "syntax-dynamic-import",
     "transform-object-assign"
   ],
-  "comments": false
+  "env": {
+    "test": {
+      "presets": [
+        "env",
+        "stage-2"
+      ],
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  }
 }

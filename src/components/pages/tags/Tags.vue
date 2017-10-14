@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-xs-12">
           <div>
-            <tag v-for="tag in tags" :tag="tag"></tag>
+            <tag v-for="tag in tags" :tag="tag" :key="tag"></tag>
           </div>
         </div>
       </div>

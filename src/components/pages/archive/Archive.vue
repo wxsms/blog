@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-xs-12">
           <tabs>
-            <tab v-for="(r,index) in reduce" :title="r.year.toString()" :group="index>=maxTabNum?'OLDER':''">
+            <tab v-for="(r,index) in reduce" :key="index" :title="r.year.toString()" :group="index>=maxTabNum?'OLDER':''">
               <ul class="archives-list">
                 <li v-for="post in r.posts">
                   <list-item :post="post"></list-item>

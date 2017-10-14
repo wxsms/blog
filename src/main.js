@@ -6,12 +6,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 import PageWrapper from './components/architecture/PageWrapper.vue'
-
 import store from './store/store'
 import router from './router/index'
 
 Vue.http = Vue.prototype.$http = axios
-Vue.component('PageWrapper', PageWrapper)
 Vue.use(VueRouter)
 
 document.addEventListener('DOMContentLoaded', () => {
