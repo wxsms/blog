@@ -97,7 +97,18 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  mode: 'history',
+  scrollBehavior (to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        selector: to.hash
+      }
+    } else if (savedPosition) {
+      return savedPosition
+    } else {
+      return {x: 0, y: 0}
+    }
+  }
 })
 
 const buildTitle = (base, desc) => {
@@ -117,8 +128,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
   // Finish progress
   NProgress.done()
-  // Scroll top
-  window.scrollTo(0, 0)
   // Build page title
   let store = router.app.$store
   let path = to.path
