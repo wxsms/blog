@@ -153,10 +153,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       // (REQUIRED) List of routes to prerender
       staticPaths,
       {
+        maxAttempts: 5,
         navigationLocked: true,
         captureAfterTime: 5000,
         postProcessHtml: function (context) {
-          console.log(`(${++processProgress} / ${ajaxPaths.length + staticPaths.length}) Done: ${context.route}`)
+          console.log(`[PRE-RENDER] (${++processProgress} / ${ajaxPaths.length + staticPaths.length}) ${context.route}`)
           return context.html
         }
       }
@@ -169,12 +170,13 @@ const webpackConfig = merge(baseWebpackConfig, {
       ajaxPaths,
       // Options
       {
-        captureAfterElementExists: '#post-content',
+        maxAttempts: 5,
         navigationLocked: true,
+        captureAfterElementExists: '#post-content',
         postProcessHtml: function (context) {
           // finishedAjaxPaths.push(context.route)
           // console.log('Not Finish:', ajaxPaths.filter(path => finishedAjaxPaths.indexOf(path) < 0).join(', '))
-          console.log(`(${++processProgress} / ${ajaxPaths.length + staticPaths.length}) Done: ${context.route}`)
+          console.log(`[PRE-RENDER] (${++processProgress} / ${ajaxPaths.length + staticPaths.length}) ${context.route}`)
           return context.html
         }
       }

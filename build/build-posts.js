@@ -1,7 +1,7 @@
 const fs = require('fs')
 const utils = require('./utils')
 const ejs = require('ejs')
-
+const chalk = require('chalk')
 const JSON_EXT = '.json'
 const POSTS_PATH = './posts/'
 const DIST_PATH = './dist/'
@@ -62,7 +62,7 @@ utils.readFilesFromDirSync(POSTS_PATH, (filename, content) => {
       delete post.markdown
       delete post.meta['excerpt']
       fs.writeFileSync(POSTS_DIST_PATH + post.meta.id + JSON_EXT, JSON.stringify(post))
-      console.log('Generated post:', post.meta.id)
+      // console.log('Generated post:', post.meta.id)
     } catch (e) {
       console.error(e)
     }
@@ -70,7 +70,9 @@ utils.readFilesFromDirSync(POSTS_PATH, (filename, content) => {
 }, (err) => {
   console.error(err)
 })
-console.log('Generated post index:', postIndex.length, '/', count, 'success.')
+
+console.log(chalk.bold.green(`[Generate Posts] (${postIndex.length} / ${count}) success.`))
+
 postIndex.sort((a, b) => {
   let _a = new Date(a.meta.date).getTime()
   let _b = new Date(b.meta.date).getTime()
