@@ -19,19 +19,14 @@
 
 <script>
   import Tag from './../../common/Tag.vue'
+  import dateUtils from '../../../utils/dateUtils'
 
   export default {
     components: {Tag},
     props: ['post'],
     computed: {
       postDate () {
-        if (this.post && this.post.meta) {
-          let date = this.post.meta.date
-          if (typeof date === 'string') {
-            date = new Date(date)
-          }
-          return date.toISOString().slice(0, 10)
-        }
+        return dateUtils.getDateStrByPost(this.post)
       },
       postTags () {
         try {

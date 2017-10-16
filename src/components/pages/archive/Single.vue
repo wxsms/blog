@@ -48,7 +48,7 @@
   import PostNav from './PostNav.vue'
   import SearchForm from './../../common/SearchForm.vue'
   import store from './../../../store/store'
-  import { getAnchors } from './../../../util/DomUtils'
+  import { getAnchors } from '../../../utils/domUtils'
 
   const fetchPost = (to, from, next) => {
     let postList = store.state.posts

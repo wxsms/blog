@@ -1,5 +1,3 @@
-'use strict'
-
 export function getAnchors() {
   let anchors = []
   if (document) {

@@ -43,7 +43,7 @@
 
 <script>
   import PageHeader from './../architecture/PageHeader.vue'
-  import hljs from './../../util/hljsUtils'
+  import hljs from '../../utils/hljsUtils'
 
   export default {
     components: {PageHeader},

@@ -8,12 +8,19 @@
 </template>
 
 <script>
+  import dateUtils from '../../../utils/dateUtils'
+
   export default {
-    props: ['post'],
+    props: {
+      post: {},
+      showYear: {
+        type: Boolean,
+        'default': false
+      }
+    },
     computed: {
       postDate () {
-        let date = new Date(this.post.meta.date)
-        return date.toISOString().slice(5, 10)
+        return dateUtils.getDateStrByPost(this.post, this.showYear)
       }
     }
   }

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import * as tagUtils from './../../util/tagUtils'
+  import tagUtils from '../../utils/tagUtils'
 
   export default {
     props: ['tag'],
