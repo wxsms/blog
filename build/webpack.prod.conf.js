@@ -1,6 +1,4 @@
-'use strict'
 const path = require('path')
-const fs = require('fs')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
@@ -10,41 +8,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const PrerenderSpaPlugin = require('prerender-spa-plugin')
-const SitemapPlugin = require('sitemap-webpack-plugin')
 
 const env = config.build.env
-
-// Generate url list for pre-render
-let staticPaths = ['/', '/a', '/g', '/t', '/c', '/q', '/o/cv', '/p']
-let categories = []
-let tags = []
-let postIndex = fs.readFileSync('./dist/posts/index.json').toString()
-postIndex = JSON.parse(postIndex)
-postIndex.forEach((post) => {
-  if (post.categories) categories = categories.concat(post.categories)
-  if (post.tags) tags = tags.concat(post.tags)
-})
-categories = [...new Set(categories)]
-tags = [...new Set(tags)]
-categories.forEach((c) => {
-  staticPaths.push(`/c/${encodeURI(c)}`)
-})
-tags.forEach((t) => {
-  staticPaths.push(`/t/${encodeURI(t)}`)
-})
-
-let ajaxPaths = []
-utils.readFilesFromDirSync('./dist/posts/', (filename, content) => {
-  if (filename === 'index.json') return
-  ajaxPaths.push('/p/' + filename.replace('.json', ''))
-}, (err) => {
-  console.error(err)
-})
-
-let finishedAjaxPaths = []
-let processProgress = 0
-
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -144,45 +109,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    // static routes (no ajax)
-    new PrerenderSpaPlugin(
-      // (REQUIRED) Absolute path to static root
-      path.join(__dirname, './../dist'),
-      // (REQUIRED) List of routes to prerender
-      staticPaths,
-      {
-        maxAttempts: 5,
-        navigationLocked: true,
-        captureAfterTime: 2000,
-        postProcessHtml: function (context) {
-          console.log(`[PRE-RENDER] (${++processProgress} / ${ajaxPaths.length + staticPaths.length}) ${context.route}`)
-          return context.html
-        }
-      }
-    ),
-    // ajax routes
-    new PrerenderSpaPlugin(
-      // (REQUIRED) Absolute path to static root
-      path.join(__dirname, './../dist'),
-      // (REQUIRED) List of routes to prerender
-      ajaxPaths,
-      // Options
-      {
-        maxAttempts: 5,
-        navigationLocked: true,
-        captureAfterElementExists: '#post-content',
-        postProcessHtml: function (context) {
-          // finishedAjaxPaths.push(context.route)
-          // console.log('Not Finish:', ajaxPaths.filter(path => finishedAjaxPaths.indexOf(path) < 0).join(', '))
-          console.log(`[PRE-RENDER] (${++processProgress} / ${ajaxPaths.length + staticPaths.length}) ${context.route}`)
-          return context.html
-        }
-      }
-    ),
-    new SitemapPlugin('https://wxsm.space', [].concat(staticPaths, ajaxPaths), {
-      skipGzip: true,
-      changeFreq: 'weekly'
-    })
+    ...utils.generateRenderPlugins()
   ]
 })
 

@@ -1,8 +1,10 @@
-'use strict'
 const path = require('path')
 const fs = require('fs')
+const _ = require('lodash')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const PrerenderSpaPlugin = require('prerender-spa-plugin')
+const SitemapPlugin = require('sitemap-webpack-plugin')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -51,7 +53,7 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
+    sass: generateLoaders('sass', {indentedSyntax: true}),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
@@ -76,7 +78,7 @@ exports.readFilesFromDirSync = function (dirname, onFileContent, onError) {
   try {
     let fileNames = fs.readdirSync(dirname)
     fileNames.forEach(filename => {
-      let content = fs.readFileSync(dirname + filename, 'utf-8')
+      let content = fs.readFileSync(dirname + '/' + filename, 'utf-8')
       try {
         if (typeof onFileContent === 'function') {
           onFileContent(filename, content)
@@ -92,4 +94,77 @@ exports.readFilesFromDirSync = function (dirname, onFileContent, onError) {
       onError(e)
     }
   }
+}
+
+// Generate url list for pre-render
+exports.generateRenderPlugins = () => {
+  let staticPaths = ['/', '/a', '/g', '/t', '/c', '/q', '/o/cv', '/p']
+  let categories = []
+  let tags = []
+  let postIndex = fs.readFileSync(path.resolve(__dirname, '../dist/posts/index.json')).toString()
+  postIndex = JSON.parse(postIndex)
+  postIndex.forEach((post) => {
+    if (post.categories) {
+      categories = categories.concat(post.categories)
+    }
+    if (post.tags) {
+      tags = tags.concat(post.tags)
+    }
+  })
+  categories = [...new Set(categories)]
+  tags = [...new Set(tags)]
+  categories.forEach((c) => {
+    staticPaths.push(`/c/${encodeURI(c)}`)
+  })
+  tags.forEach((t) => {
+    staticPaths.push(`/t/${encodeURI(t)}`)
+  })
+
+  let ajaxPaths = []
+  this.readFilesFromDirSync(path.resolve(__dirname, '../dist/posts'), (filename) => {
+    if (filename === 'index.json') {
+      return
+    }
+    ajaxPaths.push('/p/' + filename.replace('.json', ''))
+  }, (err) => {
+    console.error(err)
+  })
+  // console.log(staticPaths.length, ajaxPaths.length)
+  let totalRoutes = ajaxPaths.length + staticPaths.length
+  let chunkSize = 10
+  let staticChunks = _.chunk(staticPaths, chunkSize)
+  let ajaxChunks = _.chunk(ajaxPaths, chunkSize)
+  let plugins = []
+  let distPath = path.join(__dirname, '../dist')
+  let progress = 0
+  staticChunks.forEach(chunk => {
+    // console.log('static', chunk)
+    plugins.push(new PrerenderSpaPlugin(distPath, chunk, {
+        navigationLocked: true,
+        captureAfterTime: 2000,
+        postProcessHtml (context) {
+          console.log(`[PRE-RENDER] (${++progress} / ${totalRoutes}) ${context.route}`)
+          return context.html
+        }
+      }
+    ))
+  })
+  ajaxChunks.forEach(chunk => {
+    // console.log('ajax', chunk)
+    plugins.push(new PrerenderSpaPlugin(distPath, chunk, {
+        navigationLocked: true,
+        captureAfterElementExists: '#post-content',
+        postProcessHtml (context) {
+          console.log(`[PRE-RENDER] (${++progress} / ${totalRoutes}) ${context.route}`)
+          return context.html
+        }
+      }
+    ))
+  })
+  // site map plugin
+  plugins.push(new SitemapPlugin('https://wxsm.space', [].concat(staticPaths, ajaxPaths), {
+    skipGzip: true,
+    changeFreq: 'weekly'
+  }))
+  return plugins
 }
