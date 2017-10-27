@@ -20,9 +20,6 @@ const state = {
     path: '/p',
     label: 'Archive'
   }, {
-    path: '/m',
-    label: 'Movies'
-  }, {
     path: '/c',
     label: 'Categories'
   }, {
