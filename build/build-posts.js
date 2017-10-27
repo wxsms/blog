@@ -2,31 +2,17 @@ const fs = require('fs')
 const utils = require('./utils')
 const ejs = require('ejs')
 const chalk = require('chalk')
+const yamlFront = require('yaml-front-matter')
+const MarkdownIt = require('markdown-it')
+const hljs = require('highlight.js')
+
 const JSON_EXT = '.json'
 const POSTS_PATH = './posts/'
 const DIST_PATH = './dist/'
 const POSTS_DIST_PATH = './dist/posts/'
 const POSTS_INDEX_FILE_NAME = 'index' + JSON_EXT
 const POST_FEED_FILE_NAME = 'feed.xml'
-
-const prepareMarked = () => {
-  const marked = require('meta-marked')
-
-  let renderer = new marked.Renderer()
-  renderer.heading = (text, level) => {
-    let escapedText = text.replace(/[ .,\/#!$%\^&*;:{}=\-_`~()]+/g, '-')
-    return `<h${level} role="anchor">
-            <a name="${escapedText}" role="anchor">${text}</a>
-          </h${level}>`
-  }
-
-  marked.setOptions({
-    highlight: code => require('highlight.js').highlightAuto(code).value,
-    renderer
-  })
-
-  return marked
-}
+const EXCERPT_REGEX = /([\s\S]*)<!--[\s]*?more[\s]*?-->/i
 
 const ensureDir = () => {
   try {
@@ -48,24 +34,46 @@ const ensureDir = () => {
 
 let count = 0
 let postIndex = []
-let marked = prepareMarked()
+let md = new MarkdownIt({
+  html: true,
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(lang, str).value
+      } catch (__) {
+      }
+    }
+    return '' // use external default escaping
+  }
+})
+md.use(require('markdown-it-anchor'), {
+  permalink: true,
+  permalinkSymbol: '&#128279;'
+})
+
 ensureDir()
+
 utils.readFilesFromDirSync(POSTS_PATH, (filename, content) => {
   count++
-  let post = marked(content)
-  if (post.meta && !post.meta['draft']) {
-    try {
-      let excerptIndex = post.html.indexOf('<!--more-->')
-      excerptIndex = excerptIndex >= 0 ? excerptIndex : post.html.length
-      post.meta['excerpt'] = post.html.substr(0, excerptIndex)
-      postIndex.push(JSON.parse(JSON.stringify(post)))
-      delete post.markdown
-      delete post.meta['excerpt']
-      fs.writeFileSync(POSTS_DIST_PATH + post.meta.id + JSON_EXT, JSON.stringify(post))
-      // console.log('Generated post:', post.meta.id)
-    } catch (e) {
-      console.error(e)
+  let post = yamlFront.loadFront(content)
+  post.html = md.render(post['__content'])
+  delete post['__content']
+  // console.log(post)
+  if (post['draft']) {
+    return
+  }
+  try {
+    let excerpt = EXCERPT_REGEX.exec(post.html)
+    if (excerpt) {
+      post.excerpt = excerpt[1]
+    } else {
+      post.excerpt = post.html
     }
+    postIndex.push(Object.assign({}, post))
+    delete post.excerpt
+    fs.writeFileSync(POSTS_DIST_PATH + post.id + JSON_EXT, JSON.stringify(post))
+  } catch (e) {
+    console.error(e)
   }
 }, (err) => {
   console.error(err)
@@ -73,11 +81,8 @@ utils.readFilesFromDirSync(POSTS_PATH, (filename, content) => {
 
 console.log(chalk.bold.green(`[Generate Posts] (${postIndex.length} / ${count}) success.`))
 
-postIndex.sort((a, b) => {
-  let _a = new Date(a.meta.date).getTime()
-  let _b = new Date(b.meta.date).getTime()
-  return _b - _a
-})
+// sort post index by date desc
+postIndex.sort((a, b) => b.date - a.date)
 
 // generate feed
 let data = {
@@ -92,9 +97,8 @@ fs.writeFileSync(DIST_PATH + POST_FEED_FILE_NAME, str)
 
 postIndex = postIndex.map((v, i) => {
   delete v.html
-  delete v.markdown
   if (i >= 10) {
-    delete v.meta.excerpt
+    delete v.excerpt
   }
   return v
 })

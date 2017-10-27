@@ -137,8 +137,8 @@ router.afterEach((to, from) => {
       let postList = store.state.postList
       for (let i = 0, l = postList.length; i < l; i++) {
         let post = postList[i]
-        if (post.meta && post.meta.id === id) {
-          buildTitle(store.state.baseTitle, post.meta.title)
+        if (post.id === id) {
+          buildTitle(store.state.baseTitle, post.title)
           break
         }
       }

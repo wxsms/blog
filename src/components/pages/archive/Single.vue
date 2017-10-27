@@ -48,7 +48,30 @@
   import PostNav from './PostNav.vue'
   import SearchForm from './../../common/SearchForm.vue'
   import store from './../../../store/store'
-  import { getAnchors } from '../../../utils/domUtils'
+
+  export function getAnchors (el) {
+    if (!el) {
+      return
+    }
+    let anchors = []
+    // let headings = document.querySelectorAll(`h1${attr},h2${attr},h3${attr},h4${attr},h5${attr},h6${attr}`)
+    let headings = document.querySelectorAll(`h2[id],h3[id]`)
+    for (let i = 0; i < headings.length; i++) {
+      let h = headings[i]
+      let t = {
+        level: parseInt(h.tagName.substr(1, 1)),
+        href: '#' + h.id,
+        label: h.innerText.replace('🔗', ''),
+        items: []
+      }
+      if (t.level === 2) {
+        anchors.push(t)
+      } else if (anchors.length) {
+        anchors[anchors.length - 1].items.push(t)
+      }
+    }
+    return anchors
+  }
 
   const fetchPost = (to, from, next) => {
     let postList = store.state.posts
@@ -79,9 +102,9 @@
       let postList = this.$store.state.posts
       if (postList.hasOwnProperty(this.id)) {
         this.post = postList[this.id]
-        if (this.post.meta && this.post.meta.index) {
+        if (this.post.index) {
           this.$nextTick(() => {
-            let anchors = getAnchors()
+            let anchors = getAnchors(this.$refs.post)
             this.$store.commit(types.ASIDE_SET_TOC, anchors)
           })
         } else {
@@ -100,7 +123,7 @@
     },
     computed: {
       headerText () {
-        return this.post && this.post.meta ? this.post.meta.title : 'Not Found'
+        return this.post ? this.post.title : 'Not Found'
       }
     }
   }

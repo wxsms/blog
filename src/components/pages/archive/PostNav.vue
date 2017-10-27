@@ -4,14 +4,14 @@
       <hr/>
     </div>
     <div class="col-md-6 text-left">
-      <router-link v-if="prevPost" class="btn btn-link" :to="'/p/'+prevPost.meta.id">
+      <router-link v-if="prevPost" class="btn btn-link" :to="'/p/'+prevPost.id">
         <i class="glyphicon glyphicon-menu-left"></i>
-        <span>{{prevPost.meta.title}}</span>
+        <span>{{prevPost.title}}</span>
       </router-link>
     </div>
     <div class="col-md-6 text-right">
-      <router-link v-if="nextPost" class="btn btn-link" :to="'/p/'+nextPost.meta.id">
-        <span>{{nextPost.meta.title}}</span>
+      <router-link v-if="nextPost" class="btn btn-link" :to="'/p/'+nextPost.id">
+        <span>{{nextPost.title}}</span>
         <i class="glyphicon glyphicon-menu-right"></i>
       </router-link>
     </div>
@@ -29,9 +29,9 @@
         return this.$store.state.postList
       },
       prevPost () {
-        if (this.post && this.post.meta) {
+        if (this.post) {
           for (let i = 0, l = this.postList.length; i < l; i++) {
-            if (this.postList[i].meta.id === this.post.meta.id) {
+            if (this.postList[i].id === this.post.id) {
               return i < l - 1 ? this.postList[i + 1] : undefined
             }
           }
@@ -39,9 +39,9 @@
         return undefined
       },
       nextPost () {
-        if (this.post && this.post.meta) {
+        if (this.post) {
           for (let i = 0, l = this.postList.length; i < l; i++) {
-            if (this.postList[i].meta.id === this.post.meta.id) {
+            if (this.postList[i].id === this.post.id) {
               return i > 0 ? this.postList[i - 1] : undefined
             }
           }

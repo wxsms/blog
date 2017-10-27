@@ -22,10 +22,8 @@ let tags = []
 let postIndex = fs.readFileSync('./dist/posts/index.json').toString()
 postIndex = JSON.parse(postIndex)
 postIndex.forEach((post) => {
-  if (post.meta) {
-    if (post.meta.categories) categories = categories.concat(post.meta.categories)
-    if (post.meta.tags) tags = tags.concat(post.meta.tags)
-  }
+  if (post.categories) categories = categories.concat(post.categories)
+  if (post.tags) tags = tags.concat(post.tags)
 })
 categories = [...new Set(categories)]
 tags = [...new Set(tags)]

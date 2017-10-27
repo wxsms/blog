@@ -24,12 +24,12 @@
       <div class="toc-div" v-if="asideTocItems">
         <ul class="toc-ul">
           <li v-for="h2 in asideTocItems">
-            <a :href="'#' + h2.href">
+            <a :href="h2.href">
               <b>{{h2.label}}</b>
             </a>
             <ul v-if="h2.items && h2.items.length">
               <li v-for="h3 in h2.items">
-                <a :href="'#' + h3.href">{{h3.label}}</a>
+                <a :href="h3.href">{{h3.label}}</a>
               </li>
             </ul>
           </li>

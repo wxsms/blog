@@ -36,7 +36,7 @@
         let posts = []
         this.postList.forEach(post => {
           try {
-            if (post.meta.tags.indexOf(this.tag) >= 0) {
+            if (post.tags.indexOf(this.tag) >= 0) {
               posts.push(post)
             }
           } catch (e) {

@@ -6,7 +6,9 @@ cache:
 node_js:
   - "node"
 script:
-  - travis_wait 30 npm run build
+  - npm run build-posts
+  - travis_wait 30 npm run build-site
+  - npm run build-config
 deploy:
   - provider: pages
     skip_cleanup: true

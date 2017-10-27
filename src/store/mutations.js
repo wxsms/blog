@@ -12,7 +12,7 @@ export default {
     }
   },
   [types.GET_POST_SINGLE_SUCCESS] (state, post) {
-    Vue.set(state.posts, post.meta.id, post)
+    Vue.set(state.posts, post.id, post)
   },
   [types.GET_POST_SINGLE_ERROR] (state) {
     // TODO

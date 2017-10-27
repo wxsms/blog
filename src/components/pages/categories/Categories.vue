@@ -34,7 +34,7 @@
         let nums = []
         this.postList.forEach(post => {
           try {
-            post.meta.categories.forEach(c => {
+            post.categories.forEach(c => {
               let index = categories.indexOf(c)
               if (index < 0) {
                 categories.push(c)

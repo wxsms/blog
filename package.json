@@ -6,8 +6,10 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build": "npm run build-posts && node build/build.js && node build/build-dist-config.js",
+    "build": "npm run build-posts && npm run build-site && npm run build-config",
+    "build-site": "node build/build.js",
     "build-posts": "node build/build-posts.js",
+    "build-config": "node build/build-dist-config.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "post": "node build/post-generator.js"
   },
@@ -18,14 +20,16 @@
     "es6-promise": "^4.1.1",
     "fuse.js": "^3.2.0",
     "highlight.js": "^9.8.0",
-    "js-beautify": "1.6.14",
+    "markdown-it": "^8.4.0",
+    "markdown-it-anchor": "^4.0.0",
     "moment": "^2.19.1",
     "nprogress": "^0.2.0",
     "readline-sync": "^1.4.7",
     "uiv": "^0.12.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.0"
+    "vuex": "^3.0.0",
+    "yaml-front-matter": "^3.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -62,7 +66,6 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "lodash": "^4.17.2",
-    "meta-marked": "^0.4.2",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",

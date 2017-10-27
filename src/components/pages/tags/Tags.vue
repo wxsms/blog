@@ -27,7 +27,7 @@
         let tags = []
         this.postList.forEach(post => {
           try {
-            post.meta.tags.forEach(tag => {
+            post.tags.forEach(tag => {
               if (tags.indexOf(tag) < 0) {
                 tags.push(tag)
               }

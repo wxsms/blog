@@ -34,7 +34,7 @@
       reduce () {
         let years = []
         this.postList.forEach(v => {
-          let date = new Date(v.meta.date)
+          let date = new Date(v.date)
           let year = date.getFullYear()
           if (years.indexOf(year) < 0) {
             years.push(year)
@@ -42,7 +42,7 @@
         })
         return years.sort((a, b) => b - a).map(year => {
           let posts = this.postList.map(v => {
-            let date = new Date(v.meta.date)
+            let date = new Date(v.date)
             v._year = date.getFullYear()
             return v
           })

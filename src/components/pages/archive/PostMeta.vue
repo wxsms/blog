@@ -4,7 +4,7 @@
       <i class="glyphicon glyphicon-calendar"></i>
       <span>{{postDate}}</span>
     </div>
-    <div class="meta-block" v-if="post.meta.categories && post.meta.categories.length">
+    <div class="meta-block" v-if="post.categories && post.categories.length">
       <i class="glyphicon glyphicon-folder-open"></i>
       <template v-for="(c,index) in postCategories">
         <span v-show="index>0">,&nbsp;</span>
@@ -30,14 +30,14 @@
       },
       postTags () {
         try {
-          return this.post.meta.tags
+          return this.post.tags
         } catch (e) {
           return []
         }
       },
       postCategories () {
         try {
-          return this.post.meta.categories
+          return this.post.categories
         } catch (e) {
           return []
         }

@@ -48,8 +48,8 @@
         maxPatternLength: 32,
         minMatchCharLength: 1,
         keys: [
-          'meta.id',
-          'meta.title'
+          'id',
+          'title'
         ]
       })
       this.queryPosts = fuse.search(this.query)
