@@ -155,7 +155,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       {
         maxAttempts: 5,
         navigationLocked: true,
-        captureAfterTime: 5000,
+        captureAfterTime: 1000,
         postProcessHtml: function (context) {
           console.log(`[PRE-RENDER] (${++processProgress} / ${ajaxPaths.length + staticPaths.length}) ${context.route}`)
           return context.html
