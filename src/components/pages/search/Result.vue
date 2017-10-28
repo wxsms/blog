@@ -1,32 +1,25 @@
 <template>
   <section>
-    <page-header :title="'Search '+query" back-to="/q"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <div v-if="queryPosts.length">
-            <ul class="archives-list">
-              <li v-for="post in queryPosts">
-                <list-item :post="post" :show-year="true"></list-item>
-              </li>
-            </ul>
-          </div>
-          <div v-else>
-            <p>(No result)</p>
-          </div>
-        </div>
-      </div>
+    <h1>Search {{query}}</h1>
+    <div v-if="queryPosts.length">
+      <ul class="archives-list">
+        <li v-for="post in queryPosts">
+          <list-item :post="post" :show-year="true"></list-item>
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <p>(No result)</p>
     </div>
   </section>
 </template>
 
 <script>
-  import PageHeader from '../../architecture/PageHeader.vue'
   import ListItem from '../archive/ArchiveListItem.vue'
   import Fuse from 'fuse.js'
 
   export default {
-    components: {PageHeader, ListItem},
+    components: {ListItem},
     data () {
       return {
         query: this.$route.params.q,

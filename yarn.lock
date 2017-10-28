@@ -2600,7 +2600,7 @@ heavy@4.x.x:
     hoek "4.x.x"
     joi "10.x.x"
 
-highlight.js@^9.8.0:
+highlight.js@^9.12.0, highlight.js@^9.8.0:
   version "9.12.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
 
@@ -5339,6 +5339,14 @@ vue-loader@^13.3.0:
     vue-hot-reload-api "^2.2.0"
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
+
+vue-md-loader@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vue-md-loader/-/vue-md-loader-0.1.4.tgz#0892244a50a4337ca19d65b4e69e9d0bff74a0d8"
+  dependencies:
+    highlight.js "^9.12.0"
+    loader-utils "^1.1.0"
+    markdown-it "^8.4.0"
 
 vue-router@^3.0.1:
   version "3.0.1"

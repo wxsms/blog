@@ -1,28 +1,19 @@
 <template>
   <section>
-    <page-header :title="'Tag '+tag" back-to="/t"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <div>
-            <ul class="archives-list">
-              <li v-for="post in tagPosts">
-                <list-item :post="post"></list-item>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h1>Tag {{tag}}</h1>
+    <ul class="archives-list">
+      <li v-for="post in tagPosts">
+        <list-item :post="post"></list-item>
+      </li>
+    </ul>
   </section>
 </template>
 
 <script>
-  import PageHeader from './../../architecture/PageHeader.vue'
   import ListItem from './../archive/ArchiveListItem.vue'
 
   export default {
-    components: { PageHeader, ListItem },
+    components: {ListItem},
     data () {
       return {
         tag: this.$route.params.t

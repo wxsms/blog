@@ -1,24 +1,17 @@
 <template>
   <section>
-    <page-header title="Tags"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <div>
-            <tag v-for="tag in tags" :tag="tag" :key="tag"></tag>
-          </div>
-        </div>
-      </div>
+    <h1>Tags</h1>
+    <div>
+      <tag v-for="tag in tags" :tag="tag" :key="tag"></tag>
     </div>
   </section>
 </template>
 
 <script>
-  import PageHeader from './../../architecture/PageHeader.vue'
   import Tag from './../../common/Tag.vue'
 
   export default {
-    components: { PageHeader, Tag },
+    components: {Tag},
     computed: {
       postList () {
         return this.$store.state.postList

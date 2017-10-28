@@ -18,9 +18,7 @@
           <span>/</span>
           <a href="/feed.xml" rel="nofollow">FEED</a>
           <span>/</span>
-          <tooltip text="LICENSE">
-            <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">CC BY 4.0</a>
-          </tooltip>
+          <a v-tooltip="'LICENSE'" href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">CC BY 4.0</a>
         </div>
       </div>
     </div>
@@ -29,11 +27,9 @@
 
 <script>
   import config from './../../config/global'
-  import { Tooltip } from 'uiv'
 
   export default {
     props: ['title'],
-    components: {Tooltip},
     data () {
       return {
         year: new Date().getFullYear(),

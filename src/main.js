@@ -8,9 +8,11 @@ import axios from 'axios'
 import PageWrapper from './components/architecture/PageWrapper.vue'
 import store from './store/store'
 import router from './router/index'
+import * as uiv from 'uiv'
 
 Vue.http = Vue.prototype.$http = axios
 Vue.use(VueRouter)
+Vue.use(uiv)
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({

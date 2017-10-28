@@ -1,28 +1,19 @@
 <template>
   <section>
-    <page-header :title="'Category '+category" back-to="/c"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <div>
-            <ul class="archives-list">
-              <li v-for="post in categoryPosts">
-                <list-item :post="post"></list-item>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h1>Category {{category}}</h1>
+    <ul class="archives-list">
+      <li v-for="post in categoryPosts">
+        <list-item :post="post"></list-item>
+      </li>
+    </ul>
   </section>
 </template>
 
 <script>
-  import PageHeader from './../../architecture/PageHeader.vue'
   import ListItem from './../archive/ArchiveListItem.vue'
 
   export default {
-    components: { PageHeader, ListItem },
+    components: {ListItem},
     data () {
       return {
         category: this.$route.params.c

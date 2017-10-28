@@ -1,32 +1,24 @@
 <template>
   <section>
-    <page-header title="Archive"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <tabs>
-            <tab v-for="(r,index) in reduce" :key="index" :title="r.year.toString()" :group="index>=maxTabNum?'OLDER':''">
-              <ul class="archives-list">
-                <li v-for="post in r.posts">
-                  <list-item :post="post"></list-item>
-                </li>
-              </ul>
-            </tab>
-          </tabs>
-        </div>
-      </div>
-    </div>
+    <h1>Archive</h1>
+    <tabs>
+      <tab v-for="(r,index) in reduce" :key="index" :title="r.year.toString()" :group="index>=maxTabNum?'OLDER':''">
+        <ul class="archives-list">
+          <li v-for="post in r.posts">
+            <list-item :post="post"></list-item>
+          </li>
+        </ul>
+      </tab>
+    </tabs>
   </section>
 </template>
 
 <script>
-  import PageHeader from './../../architecture/PageHeader.vue'
   import Loading from './../../common/Loading.vue'
   import ListItem from './ArchiveListItem.vue'
-  import {Tabs, Tab} from 'uiv'
 
   export default {
-    components: {PageHeader, Loading, ListItem, Tabs, Tab},
+    components: {Loading, ListItem},
     computed: {
       postList () {
         return this.$store.state.postList

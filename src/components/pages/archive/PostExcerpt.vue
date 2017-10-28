@@ -1,8 +1,8 @@
 <template>
-  <div class="post-box">
-    <h2 class="page-header">
+  <section class="post-box">
+    <h1>
       <router-link :to="'/p/' + post.id">{{post.title}}</router-link>
-    </h2>
+    </h1>
     <div class="post-excerpt" v-html="post.excerpt"></div>
     <post-meta :post="post"></post-meta>
     <p>
@@ -11,7 +11,7 @@
         <i class="glyphicon glyphicon-chevron-right"></i>
       </router-link>
     </p>
-  </div>
+  </section>
 </template>
 
 <script>

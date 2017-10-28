@@ -1,48 +1,31 @@
 <template>
   <section>
-    <page-header :title="headerText"></page-header>
-    <div class="container-fluid" v-if="post">
-      <div class="row" id="post-content">
-        <div class="col-xs-12">
-          <div class="post-container" v-html="post.html" ref="post"></div>
-          <post-meta :post="post"></post-meta>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <post-nav :post="post"></post-nav>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <disqus></disqus>
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid" v-else>
-      <div class="row">
-        <div class="col-xs-12">
-          <h4>
-            <i class="glyphicon glyphicon-exclamation-sign"></i>
-            <span>Post not found.</span>
-          </h4>
-          <br/>
-          <p>Possible reasons:</p>
-          <ul>
-            <li>Post deleted or never exist.</li>
-            <li>Network connection issue.</li>
-          </ul>
-          <p>Try search?</p>
-          <search-form></search-form>
-        </div>
-      </div>
-    </div>
+    <h1>{{headerText}}</h1>
+    <section v-if="post" id="post-content">
+      <div v-html="post.html" ref="post"></div>
+      <post-meta :post="post"></post-meta>
+      <post-nav :post="post"></post-nav>
+      <disqus></disqus>
+    </section>
+    <section v-else>
+      <h4>
+        <i class="glyphicon glyphicon-exclamation-sign"></i>
+        <span>Post not found.</span>
+      </h4>
+      <br/>
+      <p>Possible reasons:</p>
+      <ul>
+        <li>Post deleted or never exist.</li>
+        <li>Network connection issue.</li>
+      </ul>
+      <p>Try search?</p>
+      <search-form></search-form>
+    </section>
   </section>
 </template>
 
 <script>
   import types from '../../../store/mutationTypes'
-  import PageHeader from './../../architecture/PageHeader.vue'
   import Disqus from './../../common/Disqus.vue'
   import PostMeta from './PostMeta.vue'
   import PostNav from './PostNav.vue'
@@ -91,7 +74,7 @@
   }
 
   export default {
-    components: {PageHeader, Disqus, PostMeta, PostNav, SearchForm},
+    components: {Disqus, PostMeta, PostNav, SearchForm},
     data () {
       return {
         id: this.$route.params.p,

@@ -1,33 +1,26 @@
 <template>
   <section>
-    <page-header title="404"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <h4>
-            <i class="glyphicon glyphicon-exclamation-sign"></i>
-            <span>Page not found.</span>
-          </h4>
-          <br/>
-          <p>Possible reasons:</p>
-          <ul>
-            <li>Page deleted or never exist.</li>
-            <li>Network connection issue.</li>
-          </ul>
-          <p>Try search?</p>
-          <search-form></search-form>
-        </div>
-      </div>
-    </div>
+    <h1>404</h1>
+    <h4>
+      <i class="glyphicon glyphicon-exclamation-sign"></i>
+      <span>Page not found.</span>
+    </h4>
+    <br/>
+    <p>Possible reasons:</p>
+    <ul>
+      <li>Page deleted or never exist.</li>
+      <li>Network connection issue.</li>
+    </ul>
+    <p>Try search?</p>
+    <search-form></search-form>
   </section>
 </template>
 
 <script>
-  import PageHeader from './../architecture/PageHeader.vue'
   import SearchForm from './../common/SearchForm.vue'
 
   export default {
-    components: {PageHeader, SearchForm}
+    components: {SearchForm}
   }
 </script>
 

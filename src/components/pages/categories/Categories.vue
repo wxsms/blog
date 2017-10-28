@@ -1,30 +1,19 @@
 <template>
   <section>
-    <page-header title="Categories"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <div>
-            <ul>
-              <li v-for="c in categories">
-                <h5>
-                  <router-link :to="'/c/'+c.name">{{c.name}}</router-link>
-                  <small>({{c.num}})</small>
-                </h5>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h1>Categories</h1>
+    <ul>
+      <li v-for="c in categories">
+        <h5>
+          <router-link :to="'/c/'+c.name">{{c.name}}</router-link>
+          <small>({{c.num}})</small>
+        </h5>
+      </li>
+    </ul>
   </section>
 </template>
 
 <script>
-  import PageHeader from './../../architecture/PageHeader.vue'
-
   export default {
-    components: { PageHeader },
     computed: {
       postList () {
         return this.$store.state.postList

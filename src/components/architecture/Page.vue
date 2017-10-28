@@ -2,7 +2,13 @@
   <section class="page">
     <div class="page-body">
       <navbar></navbar>
-      <router-view :key="$route.path"></router-view>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <router-view :key="$route.path"></router-view>
+          </div>
+        </div>
+      </div>
     </div>
     <page-footer></page-footer>
   </section>

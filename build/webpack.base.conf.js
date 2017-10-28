@@ -48,6 +48,26 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
+        test: /\.md$/,
+        loaders: [
+          'vue-loader',
+          {
+            loader: 'vue-md-loader',
+            options: {
+              plugins: [
+                [
+                  require('markdown-it-anchor'),
+                  {
+                    permalink: true,
+                    permalinkSymbol: '&#128279;'
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {

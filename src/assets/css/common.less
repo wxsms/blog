@@ -9,38 +9,38 @@ body, html {
 }
 
 .page {
+  .page-body {
+    h1, h2, h3, h4, h5, h6 {
+      position: relative;
+
+      .header-anchor {
+        font-size: 80%;
+        display: none;
+        text-decoration: none !important;
+      }
+
+      &:hover {
+        .header-anchor {
+          display: inline;
+        }
+      }
+    }
+
+    // Add `page-header` style
+    h1, h2, h3 {
+      padding-bottom: 9px;
+      margin: 40px 0 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
   .container-fluid {
     max-width: 960px;
     margin: 0 50px;
-  }
-}
-
-.post-container, .post-excerpt {
-  h1, h2, h3, h4, h5, h6 {
-    position: relative;
-
-    .header-anchor {
-      font-size: 80%;
-      display: none;
-      text-decoration: none !important;
-    }
-
-    &:hover {
-      .header-anchor {
-        display: inline;
-      }
-    }
-  }
-
-  // Add `page-header` style
-  h1, h2, h3 {
-    padding-bottom: 9px;
-    margin: 40px 0 20px;
-    border-bottom: 1px solid #eee;
-  }
-
-  img {
-    max-width: 100%;
   }
 }
 
@@ -64,12 +64,8 @@ body, html {
 
 h1, h2, h3, h4, h5, h6 {
   a {
-    color: @site-color;
-
-    &:hover, &:focus, &:active {
-      color: @site-color;
-      text-decoration: none;
-    }
+    color: inherit !important;
+    text-decoration: none !important;
   }
 }
 

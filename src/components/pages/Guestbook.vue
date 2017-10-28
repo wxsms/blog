@@ -1,22 +1,15 @@
 <template>
   <section>
-    <page-header title="Guestbook"></page-header>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <disqus></disqus>
-        </div>
-      </div>
-    </div>
+    <h1>Guestbook</h1>
+    <disqus></disqus>
   </section>
 </template>
 
 <script>
-  import PageHeader from './../architecture/PageHeader.vue'
   import Disqus from './../common/Disqus.vue'
 
   export default {
-    components: { PageHeader, Disqus }
+    components: {Disqus}
   }
 </script>
 

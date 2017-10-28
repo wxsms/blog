@@ -8,19 +8,20 @@ NProgress.configure({
 })
 
 const routeNames = {
-  HOME: 'home',
-  ARCHIVE: 'archive',
-  POST: 'post',
-  TAGS: 'tags',
-  TAG: 'tag',
-  CATEGORIES: 'CATEGORIES',
-  CATEGORY: 'CATEGORY',
-  QUERY: 'query',
-  QUERY_RESULT: 'queryResult',
-  ABOUT: 'about',
-  GUESTBOOK: 'guestbook',
-  CV: 'cv',
-  MOVIES: 'movies'
+  HOME: 'Home',
+  ARCHIVE: 'Archive',
+  POST: 'Post',
+  TAGS: 'Tags',
+  TAG: 'Tag',
+  CATEGORIES: 'Categories',
+  CATEGORY: 'Category',
+  QUERY: 'Search',
+  QUERY_RESULT: 'Search Results',
+  ABOUT: 'About',
+  GUESTBOOK: 'Guestbook',
+  CV: 'CV',
+  MOVIES: 'Movies',
+  NOT_FOUND: '404'
 }
 
 const routes = [
@@ -72,12 +73,7 @@ const routes = [
   {
     path: '/a',
     name: routeNames.ABOUT,
-    component: () => import('./../components/pages/About.vue')
-  },
-  {
-    path: '/m',
-    name: routeNames.MOVIES,
-    component: () => import('./../components/pages/Movies.vue')
+    component: () => import('./../../pages/About.md')
   },
   {
     path: '/g',
@@ -85,13 +81,9 @@ const routes = [
     component: () => import('./../components/pages/Guestbook.vue')
   },
   {
-    path: '/o/cv',
-    name: routeNames.CV,
-    component: () => import('./../components/pages/Cv.vue')
-  },
-  {
     path: '*',
-    component: require('./../components/pages/NotFound.vue')
+    name: routeNames.NOT_FOUND,
+    component: () => import('./../components/pages/NotFound.vue')
   }
 ]
 
@@ -132,6 +124,9 @@ router.afterEach((to, from) => {
   let store = router.app.$store
   let path = to.path
   switch (to.name) {
+    case routeNames.HOME:
+      buildTitle(store.state.baseTitle)
+      break
     case routeNames.POST:
       let id = path.replace('/p/', '')
       let postList = store.state.postList
@@ -143,38 +138,14 @@ router.afterEach((to, from) => {
         }
       }
       break
-    case routeNames.ARCHIVE:
-      buildTitle(store.state.baseTitle, 'Archive')
-      break
-    case routeNames.CATEGORIES:
-      buildTitle(store.state.baseTitle, 'Categories')
-      break
     case routeNames.CATEGORY:
       buildTitle(store.state.baseTitle, `Category ${path.replace('/c/', '')}`)
-      break
-    case routeNames.TAGS:
-      buildTitle(store.state.baseTitle, 'Tags')
       break
     case routeNames.TAG:
       buildTitle(store.state.baseTitle, `Tag ${path.replace('/t/', '')}`)
       break
-    case routeNames.GUESTBOOK:
-      buildTitle(store.state.baseTitle, 'Guestbook')
-      break
-    case routeNames.ABOUT:
-      buildTitle(store.state.baseTitle, 'About')
-      break
-    case routeNames.MOVIES:
-      buildTitle(store.state.baseTitle, 'Movies')
-      break
-    case routeNames.QUERY:
-      buildTitle(store.state.baseTitle, 'Search')
-      break
-    case routeNames.QUERY_RESULT:
-      buildTitle(store.state.baseTitle, 'Search Results')
-      break
     default:
-      buildTitle(store.state.baseTitle)
+      buildTitle(store.state.baseTitle, to.name)
   }
 })
 
