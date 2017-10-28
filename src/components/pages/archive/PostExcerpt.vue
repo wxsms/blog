@@ -1,16 +1,11 @@
 <template>
   <section class="post-box">
     <h1>
-      <router-link :to="'/p/' + post.id">{{post.title}}</router-link>
+      <router-link :to="to">{{post.title}}</router-link>
     </h1>
-    <div class="post-excerpt" v-html="post.excerpt"></div>
     <post-meta :post="post"></post-meta>
-    <p>
-      <router-link :to="'/p/'+post.id" class="btn btn-primary">
-        <span>Read More</span>
-        <i class="glyphicon glyphicon-chevron-right"></i>
-      </router-link>
-    </p>
+    <div class="post-excerpt" v-html="post.excerpt"></div>
+    <router-link :to="to" v-if="!post.full">Read more &raquo;</router-link>
   </section>
 </template>
 
@@ -19,7 +14,17 @@
 
   export default {
     components: {PostMeta},
-    props: ['post']
+    props: {
+      post: {
+        type: Object,
+        required: true
+      }
+    },
+    computed: {
+      to () {
+        return `/p/${this.post.id}`
+      }
+    }
   }
 </script>
 

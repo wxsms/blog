@@ -1,5 +1,7 @@
 # About
 
+### Me
+
 [@wxsm](https://github.com/wxsms) Coder, DOTAer.
 
 Currently working [@西山居](https://www.xishanju.com/), Zhuhai.
@@ -11,7 +13,7 @@ Contact me:
 * [@steam](http://steamcommunity.com/id/wxsm/)
 * [@知乎](https://www.zhihu.com/people/wxsm)
 
-------
+### This Blog
 
 Project: [https://github.com/wxsms/wxsms.github.io](https://github.com/wxsms/wxsms.github.io).
 

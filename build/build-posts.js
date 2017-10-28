@@ -68,6 +68,7 @@ utils.readFilesFromDirSync(POSTS_PATH, (filename, content) => {
       post.excerpt = excerpt[1]
     } else {
       post.excerpt = post.html
+      post.full = true
     }
     postIndex.push(Object.assign({}, post))
     delete post.excerpt

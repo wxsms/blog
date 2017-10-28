@@ -2,9 +2,11 @@
   <section>
     <h1>{{headerText}}</h1>
     <section v-if="post" id="post-content">
-      <div v-html="post.html" ref="post"></div>
       <post-meta :post="post"></post-meta>
+      <div v-html="post.html" ref="post"></div>
+      <hr/>
       <post-nav :post="post"></post-nav>
+      <hr/>
       <disqus></disqus>
     </section>
     <section v-else>

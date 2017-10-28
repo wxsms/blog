@@ -1,6 +1,6 @@
 ---
-id: 'document-gracefully'
-title: 'Document Gracefully'
+id: 'better-documents'
+title: 'Better Documents'
 date: 2017-10-27T06:43:01.255Z
 categories: [Web-Front-end]
 tags: [Vue,Github,Webpack,Markdown,User-Experience]
