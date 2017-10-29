@@ -32,7 +32,6 @@
   @import "./../../assets/css/variables";
 
   .page {
-    flex-grow: 1;
     margin-left: @side-nav-width;
     min-height: 100vh;
     display: flex;

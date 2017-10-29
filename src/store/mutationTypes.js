@@ -1,5 +1,3 @@
-'use strict'
-
 export default {
   TOGGLE_ASIDE: 'TOGGLE_ASIDE',
   GET_POST_BY_ID: 'GET_POST_BY_ID',

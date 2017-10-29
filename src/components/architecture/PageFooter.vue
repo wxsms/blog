@@ -5,9 +5,9 @@
         <div class="col-xs-12">
           <p class="text-muted">
             <span>Links:</span>
-            <template v-for="(friend,index) in friendLinks">
+            <template v-for="(friend, index) in friendLinks">
               <span v-if="index>0">&nbsp;/</span>
-              <a :href="friend.href">{{friend.label}}</a>
+              <a :href="friend.href" target="_blank">{{friend.label}}</a>
             </template>
           </p>
         </div>
@@ -16,7 +16,7 @@
         <div class="col-xs-12">
           <a href="https://wxsm.space">© {{year}} WXSM</a>
           <span>/</span>
-          <a href="/feed.xml" rel="nofollow">FEED</a>
+          <a href="/feed.xml" rel="nofollow" target="_blank">FEED</a>
           <span>/</span>
           <a v-tooltip="'LICENSE'" href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">CC BY 4.0</a>
         </div>
@@ -29,7 +29,6 @@
   import config from './../../config/global'
 
   export default {
-    props: ['title'],
     data () {
       return {
         year: new Date().getFullYear(),
@@ -50,12 +49,8 @@
     border-top: 1px solid darken(@gray, 10%);
 
     a {
-      color: #888;
-
-      &:hover, &:active, &:focus {
-        color: #888;
-        text-decoration: none;
-      }
+      color: #888 !important;
+      text-decoration: none !important;
     }
   }
 

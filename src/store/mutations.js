@@ -1,5 +1,3 @@
-'use strict'
-
 import types from './mutationTypes'
 import Vue from 'vue'
 

@@ -16,8 +16,8 @@
     <div class="nav-container">
       <div class="nav-div">
         <ul class="nav nav-pills nav-stacked" role="tablist">
-          <li role="presentation" v-for="item in asideItems" @click="toggleAside(false)">
-            <router-link :to="item.path" class="btn btn-link">{{item.label}}</router-link>
+          <li role="presentation" v-for="item in routes" @click="toggleAside(false)">
+            <router-link :to="item.path" class="btn btn-link">{{item.name}}</router-link>
           </li>
         </ul>
       </div>
@@ -44,20 +44,19 @@
   import types from '../../store/mutationTypes'
   import Logo from './../common/Logo.vue'
   import SearchForm from './../common/SearchForm.vue'
+  import {routes} from './../../router/routes'
 
   export default {
     components: {Logo, SearchForm},
     data () {
       return {
-        query: ''
+        query: '',
+        routes: routes.filter(route => route.meta && route.meta.nav)
       }
     },
     computed: {
       isAsideShow () {
         return this.$store.state.asideShow
-      },
-      asideItems () {
-        return this.$store.state.asideItems
       },
       asideTocItems () {
         return this.$store.state.asideToc
@@ -80,7 +79,6 @@
     top: 0;
     width: @side-nav-width;
     height: 100vh;
-    flex-shrink: 0;
     overflow-y: auto;
     overflow-x: hidden;
     // z-index: 5;

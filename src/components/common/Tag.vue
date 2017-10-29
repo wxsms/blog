@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'/t/'+tag" class="label-tag">
+  <router-link :to="'/t/' + tag" class="label-tag">
     <span :class="labelClass">{{tag}}</span>
   </router-link>
 </template>
@@ -8,7 +8,12 @@
   import tagUtils from '../../utils/tagUtils'
 
   export default {
-    props: ['tag'],
+    props: {
+      tag: {
+        type: String,
+        required: true
+      }
+    },
     computed: {
       labelClass () {
         return `label label-${tagUtils.getLabelClassByTagName(this.tag)}`

@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router'
 import NProgress from 'nprogress'
+import * as routes from './routes'
 
 NProgress.configure({
   showSpinner: false,
@@ -7,88 +8,8 @@ NProgress.configure({
   minimum: 0.15
 })
 
-const routeNames = {
-  HOME: 'Home',
-  ARCHIVE: 'Archive',
-  POST: 'Post',
-  TAGS: 'Tags',
-  TAG: 'Tag',
-  CATEGORIES: 'Categories',
-  CATEGORY: 'Category',
-  QUERY: 'Search',
-  QUERY_RESULT: 'Search Results',
-  ABOUT: 'About',
-  GUESTBOOK: 'Guestbook',
-  CV: 'CV',
-  MOVIES: 'Movies',
-  NOT_FOUND: '404'
-}
-
-const routes = [
-  {
-    path: '/',
-    name: routeNames.HOME,
-    component: () => import('./../components/pages/Home.vue')
-  },
-  {
-    path: '/p',
-    name: routeNames.ARCHIVE,
-    component: () => import('./../components/pages/archive/Archive.vue')
-  },
-  {
-    path: '/p/:p',
-    name: routeNames.POST,
-    component: () => import('./../components/pages/archive/Single.vue')
-  },
-  {
-    path: '/t',
-    name: routeNames.TAGS,
-    component: () => import('./../components/pages/tags/Tags.vue')
-  },
-  {
-    path: '/t/:t',
-    name: routeNames.TAG,
-    component: () => import('./../components/pages/tags/Single.vue')
-  },
-  {
-    path: '/c',
-    name: routeNames.CATEGORIES,
-    component: () => import('./../components/pages/categories/Categories.vue')
-  },
-  {
-    path: '/c/:c',
-    name: routeNames.CATEGORY,
-    component: () => import('./../components/pages/categories/Single.vue')
-  },
-  {
-    path: '/q',
-    name: routeNames.QUERY,
-    component: () => import('./../components/pages/search/Search.vue')
-  },
-  {
-    path: '/q/:q',
-    name: routeNames.QUERY_RESULT,
-    component: () => import('./../components/pages/search/Result.vue')
-  },
-  {
-    path: '/a',
-    name: routeNames.ABOUT,
-    component: () => import('./../../pages/About.md')
-  },
-  {
-    path: '/g',
-    name: routeNames.GUESTBOOK,
-    component: () => import('./../components/pages/Guestbook.vue')
-  },
-  {
-    path: '*',
-    name: routeNames.NOT_FOUND,
-    component: () => import('./../components/pages/NotFound.vue')
-  }
-]
-
 const router = new VueRouter({
-  routes,
+  routes: routes.routes,
   mode: 'history',
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
@@ -120,10 +41,10 @@ router.afterEach((to, from) => {
   let store = router.app.$store
   let path = to.path
   switch (to.name) {
-    case routeNames.HOME:
+    case routes.ROUTE_NAMES.HOME:
       buildTitle(store.state.baseTitle)
       break
-    case routeNames.POST:
+    case routes.ROUTE_NAMES.POST:
       let id = path.replace('/p/', '')
       let postList = store.state.postList
       for (let i = 0, l = postList.length; i < l; i++) {
@@ -134,10 +55,10 @@ router.afterEach((to, from) => {
         }
       }
       break
-    case routeNames.CATEGORY:
+    case routes.ROUTE_NAMES.CATEGORY:
       buildTitle(store.state.baseTitle, `Category ${path.replace('/c/', '')}`)
       break
-    case routeNames.TAG:
+    case routes.ROUTE_NAMES.TAG:
       buildTitle(store.state.baseTitle, `Tag ${path.replace('/t/', '')}`)
       break
     default:

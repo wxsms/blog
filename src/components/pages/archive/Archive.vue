@@ -2,7 +2,10 @@
   <section>
     <h1>Archive</h1>
     <tabs>
-      <tab v-for="(r,index) in reduce" :key="index" :title="r.year.toString()" :group="index>=maxTabNum?'OLDER':''">
+      <tab v-for="(r, index) in reduce"
+           :key="index"
+           :title="r.year.toString()"
+           :group="index >= maxTabNum? 'OLDER' : null">
         <ul class="archives-list">
           <li v-for="post in r.posts">
             <list-item :post="post"></list-item>
@@ -14,11 +17,10 @@
 </template>
 
 <script>
-  import Loading from './../../common/Loading.vue'
   import ListItem from './ArchiveListItem.vue'
 
   export default {
-    components: {Loading, ListItem},
+    components: {ListItem},
     computed: {
       postList () {
         return this.$store.state.postList
@@ -55,6 +57,5 @@
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
-  @import "./../../../assets/css/variables";
 
 </style>

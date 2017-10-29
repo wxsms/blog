@@ -15,7 +15,7 @@
       post: {},
       showYear: {
         type: Boolean,
-        'default': false
+        default: false
       }
     },
     computed: {

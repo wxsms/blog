@@ -1,15 +1,14 @@
 <template>
   <div id="disqus_thread" ref="container">
-    <loading :status="0" loading-text="Loading Disqus..."></loading>
+    <i class="glyphicon glyphicon-refresh icon-spin"></i>
+    <span>Loading Disqus......</span>
   </div>
 </template>
 
 <script>
   import config from './../../config/global'
-  import Loading from './Loading.vue'
 
   export default {
-    components: {Loading},
     mounted () {
       let self = this
       if (window.DISQUS) {
@@ -66,9 +65,5 @@
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
-  @media print {
-    #disqus_thread {
-      display: none;
-    }
-  }
+
 </style>
