@@ -5204,8 +5204,8 @@ uid-number@^0.0.6:
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
 uiv@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.12.1.tgz#abf6cc096c488ab496e44458dea7d73bbd942148"
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.12.2.tgz#8f13c7aa110314ae2e707be39291ff7583503992"
 
 ultron@~1.1.0:
   version "1.1.0"
