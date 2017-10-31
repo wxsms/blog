@@ -1,5 +1,5 @@
 <template>
-  <form :class="classes" @submit.prevent="doSearch()">
+  <form :class="classes" @submit.prevent="search">
     <div class="form-group">
       <input type="search"
              class="form-control"
@@ -33,7 +33,7 @@
       }
     },
     methods: {
-      doSearch () {
+      search () {
         this.$router.push(`/q/${this.query}`)
         this.query = ''
         this.$emit('search')

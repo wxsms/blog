@@ -53,10 +53,4 @@
       text-decoration: none !important;
     }
   }
-
-  @media print {
-    .page-footer {
-      display: none;
-    }
-  }
 </style>

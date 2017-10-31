@@ -7,8 +7,8 @@
     <div class="meta-block" v-if="post.categories && post.categories.length">
       <i class="glyphicon glyphicon-folder-open"></i>
       <template v-for="(c, index) in post.categories">
-        <span v-show="index>0">,&nbsp;</span>
-        <router-link :to="'/c/' + c" class="cate-link">{{c}}</router-link>
+        <span v-if="index > 0">,&nbsp;</span>
+        <router-link :to="'/c/' + c" class="category-link">{{c}}</router-link>
       </template>
     </div>
     <div class="meta-block" v-if="post.tags && post.tags.length">
@@ -52,8 +52,8 @@
     margin-right: 20px;
   }
 
-  .cate-link {
-    color: #666 !important;
+  .category-link {
+    color: inherit !important;
     text-decoration: none !important;
   }
 </style>

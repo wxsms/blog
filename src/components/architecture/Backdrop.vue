@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <section v-show="isAsideShow" @click="toggleAside()"></section>
+    <section v-show="isAsideShow" @click="toggle"></section>
   </transition>
 </template>
 
@@ -14,7 +14,7 @@
       }
     },
     methods: {
-      toggleAside () {
+      toggle () {
         this.$store.commit(types.TOGGLE_ASIDE)
       }
     }

@@ -16,6 +16,8 @@
 </template>
 
 <script>
+  import {findIndex} from 'lodash'
+
   export default {
     props: {
       post: {
@@ -24,23 +26,17 @@
       }
     },
     computed: {
-      postList () {
+      list () {
         return this.$store.state.postList
       },
       prev () {
-        for (let i = 0, l = this.postList.length; i < l; i++) {
-          if (this.postList[i].id === this.post.id) {
-            return i < l - 1 ? this.postList[i + 1] : null
-          }
-        }
+        let index = findIndex(this.list, post => post.id === this.post.id) + 1
+        return index < this.list.length ? this.list[index] : null
       },
       next () {
         if (this.post) {
-          for (let i = 0, l = this.postList.length; i < l; i++) {
-            if (this.postList[i].id === this.post.id) {
-              return i > 0 ? this.postList[i - 1] : null
-            }
-          }
+          let index = findIndex(this.list, post => post.id === this.post.id) - 1
+          return index >= 0 ? this.list[index] : null
         }
       }
     }

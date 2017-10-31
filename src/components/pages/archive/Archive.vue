@@ -1,64 +1,100 @@
 <template>
   <section>
-    <h1>
-      <span>Archive</span>
-      <small>{{postList.length}} posts in total.</small>
-    </h1>
-    <tabs>
-      <tab v-for="(r, index) in reduce"
-           :key="index"
-           :title="r.year.toString()"
-           :group="index >= maxTabNum? 'OLDER' : null">
-        <ul class="archives-list">
-          <li v-for="post in r.posts">
-            <list-item :post="post"></list-item>
-          </li>
-        </ul>
-      </tab>
-    </tabs>
+    <h1>Archive</h1>
+    <p><i class="glyphicon glyphicon-book"></i> <b>{{list.length}}</b> posts in total.</p>
+    <template v-for="group in listGroupedByYear">
+      <h2 class="year">{{group.year}}</h2>
+      <table class="archive">
+        <tbody>
+        <tr v-for="post in group.posts">
+          <td class="date text-muted">{{post.dateStr}}</td>
+          <td>
+            <router-link :to="'/p/' + post.id">{{post.title}}</router-link>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </template>
   </section>
 </template>
 
 <script>
   import ListItem from './ArchiveListItem.vue'
+  import {uniq} from 'lodash'
+  import dateUtils from '../../../utils/dateUtils'
 
   export default {
     components: {ListItem},
     computed: {
-      postList () {
+      list () {
         return this.$store.state.postList
       },
-      reduce () {
-        let years = []
-        this.postList.forEach(v => {
-          let date = new Date(v.date)
-          let year = date.getFullYear()
-          if (years.indexOf(year) < 0) {
-            years.push(year)
-          }
-        })
-        return years.sort((a, b) => b - a).map(year => {
-          let posts = this.postList.map(v => {
-            let date = new Date(v.date)
-            v._year = date.getFullYear()
-            return v
+      listGroupedByYear () {
+        return uniq(this.list.map(post => post.date.getFullYear()))
+          .map(year => {
+            return {
+              year: year.toString(),
+              posts: this.list
+                .filter(post => post.date.getFullYear() === year)
+                .map(post => {
+                  post.dateStr = dateUtils.getDateStrByPost(post, false)
+                  return post
+                })
+            }
           })
-          posts = posts.filter(v => v._year === year)
-          return {
-            year: year,
-            posts: posts
-          }
-        })
-      }
-    },
-    data () {
-      return {
-        maxTabNum: 4
       }
     }
   }
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
+  @import "./../../../assets/css/variables";
 
+  @date-width: 60px;
+
+  .year {
+    color: @blue;
+    border: none !important;
+    margin: 25px 0 !important;
+    padding: 0 !important;
+  }
+
+  table.archive {
+    margin-left: 35px;
+    border: none;
+    border-left: 3px solid @gray;
+
+    @media (max-width: @screen-xs-max) {
+      margin-left: 0;
+      border-left: none;
+    }
+
+    tr, td {
+      border: none;
+    }
+
+    td {
+      padding: 10px 0;
+      vertical-align: middle;
+      text-align: left;
+
+      &.date {
+        font-size: 0.8em;
+        padding-left: 20px;
+        width: @date-width + 20px;
+        min-width: @date-width + 20px;
+
+        @media (max-width: @screen-xs-max) {
+          padding-left: 0;
+          width: @date-width;
+          min-width: @date-width;
+        }
+      }
+
+      a {
+        color: inherit !important;
+        text-decoration: none !important;
+      }
+    }
+  }
 </style>

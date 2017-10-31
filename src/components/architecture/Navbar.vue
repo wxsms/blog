@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="navbar-toggle collapsed" @click="toggleAside()">
+  <button type="button" class="navbar-toggle collapsed" @click="toggle">
     <span class="sr-only">Toggle navigation</span>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
@@ -12,7 +12,7 @@
 
   export default {
     methods: {
-      toggleAside () {
+      toggle () {
         this.$store.commit(types.TOGGLE_ASIDE)
       }
     }

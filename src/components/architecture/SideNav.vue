@@ -1,22 +1,22 @@
 <template>
   <aside :class="{'show':isAsideShow}">
     <div class="brand">
-      <div class="logo" @click="toggleAside(false)">
+      <div class="logo" @click="toggle(false)">
         <router-link to="/">
           <logo></logo>
         </router-link>
       </div>
-      <h4 @click="toggleAside(false)" class="brand-link">
+      <h4 @click="toggle(false)" class="brand-link">
         <router-link to="/">wxsm's space</router-link>
       </h4>
     </div>
     <div class="search-container">
-      <search-form :box="true" @search="toggleAside(false)"></search-form>
+      <search-form :box="true" @search="toggle(false)"></search-form>
     </div>
     <div class="nav-container">
       <div class="nav-div">
         <ul class="nav nav-pills nav-stacked" role="tablist">
-          <li role="presentation" v-for="item in routes" @click="toggleAside(false)">
+          <li role="presentation" v-for="item in routes" @click="toggle(false)">
             <router-link :to="item.path" class="btn btn-link">{{item.name}}</router-link>
           </li>
         </ul>
@@ -63,7 +63,7 @@
       }
     },
     methods: {
-      toggleAside (show) {
+      toggle (show) {
         this.$store.commit(types.TOGGLE_ASIDE, show)
       }
     }
