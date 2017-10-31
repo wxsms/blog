@@ -1,6 +1,9 @@
 <template>
   <section>
-    <h1>Archive</h1>
+    <h1>
+      <span>Archive</span>
+      <small>{{postList.length}} posts in total.</small>
+    </h1>
     <tabs>
       <tab v-for="(r, index) in reduce"
            :key="index"

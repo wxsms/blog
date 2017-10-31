@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <section>
     <h5>
       <router-link :to="'/p/' + post.id">{{post.title}}</router-link>
       <small>{{postDate}}</small>
     </h5>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -12,7 +12,10 @@
 
   export default {
     props: {
-      post: {},
+      post: {
+        type: Object,
+        required: true
+      },
       showYear: {
         type: Boolean,
         default: false
