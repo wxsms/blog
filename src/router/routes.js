@@ -5,7 +5,6 @@ const ROUTE_NAMES = {
   TAGS: 'Tags',
   TAG: 'Tag',
   CATEGORIES: 'Categories',
-  CATEGORY: 'Category',
   QUERY: 'Search',
   QUERY_RESULT: 'Search Results',
   ABOUT: 'About',
@@ -36,12 +35,7 @@ const routes = [
     path: '/c',
     name: ROUTE_NAMES.CATEGORIES,
     meta: {nav: true},
-    component: () => import('./../components/pages/categories/Categories.vue')
-  },
-  {
-    path: '/c/:c',
-    name: ROUTE_NAMES.CATEGORY,
-    component: () => import('./../components/pages/categories/Single.vue')
+    component: () => import('./../components/pages/Categories.vue')
   },
   {
     path: '/t',

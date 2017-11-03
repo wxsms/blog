@@ -99,23 +99,15 @@ exports.readFilesFromDirSync = function (dirname, onFileContent, onError) {
 // Generate url list for pre-render
 exports.generateRenderPlugins = () => {
   let staticPaths = ['/', '/a', '/g', '/t', '/c', '/q', '/p']
-  let categories = []
   let tags = []
   let postIndex = fs.readFileSync(path.resolve(__dirname, '../dist/posts/index.json')).toString()
   postIndex = JSON.parse(postIndex)
   postIndex.forEach((post) => {
-    if (post.categories) {
-      categories = categories.concat(post.categories)
-    }
     if (post.tags) {
       tags = tags.concat(post.tags)
     }
   })
-  categories = [...new Set(categories)]
   tags = [...new Set(tags)]
-  categories.forEach((c) => {
-    staticPaths.push(`/c/${encodeURI(c)}`)
-  })
   tags.forEach((t) => {
     staticPaths.push(`/t/${encodeURI(t)}`)
   })

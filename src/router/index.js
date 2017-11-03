@@ -12,7 +12,11 @@ const router = new VueRouter({
   routes: routes.routes,
   mode: 'history',
   scrollBehavior (to, from, savedPosition) {
-    if (savedPosition) {
+    if (to.hash) {
+      return {
+        selector: `[id='${to.hash.slice(1)}']`
+      }
+    } else if (savedPosition) {
       return savedPosition
     } else {
       return {x: 0, y: 0}
@@ -54,9 +58,6 @@ router.afterEach((to, from) => {
           break
         }
       }
-      break
-    case routes.ROUTE_NAMES.CATEGORY:
-      buildTitle(store.state.baseTitle, `Category ${path.replace('/c/', '')}`)
       break
     case routes.ROUTE_NAMES.TAG:
       buildTitle(store.state.baseTitle, `Tag ${path.replace('/t/', '')}`)
