@@ -1,7 +1,9 @@
 <template>
   <section>
     <h1>Archive</h1>
-    <p><i class="glyphicon glyphicon-book"></i> <b>{{list.length}}</b> posts in total.</p>
+    <p class="text-muted">
+      <i class="glyphicon glyphicon-book"></i> <b>{{list.length}}</b> posts in total.
+    </p>
     <template v-for="group in listGroupedByYear">
       <h2 class="year">{{group.year}}</h2>
       <table class="archive">

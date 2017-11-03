@@ -1,6 +1,9 @@
 <template>
   <section>
     <h1>Categories</h1>
+    <p class="text-muted">
+      <i class="glyphicon glyphicon-hand-down"></i> Click on category to toggle details.
+    </p>
     <template v-for="group in postsGroupedByCategory">
       <div class="category" :id="group.name">
         <a role="button" href="javascript:void(0)" @click="toggleGroup(group)">
@@ -9,10 +12,11 @@
         </a>
       </div>
       <collapse v-model="group.show">
-        <div class="well">
-          <list-item v-for="post in group.posts" :post="post" :key="post.id"/>
+        <div class="category-posts">
+          <div class="well">
+            <list-item v-for="post in group.posts" :post="post" :key="post.id"/>
+          </div>
         </div>
-        <br/>
       </collapse>
     </template>
   </section>
@@ -61,7 +65,34 @@
     }
   }
 
-  .well {
-    margin-bottom: 0;
+  .category-posts {
+    padding: 20px 0 30px;
+
+    .well {
+      margin-bottom: 0;
+      position: relative;
+      border: 1px solid @well-border;
+
+      &:before, &:after {
+        display: block;
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 10px;
+        border-style: solid;
+        border-width: 0 15px 12px 15px;
+      }
+
+      &:before {
+        top: -12px;
+        border-color: transparent transparent @well-border transparent;
+      }
+
+      &:after {
+        top: -11px;
+        border-color: transparent transparent @well-bg transparent;
+      }
+    }
   }
 </style>
