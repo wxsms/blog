@@ -38,6 +38,7 @@
 
     .label {
       font-weight: normal;
+      transition: background .3s ease-in-out;
     }
   }
 </style>

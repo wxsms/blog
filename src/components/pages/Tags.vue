@@ -10,10 +10,10 @@
         @click.native="selectTag(group.name)"/>
     </div>
     <br/>
-    <div v-for="group in postsGroupedByTag" v-show="selectedTag && selectedTag === group.name">
-      <div class="well well-arrow">
+    <div class="well well-arrow" v-if="selectedTag">
+      <template v-for="group in postsGroupedByTag" v-if="selectedTag === group.name">
         <list-item v-for="post in group.posts" :post="post" :key="post.id"/>
-      </div>
+      </template>
     </div>
   </section>
 </template>
@@ -53,7 +53,5 @@
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
-  @import "../../assets/css/variables";
-
 
 </style>
