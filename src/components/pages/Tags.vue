@@ -1,6 +1,9 @@
 <template>
   <section>
     <h1>Tags</h1>
+    <p class="text-muted">
+      <i class="glyphicon glyphicon-hand-down"></i> Click on tag to toggle details.
+    </p>
     <div>
       <tag
         v-for="group in postsGroupedByTag"

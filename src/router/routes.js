@@ -5,7 +5,6 @@ const ROUTE_NAMES = {
   TAGS: 'Tags',
   CATEGORIES: 'Categories',
   QUERY: 'Search',
-  QUERY_RESULT: 'Search Results',
   ABOUT: 'About',
   GUESTBOOK: 'Guestbook',
   CV: 'CV',
@@ -45,12 +44,8 @@ const routes = [
   {
     path: '/q',
     name: ROUTE_NAMES.QUERY,
-    component: () => import('./../components/pages/search/Search.vue')
-  },
-  {
-    path: '/q/:q',
-    name: ROUTE_NAMES.QUERY_RESULT,
-    component: () => import('./../components/pages/search/Result.vue')
+    component: () => import('./../components/pages/Query.vue'),
+    props: (route) => ({query: route.query.q})
   },
   {
     path: '/g',

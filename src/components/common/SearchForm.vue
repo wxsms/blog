@@ -34,7 +34,7 @@
     },
     methods: {
       search () {
-        this.$router.push(`/q/${this.query}`)
+        this.$router.push({path: '/q', query: {q: this.query}})
         this.query = ''
         this.$emit('search')
       }
