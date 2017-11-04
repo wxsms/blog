@@ -33,8 +33,11 @@ const buildTitle = (base, desc) => {
 }
 
 router.beforeEach((to, from, next) => {
-  // Start progressbar
-  NProgress.start()
+  // not start progressbar on same path && not the same hash
+  // which means hash jumping inside a route
+  if (!(from.path === to.path && from.hash !== to.hash)) {
+    NProgress.start()
+  }
   next()
 })
 
@@ -58,9 +61,6 @@ router.afterEach((to, from) => {
           break
         }
       }
-      break
-    case routes.ROUTE_NAMES.TAG:
-      buildTitle(store.state.baseTitle, `Tag ${path.replace('/t/', '')}`)
       break
     default:
       buildTitle(store.state.baseTitle, to.name)

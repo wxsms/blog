@@ -99,28 +99,9 @@ exports.readFilesFromDirSync = function (dirname, onFileContent, onError) {
 // Generate url list for pre-render
 exports.generateRenderPlugins = () => {
   let staticPaths = ['/', '/a', '/g', '/t', '/c', '/q', '/p']
-  let tags = []
   let postIndex = fs.readFileSync(path.resolve(__dirname, '../dist/posts/index.json')).toString()
   postIndex = JSON.parse(postIndex)
-  postIndex.forEach((post) => {
-    if (post.tags) {
-      tags = tags.concat(post.tags)
-    }
-  })
-  tags = [...new Set(tags)]
-  tags.forEach((t) => {
-    staticPaths.push(`/t/${encodeURI(t)}`)
-  })
-
-  let ajaxPaths = []
-  this.readFilesFromDirSync(path.resolve(__dirname, '../dist/posts'), (filename) => {
-    if (filename === 'index.json') {
-      return
-    }
-    ajaxPaths.push('/p/' + filename.replace('.json', ''))
-  }, (err) => {
-    console.error(err)
-  })
+  let ajaxPaths = postIndex.map(post => `/p/${post.id}`)
   // console.log(staticPaths.length, ajaxPaths.length)
   let totalRoutes = ajaxPaths.length + staticPaths.length
   let chunkSize = 10

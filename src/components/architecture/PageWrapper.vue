@@ -109,6 +109,37 @@
     }
   }
 
+  .label-muted {
+    background-color: @gray-light;
+  }
+
+  .well.well-arrow {
+    margin-bottom: 0;
+    position: relative;
+    border: 1px solid @site-well-border;
+
+    &:before, &:after {
+      display: block;
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      left: 10px;
+      border-style: solid;
+      border-width: 0 15px 12px 15px;
+    }
+
+    &:before {
+      top: -12px;
+      border-color: transparent transparent @site-well-border transparent;
+    }
+
+    &:after {
+      top: -11px;
+      border-color: transparent transparent @well-bg transparent;
+    }
+  }
+
   .icon-spin {
     animation: spinIt 1.5s infinite linear;
   }

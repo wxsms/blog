@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'/t/' + tag" class="label-tag">
+  <router-link :to="'/t#' + tag" class="label-tag">
     <span :class="labelClass">{{tag}}</span>
   </router-link>
 </template>
@@ -12,11 +12,19 @@
       tag: {
         type: String,
         required: true
+      },
+      muted: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {
       labelClass () {
-        return `label label-${tagUtils.getLabelClassByTagName(this.tag)}`
+        return {
+          label: true,
+          [`label-${tagUtils.getLabelClassByTagName(this.tag)}`]: this.tag,
+          'label-muted': this.muted
+        }
       }
     }
   }

@@ -13,7 +13,7 @@
       </div>
       <collapse v-model="group.show">
         <div class="category-posts">
-          <div class="well">
+          <div class="well well-arrow">
             <list-item v-for="post in group.posts" :post="post" :key="post.id"/>
           </div>
         </div>
@@ -67,32 +67,5 @@
 
   .category-posts {
     padding: 20px 0 30px;
-
-    .well {
-      margin-bottom: 0;
-      position: relative;
-      border: 1px solid @site-well-border;
-
-      &:before, &:after {
-        display: block;
-        content: '';
-        width: 0;
-        height: 0;
-        position: absolute;
-        left: 10px;
-        border-style: solid;
-        border-width: 0 15px 12px 15px;
-      }
-
-      &:before {
-        top: -12px;
-        border-color: transparent transparent @site-well-border transparent;
-      }
-
-      &:after {
-        top: -11px;
-        border-color: transparent transparent @well-bg transparent;
-      }
-    }
   }
 </style>

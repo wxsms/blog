@@ -3,7 +3,6 @@ const ROUTE_NAMES = {
   ARCHIVE: 'Archive',
   POST: 'Post',
   TAGS: 'Tags',
-  TAG: 'Tag',
   CATEGORIES: 'Categories',
   QUERY: 'Search',
   QUERY_RESULT: 'Search Results',
@@ -41,12 +40,7 @@ const routes = [
     path: '/t',
     name: ROUTE_NAMES.TAGS,
     meta: {nav: true},
-    component: () => import('./../components/pages/tags/Tags.vue')
-  },
-  {
-    path: '/t/:t',
-    name: ROUTE_NAMES.TAG,
-    component: () => import('./../components/pages/tags/Single.vue')
+    component: () => import('./../components/pages/Tags.vue')
   },
   {
     path: '/q',
