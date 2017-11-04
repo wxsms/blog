@@ -36,7 +36,6 @@
         </ul>
       </div>
     </div>
-    <!--<div class="social-links"></div>-->
   </aside>
 </template>
 
@@ -81,16 +80,31 @@
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-    // z-index: 5;
-    background: @aside-bg;
-    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+    background: @site-nav-bg;
+    box-shadow: @site-nav-box-shadow;
+
+    @media (max-width: @screen-xs-max) {
+      left: 0 - @side-nav-width - 10px;
+      z-index: 1002;
+      transition: left .3s ease-in-out;
+      box-shadow: none;
+
+      &.show {
+        left: 0;
+        box-shadow: @site-nav-box-shadow;
+      }
+    }
+
+    @media print {
+      display: none;
+    }
 
     .brand {
       padding: 0 15px;
-      height: @brand-height;
+      height: @site-brand-height;
       display: flex;
       align-items: center;
-      border-bottom: 1px solid darken(@gray, 10%);
+      border-bottom: @side-nav-item-border;
 
       .logo {
         flex-basis: 40px;
@@ -103,7 +117,7 @@
         flex: 1;
 
         a {
-          color: @site-color;
+          color: @side-nav-link-color;
           text-decoration: none !important;
         }
       }
@@ -111,7 +125,7 @@
 
     .search-container {
       height: 42px;
-      border-bottom: 1px solid rgba(207, 216, 220, 0.56);
+      border-bottom: @side-nav-item-border;
       background: #fff;
       box-sizing: border-box;
       box-shadow: none;
@@ -129,10 +143,10 @@
       .nav {
         li {
           margin: 0;
-          border-bottom: 1px solid rgba(207, 216, 220, 0.56);
+          border-bottom: @side-nav-item-border;
 
           a {
-            color: #888;
+            color: @side-nav-link-color;
             transition: all .3s ease-in-out;
             text-align: left;
             text-transform: none;
@@ -140,8 +154,8 @@
 
             &.router-link-active {
               background: @side-nav-item-active-bg;
-              color: @blue;
-              box-shadow: -6px 0 0 @blue inset;
+              color: @brand-primary;
+              box-shadow: -6px 0 0 @brand-primary inset;
             }
 
             &:hover {
@@ -167,47 +181,6 @@
           }
         }
       }
-    }
-
-    .social-links {
-      flex-basis: 50px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 15px;
-
-      a {
-        color: #888;
-        text-decoration: none;
-
-        &:hover, &:active, &:focus {
-          text-decoration: none;
-        }
-
-        i {
-          font-size: x-large;
-        }
-      }
-    }
-  }
-
-  @media (max-width: @screen-xs-max) {
-    aside {
-      left: -275px;
-      z-index: 1002;
-      transition: left .3s ease-in-out;
-
-      &.show {
-        left: 0;
-      }
-    }
-  }
-
-  @media print {
-    aside {
-      display: none;
     }
   }
 </style>

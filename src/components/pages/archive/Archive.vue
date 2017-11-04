@@ -55,7 +55,7 @@
   @date-width: 60px;
 
   .year {
-    color: @blue;
+    color: @brand-primary;
     border: none !important;
     margin: 25px 0 !important;
     padding: 0 !important;
@@ -64,7 +64,7 @@
   table.archive {
     margin-left: 35px;
     border: none;
-    border-left: 3px solid @gray;
+    border-left: 3px solid @gray-lighter;
 
     @media (max-width: @screen-xs-max) {
       margin-left: 0;

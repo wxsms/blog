@@ -42,10 +42,8 @@
       flex: 1 0 auto;
       padding-bottom: 50px;
     }
-  }
 
-  @media (max-width: @screen-xs-max) {
-    .page {
+    @media (max-width: @screen-xs-max) {
       margin-left: 0;
       margin-top: 0;
     }

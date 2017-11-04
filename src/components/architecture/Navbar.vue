@@ -35,16 +35,12 @@
     .icon-bar {
       background-color: #fff;
     }
-  }
 
-  @media (max-width: @screen-xs-max) {
-    .navbar-toggle {
+    @media (max-width: @screen-xs-max) {
       display: block;
     }
-  }
 
-  @media print {
-    .navbar-toggle {
+    @media print {
       display: none;
     }
   }

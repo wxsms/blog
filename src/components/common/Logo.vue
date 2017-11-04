@@ -64,12 +64,12 @@
           width: 75pt;
           height: 75pt;
           backface-visibility: hidden;
-          background-color: fade(@blue, 20%);
+          background-color: fade(@brand-primary, 20%);
         }
       }
 
       .back, .front, .left, .right, .top {
-        background: radial-gradient(transparent 30%, fade(darken(@blue, 30%), 20%) 100%)
+        background: radial-gradient(transparent 30%, fade(darken(@brand-primary, 30%), 20%) 100%)
       }
 
       .front {
@@ -92,7 +92,7 @@
         transform: rotateX(90deg) translateZ(50px);
 
         &:after {
-          background-color: fade(@blue, 20%)
+          background-color: fade(@brand-primary, 20%)
         }
       }
 
@@ -143,12 +143,12 @@
           width: 50px;
           height: 50px;
           backface-visibility: hidden;
-          background-color: fade(darken(@blue, 70%), 20%);
+          background-color: fade(darken(@brand-primary, 70%), 20%);
         }
       }
 
       .back, .front, .left, .right, .top {
-        background: radial-gradient(transparent 30%, fade(darken(@blue, 100%), 20%) 100%)
+        background: radial-gradient(transparent 30%, fade(darken(@brand-primary, 100%), 20%) 100%)
       }
 
       .front {
@@ -171,7 +171,7 @@
         transform: rotateX(90deg) translateZ(25px);
 
         &:after {
-          background-color: fade(darken(@blue, 70%), 20%)
+          background-color: fade(darken(@brand-primary, 70%), 20%)
         }
       }
 

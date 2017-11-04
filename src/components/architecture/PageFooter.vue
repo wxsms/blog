@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
-          <p class="text-muted">
+          <p>
             <span>Links:</span>
             <template v-for="(friend, index) in friendLinks">
               <span v-if="index>0">&nbsp;/</span>
@@ -42,14 +42,15 @@
   @import "./../../assets/css/variables";
 
   .page-footer {
-    flex-basis: @footer-height;
+    flex-basis: @site-footer-height;
     display: flex;
     align-items: center;
-    background: @footer-bg;
-    border-top: 1px solid darken(@gray, 10%);
+    background: @site-footer-bg;
+    border-top: @side-nav-item-border;
+    color: @site-footer-color;
 
     a {
-      color: #888 !important;
+      color: inherit !important;
       text-decoration: none !important;
     }
   }

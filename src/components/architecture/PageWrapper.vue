@@ -19,12 +19,107 @@
 <style lang="less" rel="stylesheet/less">
   @import "./../../assets/css/variables";
 
+  body, html {
+    max-width: 100%;
+  }
+
   #app {
     max-width: 100%;
     overflow: hidden;
   }
 
   #nprogress .bar {
-    background: @blue !important;
+    background: @brand-primary !important;
   }
+
+  .page {
+    .page-body {
+      h1, h2, h3, h4, h5, h6 {
+        position: relative;
+
+        .header-anchor {
+          font-size: 80%;
+          display: none;
+          text-decoration: none !important;
+        }
+
+        &:hover {
+          .header-anchor {
+            display: inline;
+          }
+        }
+      }
+
+      // Add `page-header` style
+      h1, h2 {
+        padding-bottom: 9px;
+        margin: 40px 0 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .container-fluid {
+      max-width: 960px;
+      margin: 0 50px;
+
+      @media (max-width: @screen-xs-max) {
+        margin: 0;
+      }
+    }
+  }
+
+  .archives-list {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .nav-pills > li > a {
+    border-radius: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    a {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+  }
+
+  code.hljs {
+    background: transparent;
+  }
+
+  pre {
+    border-radius: 0;
+    border: none;
+    padding: 0;
+
+    code {
+      white-space: pre;
+      word-wrap: normal;
+      display: block;
+      overflow-x: auto;
+      border-radius: 0;
+      border: none;
+      padding: 12px !important;
+    }
+  }
+
+  .icon-spin {
+    animation: spinIt 1.5s infinite linear;
+  }
+
+  @keyframes spinIt {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(359deg);
+    }
+  }
+
 </style>

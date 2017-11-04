@@ -43,6 +43,8 @@
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
+  @import "./../../assets/css/variables";
+
   .search-form-box {
     .form-group {
       display: block;
@@ -52,7 +54,7 @@
         border: none !important;
         box-shadow: none !important;
         box-sizing: border-box;
-        color: #888;
+        color: @gray;
         font-size: 13px;
         height: 26px;
         margin: 0;

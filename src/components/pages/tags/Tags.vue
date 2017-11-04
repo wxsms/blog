@@ -9,29 +9,27 @@
 
 <script>
   import Tag from './../../common/Tag.vue'
+  import {uniq, flatten} from 'lodash'
 
   export default {
     components: {Tag},
-    computed: {
-      postList () {
-        return this.$store.state.postList
-      },
-      tags () {
-        let tags = []
-        this.postList.forEach(post => {
-          try {
-            post.tags.forEach(tag => {
-              if (tags.indexOf(tag) < 0) {
-                tags.push(tag)
-              }
-            })
-          } catch (e) {
-            // ignore
-          }
-        })
-        // return tags.sort()
-        return tags
+    data () {
+      return {
+        postsGroupedByTag: [],
+        tags: []
       }
+    },
+    mounted () {
+      let list = this.$store.state.postList
+      let name = this.$route.hash && this.$route.hash.slice(1)
+      this.tags = uniq(flatten(list.map(post => post.tags)))
+      this.postsGroupedByTag = this.tags.map(tag => {
+        return {
+          name: tag,
+          show: name === tag,
+          posts: list.filter(post => post.categories.indexOf(tag) >= 0)
+        }
+      })
     }
   }
 </script>

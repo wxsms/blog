@@ -71,7 +71,7 @@
     .well {
       margin-bottom: 0;
       position: relative;
-      border: 1px solid @well-border;
+      border: 1px solid @site-well-border;
 
       &:before, &:after {
         display: block;
@@ -86,7 +86,7 @@
 
       &:before {
         top: -12px;
-        border-color: transparent transparent @well-border transparent;
+        border-color: transparent transparent @site-well-border transparent;
       }
 
       &:after {
