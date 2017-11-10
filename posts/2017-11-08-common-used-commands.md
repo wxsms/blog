@@ -115,10 +115,35 @@ origin  git@github.com:wxsms/uiv.git (push)
 
 ## OSX
 
+### Keys
+
+Name      | Symbol    
+-------   | --------
+command   | ⌘
+option    | ⌥
+shift     | ⇧
+caps lock | ⇪
+control   | ⌃
+return    | ↩
+enter     | ⌅
+
 ### Shortcuts
 
-Lock screen <kbd>Command</kbd> + <kbd>Ctrl</kbd> + <kbd>Q</kbd>
-
+Name                         | Symbol    
+-------                      | --------
+search                       | ⌘ + space
+switch input                 | ⌃ + space
+delete                       | ⌘ + delete
+Lock screen                  | ⌘ + ⌃ + Q
+Screen shot (full)           | ⌘ + ⇧ + 3
+Screen shot (custom)         | ⌘ + ⇧ + 4
+Screen shot (window)         | ⌘ + ⇧ + 4 + space
+Screen shot & copy (full)    | ⌘ + ⇧ + ⌃ + 3
+Screen shot & copy (custom)  | ⌘ + ⇧ + ⌃ + 4
+Screen shot & copy (window)  | ⌘ + ⇧ + ⌃ + 4 + space
+Hide window                  | ⌘ + H
+Minimize window              | ⌘ + M
+Quit                         | ⌘ + Q
 
 ### Proxy command
 

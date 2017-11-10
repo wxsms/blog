@@ -17,7 +17,7 @@
       <div class="nav-div">
         <ul class="nav nav-pills nav-stacked" role="tablist">
           <li role="presentation" v-for="item in routes" @click="toggle(false)">
-            <router-link :to="item.path" class="btn btn-link">{{item.name}}</router-link>
+            <btn type="link" :to="item.path">{{item.name}}</btn>
           </li>
         </ul>
       </div>

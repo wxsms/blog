@@ -46,10 +46,22 @@ let md = new MarkdownIt({
     return '' // use external default escaping
   }
 })
+// apply plugins
 md.use(require('markdown-it-anchor'), {
   permalink: true,
   permalinkSymbol: '&#128279;'
 })
+// apply rules
+let rendererRules = md.renderer.rules
+let userRules = {
+  'table_open': () => '<div class="table-responsive"><table class="table table-bordered table-hover">',
+  'table_close': () => '</table></div>'
+}
+for (let key in userRules) {
+  if (userRules.hasOwnProperty(key) && typeof userRules[key] === 'function') {
+    rendererRules[key] = userRules[key]
+  }
+}
 
 ensureDir()
 

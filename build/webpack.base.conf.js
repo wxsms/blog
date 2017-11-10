@@ -54,6 +54,10 @@ module.exports = {
           {
             loader: 'vue-md-loader',
             options: {
+              rules: {
+                'table_open': () => '<div class="table-responsive"><table class="table table-bordered table-hover">',
+                'table_close': () => '</table></div>'
+              },
               plugins: [
                 [
                   require('markdown-it-anchor'),
