@@ -27,10 +27,10 @@ NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
 其实现在社区有很多开源作品了，但是简单来说，就是觉得不是很满意，怎么说呢：
 
-* VueStrap 这个作品虽然出现的比较早也比较全，然而貌似止步在 Vue 1 了，更新比较慢，不客气地说，里面很多组件其实是不好用的。只要稍稍对比下 Angular UI Bootstrap 就能发现差距，有些东西从设计上就有问题
-* Bootstrap-Vue 这个作品是基于 Bootstrap 4 的，不知道为什么，就是不太喜欢~
-* Material Design 的作品有两三个，但实际使用上，感觉还是 Bootstrap 的应用场景更多，也更轻量
-* 至于 ElementUI，做得非常好非常全，然而是自立门户做的，跟 Bootstrap 与 Material 都没有关联
+* VueStrap 这个作品虽然出现的比较早也比较全，然而貌似止步在 Vue 1 了，更新比较慢，不客气地说，里面很多组件其实是不好用的。只要稍稍对比下 Angular UI Bootstrap 就能发现差距，有些东西从设计上就有问题。
+* Bootstrap-Vue 这个作品是基于 Bootstrap 4 的，不知道为什么，就是不太喜欢。
+* Material Design 的作品有两三个，但实际使用上，感觉还是 Bootstrap 的应用场景更多，也更轻量。
+* 至于 ElementUI，做得非常好非常全，然而是自立门户做的，跟 Bootstrap 与 Material 都没有关联。
 
 我想要的是：
 
@@ -40,9 +40,9 @@ NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 * 纯净的依赖，没有除了 Vue 与 Bootstrap CSS 以外的东西
 * 主流浏览器支持
 
-好吧，说白了就是想自己做。跟前辈们做的东西好与不好无关。反正开源作品，人畜无害啦。
+好吧，说白了就是想自己做。跟前辈们做的东西好与不好无关。反正开源作品，人畜无害。
 
-做着做着，于是就有了这个东西。感谢静纯的参与，帮我完成了一部分工作~
+做着做着，于是就有了这个东西。感谢静纯的参与，帮我完成了一部分工作。
 
 ## 项目现状
 
@@ -63,7 +63,7 @@ NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
 共 12 个。
 
-依赖只有 Vue 2 与 Bootstrap 3，最终打包压缩 + Gzip 后体积约 9 KB，应该算是比较轻比较小的啦~
+依赖只有 Vue 2 与 Bootstrap 3，最终打包压缩 + Gzip 后体积约 9 KB，应该算是比较轻比较小的啦。
 
 所有组件在主流浏览器（Chrome / Firefox / Safari）与 IE 9 / 10 / 11 下都经过了测试，暂时没有发现问题。当然，由于 IE 9 不支持 Transition 属性，因此是没有动画效果的，不过功能正常，不影响使用流程。
 
