@@ -13,10 +13,14 @@ import * as uiv from 'uiv'
 Vue.http = Vue.prototype.$http = axios
 Vue.use(VueRouter)
 Vue.use(uiv)
-Vue.use(VueAnalytics, {
-  id: 'UA-102731925-1',
-  router
-})
+
+// apply google analytics only on production mode
+if (process.env && process.env.NODE_ENV === 'production') {
+  Vue.use(VueAnalytics, {
+    id: 'UA-102731925-1',
+    router
+  })
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
