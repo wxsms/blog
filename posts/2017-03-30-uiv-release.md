@@ -11,7 +11,7 @@ tags:
 
 一点微小的工作。
 
-Demo: [https://wxsm.space/uiv/](https://wxsm.space/uiv/)
+Demo: [https://uiv.wxsm.space](https://uiv.wxsm.space)
 
 Github: [https://github.com/wxsms/uiv](https://github.com/wxsms/uiv)
 
