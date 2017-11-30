@@ -18,7 +18,10 @@ Vue.use(uiv)
 if (process.env && process.env.NODE_ENV === 'production') {
   Vue.use(VueAnalytics, {
     id: 'UA-102731925-1',
-    router
+    router,
+    autoTracking: {
+      skipSamePath: true
+    }
   })
 }
 
