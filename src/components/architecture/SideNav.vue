@@ -22,18 +22,7 @@
         </ul>
       </div>
       <div class="toc-div" v-if="asideTocItems">
-        <ul class="toc-ul">
-          <li v-for="h2 in asideTocItems">
-            <a :href="h2.href">
-              <b>{{h2.label}}</b>
-            </a>
-            <ul v-if="h2.items && h2.items.length">
-              <li v-for="h3 in h2.items">
-                <a :href="h3.href">{{h3.label}}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <toc :data="asideTocItems"></toc>
       </div>
     </div>
   </aside>
@@ -43,10 +32,11 @@
   import types from '../../store/mutationTypes'
   import Logo from './../common/Logo.vue'
   import SearchForm from './../common/SearchForm.vue'
+  import Toc from './Toc.vue'
   import {routes} from './../../router/routes'
 
   export default {
-    components: {Logo, SearchForm},
+    components: {Logo, SearchForm, Toc},
     data () {
       return {
         query: '',
@@ -168,18 +158,6 @@
       .toc-div {
         padding: 0;
         position: relative;
-
-        .toc-ul {
-          list-style: none;
-          padding: 20px 20px;
-          margin: 0;
-
-          ul {
-            list-style: none;
-            margin: 0;
-            padding-left: 20px;
-          }
-        }
       }
     }
   }

@@ -21,6 +21,7 @@
 
   body, html {
     max-width: 100%;
+    position: relative;
   }
 
   #app {
