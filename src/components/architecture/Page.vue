@@ -19,12 +19,7 @@
   import PageFooter from './PageFooter.vue'
 
   export default {
-    components: {Navbar, PageFooter},
-    methods: {
-      scrollTop () {
-        window.scrollTo(0, 0)
-      }
-    }
+    components: {Navbar, PageFooter}
   }
 </script>
 
