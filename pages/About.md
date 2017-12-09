@@ -4,7 +4,7 @@
 
 [@wxsm](https://github.com/wxsms) Coder, DOTAer.
 
-Currently working [@西山居](https://www.xishanju.com/), Zhuhai.
+Currently working [@西山居](https://www.xishanju.com/) (Zhuhai, China).
 
 Contact me:
 
@@ -17,4 +17,4 @@ Contact me:
 
 Project: [https://github.com/wxsms/wxsms.github.io](https://github.com/wxsms/wxsms.github.io).
 
-Base on [Vue.js](https://vuejs.org/) & [webpack](https://webpack.github.io/), Hosted by [Github Pages](https://pages.github.com/).
+Base on [Vue.js](https://vuejs.org/) & [Webpack](https://webpack.github.io/), Hosted by [Github Pages](https://pages.github.com/) & [Cloudflare](https://www.cloudflare.com/).
