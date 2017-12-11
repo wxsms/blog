@@ -33,7 +33,7 @@
           reload: true,
           config: function () {
             this.page.identifier = (self.$route.path || window.location.pathname)
-            this.page.url = 'https://wxsm.space' + this.page.identifier
+            this.page.url = 'https://blog.wxsm.space' + this.page.identifier
           }
         })
       },
@@ -46,7 +46,7 @@
             identifier = identifier.substr(0, identifier.length - 1)
           }
           this.page.identifier = identifier
-          this.page.url = 'https://wxsm.space' + this.page.identifier
+          this.page.url = 'https://blog.wxsm.space' + this.page.identifier
         }
         setTimeout(() => {
           let d = document

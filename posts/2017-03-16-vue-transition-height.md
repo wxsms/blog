@@ -103,7 +103,7 @@ on: {
 
 理解了 `enter` 过程，剩下的 `afterEnter` / `leave` / `afterLeave` 钩子，里面的内容就很容易理解了。
 
-效果演示：[https://wxsm.space/uiv/#collapse](https://wxsm.space/uiv/#collapse)
+效果演示：[https://uiv.wxsm.space/collapse](https://uiv.wxsm.space/collapse)
 
 回过头来看一下实现原理其实很简单粗暴，因此，除了在 vue 上面可以这么玩，其实其他支持 css transition 的框架肯定也是可以的（如 angular 中有 ngAnimate 可以实现），最终达到的动画效果十分完美，并且没有借助主框架以外的任何额外 js 库。
 

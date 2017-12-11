@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This is [my personal blog](https://wxsm.space).
+This is [my personal blog](https://blog.wxsm.space).
 
 * A typical [Vue](https://github.com/vuejs/vue) project scaffold by [official webpack template](https://github.com/vuejs-templates/webpack).
 * Using [Bootstrap](https://github.com/twbs/bootstrap) CSS.

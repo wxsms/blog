@@ -135,7 +135,7 @@ exports.generateRenderPlugins = () => {
     ))
   })
   // site map plugin
-  plugins.push(new SitemapPlugin('https://wxsm.space', [].concat(staticPaths, ajaxPaths), {
+  plugins.push(new SitemapPlugin('https://blog.wxsm.space', [].concat(staticPaths, ajaxPaths), {
     skipGzip: true,
     changeFreq: 'weekly'
   }))
