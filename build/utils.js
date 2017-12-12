@@ -98,7 +98,7 @@ exports.readFilesFromDirSync = function (dirname, onFileContent, onError) {
 
 // Generate url list for pre-render
 exports.generateRenderPlugins = () => {
-  let staticPaths = ['/', '/a', '/g', '/t', '/c', '/p']
+  let staticPaths = ['/', '/a', '/g', '/t', '/p']
   let postIndex = fs.readFileSync(path.resolve(__dirname, '../dist/posts/index.json')).toString()
   postIndex = JSON.parse(postIndex)
   let ajaxPaths = postIndex.map(post => `/p/${post.id}`)

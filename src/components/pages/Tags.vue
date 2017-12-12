@@ -15,7 +15,7 @@
     <br/>
     <div class="well well-arrow" v-if="selectedTag">
       <template v-for="group in postsGroupedByTag" v-if="selectedTag === group.name">
-        <list-item v-for="post in group.posts" :post="post" :key="post.id"/>
+        <list-item v-for="post in group.posts" :post="post" :key="post.id" show-year/>
       </template>
     </div>
   </section>
