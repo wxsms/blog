@@ -2,13 +2,13 @@
   <nav>
     <ul class="pager">
       <li class="previous">
-        <router-link v-if="prev" :to="'/p/' + prev.id" v-tooltip="prev.title">
-          <span aria-hidden="true">&larr;</span> Prev
+        <router-link v-if="prev" :to="'/p/' + prev.id">
+          <i class="glyphicon glyphicon-chevron-left"></i> {{prev.title}}
         </router-link>
       </li>
       <li class="next">
-        <router-link v-if="next" :to="'/p/' + next.id" v-tooltip="next.title">
-          Next  <span aria-hidden="true">&rarr;</span>
+        <router-link v-if="next" :to="'/p/' + next.id">
+          {{next.title}} <i class="glyphicon glyphicon-chevron-right"></i>
         </router-link>
       </li>
     </ul>

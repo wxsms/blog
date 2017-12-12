@@ -3,7 +3,6 @@ const ROUTE_NAMES = {
   ARCHIVE: 'Archive',
   POST: 'Post',
   TAGS: 'Tags',
-  CATEGORIES: 'Categories',
   QUERY: 'Search',
   ABOUT: 'About',
   GUESTBOOK: 'Guestbook',
@@ -28,12 +27,6 @@ const routes = [
     path: '/p/:p',
     name: ROUTE_NAMES.POST,
     component: () => import('./../components/pages/archive/Single.vue')
-  },
-  {
-    path: '/c',
-    name: ROUTE_NAMES.CATEGORIES,
-    meta: {nav: true},
-    component: () => import('./../components/pages/Categories.vue')
   },
   {
     path: '/t',

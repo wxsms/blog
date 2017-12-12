@@ -18,7 +18,7 @@
           <span>/</span>
           <a href="/feed.xml" rel="nofollow" target="_blank">FEED</a>
           <span>/</span>
-          <a v-tooltip="'LICENSE'" href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">CC BY 4.0</a>
+          <a title="LICENSE" href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow">CC BY 4.0</a>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
   <section>
     <post-excerpt v-for="post in postsWithExcerpt" :key="post.id" :post="post"></post-excerpt>
     <div>
-      <btn to="/p">PREVIOUSLY ON SPACE</btn>
+      <btn to="/p">ARCHIVE...</btn>
     </div>
   </section>
 </template>
