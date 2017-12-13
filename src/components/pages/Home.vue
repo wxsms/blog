@@ -8,10 +8,11 @@
 </template>
 
 <script>
+  import {Btn} from 'uiv'
   import PostExcerpt from './archive/PostExcerpt.vue'
 
   export default {
-    components: {PostExcerpt},
+    components: {PostExcerpt, Btn},
     computed: {
       postsWithExcerpt () {
         return this.$store.state.postList.filter(v => {

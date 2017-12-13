@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import {Btn} from 'uiv'
   import types from '../../store/mutationTypes'
   import Logo from './../common/Logo.vue'
   import SearchForm from './../common/SearchForm.vue'
@@ -36,7 +37,7 @@
   import {routes} from './../../router/routes'
 
   export default {
-    components: {Logo, SearchForm, Toc},
+    components: {Logo, SearchForm, Toc, Btn},
     data () {
       return {
         query: '',

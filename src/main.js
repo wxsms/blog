@@ -8,11 +8,9 @@ import axios from 'axios'
 import PageWrapper from './components/architecture/PageWrapper.vue'
 import store from './store/store'
 import router from './router/index'
-import * as uiv from 'uiv'
 
 Vue.http = Vue.prototype.$http = axios
 Vue.use(VueRouter)
-Vue.use(uiv)
 
 // apply google analytics only on production mode
 if (process.env && process.env.NODE_ENV === 'production') {
