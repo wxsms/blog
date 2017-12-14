@@ -22,7 +22,7 @@
 
 <script>
   import ListItem from './ArchiveListItem.vue'
-  import {uniq} from 'lodash'
+  import uniq from 'lodash/uniq'
   import dateUtils from '../../../utils/dateUtils'
 
   export default {

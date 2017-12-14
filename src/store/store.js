@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {isArray} from 'lodash'
 import posts from './../../dist/posts/index.json'
 import actions from './actions'
 import mutations from './mutations'
@@ -11,8 +10,8 @@ const cleanPosts = () => {
   return posts
     .map(post => {
       post.date = new Date(post.date)
-      post.tags = isArray(post.tags) ? post.tags : []
-      post.categories = isArray(post.categories) ? post.categories : []
+      post.tags = Array.isArray(post.tags) ? post.tags : []
+      post.categories = Array.isArray(post.categories) ? post.categories : []
       post.id = post.id.toString()
       post.title = post.title.toString()
       return post

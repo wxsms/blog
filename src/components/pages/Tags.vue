@@ -23,7 +23,8 @@
 
 <script>
   import Tag from '../common/Tag.vue'
-  import {uniq, flatten} from 'lodash'
+  import uniq from 'lodash/uniq'
+  import flatten from 'lodash/flatten'
   import ListItem from './archive/ArchiveListItem.vue'
 
   export default {
