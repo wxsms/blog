@@ -1,20 +1,21 @@
-[![Build Status](https://travis-ci.org/wxsms/wxsms.github.io.svg?branch=src)](https://travis-ci.org/wxsms/wxsms.github.io)
+[![Build Status](https://travis-ci.org/wxsms/blog.svg?branch=master)](https://travis-ci.org/wxsms/blog)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/wxsms/wxsms.github.io/src/LICENSE)
 
 ## Introduction
 
-This is [my personal blog](https://blog.wxsm.space).
+Just another blogging system.
 
-* A typical [Vue](https://github.com/vuejs/vue) project scaffold by [official webpack template](https://github.com/vuejs-templates/webpack).
+Demo: [https://blog.wxsm.space](https://blog.wxsm.space).
+
+Features:
+
+* A typical [Vue.js](https://github.com/vuejs/vue) project scaffold by [official webpack template](https://github.com/vuejs-templates/webpack).
+* Blazing fast, all resource in first screen ~200KB gzipped.
 * Using [Bootstrap](https://github.com/twbs/bootstrap) CSS.
-* Generated static site with no need for back-end servers.
+* Generated pure static site.
+* All pages pre-rendered for SEO.
 * Desktop (IE 10+) and mobile compatible.
-* Pre-render all pages for SEO with lazy-load posts.
-* Integrated with [Disqus](https://disqus.com).
-
-You can use the blog program as yours as well. Just simply remove my posts and add your own, then build it & enjoy.
-
-> Note: `master` branch is serving generated files, checkout `src` branch for source code.
+* Integrated with [Disqus](https://disqus.com) and [Google Analytics](https://analytics.google.com).
 
 ## Build Setup
 
@@ -25,17 +26,15 @@ npm install
 # generate post by template
 npm run post
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:9090
 npm run dev
 
 # build posts (Markdown to HTML & generate index file)
 npm run build-posts
 
-# build for production with minification
+# build everything for production with minification
 npm run build
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## LICENSE
 
