@@ -17,7 +17,6 @@
   ],
   "plugins": [
     "transform-runtime",
-    "syntax-dynamic-import",
     "transform-object-assign"
   ],
   "env": {
