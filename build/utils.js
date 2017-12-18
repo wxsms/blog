@@ -4,7 +4,7 @@ const _ = require('lodash')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const PrerenderSpaPlugin = require('prerender-spa-plugin')
-const SitemapPlugin = require('sitemap-webpack-plugin')
+const SitemapPlugin = require('sitemap-webpack-plugin').default
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
