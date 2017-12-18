@@ -35,7 +35,8 @@ const ensureDir = () => {
 let count = 0
 let postIndex = []
 let md = new MarkdownIt({
-  html: true,
+  html: true, // Enable HTML tags in source
+  linkify: true, // Autoconvert URL-like text to links
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
