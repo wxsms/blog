@@ -5418,11 +5418,11 @@ uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
-uiv@^0.14.5:
-  version "0.14.5"
-  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.14.5.tgz#5376ea42b0e7b47846beda10b10c912646267df2"
+uiv@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.15.0.tgz#9325566ccfdf48364a41208bb7ac80706d13bfa3"
   dependencies:
-    vue-functional-data-merge "^2.0.2"
+    vue-functional-data-merge "^2.0.3"
 
 uniq@^1.0.1:
   version "1.0.1"
@@ -5548,7 +5548,7 @@ vue-analytics@^5.5.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.7.1.tgz#6a3ba04a7beb0915c6b5799729dc5c1e3b5b4912"
 
-vue-functional-data-merge@^2.0.2:
+vue-functional-data-merge@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-functional-data-merge/-/vue-functional-data-merge-2.0.3.tgz#fe79c9f6fab13e047f1e6dcaa4a0fde63fe15587"
 
