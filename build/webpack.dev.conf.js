@@ -31,8 +31,6 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin(),
-    // ignore momentjs locale files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new FriendlyErrorsPlugin()
   ]
 })

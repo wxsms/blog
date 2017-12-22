@@ -3637,10 +3637,6 @@ moment@2.x.x:
   version "2.19.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.1.tgz#56da1a2d1cbf01d38b7e1afc31c10bcfa1929167"
 
-moment@^2.19.1:
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.0.tgz#53396358994dd3a551e966a66af715ecb6c30ad0"
-
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -5418,9 +5414,9 @@ uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
-uiv@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.15.0.tgz#9325566ccfdf48364a41208bb7ac80706d13bfa3"
+uiv@^0.15.2:
+  version "0.15.2"
+  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.15.2.tgz#49692a7a146d16636d2f1b24ed92d9ca08e2220d"
   dependencies:
     vue-functional-data-merge "^2.0.3"
 

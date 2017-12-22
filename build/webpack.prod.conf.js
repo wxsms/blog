@@ -128,8 +128,6 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    // ignore momentjs locale files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // pre-render
     ...utils.generateRenderPlugins()
   ]

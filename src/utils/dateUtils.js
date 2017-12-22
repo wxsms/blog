@@ -1,15 +1,17 @@
-import moment from 'moment'
-
 export default {
   getDateStrByPost (post, withYear = true) {
-    if (post && post.date) {
-      let format = 'MMM-DD'
-      if (withYear) {
-        format += '-YYYY'
+    try {
+      let str = new Date(post.date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      })
+      if (!withYear) {
+        str = str.replace(/[,|/]?\s*?\d{4}\s*?[,|/]?/, '')
       }
-      let date = moment(post.date)
-      return date.format(format)
+      return str
+    } catch (err) {
+      return 'Invalid Date'
     }
-    return 'Invalid Date'
   }
 }
