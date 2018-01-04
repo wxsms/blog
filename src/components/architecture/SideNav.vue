@@ -1,11 +1,6 @@
 <template>
   <aside :class="{'show':isAsideShow}">
     <div class="brand">
-      <div class="logo" @click="toggle(false)">
-        <router-link to="/">
-          <logo></logo>
-        </router-link>
-      </div>
       <h4 @click="toggle(false)" class="brand-link">
         <router-link to="/">wxsm's space</router-link>
       </h4>
@@ -31,13 +26,12 @@
 <script>
   import {Btn} from 'uiv'
   import types from '../../store/mutationTypes'
-  import Logo from './../common/Logo.vue'
   import SearchForm from './../common/SearchForm.vue'
   import Toc from './Toc.vue'
   import {routes} from './../../router/routes'
 
   export default {
-    components: {Logo, SearchForm, Toc, Btn},
+    components: {SearchForm, Toc, Btn},
     data () {
       return {
         query: '',
@@ -96,11 +90,6 @@
       display: flex;
       align-items: center;
       border-bottom: @side-nav-item-border;
-
-      .logo {
-        flex-basis: 40px;
-        margin-right: 10px;
-      }
 
       .brand-link {
         margin: 0;
