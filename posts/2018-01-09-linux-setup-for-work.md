@@ -20,13 +20,13 @@ draft: false
 
 <!-- more -->
 
-## System Installation
+## System installation
 
 这次选择的发行版是 Ubuntu 16.04 LTS，从 https://www.ubuntu.com/download/desktop 下载镜像安装包，复制到 u 盘后启动。
 
 这里有一点问题是，我这台机器必须选择 UEFI 安装，Ubuntu 才能正常安装与启动。如果选择了 Legacy 安装，Ubuntu 可以正常安装，但启动后会一直停留在黑屏光标闪烁的状态，原因未知。
 
-## NVIDIA Driver Setup
+## NVIDIA driver setup
 
 系统默认安装了一个第三方的显卡驱动，基本上没什么可用性，在桌面上都有点卡。因此官方驱动是必须的。但如果安装不正确，会导致系统重启后无限卡在登录界面。如果不幸已经发生了这种情况，可以按 Ctrl + Alt + F1 进入纯命令行操作界面进行修复。
 
@@ -68,11 +68,11 @@ $ sudo reboot
 
 如此，显卡驱动就装好了。
 
-## Chrome Setup
+## Chrome setup
 
 虽然 Ubuntu App Store 有提供开源版本的 Chromium，但是经过实测它在有些情况下并不能完全替代 Chrome（比如有些工具会调用 `google-chrome` 来打开一个浏览器页，如果安装的是 Chromium 就会失败）。因此，还是建议到 [Google Chrome Downloads](https://www.google.com/chrome/browser/desktop/index.html) 下载适用于 Linux 平台的 Chrome 完全体。
 
-## Secondary Drive Mount
+## Secondary drive mount
 
 两块硬盘已经不是什么新鲜事了。痛苦的是系统盘以外的另一块硬盘需要手动挂载。
 
@@ -104,13 +104,13 @@ $ sudo chmod -R -v 777 *
 $ sudo chown -R -v username:username *
 ```
 
-## Input Method Setup
+## Input method setup
 
 到 https://pinyin.sogou.com/linux/ 下载合适的输入法包，并安装之。然后从 Settings -> Language Support 中将 Keyboard input method system 从 iBus 切换为 fcitx（有可能会遇到语言包安装不完全的情况，输入 `sudo apt-get install -f` 可以修复），然后重启。
 
 重启后，右键桌面右上角的 fcitx 图标，选择 ConfigureFcitx，点击 + 号添加输入法，**去掉 Only show current language 的勾**，然后输入 sogou 搜索即可看到安装好的搜狗输入法。添加即可。
 
-## Email Setup
+## Email setup
 
 因为我的公司邮箱是用的 Ms Exchange，所以设置步骤很简单：
 
@@ -118,7 +118,7 @@ $ sudo chown -R -v username:username *
 2. 它本身是不支持 Exchange 配置的，需要添加一个插件 [ExQuilla for Microsoft Exchange](https://addons.mozilla.org/en-US/thunderbird/addon/exquilla-exchange-web-services/) 以支持。
 3. 安装好插件后，从菜单栏的 Tools -> ExQuilla for Microsoft Exchange -> Add Microsoft Exchange Account 进入配置入口，然后就是正常的邮件配置了。
 
-## Screen Shot
+## Screenshot
 
 以下安装截图工具 Shutter，并设置快捷键：
 
@@ -134,7 +134,7 @@ $ sudo apt-get install shutter
 
 ![shutter-2](http://www.linuxidc.com/upload/2015_07/150711194568205.png)
 
-## JDK Setup
+## JDK setup
 
 JDK 可以到 Oracle 网站下载，也可以通过 apt-get 安装 openjdk，以下是安装 openjdk 的过程：
 
@@ -147,7 +147,7 @@ $ export PATH=$PATH:$JAVA_HOME/bin
 
 注意 JAVA_HOME 的 folder 可能有所变化，注意使用实际目录。
 
-## Node.js Setup
+## Node.js setup
 
 Node.js 不直接安装，而是选择使用 [nvm](https://github.com/creationix/nvm) 进行管理。
 
@@ -160,7 +160,7 @@ $ command -v nvm
 
 使用方法：https://github.com/creationix/nvm#usage
 
-## MongoDB Setup
+## MongoDB setup
 
 这里其实参照[官方文档](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)就行了。
 
@@ -172,7 +172,7 @@ $ sudo apt-get install -y mongodb-org
 $ sudo service mongod start
 ```
 
-## Change Launcher Position
+## Change launcher position
 
 Ubuntu 默认的 Launcher 设置在了屏幕的左边，但是如果有三屏的话，那用起来其实并不方便。可以通过一个简单的命令将其下置：
 
@@ -182,7 +182,29 @@ $ gsettings set com.canonical.Unity.Launcher launcher-position Bottom
 
 这样 Launcher 就到了屏幕下方了，就像 Windows 默认的任务栏一样。Ubuntu 会记住这个设定，所以下次登录时也无需重新输入。
 
-## Other Apps
+## Enable workspace
+
+Ubuntu 16.04 默认关闭了 Workspace （即类似 OSX 的全屏切换功能），其实挺好用的。可以手动开启：
+
+```
+Settings -> Appearance -> Behavior -> Enable workspaces
+```
+
+![enable-workspace](https://i.stack.imgur.com/wQ3hD.png)
+
+如果有配置双屏的话，一般会想固定副屏的内容，只需在副屏标题栏右键，选择 `Always on Visible Workspace` 即可。
+
+![always-on-visible-workspace](https://i.stack.imgur.com/Xx7pQ.png)
+
+默认的切换屏幕快捷键是 <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Arrow</kbd>，跟 Intellij 的快捷键冲突了，并且与 OSX 上的不一致。可以手动修复：
+
+```
+Settings -> Keyboard -> Shortcuts -> Navigation
+```
+
+找到 Switch workspace to left / right / up / down, 各自改成相应的 <kbd>Ctrl</kbd> + <kbd>Arrow</kbd> 即可。
+
+## Other apps
 
 * [微信](https://github.com/geeeeeeeeek/electronic-wechat)
 * [有道词典](http://cidian.youdao.com/index-linux.html)
