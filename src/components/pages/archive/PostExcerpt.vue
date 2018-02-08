@@ -5,7 +5,7 @@
     </h1>
     <post-meta :post="post"/>
     <div class="post-excerpt" v-html="post.excerpt"></div>
-    <btn :to="to" v-if="!post.full" type="primary" size="sm">Read more &raquo;</btn>
+    <router-link :to="to" v-if="!post.full">Read more &raquo;</router-link>
   </section>
 </template>
 
