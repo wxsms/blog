@@ -26,7 +26,7 @@ npm install
 # generate post by template
 npm run post
 
-# serve with hot reload at localhost:9090
+# serve with hot reload at localhost:10086
 npm run dev
 
 # build posts (Markdown to HTML & generate index file)

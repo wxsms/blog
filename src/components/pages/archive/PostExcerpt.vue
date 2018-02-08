@@ -3,9 +3,9 @@
     <h1>
       <router-link :to="to">{{post.title}}</router-link>
     </h1>
-    <post-meta :post="post"></post-meta>
+    <post-meta :post="post"/>
     <div class="post-excerpt" v-html="post.excerpt"></div>
-    <router-link :to="to" v-if="!post.full">Read more &raquo;</router-link>
+    <btn :to="to" v-if="!post.full" type="primary" size="sm">Read more &raquo;</btn>
   </section>
 </template>
 

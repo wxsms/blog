@@ -1,6 +1,6 @@
 <template>
   <section>
-    <post-excerpt v-for="post in postsWithExcerpt" :key="post.id" :post="post"></post-excerpt>
+    <post-excerpt v-for="post in postsWithExcerpt" :key="post.id" :post="post"/>
     <div>
       <btn to="/p">ARCHIVE...</btn>
     </div>
@@ -8,11 +8,10 @@
 </template>
 
 <script>
-  import {Btn} from 'uiv'
   import PostExcerpt from './archive/PostExcerpt.vue'
 
   export default {
-    components: {PostExcerpt, Btn},
+    components: {PostExcerpt},
     computed: {
       postsWithExcerpt () {
         return this.$store.state.postList.filter(v => {

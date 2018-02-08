@@ -6,7 +6,7 @@
       </h4>
     </div>
     <div class="search-container">
-      <search-form :box="true" @search="toggle(false)"></search-form>
+      <search-form :box="true" @search="toggle(false)"/>
     </div>
     <div class="nav-container">
       <div class="nav-div">
@@ -17,21 +17,20 @@
         </ul>
       </div>
       <div class="toc-div" v-if="asideTocItems">
-        <toc :data="asideTocItems"></toc>
+        <toc :data="asideTocItems"/>
       </div>
     </div>
   </aside>
 </template>
 
 <script>
-  import {Btn} from 'uiv'
   import types from '../../store/mutationTypes'
   import SearchForm from './../common/SearchForm.vue'
   import Toc from './Toc.vue'
   import {routes} from './../../router/routes'
 
   export default {
-    components: {SearchForm, Toc, Btn},
+    components: {SearchForm, Toc},
     data () {
       return {
         query: '',

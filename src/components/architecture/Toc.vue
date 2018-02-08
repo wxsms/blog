@@ -14,11 +14,8 @@
 </template>
 
 <script>
-  import {scrollspy} from 'uiv'
-
   export default {
-    props: ['data'],
-    directives: {scrollspy}
+    props: ['data']
   }
 </script>
 
