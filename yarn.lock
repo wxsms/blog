@@ -5414,9 +5414,9 @@ uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
-uiv@^0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.16.0.tgz#0cdf59b6286eacec7672e4ee0f08cbc8f676bd4c"
+uiv@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/uiv/-/uiv-0.25.0.tgz#7f90364138d5836f2862f9870baed8083b184941"
   dependencies:
     vue-functional-data-merge "^2.0.3"
 
