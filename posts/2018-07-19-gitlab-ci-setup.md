@@ -134,3 +134,19 @@ node:latest
 ## 遇到的问题
 
 其实本地构建基本上都没什么问题，遇到的坑基本集中在 deploy 阶段，即远程到服务器上去发布的这一步。按照 Gitlab 提供的[文档](https://docs.gitlab.com/ee/ci/ssh_keys/)，走完了所有的步骤后，构建机总是无法使用 private key 直接登录，而是必须输入密码登录。尝试了查看 ssh 日志，重启服务器 sshd 服务，修改文件夹权限等等，debug 了半天还是没有解决该问题。后来偶然发现在部署服务器上使用 sshd 开启一个新的服务，用新的端口即可顺利登录，也不知道是为什么。
+
+更新：另外一个方法，可以使用 `sshpass` 命令来进行登录。用法：
+
+1. 在 docker 镜像中安装 sshpass
+   ```
+   which sshpass || ( apt-get update -y && apt-get install sshpass -y )'
+   ```
+   `-y` 是为了防止安装过程中出现需要选择的项目，一律选 YES
+2. 在项目 CI 变量中设置 ssh 密码
+3. 使用 sshpass 复制文件，或登录远程服务器
+   ```
+   # scp
+   SSHPASS=$YOUR_PASSWORD_VAR sshpass -e scp -r local_folder user@host:remote_folder"
+   # ssh
+   SSHPASS=$YOUR_PASSWORD_VAR sshpass -e ssh user@host
+   ```
