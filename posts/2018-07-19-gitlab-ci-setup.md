@@ -137,16 +137,16 @@ node:latest
 
 更新：另外一个方法，可以使用 `sshpass` 命令来进行登录。用法：
 
-1. 在 docker 镜像中安装 sshpass
+1. 在 docker 镜像中安装 `sshpass`
    ```
-   which sshpass || ( apt-get update -y && apt-get install sshpass -y )'
+   $ which sshpass || ( apt-get update -y && apt-get install sshpass -y )
    ```
-   `-y` 是为了防止安装过程中出现需要选择的项目，一律选 YES
+   其中 `-y` 是为了防止安装过程中出现需要选择的项目，一律选 YES
 2. 在项目 CI 变量中设置 ssh 密码
-3. 使用 sshpass 复制文件，或登录远程服务器
+3. 使用 `sshpass` 复制文件，或登录远程服务器
    ```
    # scp
-   SSHPASS=$YOUR_PASSWORD_VAR sshpass -e scp -r local_folder user@host:remote_folder"
+   $ SSHPASS=$YOUR_PASSWORD_VAR sshpass -e scp -r local_folder user@host:remote_folder"
    # ssh
-   SSHPASS=$YOUR_PASSWORD_VAR sshpass -e ssh user@host
+   $ SSHPASS=$YOUR_PASSWORD_VAR sshpass -e ssh user@host
    ```
