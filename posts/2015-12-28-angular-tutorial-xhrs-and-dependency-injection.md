@@ -60,7 +60,7 @@ phonecatApp.controller('PhoneListCtrl', function ($scope, $http) {...}
 
 Angular依赖注入器会在控制器初始化的时候提供服务，同时也会照顾到服务所依赖的服务（服务通常会依赖于其它的服务）。
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/tutorial_05.png)
+![](https://user-images.githubusercontent.com/5960988/48595813-43185d00-e991-11e8-9b2d-75c55e3a96b2.png)
 
 ### $前缀命名转换
 

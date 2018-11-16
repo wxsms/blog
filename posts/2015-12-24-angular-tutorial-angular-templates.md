@@ -54,7 +54,7 @@ tags:
 
 注意：我们使用`ng-app="phonecatApp"`指定了一个名为`phonecatApp`的 [Angular模块](https://docs.angularjs.org/api/ng/type/angular.Module)，这个模块中将包含`PhoneListCtrl`控制器。
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/tutorial_02.png)
+![](https://user-images.githubusercontent.com/5960988/48595811-427fc680-e991-11e8-8a47-09a71f5f5ce7.png)
 
 * * *
 

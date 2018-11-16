@@ -16,7 +16,7 @@ tags:
 
 首先阿里云虚拟主机发邮件相关的函数只开放了一个，即 `fsockopen`，默认情况下还是禁用的，所以我们要去控制台打开它（主机管理 ⇒ 站点信息 ⇒ 高级环境设置 ⇒ PHP.ini设置）。如图所示。
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/20160222105330.jpg)
+![](https://user-images.githubusercontent.com/5960988/48595792-3e53a900-e991-11e8-9513-b8e2070d461e.jpg)
 
 ## 更改Wordpress代码
 
@@ -45,7 +45,7 @@ $this->smtp_conn = fsockopen($host, $port, $errno, $errstr);
 
 改完代码以后，到Wordpress控制台搜索插件**Easy WP SMTP**（其它类似插件应该也行，这里以它为例），安装并启用。如图所示配置好。
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/20160222110446.jpg)
+![](https://user-images.githubusercontent.com/5960988/48595793-3eec3f80-e991-11e8-800e-e4dab8c116be.jpg)
 
 配置好后点击Save，保存成功后下方会有一个测试发送的表单。可以用它来测试SMTP是否已经可以正确工作。
 

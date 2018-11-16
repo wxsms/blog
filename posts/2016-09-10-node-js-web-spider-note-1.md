@@ -18,7 +18,7 @@ tags:
 
 ## 执行流程
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/Flowchart.png)
+![](https://user-images.githubusercontent.com/5960988/48595803-40b60300-e991-11e8-852f-e89da0452800.png)
 
 蓝色部分的任一流程出现失败或错误，程序都会直接返回到“从种子队列取出一个用户ID”这一步。因为作为一个完整的知乎用户来说，它应该是包含了个人信息，关注以及话题的，缺失一项会导致其失去很大部分的意义。
 
@@ -100,7 +100,7 @@ tags:
 
 整个过程虽然简单，但是由于经验匮乏，还是走了不少弯路。最终总结出来的必须步骤如下：
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/loginflow.png)
+![](https://user-images.githubusercontent.com/5960988/48595805-414e9980-e991-11e8-80ae-b9a0ef4eb43e.png)
 
 代码如下：
 

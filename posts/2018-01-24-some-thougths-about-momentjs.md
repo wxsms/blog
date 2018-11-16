@@ -17,7 +17,7 @@ draft: false
 
 具体看图吧：
 
-![strange-moment-js](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/Selection_003.png)
+![strange-moment-js](https://user-images.githubusercontent.com/5960988/48595809-41e73000-e991-11e8-8de0-d37e072df03c.png)
 
 很明显，调用 Moment.js 的 API 产生了预期之外的副作用。函数在带有返回值的同时却又对原始值进行了修改，违反了基本的 OO 设计原则。
 

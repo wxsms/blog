@@ -10,7 +10,7 @@ tags:
 ---
 本系列教程是[AngularJs官方教程](https://docs.angularjs.org/tutorial)（基于[CC BY 3.0协议](http://creativecommons.org/licenses/by/3.0/)发布）的个人翻译，原版权属[AngularJs官方网站](https://angularjs.org/)所有，主要用于学习与分享，如有纰漏敬请指出。转载请注明出处。 学习AngularJs的方法之一就是跟着本教程做一个完整的项目，这个项目会向你介绍一个 AngularJS Web App 应有的架构体系。项目的目的是构建一个安卓设备目录，它可以显示一个带过滤/排序功能的列表页，同时允许用户点击列表中的设备以查看其中的详细内容。就像这样：
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/catalog_screen.png)
+![](https://user-images.githubusercontent.com/5960988/48595800-401d6c80-e991-11e8-94ca-54fa12eb9f8c.png)
 
 在不使用任何原生扩展包以及插件的情况下，跟随本教程来体会 Angular 是如何让浏览器变得更聪明的：
 

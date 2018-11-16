@@ -153,7 +153,7 @@ promise
 
 该代码块实际流程如图所示：
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/promise-then-catch-flow.png)
+![](https://user-images.githubusercontent.com/5960988/48595808-41e73000-e991-11e8-8abe-199dae72c567.png)
 
 &nbsp;
 

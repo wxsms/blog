@@ -15,4 +15,4 @@ Fix steps:
 1. In the "Search Current Mailbox (Ctrl+E)" box, type: `read:no` and hit <kbd>Enter</kbd>.
 2. When it shows "Find More on Server" link, click it. Then the unread email(s) should appear.
 
-![](https://raw.githubusercontent.com/wxsms/wxsms-img-holder/master/outlook-wrong-unread-num.png)
+![](https://user-images.githubusercontent.com/5960988/48595807-41e73000-e991-11e8-9047-6ea346495784.png)
