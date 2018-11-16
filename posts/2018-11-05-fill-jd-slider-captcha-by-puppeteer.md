@@ -21,6 +21,8 @@ draft: false
 
 首先，我们能够看到这个滑块缺口是一个黑色半透明的遮罩区域，通过代码分析并不能得到它的具体色值。因此只能自行比对尝试。通过肉眼测试与对比，可以得到这个遮罩的色值大约为 `rgba(0,0,0,0.65)`
 
+![img](https://user-images.githubusercontent.com/5960988/48612937-52b19900-e9c5-11e8-97c4-eab52883c540.png)
+
 得到这个色值的目的是：通过判断相邻像素点 a, b 的色值之差，来决定像素点 b 的色值是否是像素点 a 的色值加上遮罩之后的结果，以此来推断遮罩所在的位置。
 
 下面介绍两个函数：
@@ -64,6 +66,8 @@ export function tolerance (rgba1: number[], rgba2: number[], t: number): boolean
 ```
 
 接下来就可以写出距离算法了，通过传入包含缺口的验证码图片的 base64 编码，以及图片的实际宽度，返回缺口位置 x 值。具体思路是：通过自左而右，自上而下的逐列像素分析，找出第一个跟上个像素的色值与遮罩色值相加后的结果相似的像素点，就认为是遮罩的 x 位置。
+
+![img](https://user-images.githubusercontent.com/5960988/48612892-33b30700-e9c5-11e8-94d7-a6cc6ec30c87.png)
 
 ```typescript
 function getVerifyPosition (base64: string, actualWidth: number): Promise<number> {
@@ -150,5 +154,7 @@ if (distance > 10) {
 // 等待验证结果
 await page.waitFor(3000)
 ```
+
+![img](https://user-images.githubusercontent.com/5960988/48613026-91dfea00-e9c5-11e8-988b-42d823a3699a.png)
 
 大概就这样。
