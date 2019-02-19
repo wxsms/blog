@@ -141,7 +141,7 @@ Angular Router支持两种使用方式：
 
 
 
-独立页面链接：<a href="http://blog.wxsm.space/others/examples/angular-router/" target="_blank">http://wxsm.space/others/examples/angular-router/</a>
+独立页面链接：<a href="http://wxsm.space/others/examples/angular-router/" target="_blank">http://wxsm.space/others/examples/angular-router/</a>
 
 点击Edit/Delete/Add/Show几个链接，可以发现下面的内容发生了变化。同时地址栏的URL也相应地变了。也可以尝试前进、后退、收藏等操作（在独立页面进行）。 代码如下：
 

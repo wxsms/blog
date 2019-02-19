@@ -5,7 +5,7 @@
 
 Just another blogging system.
 
-Demo: [https://blog.wxsm.space](https://blog.wxsm.space).
+Demo: [https://wxsm.space](https://wxsm.space).
 
 Features:
 

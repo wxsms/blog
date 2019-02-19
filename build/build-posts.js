@@ -101,7 +101,7 @@ postIndex.sort((a, b) => b.date - a.date)
 // generate feed
 let data = {
   title: 'wxsm\'s blog',
-  url: 'https://blog.wxsm.space',
+  url: 'https://wxsm.space',
   description: 'wxsm\'s personal blog.',
   posts: postIndex
 }

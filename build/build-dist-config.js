@@ -12,7 +12,7 @@ const ensureDir = () => {
 ensureDir()
 
 // write CNAME
-fs.writeFileSync(DIST_PATH + 'CNAME', 'blog.wxsm.space')
+fs.writeFileSync(DIST_PATH + 'CNAME', 'wxsm.space')
 
 // write baidu verification file
 fs.writeFileSync(DIST_PATH + 'baidu_verify_WrnmKQXx4O.html', 'WrnmKQXx4O')
