@@ -47,10 +47,10 @@
       }
     },
     mounted () {
-      this.$nextTick(() => {
+      setTimeout(() => {
         window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
         window.adsbygoogle.push({})
-      })
+      }, 3000)
     },
     computed: {
       isAsideShow () {
