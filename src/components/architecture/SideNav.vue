@@ -47,9 +47,8 @@
       }
     },
     mounted () {
-      /* eslint-disable */
-      (adsbygoogle = window.adsbygoogle || []).push({});
-      /* eslint-enable */
+      window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
+      window.adsbygoogle.push({})
     },
     computed: {
       isAsideShow () {
