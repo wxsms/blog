@@ -20,12 +20,13 @@
         <toc :data="asideTocItems"/>
       </div>
     </div>
-    <div class="ad">
-      <Adsense
-        data-ad-client="ca-pub-4714899946256166"
-        data-ad-slot="5716075317">
-      </Adsense>
-    </div>
+    <!-- sidenavAd -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4714899946256166"
+         data-ad-slot="5716075317"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
   </aside>
 </template>
 
