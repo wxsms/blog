@@ -72,9 +72,9 @@
   @import "./../../assets/css/variables";
 
   .google-ad {
-    margin: 10px 0;
-    height: 300px;
-    text-align: center;
+    margin-top: auto;
+    // background-color: green;
+    overflow: hidden;
   }
 
   aside {
@@ -87,6 +87,9 @@
     overflow-x: hidden;
     background: @site-nav-bg;
     box-shadow: @site-nav-box-shadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
     @media (max-width: @screen-xs-max) {
       left: 0 - @side-nav-width - 10px;

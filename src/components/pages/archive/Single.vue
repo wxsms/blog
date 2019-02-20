@@ -5,11 +5,11 @@
       <post-meta :post="post"></post-meta>
       <div v-html="post.html" ref="post"></div>
       <br/>
-      <!-- sidenavAd -->
+      <!-- row -->
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-4714899946256166"
-           data-ad-slot="5716075317"
+           data-ad-slot="2940247473"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
       <hr/>
