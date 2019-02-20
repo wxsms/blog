@@ -4,6 +4,14 @@
     <section v-if="post" id="post-content">
       <post-meta :post="post"></post-meta>
       <div v-html="post.html" ref="post"></div>
+      <br/>
+      <!-- sidenavAd -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4714899946256166"
+           data-ad-slot="5716075317"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
       <hr/>
       <post-nav :post="post"></post-nav>
       <hr/>
@@ -96,6 +104,10 @@
           this.$store.commit(types.ASIDE_SET_TOC, null)
         }
       }
+      setTimeout(() => {
+        window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
+        window.adsbygoogle.push({})
+      }, 2000)
     },
     beforeRouteEnter (to, from, next) {
       fetchPost(to, from, next)
