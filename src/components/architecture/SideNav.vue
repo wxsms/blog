@@ -21,13 +21,11 @@
       </div>
     </div>
     <div class="google-ad">
-      <!-- sidenavAd -->
+      <!-- sidenav-200x200 -->
       <ins class="adsbygoogle"
-           style="display:block"
+           style="display:inline-block;width:200px;height:200px"
            data-ad-client="ca-pub-4714899946256166"
-           data-ad-slot="5716075317"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
+           data-ad-slot="7250193427"></ins>
     </div>
   </aside>
 </template>
@@ -74,7 +72,7 @@
   .google-ad {
     margin: 10px 0;
     height: 300px;
-    // background: red;
+    text-align: center;
   }
 
   aside {
