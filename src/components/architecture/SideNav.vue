@@ -47,8 +47,10 @@
       }
     },
     mounted () {
-      window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
-      window.adsbygoogle.push({})
+      this.$nextTick(() => {
+        window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
+        window.adsbygoogle.push({})
+      })
     },
     computed: {
       isAsideShow () {
@@ -70,7 +72,7 @@
   @import "./../../assets/css/variables";
 
   .google-ad {
-    margin: 10px;
+    margin: 10px 0;
     height: 300px;
     // background: red;
   }
