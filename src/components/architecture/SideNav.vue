@@ -20,6 +20,12 @@
         <toc :data="asideTocItems"/>
       </div>
     </div>
+    <div class="ad">
+      <Adsense
+        data-ad-client="ca-pub-4714899946256166"
+        data-ad-slot="5716075317">
+      </Adsense>
+    </div>
   </aside>
 </template>
 

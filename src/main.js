@@ -9,6 +9,13 @@ import axios from 'axios'
 import PageWrapper from './components/architecture/PageWrapper.vue'
 import store from './store/store'
 import router from './router/index'
+import Ads from 'vue-google-adsense'
+
+Vue.use(require('vue-script2'))
+
+Vue.use(Ads.Adsense)
+Vue.use(Ads.InArticleAdsense)
+Vue.use(Ads.InFeedAdsense)
 
 Vue.http = Vue.prototype.$http = axios
 Vue.use(VueRouter)

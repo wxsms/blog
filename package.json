@@ -28,7 +28,9 @@
     "uiv": "^0.25.0",
     "vue": "^2.5.2",
     "vue-analytics": "^5.5.0",
+    "vue-google-adsense": "^1.3.0",
     "vue-router": "^3.0.1",
+    "vue-script2": "^2.0.3",
     "vuex": "^3.0.0",
     "yaml-front-matter": "^3.4.0"
   },
