@@ -114,7 +114,7 @@ exports.generateRenderPlugins = () => {
     // console.log('static', chunk)
     plugins.push(new PrerenderSpaPlugin(distPath, chunk, {
         navigationLocked: true,
-        captureAfterTime: 2000,
+        captureAfterTime: 1000,
         postProcessHtml (context) {
           console.log(`[PRE-RENDER] (${++progress} / ${totalRoutes}) ${context.route}`)
           return context.html

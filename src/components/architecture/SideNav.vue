@@ -21,11 +21,13 @@
       </div>
     </div>
     <div class="google-ad">
-      <!-- sidenav-200x200 -->
+      <!-- sidenavAd -->
       <ins class="adsbygoogle"
-           style="display:inline-block;width:200px;height:200px"
+           style="display:block"
            data-ad-client="ca-pub-4714899946256166"
-           data-ad-slot="7250193427"></ins>
+           data-ad-slot="5716075317"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
     </div>
   </aside>
 </template>
@@ -48,7 +50,7 @@
       setTimeout(() => {
         window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
         window.adsbygoogle.push({})
-      }, 3000)
+      }, 2000)
     },
     computed: {
       isAsideShow () {
