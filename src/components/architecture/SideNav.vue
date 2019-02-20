@@ -20,13 +20,15 @@
         <toc :data="asideTocItems"/>
       </div>
     </div>
-    <!-- sidenavAd -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-4714899946256166"
-         data-ad-slot="5716075317"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <div class="google-ad">
+      <!-- sidenavAd -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4714899946256166"
+           data-ad-slot="5716075317"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
   </aside>
 </template>
 
@@ -43,6 +45,11 @@
         query: '',
         routes: routes.filter(route => route.meta && route.meta.nav)
       }
+    },
+    mounted () {
+      /* eslint-disable */
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      /* eslint-enable */
     },
     computed: {
       isAsideShow () {
@@ -62,6 +69,12 @@
 
 <style lang="less" rel="stylesheet/less" scoped>
   @import "./../../assets/css/variables";
+
+  .google-ad {
+    margin: 10px;
+    height: 300px;
+    // background: red;
+  }
 
   aside {
     position: fixed;
