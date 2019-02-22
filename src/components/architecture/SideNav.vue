@@ -73,6 +73,7 @@
     margin-top: auto;
     // background-color: green;
     overflow: hidden;
+    text-align: center;
   }
 
   aside {
