@@ -5,6 +5,7 @@ const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const PrerenderSpaPlugin = require('prerender-spa-plugin')
 const SitemapPlugin = require('sitemap-webpack-plugin').default
+const Renderer = PrerenderSpaPlugin.PuppeteerRenderer
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -102,42 +103,28 @@ exports.generateRenderPlugins = () => {
   let postIndex = fs.readFileSync(path.resolve(__dirname, '../dist/posts/index.json')).toString()
   postIndex = JSON.parse(postIndex)
   let ajaxPaths = postIndex.map(post => `/p/${post.id}`)
-  // console.log(staticPaths.length, ajaxPaths.length)
-  let totalRoutes = ajaxPaths.length + staticPaths.length
-  let chunkSize = 10
-  let staticChunks = _.chunk(staticPaths, chunkSize)
-  let ajaxChunks = _.chunk(ajaxPaths, chunkSize)
-  let plugins = []
   let distPath = path.join(__dirname, '../dist')
-  let progress = 0
-  staticChunks.forEach(chunk => {
-    // console.log('static', chunk)
-    plugins.push(new PrerenderSpaPlugin(distPath, chunk, {
-        navigationLocked: true,
-        captureAfterTime: 1000,
-        postProcessHtml (context) {
-          console.log(`[PRE-RENDER] (${++progress} / ${totalRoutes}) ${context.route}`)
-          return context.html
-        }
+  return [
+    new PrerenderSpaPlugin({
+        staticDir: distPath,
+        routes: staticPaths,
+        renderer: new Renderer({
+          maxConcurrentRoutes: 5
+        })
       }
-    ))
-  })
-  ajaxChunks.forEach(chunk => {
-    // console.log('ajax', chunk)
-    plugins.push(new PrerenderSpaPlugin(distPath, chunk, {
-        navigationLocked: true,
-        captureAfterElementExists: '#post-content',
-        postProcessHtml (context) {
-          console.log(`[PRE-RENDER] (${++progress} / ${totalRoutes}) ${context.route}`)
-          return context.html
-        }
+    ),
+    new PrerenderSpaPlugin({
+        staticDir: distPath,
+        routes: ajaxPaths,
+        renderer: new Renderer({
+          renderAfterElementExists: '#post-content',
+          maxConcurrentRoutes: 5
+        })
       }
-    ))
-  })
-  // site map plugin
-  plugins.push(new SitemapPlugin('https://wxsm.space', [].concat(staticPaths, ajaxPaths), {
-    skipGzip: true,
-    changeFreq: 'weekly'
-  }))
-  return plugins
+    ),
+    new SitemapPlugin('https://wxsm.space', [].concat(staticPaths, ajaxPaths), {
+      skipGzip: true,
+      changeFreq: 'weekly'
+    })
+  ]
 }
