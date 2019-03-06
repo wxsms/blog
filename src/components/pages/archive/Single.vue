@@ -41,6 +41,7 @@
   import PostNav from './PostNav.vue'
   import SearchForm from './../../common/SearchForm.vue'
   import store from './../../../store/store'
+  import googleAd from '../../../mixins/googleAd'
 
   export function getAnchors (el) {
     if (!el) {
@@ -85,6 +86,7 @@
 
   export default {
     components: {Disqus, PostMeta, PostNav, SearchForm},
+    mixins: [googleAd],
     data () {
       return {
         id: this.$route.params.p,
@@ -104,10 +106,6 @@
           this.$store.commit(types.ASIDE_SET_TOC, null)
         }
       }
-      setTimeout(() => {
-        window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
-        window.adsbygoogle.push({})
-      }, 2000)
     },
     beforeRouteEnter (to, from, next) {
       fetchPost(to, from, next)

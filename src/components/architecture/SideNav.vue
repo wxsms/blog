@@ -20,13 +20,6 @@
         <toc :data="asideTocItems"/>
       </div>
     </div>
-    <div class="google-ad">
-      <!-- sidenav-200x200 -->
-      <ins class="adsbygoogle"
-           style="display:inline-block;width:200px;height:200px"
-           data-ad-client="ca-pub-4714899946256166"
-           data-ad-slot="7250193427"></ins>
-    </div>
   </aside>
 </template>
 
@@ -43,12 +36,6 @@
         query: '',
         routes: routes.filter(route => route.meta && route.meta.nav)
       }
-    },
-    mounted () {
-      setTimeout(() => {
-        window.adsbygoogle = window.adsbygoogle ? window.adsbygoogle : []
-        window.adsbygoogle.push({})
-      }, 2000)
     },
     computed: {
       isAsideShow () {
@@ -68,13 +55,6 @@
 
 <style lang="less" rel="stylesheet/less" scoped>
   @import "./../../assets/css/variables";
-
-  .google-ad {
-    margin-top: auto;
-    // background-color: green;
-    overflow: hidden;
-    text-align: center;
-  }
 
   aside {
     position: fixed;
