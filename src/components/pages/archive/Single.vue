@@ -12,6 +12,14 @@
            data-ad-format="fluid"
            data-ad-client="ca-pub-4714899946256166"
            data-ad-slot="3889336793"></ins>
+      <br/>
+      <!-- link-1 -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4714899946256166"
+           data-ad-slot="8148342125"
+           data-ad-format="link"
+           data-full-width-responsive="true"></ins>
       <hr/>
       <post-nav :post="post"></post-nav>
       <hr/>
