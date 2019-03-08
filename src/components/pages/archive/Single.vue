@@ -40,7 +40,7 @@
   import PostNav from './PostNav.vue'
   import SearchForm from './../../common/SearchForm.vue'
   import store from './../../../store/store'
-  import googleAd from '../../../mixins/googleAd'
+  import googleAd from 'vue-google-adsense-mixin'
 
   export function getAnchors (el) {
     if (!el) {
