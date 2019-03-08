@@ -85,7 +85,7 @@
 
   export default {
     components: {Disqus, PostMeta, PostNav, SearchForm},
-    mixins: [googleAd],
+    mixins: [googleAd({timeout: 2000})],
     data () {
       return {
         id: this.$route.params.p,
