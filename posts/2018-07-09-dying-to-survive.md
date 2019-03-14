@@ -1,6 +1,6 @@
 ---
 id: 'dying-to-survive'
-title: '中国药神'
+title: '《中国药神》'
 date: 2018-07-09T06:48:13.964Z
 tags: [movie]
 index: false
