@@ -154,4 +154,11 @@
     }
   }
 
+  img + em {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: block;
+    color: @text-muted;
+  }
+
 </style>
