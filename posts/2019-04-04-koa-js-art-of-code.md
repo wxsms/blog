@@ -14,7 +14,7 @@ Koa 并不是 Node.js 的拓展，它只是在 Node.js 的基础上实现了以�
 * 中间件式的 HTTP 服务框架 （与 Express 一致）
 * 洋葱模型 （与 Express 不同）
 
-一同天下级别的框架，只包含了约 500 行源代码。极致强大，极致简单。大概这就是码农与码神的区别，真正的代码的艺术吧。
+一统天下级别的框架，只包含了约 500 行源代码。极致强大，极致简单。大概这就是码农与码神的区别，真正的代码的艺术吧。
 
 <!-- more -->
 
@@ -31,7 +31,7 @@ lib
 一共就这四个文件（当然，还包含了发布在 npm 上面的其它 package，后面会说到），一目了然。
 
 1. `application.js` 是应用的入口，也就是 `require('koa')` 所得到的东西。它是一个继承自 [events](https://nodejs.org/dist/latest-v11.x/docs/api/events.html) 的 Class
-2. `context.js` 就是对应每一个 req/res 的 ctx
+2. `context.js` 就是对应每一个 req / res 的 ctx
 3. `request.js` / `response.js` 就不用说了
 
 下面从最基础的看起。
@@ -65,7 +65,7 @@ module.exports = {
 
 这里的 `this.req` 实际上是 [http.IncomingMessage](https://nodejs.org/dist/latest-v11.x/docs/api/http.html)，创建的时候传入的，后面会提到。
 
-这个文件绝大多数是 helper 方法，把本来已经存在在 `http.IncomingMessage` 中的属性通过更方便的方式（`getter` \ `setter`）来存取，以达到通过同一个属性来读写的目的。比如想要获取一个 request 的 header 时，通过 `ctx.request.heder`，而想写入 header 时，可以通过 `ctx.request.heder = xxx` 来实现。这也是 koa 的友好特性之一。
+这个文件绝大多数是 helper 方法，把本来已经存在在 `http.IncomingMessage` 中的属性通过更方便的方式（`getter` / `setter`）来存取，以达到通过同一个属性来读写的目的。比如想要获取一个 request 的 header 时，通过 `ctx.request.heder`，而想写入 header 时，可以通过 `ctx.request.heder = xxx` 来实现。这也是 koa 的友好特性之一。
 
 其中有一个特殊的是 `ip`：
 
@@ -434,7 +434,7 @@ function compose (middleware) {
 }
 ```
 
-它是一个递归。很容易理解：
+它是一个递归：
 
 1. 首先约定，每一个 middleware 都是一个 async 函数（即 Promise），接受两个参数 `ctx` 与 `next`
 2. 当 middleware 内部调用 next 函数时，实际上是递归调用了 `dispatch.bind(null, i + 1)` 函数，也就是，将 `index + 1` 的中间件取出来并执行了。因为中间件都是 Promise，所以能够被 await
