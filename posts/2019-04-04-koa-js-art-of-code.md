@@ -36,11 +36,7 @@ lib
 
 下面从最基础的看起。
 
-## request.js & response.js
-
-这两个文件的内容非常简单。
-
-### request.js
+## request.js
 
 `request.js` 大概的样子如下：
 
@@ -93,7 +89,7 @@ module.exports = {
 1. 允许开发者对真实请求 ip 进行改写
 2. 同时利用 Symbol 不等于任何值的特性，使它成为私有属性，对外不可见，只可通过 getter 获取
 
-### response.js
+## response.js
 
 `response.js` 与 `request.js` 类似，不同之处在于，`response.js` 重点更多在 `setter` 上面，很好理解，因为 response 的重点是一个服务器向用户返回内容的过程。
 
