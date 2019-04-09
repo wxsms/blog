@@ -111,7 +111,7 @@
       background: #fff;
       box-sizing: border-box;
       box-shadow: none;
-      padding: 8px 20px;
+      padding: 4px 20px;
       position: relative;
     }
 
