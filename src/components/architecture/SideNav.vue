@@ -65,7 +65,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     background: @site-nav-bg;
-    box-shadow: @site-nav-box-shadow;
+    border-right: @side-nav-item-border;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -74,11 +74,11 @@
       left: 0 - @side-nav-width - 10px;
       z-index: 1002;
       transition: left .3s ease-in-out;
-      box-shadow: none;
+      border-right: none;
 
       &.show {
         left: 0;
-        box-shadow: @site-nav-box-shadow;
+        border-right: @side-nav-item-border;
       }
     }
 
