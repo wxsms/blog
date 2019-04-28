@@ -2,7 +2,7 @@
   <section>
     <h1>Tags</h1>
     <p class="text-muted">
-      <i class="glyphicon glyphicon-hand-down"></i> Click on tag to toggle details.
+      Click on tag to toggle details.
     </p>
     <div>
       <tag
@@ -28,7 +28,7 @@
   import ListItem from './archive/ArchiveListItem.vue'
 
   export default {
-    components: {Tag, ListItem},
+    components: { Tag, ListItem },
     data () {
       return {
         postsGroupedByTag: [],

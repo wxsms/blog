@@ -2,7 +2,7 @@
   <section>
     <h1>Archive</h1>
     <p class="text-muted">
-      <i class="glyphicon glyphicon-book"></i> <b>{{list.length}}</b> posts in total.
+      <b>{{list.length}}</b> posts in total.
     </p>
     <template v-for="group in listGroupedByYear">
       <h2 class="year">{{group.year}}</h2>
@@ -26,7 +26,7 @@
   import dateUtils from '../../../utils/dateUtils'
 
   export default {
-    components: {ListItem},
+    components: { ListItem },
     computed: {
       list () {
         return this.$store.state.postList

@@ -84,7 +84,7 @@
   }
 
   export default {
-    components: {Disqus, PostMeta, PostNav, SearchForm},
+    components: { Disqus, PostMeta, PostNav, SearchForm },
     mixins: [googleAd],
     data () {
       return {
