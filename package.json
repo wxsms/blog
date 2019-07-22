@@ -13,7 +13,8 @@
     "less-loader": "^5.0.0",
     "readline-sync": "^1.4.9",
     "vuepress": "^1.0.2",
-    "vuepress-plugin-google-adsense": "^0.0.3"
+    "vuepress-plugin-google-adsense": "^0.0.3",
+    "vuepress-plugin-sitemap": "^2.1.2"
   },
   "dependencies": {
     "date-fns": "^1.30.1"
