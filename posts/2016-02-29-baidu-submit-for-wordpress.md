@@ -46,90 +46,39 @@ API返回的 `$result` 是一个 JSON 对象，若推送成功可能包含以�
 <div class="table-responsive">
   <table class="table table-hover">
     <tr>
-      <th>
-        字段
-      </th>
-      
-      <th>
-        是否必选
-      </th>
-      
-      <th>
-        参数类型
-      </th>
-      
-      <th>
-        说明
-      </th>
+      <th>字段</th>
+      <th>是否必选</th>
+      <th>参数类型</th>
+      <th>说明</th>
     </tr>
-    
     <tr>
-      <td>
-        success
-      </td>
-      
-      <td>
-        是
-      </td>
-      
-      <td>
-        int
-      </td>
-      
-      <td>
-        成功推送的url条数
-      </td>
+      <td>success</td>
+      <td>是</td>
+      <td>int</td>
+      <td>成功推送的url条数</td>
     </tr>
-    
     <tr>
-      <td>
-        remain
-      </td>
-      
-      <td>
-        是
-      </td>
-      
-      <td>
-        int
-      </td>
-      
-      <td>
-        当天剩余的可推送url条数
-      </td>
+      <td>remain</td>
+      <td>是</td>
+      <td>int</td>
+      <td>当天剩余的可推送url条数</td>
     </tr>
-    
     <tr>
-      <td>
-        not_same_site
-      </td>
-      
-      <td>
-        否
-      </td>
-      
-      <td>
-        array
-      </td>
-      
-      <td>
-        由于不是本站url而未处理的url列表
-      </td>
+      <td>not_same_site</td>
+      <td>否</td>
+      <td>array</td>
+      <td>由于不是本站url而未处理的url列表</td>
     </tr>
-    
     <tr>
       <td>
         not_valid
       </td>
-      
       <td>
         否
       </td>
-      
       <td>
         array
       </td>
-      
       <td>
         不合法的url列表
       </td>
@@ -156,51 +105,40 @@ API返回的 `$result` 是一个 JSON 对象，若推送成功可能包含以�
       <th>
         字段
       </th>
-      
       <th>
         是否必选
       </th>
-      
       <th>
         参数类型
       </th>
-      
       <th>
         说明
       </th>
     </tr>
-    
     <tr>
       <td>
         error
       </td>
-      
       <td>
         是
       </td>
-      
       <td>
         int
       </td>
-      
       <td>
         错误码，与状态码相同
       </td>
     </tr>
-    
     <tr>
       <td>
         message
       </td>
-      
       <td>
         是
       </td>
-      
       <td>
         string
       </td>
-      
       <td>
         错误描述
       </td>

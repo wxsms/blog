@@ -40,13 +40,13 @@ SVG 的特点是矢量绘图（与 Canvas 不同），除了预设样式以外�
 
 SVG 有一些预定义的形状元素，可被开发者使用和操作：
 
-  * 矩形 <rect>
-  * 圆形 <circle>
-  * 椭圆 <ellipse>
-  * 线 <line>
-  * 折线 <polyline>
-  * 多边形 <polygon>
-  * 路径 <path>
+  * 矩形 `<rect>`
+  * 圆形 `<circle>`
+  * 椭圆 `<ellipse>`
+  * 线 `<line>`
+  * 折线 `<polyline>`
+  * 多边形 `<polygon>`
+  * 路径 `<path>`
 
 其中，`path` 是功能最强大者，使用 `path` 可以构成所有图形。
 

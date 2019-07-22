@@ -111,10 +111,10 @@ Chrome 22.0: Executed 4 of 4 SUCCESS (0.034 secs / 0.012 secs)
 
 我们来试试给`index.html`中的绑定添加一些[Angular的内置过滤器](https://docs.angularjs.org/api/ng/filter)吧：
 
-  * `{{ "lower cap string" | uppercase }}`
-  * `{{ {foo: "bar", baz: 23} | json }}`
-  * `{{ 1304375948024 | date }}`
-  * `{{ 1304375948024 | date:"MM/dd/yyyy @ h:mma" }}`
+  * `{ "lower cap string" | uppercase }`
+  * `{ {foo: "bar", baz: 23} | json }`
+  * `{ 1304375948024 | date }}`
+  * `{ 1304375948024 | date:"MM/dd/yyyy @ h:mma" }`
 
 与此同时我们也可以创建一个带有输入框的模型，然后给它添加一个带过滤器的绑定：
 

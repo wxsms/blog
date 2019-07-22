@@ -22,105 +22,82 @@ tags:
     <tr>
       <td>
       </td>
-      
       <td>
          <strong>Server Forward</strong>
       </td>
-      
       <td>
          <strong>Server Redirect</strong>
       </td>
-      
       <td>
          <strong>Client Redirect</strong>
       </td>
     </tr>
-    
     <tr>
       <td>
          <strong>Request(s) </strong>
       </td>
-      
       <td>
          1
       </td>
-      
       <td>
          <span style="color: #ff0000;">2</span>
       </td>
-      
       <td>
          1
       </td>
     </tr>
-    
     <tr>
       <td>
          <strong>Browser URL Change</strong>
       </td>
-      
       <td>
          <span style="color: #ff0000;">NO</span>
       </td>
-      
       <td>
          YES
       </td>
-      
       <td>
          YES
       </td>
     </tr>
-    
     <tr>
       <td>
          <strong>Page Refresh </strong>
       </td>
-      
       <td>
          YES
       </td>
-      
       <td>
          YES
       </td>
-      
       <td>
          YES
       </td>
     </tr>
-    
     <tr>
       <td>
          <strong>Maintainable</strong>
       </td>
-      
       <td>
          YES
       </td>
-      
       <td>
          YES
       </td>
-      
       <td>
          <span style="color: #ff0000;">NO</span>
       </td>
     </tr>
-    
     <tr>
       <td>
          <strong>Browser Actions</strong>
       </td>
-      
       <td>
          <span style="color: #ff0000;">NO</span>
       </td>
-      
       <td>
          YES
       </td>
-      
       <td>
          YES
       </td>
