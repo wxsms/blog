@@ -4,7 +4,7 @@ title: 'Change SOCKS Proxy to HTTP'
 date: 2017-03-10 12:00:00
 categories: [Software]
 tags: [Proxy, OSX, Windows, HTTP]
-index: true
+sidebar: 'auto'
 ---
 
 # Change SOCKS Proxy to HTTP

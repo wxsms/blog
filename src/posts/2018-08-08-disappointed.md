@@ -3,7 +3,7 @@ id: 'disappointed'
 title: '失望'
 date: 2018-08-08T06:32:16.001Z
 tags: []
-index: false
+sidebar: false
 draft: false
 ---
 

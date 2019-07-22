@@ -4,7 +4,7 @@ title: Limit Prerender Plugin Workers By Webpack
 date: 2017-10-29T02:51:17.412Z
 categories: [JavaScript]
 tags: [Vue, Webpack, Travis-CI]
-index: false
+sidebar: false
 draft: false
 ---
 

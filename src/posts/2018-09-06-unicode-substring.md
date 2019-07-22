@@ -3,7 +3,7 @@ id: 'unicode-substring'
 title: 'Unicode substring'
 date: 2018-09-06T06:46:40.741Z
 tags: [JavaScript]
-index: false
+sidebar: false
 draft: false
 ---
 

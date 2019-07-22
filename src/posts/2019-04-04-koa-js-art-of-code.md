@@ -3,7 +3,7 @@ id: 'koa-js-art-of-code'
 title: '代码的艺术：koa 源码精读'
 date: 2019-04-04T07:59:02.408Z
 tags: [JavaScript, Koa]
-index: true
+sidebar: 'auto'
 draft: false
 ---
 

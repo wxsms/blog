@@ -3,7 +3,7 @@ id: 'react-native-text-inline-image'
 title: 'React Native Text Inline Image'
 date: 2018-05-30T02:09:05.427Z
 tags: [ReactNative]
-index: false
+sidebar: false
 draft: false
 ---
 

@@ -3,7 +3,7 @@ id: 'thoughts-of-react-native'
 title: 'Thoughts of ReactNative'
 date: 2018-04-27T08:24:25.520Z
 tags: [ReactNative]
-index: true
+sidebar: 'auto'
 draft: false
 ---
 

@@ -3,7 +3,7 @@ id: 'gitlab-ci-setup'
 title: 'Gitlab CI Setup'
 date: 2018-07-19T06:22:36.993Z
 tags: [CI, Gitlab]
-index: false
+sidebar: false
 draft: false
 ---
 

@@ -2,7 +2,7 @@
 id: 'react-note-basic'
 title: 'React Note - Basic'
 date: 2017-02-08 11:33:00
-index: true
+sidebar: 'auto'
 categories:
   - JavaScript
 tags:

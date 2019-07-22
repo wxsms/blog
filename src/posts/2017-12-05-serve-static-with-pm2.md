@@ -4,7 +4,7 @@ title: 'Serve static with PM2'
 date: 2017-12-05T11:10:49.100Z
 categories: [JavaScript]
 tags: [PM2]
-index: false
+sidebar: false
 draft: false
 ---
 

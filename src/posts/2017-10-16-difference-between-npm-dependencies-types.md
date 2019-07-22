@@ -4,7 +4,7 @@ title: 'Difference Between NPM Dependencies Types'
 date: 2017-10-16T07:36:52.405Z
 categories: [JavaScript]
 tags: [NodeJs]
-index: true
+sidebar: 'auto'
 draft: false
 ---
 

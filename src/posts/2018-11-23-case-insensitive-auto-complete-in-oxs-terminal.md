@@ -3,7 +3,7 @@ id: 'case-insensitive-auto-complete-in-oxs-terminal'
 title: 'Case insensitive auto-complete in OSX Terminal'
 date: 2018-11-23T07:48:00.844Z
 tags: [OSX]
-index: false
+sidebar: false
 draft: false
 ---
 

@@ -3,7 +3,7 @@ id: '{{id}}'
 title: '{{title}}'
 date: {{date}}
 tags: [{{tags}}]
-index: {{index}}
+sidebar: {{sidebar}}
 draft: {{draft}}
 ---
 

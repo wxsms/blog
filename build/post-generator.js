@@ -15,7 +15,7 @@ str = str
   .replace('{{title}}', postTitle)
   .replace('{{tags}}', tags)
   .replace('{{date}}', isoDateStr)
-  .replace('{{index}}', !!useIndex)
+  .replace('{{sidebar}}', useIndex ? `'auto'` : false)
   .replace('{{draft}}', !!isDraft)
 
 let filename = `${isoDateStr.substr(0, 10)}-${postId}.md`

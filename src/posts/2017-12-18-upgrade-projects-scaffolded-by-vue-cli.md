@@ -3,7 +3,7 @@ id: 'upgrade-projects-built-by-vue-cli'
 title: 'Upgrade Projects Built by vue-cli'
 date: 2017-12-18T12:08:22.025Z
 tags: [Vue, Webpack]
-index: true
+sidebar: 'auto'
 draft: false
 ---
 

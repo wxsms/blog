@@ -2,7 +2,7 @@
 id: 'egret-note'
 title: 'Egret Note'
 date: 2017-02-22 16:17:00
-index: true
+sidebar: 'auto'
 categories:
   - JavaScript
   - Game-Engine

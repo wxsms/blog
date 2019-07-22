@@ -3,7 +3,7 @@ id: 'first-exp-of-parcel'
 title: 'Parcel 初体验'
 date: 2019-04-02T07:10:24.846Z
 tags: [Parcel, JavaScript]
-index: false
+sidebar: false
 draft: false
 ---
 

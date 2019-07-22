@@ -3,7 +3,7 @@ id: 'simplest-wechat-client-on-linux'
 title: 'Simplest Wechat Client on Linux'
 date: 2018-06-11T07:26:45.443Z
 tags: [Linux]
-index: false
+sidebar: false
 draft: false
 ---
 

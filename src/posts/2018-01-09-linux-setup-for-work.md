@@ -3,7 +3,7 @@ id: 'linux-setup-for-work'
 title: 'Linux Setup for Work'
 date: 2018-01-09T12:56:59.393Z
 tags: [Linux]
-index: true
+sidebar: 'auto'
 draft: false
 ---
 

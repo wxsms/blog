@@ -4,7 +4,7 @@ title: 'CORS Headers Note'
 date: 2017-10-12T06:44:39.617Z
 categories: [Web-Front-end]
 tags: [Ajax, HTTP, NodeJs]
-index: true
+sidebar: 'auto'
 draft: false
 ---
 
