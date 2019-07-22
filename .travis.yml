@@ -8,13 +8,12 @@ cache:
 node_js:
   - "node"
 script:
-  - npm run lint
-  - npm run build
+  - npm run docs:build
 deploy:
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
-    local_dir: dist
+    local_dir: src/.vuepress/dist
     target_branch: gh-pages
     on:
       branch: master
