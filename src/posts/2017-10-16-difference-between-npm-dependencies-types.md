@@ -8,6 +8,9 @@ index: true
 draft: false
 ---
 
+# Difference Between NPM Dependencies Types
+
+
 ref: [stackoverflow](https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencies)
 
 Summary of important behavior differences:

@@ -7,6 +7,9 @@ index: false
 draft: false
 ---
 
+# Simplest Wechat Client on Linux
+
+
 微信没有为 Linux 提供桌面客户端，可用的替代方式有：
 
 1. 使用[网页版微信](https://wx.qq.com/)

@@ -2,4 +2,4 @@ node_modules/
 .idea/
 *.iml
 yarn-error.log
-/posts/.vuepress/dist
+/src/.vuepress/dist

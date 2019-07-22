@@ -8,6 +8,9 @@ tags:
   - Bootstrap
   - Firefox
 ---
+
+# Bootstrap file input in Firefox
+
 默认的Bootstrap文件上传框在Chrome/Firefox/IE上的表现都不一样，如下所示。 代码：
 
 ```

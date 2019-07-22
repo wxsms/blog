@@ -9,6 +9,9 @@ tags:
   - ES6
   - Promise
 ---
+
+# JavaScript Promise
+
 知乎上有一个黑 JavaScript 的段子，大概是说：
 
 > N 年后，外星人截获了 NASA 发射的飞行器并破解其源代码，翻到最后发现好几页的 }}}}}}&#8230;&#8230;

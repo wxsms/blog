@@ -8,6 +8,9 @@ index: true
 draft: false
 ---
 
+# Vue-Router Note
+
+
 Vue Router ([https://github.com/vuejs/vue-router](https://github.com/vuejs/vue-router)) 使用笔记。虽然[官方文档](https://router.vuejs.org/)比较详尽，但实际用起来依然有些地方需要特别注意的（其实主要是我的个人需求）。
 
 <!--more-->

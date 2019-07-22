@@ -7,6 +7,9 @@ tags: [Proxy, OSX, Windows, HTTP]
 index: true
 ---
 
+# Change SOCKS Proxy to HTTP
+
+
 ## OSX
 
 Use `brew` to install `polipo` via socks proxy:

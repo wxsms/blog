@@ -7,6 +7,9 @@ categories:
 tags:
   - Wordpress
 ---
+
+# WordPress 掉坑记录
+
 忍无可忍，长期更新。
 
 （其实我很想自己重新做一个 blog，但是太麻烦，也没什么实践价值了，无非 CRUD，而且维护起来很容易忽略 blog 本身的目的所在）

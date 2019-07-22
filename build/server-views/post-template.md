@@ -7,4 +7,6 @@ index: {{index}}
 draft: {{draft}}
 ---
 
+# {{title}}
+
 <!-- more -->

@@ -7,6 +7,9 @@ index: false
 draft: false
 ---
 
+# Parcel 初体验
+
+
 [Parcel Bundler](https://github.com/parcel-bundler/parcel) 发布了这么久，终于有机会体验了一次。在一个新的基于 jQuery 的小项目中尝试了这个打包器。结合它的宣传点，整体来说最大的感受是：
 
 1. 确实比 Webpack 快很多

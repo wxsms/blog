@@ -6,6 +6,9 @@ categories:
   - Personal
 ---
 
+# Static Blog Built with Vue
+
+
 博客再次迁移，这次是从 Wordpress 转向静态博客（自建）。
 
 技术栈:

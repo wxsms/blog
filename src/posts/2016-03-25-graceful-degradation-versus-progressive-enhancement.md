@@ -8,6 +8,9 @@ tags:
   - CSS3
   - User-Experience
 ---
+
+# “渐进增强”与“优雅降级”
+
 “渐进增强”与“优雅降级”是 Web 页面两种不同的开发理念，为了简单起见，先给出定义（By W3C）：
 
 > Graceful degradation Providing an alternative version of your functionality or making the user aware of shortcomings of a product as a safety measure to ensure that the product is usable. Progressive enhancement Starting with a baseline of usable functionality, then increasing the richness of the user experience step by step by testing for support for enhancements before applying them.

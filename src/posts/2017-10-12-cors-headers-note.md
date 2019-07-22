@@ -8,6 +8,9 @@ index: true
 draft: false
 ---
 
+# CORS Headers Note
+
+
 CORS HTTP Header 是解决 Ajax 跨域问题的方案之一。详情查看：[MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)
 
 这篇文章主要是记录使用过程中遇到的问题以及解决方案。

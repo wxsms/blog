@@ -9,7 +9,9 @@
     "docs:build": "vuepress build src && node build/build-dist-config.js"
   },
   "devDependencies": {
+    "readline-sync": "^1.4.9",
     "vuepress": "^1.0.2",
     "vuepress-plugin-google-adsense": "^0.0.3"
-  }
+  },
+  "dependencies": {}
 }

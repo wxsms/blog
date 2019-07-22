@@ -5,6 +5,9 @@ date: 2016-03-28T17:43:35+00:00
 categories:
   - CSS
 ---
+
+# BFC 原理及应用
+
 ## 什么是 BFC
 
 BFC（Block formatting context）是 CSS 中的一个概念，先来看一下定义 （By MDN）：

@@ -8,6 +8,9 @@ tags:
   - D3
 ---
 
+# D3 Note - Scale
+
+
 之前做的柱状图例子：
 
 ```js

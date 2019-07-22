@@ -8,6 +8,9 @@ tags:
   - IntelliJ-IDEA
   - Webpack
 ---
+
+# Webpack HMR Not Work in IDEA
+
   1. goto 'File | Settings | Appearance & Behavior | System Settings';
   2. uncheck 'Use save write' option
 

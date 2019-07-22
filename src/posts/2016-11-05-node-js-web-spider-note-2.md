@@ -8,6 +8,9 @@ tags:
   - NodeJs
   - Spider
 ---
+
+# Node.js Web Spider Note - 2
+
 ## Cookie & Session
 
 HTTP 是一种无状态协议，服务器与客户端之间储存状态信息主要靠 Session，但是，Session 在浏览器关闭后就会失效，再次开启先前所储存的状态都会丢失，因此还需要借助 Cookie

@@ -7,6 +7,9 @@ index: true
 draft: false
 ---
 
+# React node starter
+
+
 <!-- 「」 -->
 
 出于某种需求搭建了一个非常简单的、基于 React / Node / Express / MongoDB 的 starter 工程：[wxsms/react-node-starter](https://github.com/wxsms/react-node-starter)，旨在简化小型或中小型项目开发流程，关注实际业务开发。

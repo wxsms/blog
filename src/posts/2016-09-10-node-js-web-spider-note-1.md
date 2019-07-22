@@ -8,6 +8,9 @@ tags:
   - ES6
   - Spider
 ---
+
+# Node.js Web Spider Note - 1
+
 项目地址：<a href="https://github.com/edisond/zhihu-spider" target="_blank">https://github.com/edisond/zhihu-spider</a>
 
 简介：使用 Node.js 实现的一个简单的知乎爬虫，可以以一个用户为入口，爬取其账号下的一些基本信息，关注者，关注话题等。再通过关注者的 ID 继续爬取其他用户，以此循环。

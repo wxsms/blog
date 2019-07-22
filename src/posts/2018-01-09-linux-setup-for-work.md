@@ -7,6 +7,9 @@ index: true
 draft: false
 ---
 
+# Linux Setup for Work
+
+
 因为各种烦人的原因，公司搬家后到新办公室第一件事先把老电脑格了。犹豫了一下，最终还是放弃了重装 Windows，支持我做出选择的原因有几：
 
 * 不需要进行（纯）MS 系开发

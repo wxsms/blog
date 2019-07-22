@@ -7,6 +7,9 @@ index: true
 draft: false
 ---
 
+# Thoughts of ReactNative
+
+
 <!-- 「」 -->
 
 使用 ReactNative 开发半年有余，本文是作为一些简单的感想。

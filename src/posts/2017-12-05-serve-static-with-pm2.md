@@ -8,6 +8,9 @@ index: false
 draft: false
 ---
 
+# Serve static with PM2
+
+
 Command (2.4.0+):
 
 ```

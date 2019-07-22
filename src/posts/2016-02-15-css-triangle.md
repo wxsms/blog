@@ -7,6 +7,9 @@ categories:
 tags:
   - CSS3
 ---
+
+# CSS 绘制三角形
+
 关于如何使用CSS中的border属性绘制各式各样的三角形。下面有一个国外友人制作的动画，对其原理进行了直观的阐释，我简单地做了点翻译。
 
 <p class='codepen'  data-height='387' data-theme-id='0' data-slug-hash='zrbGpx' data-default-tab='result' data-animations='run' data-editable='' data-embed-version='2'>

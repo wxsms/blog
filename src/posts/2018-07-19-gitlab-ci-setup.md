@@ -7,6 +7,9 @@ index: false
 draft: false
 ---
 
+# Gitlab CI Setup
+
+
 <!-- 「」 -->
 
 Gitlab 有一套内置的 CI 系统，相比集成 Jenkins 来说更加方便一些，用法也稍为简单。以下是搭建过程。
