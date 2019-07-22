@@ -9,7 +9,6 @@ module.exports = {
   ],
   themeConfig: {
     lastUpdated: true,
-    displayAllHeaders: true,
     nav: [
       { text: 'Home', link: '/' },
       { text: 'About', link: '/about/' }
