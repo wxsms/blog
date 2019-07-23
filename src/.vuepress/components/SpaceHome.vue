@@ -34,6 +34,7 @@
   .list {
     list-style: none;
     margin-top: 20px;
+    padding: 0;
 
     li {
       position: relative;
