@@ -1,4 +1,7 @@
-# About
+---
+title: About
+layout: SpacePost
+---
 
 ### Me
 

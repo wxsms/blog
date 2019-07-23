@@ -1,5 +1,6 @@
 <template>
   <div>
+    <space-header/>
     <ul class="list">
       <li v-for="post in posts" :key="post.key">
         <h3>{{format(post.frontmatter.date, 'MMM DD, YYYY')}}</h3>
@@ -11,10 +12,11 @@
 </template>
 
 <script>
+  import SpaceHeader from './SpaceHeader'
   import format from 'date-fns/format'
 
   export default {
-    name: 'Home',
+    components: { SpaceHeader },
     computed: {
       posts () {
         return this.$site.pages
@@ -31,6 +33,7 @@
 <style scoped lang="less">
   .list {
     list-style: none;
+    margin-top: 20px;
 
     li {
       position: relative;
@@ -46,19 +49,17 @@
         margin: 0;
         width: 100px;
         flex-shrink: 0;
+        font-weight: lighter;
       }
 
       a {
         margin-left: 30px;
         display: block;
-        color: #2c3e50;
+        color: #2c3e50 !important;
         font-size: 20px;
         text-decoration: none !important;
         letter-spacing: 1px;
-
-        &:hover, &:active, &:focus {
-          color: #3eaf7c;
-        }
+        font-weight: normal;
       }
     }
   }
