@@ -51,6 +51,7 @@
         width: 100px;
         flex-shrink: 0;
         font-weight: lighter;
+        text-transform: uppercase;
       }
 
       a {
@@ -61,6 +62,7 @@
         text-decoration: none !important;
         letter-spacing: 1px;
         font-weight: normal;
+        text-transform: uppercase;
       }
     }
   }

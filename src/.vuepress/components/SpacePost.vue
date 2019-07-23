@@ -36,12 +36,14 @@
       flex-shrink: 0;
       margin: 0 0 15px 0;
       font-weight: lighter;
+      text-transform: uppercase;
     }
 
     h1 {
       letter-spacing: 1px;
       margin: 0 0 40px 0 !important;
       font-weight: normal;
+      text-transform: uppercase;
     }
   }
 </style>

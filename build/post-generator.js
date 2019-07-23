@@ -1,7 +1,8 @@
 const read = require('readline-sync')
 const fs = require('fs')
+const path = require('path')
 
-let str = fs.readFileSync('./build/server-views/post-template.md', 'utf8')
+let str = fs.readFileSync(path.join(__dirname, 'server-views/post-template.md'), 'utf8')
 
 let postTitle = read.question('Enter post title: ')
 let postId = read.question('Enter post id: ')
@@ -15,5 +16,5 @@ str = str
   .replace('{{date}}', isoDateStr)
 
 let filename = `${isoDateStr.substr(0, 10)}-${postId}.md`
-fs.writeFileSync(`./posts/${filename}`, str)
+fs.writeFileSync(path.join(__dirname, `../src/posts/${filename}`), str)
 console.log(`${filename} created.`)
