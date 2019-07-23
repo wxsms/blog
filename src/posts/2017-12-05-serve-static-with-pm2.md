@@ -6,9 +6,10 @@ categories: [JavaScript]
 tags: [PM2]
 sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# Serve static with PM2
+
 
 
 Command (2.4.0+):

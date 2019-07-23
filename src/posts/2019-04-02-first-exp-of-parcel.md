@@ -5,9 +5,10 @@ date: 2019-04-02T07:10:24.846Z
 tags: [Parcel, JavaScript]
 sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# Parcel 初体验
+
 
 
 [Parcel Bundler](https://github.com/parcel-bundler/parcel) 发布了这么久，终于有机会体验了一次。在一个新的基于 jQuery 的小项目中尝试了这个打包器。结合它的宣传点，整体来说最大的感受是：

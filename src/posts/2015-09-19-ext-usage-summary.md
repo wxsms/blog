@@ -6,9 +6,10 @@ categories:
   - JavaScript
 tags:
   - ExtJs
+layout: SpacePost
 ---
 
-# Ext 使用总结
+
 
 公司要求会用Ext Js，没办法必须学，下面总结了一些学习与使用过程中的经验。<!--more-->
 

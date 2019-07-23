@@ -4,9 +4,10 @@ title: 2013 年终总结
 date: 2013-12-25T23:47:45+00:00
 categories:
   - Personal
+layout: SpacePost
 ---
 
-# 2013 年终总结
+
 
 首先感谢郭凯瑞同学百忙中抽出时间接受访问，那么事不宜迟，就开始吧。
    

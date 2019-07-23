@@ -4,9 +4,10 @@ title: 《地心引力》
 date: 2013-11-26T00:55:47+00:00
 author: wxsm
 tags: [movie]
+layout: SpacePost
 ---
 
-# 《地心引力》
+
 
 
 * 很独特的设定。地球很美丽，宇宙很黑暗。

@@ -6,9 +6,10 @@ categories:
   - JavaScript
 tags:
   - D3
+layout: SpacePost
 ---
 
-# D3 Note - Basis
+
 
 D3 (Data-Driven Documents) 是一个 JavaScript Library，用来做 Web 端的数据可视化实现以及各种绘图。
 

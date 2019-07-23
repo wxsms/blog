@@ -3,11 +3,12 @@ id: 'react-node-starter'
 title: 'React node starter'
 date: 2018-10-10T02:36:09.528Z
 tags: [JavaScript, React, NodeJs]
-sidebar: 'auto'
+sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# React node starter
+
 
 
 <!-- 「」 -->

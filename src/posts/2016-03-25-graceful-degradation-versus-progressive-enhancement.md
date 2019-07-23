@@ -7,9 +7,10 @@ categories:
 tags:
   - CSS3
   - User-Experience
+layout: SpacePost
 ---
 
-# “渐进增强”与“优雅降级”
+
 
 “渐进增强”与“优雅降级”是 Web 页面两种不同的开发理念，为了简单起见，先给出定义（By W3C）：
 

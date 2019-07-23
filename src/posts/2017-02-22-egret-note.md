@@ -2,15 +2,16 @@
 id: 'egret-note'
 title: 'Egret Note'
 date: 2017-02-22 16:17:00
-sidebar: 'auto'
+sidebar: false
 categories:
   - JavaScript
   - Game-Engine
 tags:
   - Egret-Engine
+layout: SpacePost
 ---
 
-# Egret Note
+
 
 
 Egret Engine 的学习笔记。

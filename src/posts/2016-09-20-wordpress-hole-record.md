@@ -6,9 +6,10 @@ categories:
   - CMS
 tags:
   - Wordpress
+layout: SpacePost
 ---
 
-# WordPress 掉坑记录
+
 
 忍无可忍，长期更新。
 

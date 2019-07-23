@@ -6,9 +6,10 @@ categories:
   - CMS
 tags:
   - Wordpress
+layout: SpacePost
 ---
 
-# WordPress 更改后台字体为雅黑
+
 
 这个问题其实困扰了我很久。默认的后台字体实在是惨不忍睹。今天终于发现了一个很好的方案，完美解决。
 

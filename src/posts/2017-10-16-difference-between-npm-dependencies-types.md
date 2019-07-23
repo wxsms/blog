@@ -4,11 +4,12 @@ title: 'Difference Between NPM Dependencies Types'
 date: 2017-10-16T07:36:52.405Z
 categories: [JavaScript]
 tags: [NodeJs]
-sidebar: 'auto'
+sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# Difference Between NPM Dependencies Types
+
 
 
 ref: [stackoverflow](https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencies)

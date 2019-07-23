@@ -5,9 +5,10 @@ date: 2018-06-11T07:26:45.443Z
 tags: [Linux]
 sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# Simplest Wechat Client on Linux
+
 
 
 微信没有为 Linux 提供桌面客户端，可用的替代方式有：

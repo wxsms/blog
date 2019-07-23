@@ -3,9 +3,10 @@ id: review-of-the-monkey-king-2
 title: 《西游记之孙悟空三打白骨精》
 date: 2016-02-22T15:19:09+00:00
 tags: [movie]
+layout: SpacePost
 ---
 
-# 《西游记之孙悟空三打白骨精》
+
 
 
 有剧透。

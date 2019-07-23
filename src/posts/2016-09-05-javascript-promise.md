@@ -8,9 +8,10 @@ tags:
   - Async
   - ES6
   - Promise
+layout: SpacePost
 ---
 
-# JavaScript Promise
+
 
 知乎上有一个黑 JavaScript 的段子，大概是说：
 

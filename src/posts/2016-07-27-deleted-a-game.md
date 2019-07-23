@@ -6,9 +6,10 @@ views:
   - "21"
 categories:
   - Personal
+layout: SpacePost
 ---
 
-# 删除了一个游戏
+
 
 今天，在N连跪呕心沥血终于推倒对面一座塔赢了以后，我把皇室战争这个游戏删了。
 

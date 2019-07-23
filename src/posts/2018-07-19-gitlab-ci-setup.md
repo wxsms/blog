@@ -5,9 +5,10 @@ date: 2018-07-19T06:22:36.993Z
 tags: [CI, Gitlab]
 sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# Gitlab CI Setup
+
 
 
 <!-- 「」 -->
@@ -27,10 +28,10 @@ Gitlab 有一套内置的 CI 系统，相比集成 Jenkins 来说更加方便一
 一份较为完整的配置文件样例：
 
 ```yaml
-# 指定 docker 镜像
+#指定 docker 镜像
 image: node:9.3.0
 
-# 为 docker 镜像安装 ssh-agent 以执行部署任务
+#为 docker 镜像安装 ssh-agent 以执行部署任务
 before_script:
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - eval $(ssh-agent -s)
@@ -39,18 +40,18 @@ before_script:
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod 700 ~/.ssh
 
-# 定义构建的三个阶段
+#定义构建的三个阶段
 stages:
   - build
   - test
   - deploy
 
-# 定义可缓存的文件夹
+#定义可缓存的文件夹
 cache:
   paths:
     - node_modules/
 
-# 构建任务
+#构建任务
 build-job:
   stage: build
   script:
@@ -59,7 +60,7 @@ build-job:
   tags:
     - node
 
-# 测试任务
+#测试任务
 test-job:
   stage: test
   script:
@@ -69,7 +70,7 @@ test-job:
   tags:
     - node
 
-# 部署任务
+#部署任务
 deploy-job:
   stage: deploy
   only:

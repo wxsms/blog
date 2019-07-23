@@ -3,11 +3,12 @@ id: 'linux-setup-for-work'
 title: 'Linux Setup for Work'
 date: 2018-01-09T12:56:59.393Z
 tags: [Linux]
-sidebar: 'auto'
+sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# Linux Setup for Work
+
 
 
 因为各种烦人的原因，公司搬家后到新办公室第一件事先把老电脑格了。犹豫了一下，最终还是放弃了重装 Windows，支持我做出选择的原因有几：

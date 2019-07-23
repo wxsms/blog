@@ -8,9 +8,10 @@ categories:
 tags:
   - AngularJs
   - MEAN-Stack
+layout: SpacePost
 ---
 
-# MEAN.JS 在 0.5 版本下发现的 NG-REPEAT 闪动问题
+
 
 
 如题，经过长期痛苦的观察以及 debug 过程，以下原因被一一排除：

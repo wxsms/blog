@@ -4,11 +4,12 @@ title: 'Common-used Commands'
 date: 2017-11-08T10:41:01.237Z
 categories: [Personal]
 tags: []
-sidebar: 'auto'
+sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# Common-used Commands
+
 
 
 Personal common-used commands list, including windows, osx, git, etc.

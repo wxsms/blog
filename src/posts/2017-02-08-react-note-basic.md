@@ -2,14 +2,15 @@
 id: 'react-note-basic'
 title: 'React Note - Basic'
 date: 2017-02-08 11:33:00
-sidebar: 'auto'
+sidebar: false
 categories:
   - JavaScript
 tags:
   - React
+layout: SpacePost
 ---
 
-# React Note - Basic
+
 
 
 React 学习笔记（基础篇）。

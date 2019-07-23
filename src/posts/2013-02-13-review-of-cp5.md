@@ -6,9 +6,10 @@ author: wxsm
 categories:
   - Personal
   - Review
+layout: SpacePost
 ---
 
-# 仙五感想
+
 
 前两天觉得实在无聊，花了50人民币买了个仙5KEY，并且挂一晚上同时下载了5和5前，本来打算都玩玩看的，现在有谁想要玩的吗我给你KEY，不过只有一个哦，而且是5不是最新的5前。不准备购买5前KEY了。
 

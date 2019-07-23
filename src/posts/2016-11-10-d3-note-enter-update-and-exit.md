@@ -6,9 +6,10 @@ categories:
   - JavaScript
 tags:
   - D3
+layout: SpacePost
 ---
 
-# D3 Note - Enter, Update and Exit
+
 
 在 D3 的使用过程中，我们见得最多的应当是类似如下的代码：
 

@@ -6,9 +6,10 @@ categories:
   - CSS
 tags:
   - CSS3
+layout: SpacePost
 ---
 
-# CSS 绘制三角形
+
 
 关于如何使用CSS中的border属性绘制各式各样的三角形。下面有一个国外友人制作的动画，对其原理进行了直观的阐释，我简单地做了点翻译。
 

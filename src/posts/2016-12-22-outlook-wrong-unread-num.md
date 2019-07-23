@@ -6,9 +6,10 @@ categories:
   - Software
 tags:
   - MS-Office
+layout: SpacePost
 ---
 
-# Fix Outlook Wrong Unread Number Issue
+
 
 
 Sometimes we can see unread numbers on inbox label, but can't actually find them.

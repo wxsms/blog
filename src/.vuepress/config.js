@@ -8,7 +8,9 @@ module.exports = {
     ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
   ],
   themeConfig: {
-    lastUpdated: true,
+    sidebar: false,
+    navbar: false,
+    lastUpdated: false,
     nav: [
       { text: 'Home', link: '/' },
       { text: 'About', link: '/about/' }

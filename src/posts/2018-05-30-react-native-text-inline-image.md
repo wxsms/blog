@@ -5,9 +5,10 @@ date: 2018-05-30T02:09:05.427Z
 tags: [ReactNative]
 sidebar: false
 draft: false
+layout: SpacePost
 ---
 
-# React Native Text Inline Image
+
 
 
 原文地址（需科学上网）：[medium.com](https://medium.com/@yloeza/react-native-text-inline-image-6055dabd9399)

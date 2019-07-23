@@ -6,9 +6,10 @@ categories:
   - JavaScript
 tags:
   - D3
+layout: SpacePost
 ---
 
-# D3 Note - Scale
+
 
 
 之前做的柱状图例子：
