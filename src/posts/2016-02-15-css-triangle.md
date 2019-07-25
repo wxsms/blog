@@ -13,9 +13,10 @@ layout: SpacePost
 
 关于如何使用CSS中的border属性绘制各式各样的三角形。下面有一个国外友人制作的动画，对其原理进行了直观的阐释，我简单地做了点翻译。
 
-<p class='codepen'  data-height='387' data-theme-id='0' data-slug-hash='zrbGpx' data-default-tab='result' data-animations='run' data-editable='' data-embed-version='2'>
-  See the Pen <a href=’http://codepen.io/edisond/pen/zrbGpx/’>Animation to Explain CSS Triangles</a> by wxsm (<a href=’http://codepen.io/edisond’>@edisond</a>) on <a href=’http://codepen.io’>CodePen</a>.0
-</p>
+<iframe height="265" style="width: 100%;" scrolling="no" title="Animation to Explain CSS Triangles" src="//codepen.io/wxsm/embed/zrbGpx/?height=265&theme-id=0&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/wxsm/pen/zrbGpx/'>Animation to Explain CSS Triangles</a> by wxsm
+  (<a href='https://codepen.io/wxsm'>@wxsm</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
 
 &nbsp;
 
