@@ -1,4 +1,4 @@
-<template functional>
+<template>
   <section>
     <div class="scroll-touch">
       <p>
