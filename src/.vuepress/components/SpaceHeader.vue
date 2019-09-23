@@ -10,6 +10,10 @@
 </template>
 
 <style lang="less">
+  body {
+    overflow-y: scroll;
+  }
+
   .theme-default-content:not(.custom) > *:first-child {
     margin-top: 1.5rem !important;
   }
