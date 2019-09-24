@@ -8,15 +8,17 @@
         <!--{{post}}-->
       </li>
     </ul>
+    <space-footer/>
   </div>
 </template>
 
 <script>
   import SpaceHeader from './SpaceHeader'
+  import SpaceFooter from './SpaceFooter'
   import format from 'date-fns/format'
 
   export default {
-    components: { SpaceHeader },
+    components: { SpaceHeader, SpaceFooter },
     computed: {
       posts () {
         return this.$site.pages

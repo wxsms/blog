@@ -8,6 +8,7 @@
           <h1>{{$page.title}}</h1>
         </div>
         <Content/>
+        <space-footer/>
       </div>
     </main>
   </div>
@@ -16,9 +17,10 @@
 <script>
   import format from 'date-fns/format'
   import SpaceHeader from './SpaceHeader'
+  import SpaceFooter from './SpaceFooter'
 
   export default {
-    components: {SpaceHeader},
+    components: { SpaceHeader, SpaceFooter },
     methods: {
       format
     }
