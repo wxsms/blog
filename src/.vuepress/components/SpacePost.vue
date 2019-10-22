@@ -4,7 +4,7 @@
       <div class="theme-default-content content__default">
         <space-header/>
         <div class="title">
-          <h3 v-if="$page.frontmatter.date">{{format($page.frontmatter.date, 'MMM DD, YYYY')}}</h3>
+          <h3 v-if="$page.frontmatter.date">{{format(new Date($page.frontmatter.date), 'MMM dd, yyyy')}}</h3>
           <h1>{{$page.title}}</h1>
         </div>
         <Content/>

@@ -10,14 +10,14 @@
     "docs:build": "vuepress build src && node build/build-dist-config.js"
   },
   "devDependencies": {
-    "less": "^3.9.0",
+    "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "readline-sync": "^1.4.9",
-    "vuepress": "^1.0.2",
+    "readline-sync": "^1.4.10",
+    "vuepress": "^1.2.0",
     "vuepress-plugin-google-adsense": "^0.0.3",
-    "vuepress-plugin-sitemap": "^2.1.2"
+    "vuepress-plugin-sitemap": "^2.3.0"
   },
   "dependencies": {
-    "date-fns": "^1.30.1"
+    "date-fns": "^2.5.1"
   }
 }

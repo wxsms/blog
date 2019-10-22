@@ -3,7 +3,7 @@
     <space-header/>
     <ul class="list">
       <li v-for="post in posts" :key="post.key">
-        <h3>{{format(post.frontmatter.date, 'MMM DD, YYYY')}}</h3>
+        <h3>{{format(new Date(post.frontmatter.date), 'MMM dd, yyyy')}}</h3>
         <router-link :to="post.path" class="title-link">{{post.title}}</router-link>
         <!--{{post}}-->
       </li>
