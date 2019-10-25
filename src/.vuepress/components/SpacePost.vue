@@ -8,7 +8,7 @@
           <h1>{{$page.title}}</h1>
         </div>
         <Content/>
-        <valine v-if="$page.frontmatter.comment !== false" :key="$route.path"/>
+        <valine-comment v-if="$page.frontmatter.comment !== false" :key="$route.path"/>
         <space-footer/>
       </div>
     </main>
@@ -19,10 +19,10 @@
   import format from 'date-fns/format'
   import SpaceHeader from './SpaceHeader'
   import SpaceFooter from './SpaceFooter'
-  import Valine from './Valine'
+  import ValineComment from './ValineComment'
 
   export default {
-    components: { Valine, SpaceHeader, SpaceFooter },
+    components: { ValineComment, SpaceHeader, SpaceFooter },
     methods: {
       format
     }

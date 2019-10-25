@@ -12,7 +12,7 @@
       if (typeof window !== 'undefined') {
         const Valine = require('valine')
         window.AV = require('leancloud-storage')
-        new Valine({
+        new ValineComment({
           el: '#vcomments',
           appId: 'PXFnynf8h6Qnpm9cIWT0BMgG-gzGzoHsz',
           appKey: 'GshYVR9jngnBj94to63biynJ',
@@ -32,5 +32,4 @@
   .v-comment-container {
     margin: 5rem 0;
   }
-
 </style>
