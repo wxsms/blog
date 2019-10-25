@@ -8,7 +8,7 @@ tags:
   - AngularJs
   - Router
   - SPA
-layout: SpacePost
+
 ---
 
 

@@ -6,7 +6,7 @@ categories: [JavaScript]
 tags: [Vue, Router]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

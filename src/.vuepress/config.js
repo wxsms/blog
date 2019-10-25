@@ -7,14 +7,24 @@ module.exports = {
     ['link', { rel: 'shortcut icon', type: 'image/png', href: 'favicon.png' }],
     ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
   ],
+  theme: 'mini',
   themeConfig: {
-    sidebar: false,
-    navbar: false,
-    lastUpdated: false,
+    siteName: 'wxsm\'s space',
+    author: 'wxsm',
+    navbar: true,
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'About', link: '/about/' }
-    ]
+      { text: 'home', link: '/' },
+      { text: 'about', link: '/about/' }
+    ],
+    valine: {
+      appId: 'PXFnynf8h6Qnpm9cIWT0BMgG-gzGzoHsz',
+      appKey: 'GshYVR9jngnBj94to63biynJ',
+      placeholder: 'Leave a comment...',
+      verify: false,
+      notify: false,
+      avatar: 'retro',
+      lang: 'en'
+    }
   },
   plugins: {
     'sitemap': {

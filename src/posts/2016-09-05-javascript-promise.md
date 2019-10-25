@@ -8,7 +8,7 @@ tags:
   - Async
   - ES6
   - Promise
-layout: SpacePost
+
 ---
 
 

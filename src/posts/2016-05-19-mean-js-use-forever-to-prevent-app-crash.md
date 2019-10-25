@@ -8,7 +8,7 @@ tags:
   - Grunt
   - MEAN-Stack
   - NodeJs
-layout: SpacePost
+
 ---
 
 

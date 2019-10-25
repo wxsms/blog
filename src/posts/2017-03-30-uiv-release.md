@@ -7,7 +7,7 @@ categories:
 tags:
   - Vue
   - Bootstrap
-layout: SpacePost
+
 ---
 
 

@@ -8,7 +8,7 @@ categories:
 tags:
   - AngularJs
   - MEAN-Stack
-layout: SpacePost
+
 ---
 
 

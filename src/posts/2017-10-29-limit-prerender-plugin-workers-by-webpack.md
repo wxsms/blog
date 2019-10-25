@@ -6,7 +6,7 @@ categories: [JavaScript]
 tags: [Vue, Webpack, Travis-CI]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

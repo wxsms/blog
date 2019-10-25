@@ -5,7 +5,7 @@ date: 2019-04-02T07:10:24.846Z
 tags: [Parcel, JavaScript]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

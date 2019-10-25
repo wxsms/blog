@@ -1,1 +1,4 @@
-<space-home/>
+---
+layout: Home
+---
+

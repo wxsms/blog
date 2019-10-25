@@ -1,5 +1,5 @@
 ---
-layout: SpacePost
+
 id: 'blog-migrated-to-vuepress'
 title: 'Blog Migrated to VuePress'
 date: 2019-07-23T03:40:08.642Z

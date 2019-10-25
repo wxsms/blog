@@ -7,7 +7,7 @@ categories:
 tags:
   - Vue
   - CSS3
-layout: SpacePost
+
 ---
 
 

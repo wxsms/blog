@@ -8,7 +8,7 @@ tags:
   - MySQL
   - PHP
   - Wordpress
-layout: SpacePost
+
 ---
 
 

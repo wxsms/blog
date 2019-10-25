@@ -6,7 +6,7 @@ categories:
   - JavaScript
 tags:
   - ExtJs
-layout: SpacePost
+
 ---
 
 

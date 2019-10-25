@@ -5,7 +5,7 @@ date: 2018-09-06T06:46:40.741Z
 tags: [JavaScript]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

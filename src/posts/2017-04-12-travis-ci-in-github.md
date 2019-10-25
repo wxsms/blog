@@ -7,7 +7,7 @@ categories:
 tags:
   - Github
   - Travis-CI
-layout: SpacePost
+
 ---
 
 

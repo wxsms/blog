@@ -6,7 +6,7 @@ categories: [Personal]
 tags: []
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

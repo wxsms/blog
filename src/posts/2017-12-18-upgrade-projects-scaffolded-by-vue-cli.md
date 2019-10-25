@@ -5,7 +5,7 @@ date: 2017-12-18T12:08:22.025Z
 tags: [Vue, Webpack]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

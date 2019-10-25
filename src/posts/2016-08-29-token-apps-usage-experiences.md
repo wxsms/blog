@@ -5,7 +5,7 @@ date: 2016-08-29T16:22:07+00:00
 categories:
   - Personal
   - Review
-layout: SpacePost
+
 ---
 
 

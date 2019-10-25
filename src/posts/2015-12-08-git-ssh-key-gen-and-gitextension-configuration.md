@@ -6,7 +6,7 @@ categories:
   - VCS
 tags:
   - Git
-layout: SpacePost
+
 ---
 
 

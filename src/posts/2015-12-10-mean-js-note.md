@@ -10,7 +10,7 @@ tags:
   - MEAN-Stack
   - MongoDB
   - NodeJs
-layout: SpacePost
+
 ---
 
 

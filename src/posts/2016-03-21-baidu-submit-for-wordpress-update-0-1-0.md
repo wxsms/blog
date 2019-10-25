@@ -8,7 +8,7 @@ tags:
   - PHP
   - SEO
   - Wordpress
-layout: SpacePost
+
 ---
 
 

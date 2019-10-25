@@ -7,7 +7,7 @@ categories:
 tags:
   - IntelliJ-IDEA
   - Webpack
-layout: SpacePost
+
 ---
 
 

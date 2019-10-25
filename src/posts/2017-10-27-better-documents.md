@@ -6,7 +6,7 @@ categories: [Web-Front-end]
 tags: [Vue,Github,Webpack,Markdown,User-Experience]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

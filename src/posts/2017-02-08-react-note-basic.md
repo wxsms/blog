@@ -7,7 +7,7 @@ categories:
   - JavaScript
 tags:
   - React
-layout: SpacePost
+
 ---
 
 

@@ -1,5 +1,5 @@
 ---
-layout: SpacePost
+
 id: 'centos7-firewalld'
 title: 'CentOS7 Firewalld'
 date: 2019-10-24T01:28:04.174Z

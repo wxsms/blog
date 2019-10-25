@@ -5,7 +5,7 @@ date: 2019-03-14T07:22:18.133Z
 tags: [ReactNative]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

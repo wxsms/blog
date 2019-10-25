@@ -1,5 +1,5 @@
 ---
-layout: SpacePost
+
 id: 'webkit-overflow-scrolling'
 title: '-webkit-overflow-scrolling'
 date: 2019-07-25T02:01:20.712Z

@@ -7,7 +7,7 @@ categories:
 tags:
   - Vue
   - i18n
-layout: SpacePost
+
 ---
 
 

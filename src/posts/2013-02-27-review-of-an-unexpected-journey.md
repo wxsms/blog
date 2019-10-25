@@ -3,7 +3,7 @@ id: review-of-an-unexpected-journey
 title: 《意外之旅》
 date: 2013-02-27T01:26:36+00:00
 tags: [movie]
-layout: SpacePost
+
 ---
 
 

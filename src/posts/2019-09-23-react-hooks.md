@@ -1,5 +1,5 @@
 ---
-layout: SpacePost
+
 id: 'react-hooks'
 title: 'React Hooks'
 date: 2019-09-23T02:13:05.102Z

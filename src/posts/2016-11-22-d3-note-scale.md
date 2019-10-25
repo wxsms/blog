@@ -6,7 +6,7 @@ categories:
   - JavaScript
 tags:
   - D3
-layout: SpacePost
+
 ---
 
 

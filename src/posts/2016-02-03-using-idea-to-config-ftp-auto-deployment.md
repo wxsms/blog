@@ -7,7 +7,7 @@ categories:
 tags:
   - FTP
   - IntelliJ-IDEA
-layout: SpacePost
+
 ---
 
 

@@ -6,7 +6,7 @@ categories:
   - CSS
 tags:
   - CSS3
-layout: SpacePost
+
 ---
 
 

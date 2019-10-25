@@ -4,7 +4,7 @@ title: JavaScript 事件代理
 date: 2016-04-01T11:38:12+00:00
 categories:
   - JavaScript
-layout: SpacePost
+
 ---
 
 

@@ -6,7 +6,7 @@ categories:
   - IDE
 tags:
   - IntelliJ-IDEA
-layout: SpacePost
+
 ---
 
 

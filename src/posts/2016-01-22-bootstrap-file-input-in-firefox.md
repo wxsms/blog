@@ -7,7 +7,7 @@ categories:
 tags:
   - Bootstrap
   - Firefox
-layout: SpacePost
+
 ---
 
 

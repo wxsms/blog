@@ -4,7 +4,7 @@ title: Static Blog Built with Vue
 date: 2016-11-16 16:55:00
 categories:
   - Personal
-layout: SpacePost
+
 ---
 
 

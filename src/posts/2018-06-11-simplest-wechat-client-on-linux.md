@@ -5,7 +5,7 @@ date: 2018-06-11T07:26:45.443Z
 tags: [Linux]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

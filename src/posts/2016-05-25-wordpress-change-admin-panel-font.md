@@ -6,7 +6,7 @@ categories:
   - CMS
 tags:
   - Wordpress
-layout: SpacePost
+
 ---
 
 

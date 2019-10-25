@@ -5,7 +5,7 @@ date: 2018-11-23T07:48:00.844Z
 tags: [OSX]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

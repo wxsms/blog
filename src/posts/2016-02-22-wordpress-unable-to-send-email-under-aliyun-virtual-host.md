@@ -7,7 +7,7 @@ categories:
 tags:
   - PHP
   - Wordpress
-layout: SpacePost
+
 ---
 
 

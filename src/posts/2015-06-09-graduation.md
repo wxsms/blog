@@ -6,7 +6,7 @@ views:
   - "22"
 categories:
   - Personal
-layout: SpacePost
+
 ---
 
 

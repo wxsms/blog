@@ -5,7 +5,7 @@ date: 2017-12-13T04:41:42.021Z
 tags: [Vue, JSX, Babel, Webpack]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

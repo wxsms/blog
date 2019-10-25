@@ -6,7 +6,7 @@ categories: [JavaScript]
 tags: [PM2]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

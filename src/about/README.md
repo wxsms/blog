@@ -1,6 +1,5 @@
 ---
 title: About
-layout: SpacePost
 comment: false
 ---
 

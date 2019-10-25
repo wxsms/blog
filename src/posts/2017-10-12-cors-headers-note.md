@@ -6,7 +6,7 @@ categories: [Web-Front-end]
 tags: [Ajax, HTTP, NodeJs]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 

@@ -4,7 +4,7 @@ title: 记一次项目经历
 date: 2016-04-05T14:47:06+00:00
 categories:
   - Personal
-layout: SpacePost
+
 ---
 
 

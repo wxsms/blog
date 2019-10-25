@@ -5,7 +5,7 @@ date: 2018-07-19T06:22:36.993Z
 tags: [CI, Gitlab]
 sidebar: false
 draft: false
-layout: SpacePost
+
 ---
 
 
