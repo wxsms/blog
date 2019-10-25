@@ -8,7 +8,7 @@
   export default {
     name: 'Valine',
     mounted () {
-      console.log('mounted')
+      // console.log('mounted')
       if (typeof window !== 'undefined') {
         const Valine = require('valine')
         window.AV = require('leancloud-storage')
