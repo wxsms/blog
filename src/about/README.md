@@ -20,4 +20,3 @@ Contact me:
 
 Project: [https://github.com/wxsms/blog](https://github.com/wxsms/blog).
 
-Base on [Vue.js](https://vuejs.org/) & [Webpack](https://webpack.github.io/), Hosted by [Github Pages](https://pages.github.com/) & [Cloudflare](https://www.cloudflare.com/).

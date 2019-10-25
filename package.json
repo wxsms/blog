@@ -16,6 +16,6 @@
     "vuepress": "^1.2.0",
     "vuepress-plugin-google-adsense": "^0.0.3",
     "vuepress-plugin-sitemap": "^2.3.0",
-    "vuepress-theme-mini": "^0.0.9"
+    "vuepress-theme-mini": "^0.1.0"
   }
 }
