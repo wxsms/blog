@@ -12,7 +12,7 @@
       if (typeof window !== 'undefined') {
         const Valine = require('valine')
         window.AV = require('leancloud-storage')
-        new ValineComment({
+        new Valine({
           el: '#vcomments',
           appId: 'PXFnynf8h6Qnpm9cIWT0BMgG-gzGzoHsz',
           appKey: 'GshYVR9jngnBj94to63biynJ',
