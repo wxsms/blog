@@ -1,11 +1,10 @@
 ---
-permalink: '/posts/2019-04-02-first-exp-of-parcel.html'
-title: 'Parcel 初体验'
+permalink: '/posts/2019-04-02-parcel-note.html'
+title: 'Parcel Note'
 date: 2019-04-02T07:10:24.846Z
 tags: [Parcel, JavaScript]
 sidebar: false
 draft: false
-
 ---
 
 
