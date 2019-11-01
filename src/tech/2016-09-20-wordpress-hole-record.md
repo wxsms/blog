@@ -1,5 +1,5 @@
 ---
-id: wordpress-hole-record
+permalink: '/posts/2016-09-20-wordpress-hole-record.html
 title: WordPress 掉坑记录
 date: 2016-09-20T15:14:47+00:00
 categories:

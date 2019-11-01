@@ -1,5 +1,5 @@
 ---
-id: baidu-submit-for-wordpress-update-0-1-0
+permalink: '/posts/2016-03-21-baidu-submit-for-wordpress-update-0-1-0.html
 title: Baidu Submit for WordPress update 0.1.0
 date: 2016-03-21T13:38:04+00:00
 categories:

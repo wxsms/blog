@@ -1,5 +1,5 @@
 ---
-id: 'change-socks-proxy-to-http'
+permalink: '/posts/2017-03-10-change-socks-proxy-to-http.html
 title: 'Change SOCKS Proxy to HTTP'
 date: 2017-03-10 12:00:00
 categories: [Software]

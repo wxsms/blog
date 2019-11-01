@@ -1,5 +1,5 @@
 ---
-id: 2013-annual-summary
+permalink: '/posts/2013-12-25-2013-annual-summary.html
 title: 2013 年终总结
 date: 2013-12-25T23:47:45+00:00
 categories:

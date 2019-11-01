@@ -1,5 +1,5 @@
 ---
-id: 'react-note-basic'
+permalink: '/posts/2017-02-08-react-note-basic.html
 title: 'React Note - Basic'
 date: 2017-02-08 11:33:00
 sidebar: false

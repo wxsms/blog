@@ -1,5 +1,5 @@
 ---
-id: github-pages-and-ssl
+permalink: '/posts/2016-12-08-github-pages-and-ssl.html
 title: 'Github Pages and SSL'
 date: 2016-12-08 17:00:00
 categories:

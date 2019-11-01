@@ -1,5 +1,5 @@
 ---
-id: mean-js-menu-service-extension
+permalink: '/posts/2016-01-05-mean-js-menu-service-extension.html
 title: MEAN.js Menu Service Extension
 date: 2016-01-05T17:34:47+00:00
 categories:

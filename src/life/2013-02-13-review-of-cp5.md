@@ -1,5 +1,5 @@
 ---
-id: review-of-cp5
+permalink: '/posts/2013-02-13-review-of-cp5.html
 title: 仙五感想
 date: 2013-02-13T11:25:31+00:00
 author: wxsm

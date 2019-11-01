@@ -1,5 +1,5 @@
 ---
-id: d3-note-enter-update-and-exit
+permalink: '/posts/2016-11-10-d3-note-enter-update-and-exit.html
 title: 'D3 Note - Enter, Update and Exit'
 date: 2016-11-10T11:43:10+00:00
 categories:

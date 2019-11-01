@@ -1,5 +1,5 @@
 ---
-id: node-js-web-spider-note-2
+permalink: '/posts/2016-11-05-node-js-web-spider-note-2.html
 title: 'Node.js Web Spider Note - 2'
 date: 2016-11-05T14:45:26+00:00
 categories:

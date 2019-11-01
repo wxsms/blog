@@ -1,5 +1,5 @@
 ---
-id: graduation
+permalink: '/posts/2015-06-09-graduation.html
 title: 毕业
 date: 2015-06-09T01:09:40+00:00
 views:

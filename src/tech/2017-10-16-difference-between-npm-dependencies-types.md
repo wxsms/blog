@@ -1,5 +1,5 @@
 ---
-id: 'difference-between-npm-dependencies-types'
+permalink: '/posts/2017-10-16-difference-between-npm-dependencies-types.html
 title: 'Difference Between NPM Dependencies Types'
 date: 2017-10-16T07:36:52.405Z
 categories: [JavaScript]

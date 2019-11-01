@@ -1,5 +1,5 @@
 ---
-id: ext-usage-summary
+permalink: '/posts/2015-09-19-ext-usage-summary.html
 title: Ext 使用总结
 date: 2015-09-19T15:36:18+00:00
 categories:

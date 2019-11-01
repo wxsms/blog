@@ -1,5 +1,5 @@
 ---
-id: git-ssh-key-gen-and-gitextension-configuration
+permalink: '/posts/2015-12-08-git-ssh-key-gen-and-gitextension-configuration.html
 title: Git SSH key 生成与 GitExtension 配置
 date: 2015-12-08T16:26:07+00:00
 categories:

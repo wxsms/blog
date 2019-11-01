@@ -1,5 +1,5 @@
 ---
-id: token-apps-usage-experiences
+permalink: '/posts/2016-08-29-token-apps-usage-experiences.html
 title: 令牌软件使用体验
 date: 2016-08-29T16:22:07+00:00
 categories:

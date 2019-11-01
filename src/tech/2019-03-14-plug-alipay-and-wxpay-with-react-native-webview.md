@@ -1,5 +1,5 @@
 ---
-id: 'plug-alipay-and-wxpay-with-react-native-webview'
+permalink: '/posts/2019-03-14-plug-alipay-and-wxpay-with-react-native-webview.html
 title: 'ReactNative WebView 接入支付宝与微信支付'
 date: 2019-03-14T07:22:18.133Z
 tags: [ReactNative]

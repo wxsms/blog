@@ -1,5 +1,5 @@
 ---
-id: some-oddities-about-javascript
+permalink: '/posts/2016-02-15-some-oddities-about-javascript.html
 title: JavaScript 的一些古怪之处
 date: 2016-02-15T16:47:27+00:00
 categories:

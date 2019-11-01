@@ -1,5 +1,5 @@
 ---
-id: using-excerpt-in-wp-2016-theme
+permalink: '/posts/2016-08-31-using-excerpt-in-wp-2016-theme.html
 title: WP 2016 主题使用摘要
 date: 2016-08-31T17:15:31+00:00
 categories:

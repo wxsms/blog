@@ -1,5 +1,5 @@
 ---
-id: blog-migration
+permalink: '/posts/2015-09-18-blog-migration.html
 title: 博客迁移
 date: 2015-09-18T21:20:51+00:00
 categories:

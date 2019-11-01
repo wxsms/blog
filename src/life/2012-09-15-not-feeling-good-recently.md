@@ -1,5 +1,5 @@
 ---
-id: not-feeling-good-recently
+permalink: '/posts/2012-09-15-not-feeling-good-recently.html
 title: 最近状态不好
 date: 2012-09-15T21:33:11+00:00
 categories:

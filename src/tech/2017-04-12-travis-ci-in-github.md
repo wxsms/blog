@@ -1,5 +1,5 @@
 ---
-id: 'travis-ci-in-github'
+permalink: '/posts/2017-04-12-travis-ci-in-github.html
 title: 'Travis CI in Github'
 date: 2017-04-12 17:35:00
 categories:

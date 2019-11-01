@@ -1,5 +1,5 @@
 ---
-id: graceful-degradation-versus-progressive-enhancement
+permalink: '/posts/2016-03-25-graceful-degradation-versus-progressive-enhancement.html
 title: “渐进增强”与“优雅降级”
 date: 2016-03-25T09:35:10+00:00
 categories:

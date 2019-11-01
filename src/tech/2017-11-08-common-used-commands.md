@@ -1,5 +1,5 @@
 ---
-id: 'common-used-commands'
+permalink: '/posts/2017-11-08-common-used-commands.html
 title: 'Common-used Commands'
 date: 2017-11-08T10:41:01.237Z
 categories: [Personal]

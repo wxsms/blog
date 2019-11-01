@@ -1,6 +1,6 @@
 ---
 
-id: 'webkit-overflow-scrolling'
+permalink: '/posts/2019-07-25-webkit-overflow-scrolling.html
 title: '-webkit-overflow-scrolling'
 date: 2019-07-25T02:01:20.712Z
 tags: [CSS]

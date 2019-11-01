@@ -1,5 +1,5 @@
 ---
-id: some-memory
+permalink: '/posts/2013-10-27-some-memory.html
 title: 留念
 date: 2013-10-27T23:30:04+00:00
 views:

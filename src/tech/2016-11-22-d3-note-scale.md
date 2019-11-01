@@ -1,5 +1,5 @@
 ---
-id: d3-note-scale
+permalink: '/posts/2016-11-22-d3-note-scale.html
 title: 'D3 Note - Scale'
 date: 2016-11-22 09:00:00
 categories:

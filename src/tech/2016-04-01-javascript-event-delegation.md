@@ -1,5 +1,5 @@
 ---
-id: javascript-event-delegation
+permalink: '/posts/2016-04-01-javascript-event-delegation.html
 title: JavaScript 事件代理
 date: 2016-04-01T11:38:12+00:00
 categories:

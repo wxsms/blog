@@ -1,5 +1,5 @@
 ---
-id: 'upgrade-projects-built-by-vue-cli'
+permalink: '/posts/2017-12-18-upgrade-projects-scaffolded-by-vue-cli.html
 title: 'Upgrade Projects Built by vue-cli'
 date: 2017-12-18T12:08:22.025Z
 tags: [Vue, Webpack]

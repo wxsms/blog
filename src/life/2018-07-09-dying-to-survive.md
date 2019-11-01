@@ -1,5 +1,5 @@
 ---
-id: 'dying-to-survive'
+permalink: '/posts/2018-07-09-dying-to-survive.html
 title: '《中国药神》'
 date: 2018-07-09T06:48:13.964Z
 tags: [movie]

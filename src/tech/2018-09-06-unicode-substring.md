@@ -1,5 +1,5 @@
 ---
-id: 'unicode-substring'
+permalink: '/posts/2018-09-06-unicode-substring.html
 title: 'Unicode substring'
 date: 2018-09-06T06:46:40.741Z
 tags: [JavaScript]

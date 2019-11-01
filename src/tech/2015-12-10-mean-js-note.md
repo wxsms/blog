@@ -1,5 +1,5 @@
 ---
-id: mean-js-note
+permalink: '/posts/2015-12-10-mean-js-note.html
 title: MEAN.js 学习笔记
 date: 2015-12-10T16:35:33+00:00
 categories:

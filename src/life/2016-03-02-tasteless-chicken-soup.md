@@ -1,5 +1,5 @@
 ---
-id: tasteless-chicken-soup
+permalink: '/posts/2016-03-02-tasteless-chicken-soup.html
 title: 过期鸡汤
 date: 2016-03-02T14:02:12+00:00
 categories:

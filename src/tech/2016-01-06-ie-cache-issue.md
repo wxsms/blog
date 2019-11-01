@@ -1,5 +1,5 @@
 ---
-id: ie-cache-issue
+permalink: '/posts/2016-01-06-ie-cache-issue.html
 title: IE Cache Issue
 date: 2016-01-06T17:12:47+00:00
 categories:

@@ -1,5 +1,5 @@
 ---
-id: deleted-a-game
+permalink: '/posts/2016-07-27-deleted-a-game.html
 title: 删除了一个游戏
 date: 2016-07-27T15:13:22+00:00
 views:

@@ -1,5 +1,5 @@
 ---
-id: wordpress-archives-page-implementation
+permalink: '/posts/2016-02-02-wordpress-archives-page-implementation.html
 title: WordPress 文章归档页面实现
 date: 2016-02-02T16:06:16+00:00
 categories:

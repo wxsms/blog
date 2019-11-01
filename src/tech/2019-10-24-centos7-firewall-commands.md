@@ -1,5 +1,5 @@
 ---
-id: '/posts/2019-10-24-centos7-firewall-commands.html'
+permalink: '/posts/2019-10-24-centos7-firewall-commands.html
 title: 'CentOS7 Firewalld'
 date: 2019-10-24T01:28:04.174Z
 tags: [centos, centos7]

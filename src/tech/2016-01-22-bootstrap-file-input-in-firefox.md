@@ -1,5 +1,5 @@
 ---
-id: bootstrap-file-input-in-firefox
+permalink: '/posts/2016-01-22-bootstrap-file-input-in-firefox.html
 title: Bootstrap file input in Firefox
 date: 2016-01-22T09:20:46+00:00
 categories:

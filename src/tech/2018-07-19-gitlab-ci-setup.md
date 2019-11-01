@@ -1,5 +1,5 @@
 ---
-id: 'gitlab-ci-setup'
+permalink: '/posts/2018-07-19-gitlab-ci-setup.html
 title: 'Gitlab CI Setup'
 date: 2018-07-19T06:22:36.993Z
 tags: [CI, Gitlab]

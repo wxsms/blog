@@ -23,12 +23,12 @@ readFilesFromDirSync = function (dirname, onFileContent, onError) {
   }
 }
 
-readFilesFromDirSync('../src/life', (filename, content) => {
+readFilesFromDirSync('../src/tech', (filename, content) => {
   if (filename === 'README.md') {
     return
   }
   let _content = content.replace(/(id:.+)/, `permalink: '/posts/${filename.replace('.md', '.html')}`)
-  fs.writeFileSync('../src/life/' + filename, _content)
+  fs.writeFileSync('../src/tech/' + filename, _content)
 }, (err) => {
   console.error(err)
 })

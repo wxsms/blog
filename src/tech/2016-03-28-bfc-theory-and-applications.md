@@ -1,5 +1,5 @@
 ---
-id: bfc-theory-and-applications
+permalink: '/posts/2016-03-28-bfc-theory-and-applications.html
 title: BFC 原理及应用
 date: 2016-03-28T17:43:35+00:00
 categories:

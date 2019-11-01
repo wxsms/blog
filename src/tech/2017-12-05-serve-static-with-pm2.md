@@ -1,5 +1,5 @@
 ---
-id: 'serve-static-with-pm2'
+permalink: '/posts/2017-12-05-serve-static-with-pm2.html
 title: 'Serve static with PM2'
 date: 2017-12-05T11:10:49.100Z
 categories: [JavaScript]

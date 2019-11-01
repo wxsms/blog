@@ -1,5 +1,5 @@
 ---
-id: 'auto-height-webview-of-react-native'
+permalink: '/posts/2018-04-24-auto-height-webview-of-react-native.html
 title: 'Auto-height Webview of ReactNative'
 date: 2018-04-24T06:32:30.482Z
 tags: [JavaScript,ReactNative]

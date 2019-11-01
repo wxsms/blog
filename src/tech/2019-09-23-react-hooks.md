@@ -1,6 +1,6 @@
 ---
 
-id: 'react-hooks'
+permalink: '/posts/2019-09-23-react-hooks.html
 title: 'React Hooks'
 date: 2019-09-23T02:13:05.102Z
 tags: [React,Vue,JavaScript]

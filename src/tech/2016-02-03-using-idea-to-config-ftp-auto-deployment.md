@@ -1,5 +1,5 @@
 ---
-id: using-idea-to-config-ftp-auto-deployment
+permalink: '/posts/2016-02-03-using-idea-to-config-ftp-auto-deployment.html
 title: 使用 IDEA 配置自动同步到FTP服务器
 date: 2016-02-03T16:45:27+00:00
 categories:

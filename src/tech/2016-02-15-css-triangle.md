@@ -1,5 +1,5 @@
 ---
-id: css-triangle
+permalink: '/posts/2016-02-15-css-triangle.html
 title: CSS 绘制三角形
 date: 2016-02-15T10:58:33+00:00
 categories:

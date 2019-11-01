@@ -1,5 +1,5 @@
 ---
-id: d3-note-basis
+permalink: '/posts/2016-10-25-d3-note-basis.html
 title: 'D3 Note - Basis'
 date: 2016-10-25T10:40:44+00:00
 categories:

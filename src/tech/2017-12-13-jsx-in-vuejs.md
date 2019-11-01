@@ -1,5 +1,5 @@
 ---
-id: 'jsx-in-vuejs'
+permalink: '/posts/2017-12-13-jsx-in-vuejs.html
 title: 'JSX in Vue.js'
 date: 2017-12-13T04:41:42.021Z
 tags: [Vue, JSX, Babel, Webpack]
