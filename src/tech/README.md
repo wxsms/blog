@@ -1,5 +1,4 @@
 ---
 layout: ArticleIndex
-articleIndex: '/tech'
 ---
 

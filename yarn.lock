@@ -1947,6 +1947,11 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/commander/download/commander-1.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-1.0.0.tgz#5e6a88e7070ff5908836ead19169548c30f90bcd"
+  integrity sha1-XmqI5wcP9ZCINurRkWlUjDD5C80=
+
 commander@2.17.x:
   version "2.17.1"
   resolved "https://registry.npm.taobao.org/commander/download/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
@@ -4066,7 +4071,7 @@ js-levenshtein@^1.1.3:
   resolved "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha1-GSA/tZmR35jjoocFDUZHzerzJJk=
 
-js-yaml@^3.11.0, js-yaml@^3.13.1:
+js-yaml@^3.10.0, js-yaml@^3.11.0, js-yaml@^3.13.1:
   version "3.13.1"
   resolved "https://registry.npm.taobao.org/js-yaml/download/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   integrity sha1-r/FRswv9+o5J4F2iLnQV6d+jeEc=
@@ -7299,10 +7304,10 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-0.1.2.tgz?cache=0&sync_timestamp=1572001650740&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvuepress-theme-mini%2Fdownload%2Fvuepress-theme-mini-0.1.2.tgz#a4783960c54f979fd6bbc184e6cae03f83dd104f"
-  integrity sha1-pHg5YMVPl5/Wu8GE5srgP4PdEE8=
+vuepress-theme-mini@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-0.2.0.tgz?cache=0&sync_timestamp=1572579162146&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvuepress-theme-mini%2Fdownload%2Fvuepress-theme-mini-0.2.0.tgz#4c950c018144ff1999976750a20be3edc2be090b"
+  integrity sha1-TJUMAYFE/xmZl2dQogvj7cK+CQs=
   dependencies:
     date-fns "^2.5.1"
     leancloud-storage "^3.15.0"
@@ -7578,6 +7583,14 @@ yallist@^3.0.0, yallist@^3.0.2, yallist@^3.0.3:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/yallist/download/yallist-3.0.3.tgz#b4b049e314be545e3ce802236d6cd22cd91c3de9"
   integrity sha1-tLBJ4xS+VF486AIjbWzSLNkcPek=
+
+yaml-front-matter@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/yaml-front-matter/download/yaml-front-matter-4.0.0.tgz#11c378c54eac3061a82cbaf693a69b4e4c44f484"
+  integrity sha1-EcN4xU6sMGGoLLr2k6abTkxE9IQ=
+  dependencies:
+    commander "1.0.0"
+    js-yaml "^3.10.0"
 
 yargs-parser@^11.1.1:
   version "11.1.1"

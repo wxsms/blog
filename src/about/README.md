@@ -1,6 +1,6 @@
 ---
 title: About
-comment: false
+layout: Page
 ---
 
 ### Me

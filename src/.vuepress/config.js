@@ -13,7 +13,8 @@ module.exports = {
     author: 'wxsm',
     navbar: true,
     nav: [
-      { text: 'home', link: '/' },
+      { text: 'tech', link: '/tech' },
+      { text: 'life', link: '/life' },
       { text: 'about', link: '/about/' }
     ],
     valine: {
