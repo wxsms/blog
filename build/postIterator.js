@@ -1,3 +1,7 @@
+/**
+ * Use this file to iterate posts and do anything needed.
+ */
+
 /*
 const fs = require('fs')
 const yamlFront = require('yaml-front-matter')
