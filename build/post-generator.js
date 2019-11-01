@@ -7,7 +7,7 @@ let str = fs.readFileSync(path.join(__dirname, 'server-views/post-template.md'),
 const postTitle = read.question('Enter post title: ')
 const postId = read.question('Enter post id: ')
 const tags = read.question('Enter tags (separate by comma): ')
-const folder = read.question('Which folder (tech / life): ')
+const folder = read.question('Which folder (tech / life, etc.): ')
 const isoDateStr = new Date().toISOString()
 
 const slug = `${isoDateStr.substr(0, 10)}-${postId}`
@@ -20,5 +20,5 @@ str = str
   .replace('{{tags}}', tags)
   .replace('{{date}}', isoDateStr)
 
-fs.writeFileSync(path.join(__dirname, `../src/${folder}/${filename}`), str)
+fs.writeFileSync(path.join(__dirname, `../src/posts/${folder}/${filename}`), str)
 console.log(`${filename} created.`)

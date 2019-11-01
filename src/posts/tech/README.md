@@ -1,4 +1,5 @@
 ---
+permalink: /tech
 layout: ArticleIndex
 ---
 

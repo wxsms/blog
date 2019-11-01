@@ -1,5 +1,5 @@
 ---
 layout: ArticleIndex
-articleIndex: '/tech'
+articleIndex: '/posts/tech'
 ---
 

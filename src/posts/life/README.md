@@ -1,4 +1,5 @@
 ---
+permalink: /life
 layout: ArticleIndex
 ---
 
