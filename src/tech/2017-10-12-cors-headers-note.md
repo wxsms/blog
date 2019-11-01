@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-10-12-cors-headers-note.html
+permalink: '/posts/2017-10-12-cors-headers-note.html'
 title: 'CORS Headers Note'
 date: 2017-10-12T06:44:39.617Z
 categories: [Web-Front-end]

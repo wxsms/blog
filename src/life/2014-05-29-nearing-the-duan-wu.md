@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2014-05-29-nearing-the-duan-wu.html
+permalink: '/posts/2014-05-29-nearing-the-duan-wu.html'
 title: 临近端午
 date: 2014-05-29T20:46:52+00:00
 categories:

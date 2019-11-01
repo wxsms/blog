@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-11-07-webpack-hmr-not-work-in-idea.html
+permalink: '/posts/2016-11-07-webpack-hmr-not-work-in-idea.html'
 title: Webpack HMR Not Work in IDEA
 date: 2016-11-07T09:44:41+00:00
 categories:

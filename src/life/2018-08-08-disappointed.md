@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-08-08-disappointed.html
+permalink: '/posts/2018-08-08-disappointed.html'
 title: '失望'
 date: 2018-08-08T06:32:16.001Z
 tags: []

@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-12-22-outlook-wrong-unread-num.html
+permalink: '/posts/2016-12-22-outlook-wrong-unread-num.html'
 title: 'Fix Outlook Wrong Unread Number Issue'
 date: 2016-12-22 09:17:00
 categories:

@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-05-30-react-native-text-inline-image.html
+permalink: '/posts/2018-05-30-react-native-text-inline-image.html'
 title: 'React Native Text Inline Image'
 date: 2018-05-30T02:09:05.427Z
 tags: [ReactNative]

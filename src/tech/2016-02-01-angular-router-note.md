@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-02-01-angular-router-note.html
+permalink: '/posts/2016-02-01-angular-router-note.html'
 title: Angular Router 学习笔记
 date: 2016-02-01T17:21:59+00:00
 categories:

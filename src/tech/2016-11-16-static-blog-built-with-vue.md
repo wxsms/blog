@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-11-16-static-blog-built-with-vue.html
+permalink: '/posts/2016-11-16-static-blog-built-with-vue.html'
 title: Static Blog Built with Vue
 date: 2016-11-16 16:55:00
 categories:

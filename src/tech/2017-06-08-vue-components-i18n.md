@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-06-08-vue-components-i18n.html
+permalink: '/posts/2017-06-08-vue-components-i18n.html'
 title: '为 Vue 组件库实现国际化支持'
 date: 2017-06-08 15:27:00
 categories:

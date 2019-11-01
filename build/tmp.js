@@ -1,3 +1,4 @@
+/*
 const fs = require('fs')
 const yamlFront = require('yaml-front-matter')
 
@@ -23,12 +24,13 @@ readFilesFromDirSync = function (dirname, onFileContent, onError) {
   }
 }
 
-readFilesFromDirSync('../src/tech', (filename, content) => {
+readFilesFromDirSync('../src/life', (filename, content) => {
   if (filename === 'README.md') {
     return
   }
-  let _content = content.replace(/(id:.+)/, `permalink: '/posts/${filename.replace('.md', '.html')}`)
-  fs.writeFileSync('../src/tech/' + filename, _content)
+  let _content = content.replace(/(permalink:.+)/, `permalink: '/posts/${filename.replace('.md', '.html')}'`)
+  fs.writeFileSync('../src/life/' + filename, _content)
 }, (err) => {
   console.error(err)
 })
+*/

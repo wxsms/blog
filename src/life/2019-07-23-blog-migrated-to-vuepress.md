@@ -1,6 +1,6 @@
 ---
 
-permalink: '/posts/2019-07-23-blog-migrated-to-vuepress.html
+permalink: '/posts/2019-07-23-blog-migrated-to-vuepress.html'
 title: 'Blog Migrated to VuePress'
 date: 2019-07-23T03:40:08.642Z
 tags: []

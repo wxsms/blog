@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-05-19-mean-js-use-forever-to-prevent-app-crash.html
+permalink: '/posts/2016-05-19-mean-js-use-forever-to-prevent-app-crash.html'
 title: MEAN.JS 搭配 forever 使用以防止 app crash
 date: 2016-05-19T15:24:46+00:00
 categories:

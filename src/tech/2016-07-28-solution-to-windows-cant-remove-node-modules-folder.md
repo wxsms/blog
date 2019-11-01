@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-07-28-solution-to-windows-cant-remove-node-modules-folder.html
+permalink: '/posts/2016-07-28-solution-to-windows-cant-remove-node-modules-folder.html'
 title: Windows 无法删除 Node_modules 文件夹的解决方案
 date: 2016-07-28T16:56:40+00:00
 categories:

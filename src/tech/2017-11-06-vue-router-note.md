@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-11-06-vue-router-note.html
+permalink: '/posts/2017-11-06-vue-router-note.html'
 title: 'Vue-Router Note'
 date: 2017-11-06T02:47:50.094Z
 categories: [JavaScript]

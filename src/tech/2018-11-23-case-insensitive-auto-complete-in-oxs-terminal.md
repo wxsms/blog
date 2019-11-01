@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-11-23-case-insensitive-auto-complete-in-oxs-terminal.html
+permalink: '/posts/2018-11-23-case-insensitive-auto-complete-in-oxs-terminal.html'
 title: 'Case insensitive auto-complete in OSX Terminal'
 date: 2018-11-23T07:48:00.844Z
 tags: [OSX]

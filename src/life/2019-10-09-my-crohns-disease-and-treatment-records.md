@@ -1,6 +1,6 @@
 ---
 
-permalink: '/posts/2019-10-09-my-crohns-disease-and-treatment-records.html
+permalink: '/posts/2019-10-09-my-crohns-disease-and-treatment-records.html'
 title: '克罗恩病患病与治疗记录'
 date: 2019-10-09T09:06:58.422Z
 tags: []

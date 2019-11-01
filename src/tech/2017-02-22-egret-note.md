@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-02-22-egret-note.html
+permalink: '/posts/2017-02-22-egret-note.html'
 title: 'Egret Note'
 date: 2017-02-22 16:17:00
 sidebar: false

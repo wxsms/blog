@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-02-17-idea-scrolling-issue.html
+permalink: '/posts/2016-02-17-idea-scrolling-issue.html'
 title: IDEA 滚动条问题
 date: 2016-02-17T14:43:31+00:00
 categories:

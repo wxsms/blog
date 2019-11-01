@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-06-11-simplest-wechat-client-on-linux.html
+permalink: '/posts/2018-06-11-simplest-wechat-client-on-linux.html'
 title: 'Simplest Wechat Client on Linux'
 date: 2018-06-11T07:26:45.443Z
 tags: [Linux]

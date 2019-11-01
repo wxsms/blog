@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-09-29-holiday-soon-finally.html
+permalink: '/posts/2017-09-29-holiday-soon-finally.html'
 title: '终于要放假了'
 date: 2017-09-29 17:01:00
 categories:

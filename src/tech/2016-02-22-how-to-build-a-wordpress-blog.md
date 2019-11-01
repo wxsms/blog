@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-02-22-how-to-build-a-wordpress-blog.html
+permalink: '/posts/2016-02-22-how-to-build-a-wordpress-blog.html'
 title: WordPress 博客搭建
 date: 2016-02-22T09:12:03+00:00
 categories:

@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2013-11-26-review-of-gravity.html
+permalink: '/posts/2013-11-26-review-of-gravity.html'
 title: 《地心引力》
 date: 2013-11-26T00:55:47+00:00
 author: wxsm

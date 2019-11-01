@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-09-05-javascript-promise.html
+permalink: '/posts/2016-09-05-javascript-promise.html'
 title: JavaScript Promise
 date: 2016-09-05T17:27:26+00:00
 categories:

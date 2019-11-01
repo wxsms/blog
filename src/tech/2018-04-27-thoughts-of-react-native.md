@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-04-27-thoughts-of-react-native.html
+permalink: '/posts/2018-04-27-thoughts-of-react-native.html'
 title: 'Thoughts of ReactNative'
 date: 2018-04-27T08:24:25.520Z
 tags: [ReactNative]

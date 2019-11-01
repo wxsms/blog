@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2015-12-12-2048-game-base-on-jquery.html
+permalink: '/posts/2015-12-12-2048-game-base-on-jquery.html'
 title: jQuery 写的 2048 小游戏
 date: 2015-12-12T21:58:15+00:00
 categories:

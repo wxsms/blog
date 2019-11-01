@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-02-29-baidu-submit-for-wordpress.html
+permalink: '/posts/2016-02-29-baidu-submit-for-wordpress.html'
 title: WordPress 百度主动提交工具
 date: 2016-02-29T09:41:20+00:00
 categories:

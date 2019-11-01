@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-05-25-wordpress-change-admin-panel-font.html
+permalink: '/posts/2016-05-25-wordpress-change-admin-panel-font.html'
 title: WordPress 更改后台字体为雅黑
 date: 2016-05-25T19:33:45+00:00
 categories:

@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-02-22-wordpress-unable-to-send-email-under-aliyun-virtual-host.html
+permalink: '/posts/2016-02-22-wordpress-unable-to-send-email-under-aliyun-virtual-host.html'
 title: WordPress 在阿里云虚拟主机下无法发送邮件
 date: 2016-02-22T11:16:24+00:00
 categories:

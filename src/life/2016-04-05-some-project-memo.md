@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-04-05-some-project-memo.html
+permalink: '/posts/2016-04-05-some-project-memo.html'
 title: 记一次项目经历
 date: 2016-04-05T14:47:06+00:00
 categories:

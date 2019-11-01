@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-01-09-linux-setup-for-work.html
+permalink: '/posts/2018-01-09-linux-setup-for-work.html'
 title: 'Linux Setup for Work'
 date: 2018-01-09T12:56:59.393Z
 tags: [Linux]

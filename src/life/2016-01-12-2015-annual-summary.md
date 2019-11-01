@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-01-12-2015-annual-summary.html
+permalink: '/posts/2016-01-12-2015-annual-summary.html'
 title: 2015年度总结
 date: 2016-01-12T16:08:16+00:00
 categories:

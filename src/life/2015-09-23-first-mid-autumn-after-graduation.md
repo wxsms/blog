@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2015-09-23-first-mid-autumn-after-graduation.html
+permalink: '/posts/2015-09-23-first-mid-autumn-after-graduation.html'
 title: 毕业后的第一个中秋
 date: 2015-09-23T21:29:36+00:00
 categories:

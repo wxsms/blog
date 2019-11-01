@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-10-27-better-documents.html
+permalink: '/posts/2017-10-27-better-documents.html'
 title: 'Better Documents'
 date: 2017-10-27T06:43:01.255Z
 categories: [Web-Front-end]

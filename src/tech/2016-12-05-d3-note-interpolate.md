@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2016-12-05-d3-note-interpolate.html
+permalink: '/posts/2016-12-05-d3-note-interpolate.html'
 title: 'D3 Note - Interpolate'
 date: 2016-12-05 14:17:00
 categories:

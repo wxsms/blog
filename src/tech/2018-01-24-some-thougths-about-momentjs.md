@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-01-24-some-thougths-about-momentjs.html
+permalink: '/posts/2018-01-24-some-thougths-about-momentjs.html'
 title: '关于 Moment.js 的一些思考'
 date: 2018-01-24T06:40:18.456Z
 tags: []

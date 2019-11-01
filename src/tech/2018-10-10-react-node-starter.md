@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2018-10-10-react-node-starter.html
+permalink: '/posts/2018-10-10-react-node-starter.html'
 title: 'React node starter'
 date: 2018-10-10T02:36:09.528Z
 tags: [JavaScript, React, NodeJs]

@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-03-16-vue-transition-height.html
+permalink: '/posts/2017-03-16-vue-transition-height.html'
 title: '使用 Vue Transition 实现高度渐变动画'
 date: 2017-03-16 16:17:00
 categories:

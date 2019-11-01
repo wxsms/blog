@@ -1,5 +1,5 @@
 ---
-permalink: '/posts/2017-10-29-limit-prerender-plugin-workers-by-webpack.html
+permalink: '/posts/2017-10-29-limit-prerender-plugin-workers-by-webpack.html'
 title: Limit Prerender Plugin Workers By Webpack
 date: 2017-10-29T02:51:17.412Z
 categories: [JavaScript]
