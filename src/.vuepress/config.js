@@ -14,8 +14,7 @@ module.exports = {
     navbar: true,
     nav: [
       { text: 'tech', link: '/tech' },
-      { text: 'life', link: '/life' },
-      { text: 'about', link: '/about/' }
+      { text: 'life', link: '/life' }
     ],
     valine: {
       appId: 'PXFnynf8h6Qnpm9cIWT0BMgG-gzGzoHsz',
