@@ -4,7 +4,7 @@ layout: Page
 
 :bust_in_silhouette: 郭凯瑞
 
-:clipboard: Low-level front-end / full-stack developer, DOTAer, fans of soul-like games, currently working at [SeasunGame](https://www.seasungames.com/) (Zhuhai, China).
+:clipboard: Front-end / full-stack developer, DOTAer, fans of soul-like games, currently working at [SeasunGame](https://www.seasungames.com/) (Zhuhai, China).
 
 :pencil: My [blog](/tech).
 
