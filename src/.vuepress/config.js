@@ -7,6 +7,7 @@ module.exports = {
     ['link', { rel: 'shortcut icon', type: 'image/png', href: 'favicon.png' }],
     ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
   ],
+  shouldPrefetch: () => false,
   theme: 'mini',
   themeConfig: {
     siteName: 'wxsm\'s space',
