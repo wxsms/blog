@@ -8,11 +8,8 @@ module.exports = {
     ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
   ],
   shouldPrefetch: function (filename) {
-    // dirty approach for prefetch one single article page but not all of them.
-    // because no prefetch at all will cause a blank screen while first navigate to it.
-    // prefetch for 50.abcxyz.js because that will be an article page.
-    return /^.*50\.\w+\.js/.test(filename);
-
+    // prefetch first 20 js files
+    return /^.*\/(1?[1-9])\.\w+\.js/.test(filename);
   },
   theme: 'mini',
   themeConfig: {
