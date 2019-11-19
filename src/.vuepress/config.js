@@ -7,7 +7,13 @@ module.exports = {
     ['link', { rel: 'shortcut icon', type: 'image/png', href: 'favicon.png' }],
     ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
   ],
-  shouldPrefetch: () => false,
+  shouldPrefetch: function (filename) {
+    // dirty approach for prefetch one single article page but not all of them.
+    // because no prefetch at all will cause a blank screen while first navigate to it.
+    // prefetch for 50.abcxyz.js because that will be an article page.
+    return /^.*50\.\w+\.js/.test(filename);
+
+  },
   theme: 'mini',
   themeConfig: {
     siteName: 'wxsm\'s space',
