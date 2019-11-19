@@ -8,8 +8,8 @@ module.exports = {
     ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
   ],
   shouldPrefetch: function (filename) {
-    // prefetch first 20 js files
-    return /^.*\/(1?[1-9])\.\w+\.js/.test(filename);
+    // https://github.com/vuejs/vue/issues/7139
+    return true;
   },
   theme: 'mini',
   themeConfig: {
