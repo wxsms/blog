@@ -4,13 +4,7 @@ title: 'Common-used Commands'
 date: 2017-11-08T10:41:01.237Z
 categories: [Personal]
 tags: []
-sidebar: false
-draft: false
-
 ---
-
-
-
 
 Personal common-used commands list, including windows, osx, git, etc.
 
@@ -115,6 +109,18 @@ $ git remote set-url origin git@github.com:wxsms/uiv.git
 $ git remote -v
 origin  git@github.com:wxsms/uiv.git (fetch)
 origin  git@github.com:wxsms/uiv.git (push)
+```
+
+## NVM
+
+```
+nvm ls
+
+nvm install [version]
+NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node/ nvm install [version]
+
+nvm use [version]
+nvm alias default [version]
 ```
 
 ## OSX
