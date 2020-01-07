@@ -7304,10 +7304,10 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-0.2.5.tgz#d65b321eb6218d2157b33d30d37772f189bfdfef"
-  integrity sha1-1lsyHrYhjSFXsz0w03dy8Ym/3+8=
+vuepress-theme-mini@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-0.3.0.tgz?cache=0&sync_timestamp=1578368981518&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvuepress-theme-mini%2Fdownload%2Fvuepress-theme-mini-0.3.0.tgz#cbf356c31dae2b0c71a654eefcf9e660a21af70a"
+  integrity sha1-y/NWwx2uKwxxplTu/PnmYKIa9wo=
   dependencies:
     date-fns "^2.5.1"
     leancloud-storage "^3.15.0"
