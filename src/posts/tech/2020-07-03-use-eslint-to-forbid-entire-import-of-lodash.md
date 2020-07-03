@@ -30,7 +30,7 @@ import * as _ from 'lodash'
 
 虽然我知道这件事，但有时候我的队友不知道，辛辛苦苦改了半天的成果可以被别人一行代码就摧毁。因此我决定找一个方法来永久杜绝这件事的发生：
 
-```
+```javascript
 // http://eslint.org/docs/user-guide/configuring
 module.exports = {
   'rules': {
