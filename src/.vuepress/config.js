@@ -5,11 +5,16 @@ module.exports = {
   head: [
     ['meta', { name: 'google-site-verification', content: 'ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg' }],
     ['link', { rel: 'shortcut icon', type: 'image/png', href: 'favicon.png' }],
-    ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
+    ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }],
+    ['script', {
+      'data-ad-client': 'ca-pub-4714899946256166',
+      async: true,
+      src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+    }]
   ],
   shouldPrefetch: function (filename) {
     // https://github.com/vuejs/vue/issues/7139
-    return true;
+    return true
   },
   theme: 'mini',
   themeConfig: {
