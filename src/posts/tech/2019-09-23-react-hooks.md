@@ -6,6 +6,8 @@ date: 2019-09-23T02:13:05.102Z
 tags: [React,Vue,JavaScript]
 ---
 
+[[toc]]
+
 [Hooks](https://reactjs.org/docs/hooks-intro.html) 是 React 在 v16.8.0 版本所支持的一个新特性，允许开发者在 Functional Component 中实现「状态」以及「生命周期」等原本只能在 Class Component 中实现的特性。
 
 而 [Vue Function-based API](https://zhuanlan.zhihu.com/p/68477600) 是将来会出现在 Vue.js 3.0 大版本中的一个 API 变革的整体预览，二者（至少）在形式上保持了高度统一，而 yyx 也在文章中直言是受到了 React Hooks 的启发，二者分别解决了自身框架的一些痛点，并允许开发写编者更加「纯粹」的函数式组件。也许可以认为是未来前端框架发展的一个大方向？

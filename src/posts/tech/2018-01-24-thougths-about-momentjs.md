@@ -10,9 +10,6 @@ draft: false
 
 
 
-
-<!-- 「」 -->
-
 [Moment.js](https://momentjs.com/) 是一个流行的基于 JavaScript 的时间处理工具库。应该是一个从 2011 年开始启动的项目，至今它的 [Github repo](https://github.com/moment/moment) 也有了 3w+ 的星星，可以说在前端界人尽皆知了。反正我自从用了它基本上就没再接触过其它的相关库。
 
 但最近我却对它的看法却产生了些许改变。原因是，它的 API 设计给使用者埋下了巨大无比的坑，简单来说：“名不副实”。

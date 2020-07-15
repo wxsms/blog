@@ -39,6 +39,13 @@ module.exports = {
   plugins: {
     'sitemap': {
       hostname: 'https://wxsm.space'
+    },
+    '@vuepress/back-to-top': {}
+  },
+  markdown: {
+    toc: {
+      containerHeaderHtml: '<p>目录：</p>',
+      containerFooterHtml: '<br/>'
     }
   }
 }

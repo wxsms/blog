@@ -8,14 +8,9 @@ draft: false
 
 ---
 
-
-
-
 原文地址（需科学上网）：[medium.com](https://medium.com/@yloeza/react-native-text-inline-image-6055dabd9399)
 
 RN 版本：0.49
-
-<!-- 「」 -->
 
 图文混排（在文字中插入图片，并保持正确换行）是客户端普遍的需求，但在 RN 中它有一点问题，具体表现在 Android 平台下图片显得异常的小，并且相同系统不同设备之间的表现也不尽一样，而 ios 则表现正常。
 
