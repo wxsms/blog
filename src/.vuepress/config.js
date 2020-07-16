@@ -40,7 +40,8 @@ module.exports = {
     'sitemap': {
       hostname: 'https://wxsm.space'
     },
-    '@vuepress/back-to-top': {}
+    '@vuepress/back-to-top': {},
+    'flowchart': {}
   },
   markdown: {
     toc: {
