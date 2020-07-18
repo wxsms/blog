@@ -188,3 +188,22 @@ WebStorm 可以直接与 WSL 完美集成。
 2. Node.js: File | Settings | Languages & Frameworks | Node.js and NPM，`Node interpreter` 这里选择 `Add` 可以直接添加 WSL 内的 Node.js，NPM 在 `\\wsl$\Ubuntu\usr\local\lib\node_modules\npm`，Yarn 在 `\\wsl$\Ubuntu\usr\local\lib\node_modules\yarn`
 
 这样一来，就可以实现 「Windows 的开发界面，Linux 的开发工具」了。
+
+------
+
+update:
+
+目前发现 Git 的 Commit 功能会报错：
+
+```
+Commit failed with error
+0 file committed, 2 files failed to commit: update theme
+could not read log file 'C:UsersedisoAppDataLocalTempgit-commit-msg-.txt': No such file or directory
+```
+
+Push 正常。
+
+解决办法：
+
+1. 直接在 Terminal 内使用 `git commit`；
+2. 升级到 2020.2 版本（目前是 EAP），但是经测试该版本要求 WSL2 才能正常工作，也就是 Windows 也要升级到 EAP 才行。不推荐。
