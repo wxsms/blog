@@ -181,7 +181,7 @@ $ sudo npm install -g yarn
 
 ## WebStorm
 
-WebStorm 可以直接与 WSL 完美集成。
+WebStorm 可以直接与 WSL <del>完美</del>集成。
 
 1. Terminal: File | Settings | Tools | Terminal，将 `Shell path` 设置为 `"cmd.exe" /k "wsl.exe"`，这样 Terminal 打开就直接进入了 WSL
 2. Git: File | Settings | Version Control | Git，将 `Path to Git excutable` 设置为 `C:\Users\[username]\AppData\Roaming\bin\git.cmd`
