@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.5.2",
+    "@vuepress/plugin-google-analytics": "^1.5.2",
     "readline-sync": "^1.4.10",
     "vuepress": "^1.2.0",
     "vuepress-plugin-flowchart": "https://github.com/wxsms/vuepress-plugin-flowchart#3ae1b8fb3966cf6a71000bf9841c7e6cb77e49ea",

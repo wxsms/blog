@@ -1,7 +1,6 @@
 module.exports = {
   title: `wxsm's space`,
   description: 'Just another personal blog.',
-  ga: 'UA-102731925-1',
   head: [
     ['meta', { name: 'google-site-verification', content: 'ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg' }],
     ['link', { rel: 'shortcut icon', type: 'image/png', href: 'favicon.png' }],
@@ -35,6 +34,9 @@ module.exports = {
   plugins: {
     'sitemap': {
       hostname: 'https://wxsm.space'
+    },
+    '@vuepress/google-analytics': {
+      'ga': 'UA-102731925-1'
     },
     '@vuepress/back-to-top': {},
     'flowchart': {}
