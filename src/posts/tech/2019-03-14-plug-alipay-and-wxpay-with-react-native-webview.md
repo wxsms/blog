@@ -5,11 +5,7 @@ date: 2019-03-14T07:22:18.133Z
 tags: [ReactNative]
 sidebar: false
 draft: false
-
 ---
-
-
-
 
 在 ReactNative App 的 WebView 中接入支付宝与微信支付其实很简单。首先前提是：使用 H5 网页提前做好了支付相关的动作，ReactNative 方面只负责展示 H5 页面，以及调起相应的 App 来完成支付，不需要接入底层相关的 SDK 或其它代码。
 
@@ -43,4 +39,18 @@ onShouldStartLoadWithRequest = ({url}) => {
 };
 ```
 
+补充一点：IOS 9.0 以上需要在 `info.plist` 中添加白名单，否则 `canOpenURL` 会始终返回 `false`，不管用户安装与否：
 
+```xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <!-- 微信 URL Scheme 白名单-->
+    <string>wechat</string>
+    <string>weixin</string>
+   
+    <!-- 支付宝  URL Scheme 白名单-->
+    <string>alipay</string>
+</array>
+```
+
+参考：[developer.apple.com](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/TP40009250-SW14)
