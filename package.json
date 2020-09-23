@@ -14,7 +14,7 @@
     "@vuepress/plugin-google-analytics": "^1.5.2",
     "readline-sync": "^1.4.10",
     "vuepress": "^1.2.0",
-    "vuepress-plugin-flowchart": "https://github.com/wxsms/vuepress-plugin-flowchart#3ae1b8fb3966cf6a71000bf9841c7e6cb77e49ea",
+    "vuepress-plugin-flowchart": "https://github.com/wxsms/vuepress-plugin-flowchart#b09ce141070e6be46c69060aa7a2129f8a4ce422",
     "vuepress-plugin-sitemap": "^2.3.0",
     "vuepress-theme-mini": "^0.3.2",
     "yaml-front-matter": "^4.0.0"
