@@ -33,9 +33,9 @@ module.exports = {
     }
   },
   plugins: {
-    // 'sitemap': {
-    //   hostname: 'https://wxsm.space'
-    // },
+    'sitemap': {
+      hostname: 'https://wxsm.space'
+    },
     '@vuepress/google-analytics': {
       'ga': 'UA-102731925-1'
     },
