@@ -13,6 +13,7 @@ module.exports = {
   ],
   theme: 'mini',
   themeConfig: {
+    lastUpdated: 'Last Updated',
     siteName: 'wxsm\'s space',
     author: 'wxsm',
     navbar: true,
