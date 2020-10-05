@@ -34,7 +34,12 @@ module.exports = {
   },
   plugins: {
     'sitemap': {
-      hostname: 'https://wxsm.space'
+      hostname: 'https://wxsm.space',
+      dateFormatter: val => {
+        // vuepress-plugin-sitemap can't parse date like `2 month ago`
+        // converted by last update plugin
+        return new Date().toISOString()
+      }
     },
     '@vuepress/google-analytics': {
       'ga': 'UA-102731925-1'
