@@ -1736,6 +1736,14 @@ babel-plugin-dynamic-import-node@^2.3.3:
   dependencies:
     object.assign "^4.1.0"
 
+babel-runtime@^6.26.0:
+  version "6.26.0"
+  resolved "https://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
+  integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.11.0"
+
 balajs@^1.0.7:
   version "1.0.7"
   resolved "https://registry.npm.taobao.org/balajs/download/balajs-1.0.7.tgz#b30caf117de32f389348ceec2813578a19aa350f"
@@ -2574,7 +2582,7 @@ core-js-compat@^3.6.2, core-js-compat@^3.6.5:
     browserslist "^4.8.5"
     semver "7.0.0"
 
-core-js@^2.6.5:
+core-js@^2.4.0, core-js@^2.6.5:
   version "2.6.11"
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha1-OIMUafmSK97Y7iHJ3EaYXgOZMIw=
@@ -4883,7 +4891,7 @@ leancloud-realtime-plugin-live-query@^1.2.0:
   resolved "https://registry.npm.taobao.org/leancloud-realtime-plugin-live-query/download/leancloud-realtime-plugin-live-query-1.2.0.tgz#1e07da1b5b99e44cddbc3b052234422f278c4ab9"
   integrity sha1-HgfaG1uZ5EzdvDsFIjRCLyeMSrk=
 
-leancloud-realtime@^5.0.0-alpha.3:
+leancloud-realtime@^5.0.0-alpha.3, leancloud-realtime@^5.0.0-rc.2:
   version "5.0.0-rc.3"
   resolved "https://registry.npm.taobao.org/leancloud-realtime/download/leancloud-realtime-5.0.0-rc.3.tgz#3a590d8c99685aa54849529d5d7fbbca0ea45152"
   integrity sha1-OlkNjJloWqVISVKdXX+7yg6kUVI=
@@ -4903,7 +4911,7 @@ leancloud-realtime@^5.0.0-alpha.3:
     protobufjs "^5.0.1"
     uuid "^3.0.0"
 
-leancloud-storage@^3.0.4, leancloud-storage@^3.15.0:
+leancloud-storage@^3.0.4:
   version "3.15.0"
   resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-3.15.0.tgz#6d3b010a313189985bb69ab08c75c7ad74bd1788"
   integrity sha1-bTsBCjExiZhbtpqwjHXHrXS9F4g=
@@ -4916,6 +4924,25 @@ leancloud-storage@^3.0.4, leancloud-storage@^3.15.0:
     localstorage-memory "^1.0.1"
     md5 "^2.0.0"
     superagent "^3.3.1"
+    underscore "^1.8.3"
+    uuid "^3.3.2"
+
+leancloud-storage@^4.0.0:
+  version "4.6.1"
+  resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-4.6.1.tgz#48d11ab0a8a313e320f5de3f1b5d2c8983fb8491"
+  integrity sha1-SNEasKijE+Mg9d4/G10siYP7hJE=
+  dependencies:
+    "@leancloud/adapter-types" "^3.0.0"
+    "@leancloud/platform-adapters-browser" "^1.1.0"
+    "@leancloud/platform-adapters-node" "^1.1.0"
+    "@leancloud/platform-adapters-weapp" "^1.2.0"
+    babel-runtime "^6.26.0"
+    debug "^3.1.0"
+    eventemitter3 "^2.0.3"
+    leancloud-realtime "^5.0.0-rc.2"
+    leancloud-realtime-plugin-live-query "^1.2.0"
+    md5 "^2.0.0"
+    promise-timeout "^1.3.0"
     underscore "^1.8.3"
     uuid "^3.3.2"
 
@@ -6573,6 +6600,11 @@ regenerate@^1.4.0:
   resolved "https://registry.npm.taobao.org/regenerate/download/regenerate-1.4.1.tgz#cad92ad8e6b591773485fbe05a485caf4f457e6f"
   integrity sha1-ytkq2Oa1kXc0hfvgWkhcr09Ffm8=
 
+regenerator-runtime@^0.11.0:
+  version "0.11.1"
+  resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+  integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
+
 regenerator-runtime@^0.13.4:
   version "0.13.7"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.7.tgz?cache=0&sync_timestamp=1595456367497&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
@@ -8049,14 +8081,14 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.0.0.tgz#f387c0f8352c090f81f98cf75e240965ea79dfa5"
-  integrity sha1-84fA+DUsCQ+B+Yz3XiQJZep536U=
+vuepress-theme-mini@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.0.1.tgz?cache=0&sync_timestamp=1601965720391&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvuepress-theme-mini%2Fdownload%2Fvuepress-theme-mini-1.0.1.tgz#f730fd1e01a10199d7858636976d685ee3fa1614"
+  integrity sha1-9zD9HgGhAZnXhYY2l21oXuP6FhQ=
   dependencies:
     "@vuepress/plugin-back-to-top" "^1.6.0"
     date-fns "^2.5.1"
-    leancloud-storage "^3.15.0"
+    leancloud-storage "^4.0.0"
     valine "^1.3.10"
 
 vuepress@1.6.0:
