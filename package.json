@@ -10,12 +10,12 @@
     "docs:build": "vuepress build src && node build/buildDistConfigs.js"
   },
   "devDependencies": {
-    "@vuepress/plugin-google-analytics": "^1.5.2",
-    "readline-sync": "^1.4.10",
-    "vuepress": "^1.2.0",
+    "@vuepress/plugin-google-analytics": "1.6.0",
+    "readline-sync": "1.4.10",
+    "vuepress": "1.6.0",
     "vuepress-plugin-flowchart": "https://github.com/wxsms/vuepress-plugin-flowchart#b09ce141070e6be46c69060aa7a2129f8a4ce422",
-    "vuepress-plugin-sitemap": "^2.3.0",
-    "vuepress-theme-mini": "^1.0.0",
-    "yaml-front-matter": "^4.0.0"
+    "vuepress-plugin-sitemap": "2.3.1",
+    "vuepress-theme-mini": "1.0.0",
+    "yaml-front-matter": "4.1.0"
   }
 }
