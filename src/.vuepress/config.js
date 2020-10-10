@@ -39,7 +39,8 @@ module.exports = {
     '@vuepress/google-analytics': {
       'ga': 'UA-102731925-1'
     },
-    'flowchart': {}
+    'flowchart': {},
+    '@vuepress/back-to-top': {}
   },
   markdown: {
     // toc: {
