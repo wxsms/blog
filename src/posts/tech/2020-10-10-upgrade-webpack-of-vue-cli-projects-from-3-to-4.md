@@ -147,4 +147,4 @@ const webpackConfig = merge(baseWebpackConfig, {
 })
 ```
 
-It's done, enjoy. 🎉
+That's it, enjoy. 🎉
