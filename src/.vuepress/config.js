@@ -42,9 +42,10 @@ module.exports = {
     'flowchart': {}
   },
   markdown: {
-    toc: {
-      containerHeaderHtml: '<p>目录：</p>',
-      containerFooterHtml: '<br/>'
-    }
+    // toc: {
+    //   containerHeaderHtml: '<p>目录：</p>',
+    //   containerFooterHtml: '<br/>'
+    // },
+    lineNumbers: false
   }
 }
