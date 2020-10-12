@@ -6132,10 +6132,10 @@ pinkie@^2.0.0:
   resolved "https://registry.npm.taobao.org/pinkie/download/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
 
-pinyin@^2.9.1:
+pinyin@2.9.1:
   version "2.9.1"
-  resolved "https://registry.npmjs.org/pinyin/-/pinyin-2.9.1.tgz#4570d3e03f1430f69c08d4166b087392c9227718"
-  integrity sha512-U7kHlVP6yUYl2DV2bX4brlYWdgaAlwtqJrdkboiyri9ixRDVqVO3LD98te3PT5deN5EA9W8ywuG9GaYZfiiIlw==
+  resolved "https://registry.npm.taobao.org/pinyin/download/pinyin-2.9.1.tgz#4570d3e03f1430f69c08d4166b087392c9227718"
+  integrity sha1-RXDT4D8UMPacCNQWawhzkskidxg=
   dependencies:
     commander "~1.1.1"
     object-assign "^4.0.1"
@@ -7224,10 +7224,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.3.tgz?cache=0&sync_timestamp=1593529702917&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsignal-exit%2Fdownload%2Fsignal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
 
-simple-git@^2.21.0:
+simple-git@2.21.0:
   version "2.21.0"
-  resolved "https://registry.npmjs.org/simple-git/-/simple-git-2.21.0.tgz#d25d3fdc6a139cd7f80f197541a6f9f6e9d4cbc8"
-  integrity sha512-rohCHmEjD/ESXFLxF4bVeqgdb4Awc65ZyyuCKl3f7BvgMbZOBa/Ye3HN/GFnvruiUOAWWNupxhz3Rz5/3vJLTg==
+  resolved "https://registry.npm.taobao.org/simple-git/download/simple-git-2.21.0.tgz#d25d3fdc6a139cd7f80f197541a6f9f6e9d4cbc8"
+  integrity sha1-0l0/3GoTnNf4Dxl1Qab59unUy8g=
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
