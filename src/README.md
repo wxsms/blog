@@ -1,5 +1,7 @@
 ---
 layout: Page
+feed:
+  enable: false
 ---
 
 :bust_in_silhouette: &nbsp;wxsm

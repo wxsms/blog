@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 module.exports = {
   title: `wxsm's space`,
   description: 'Just another personal blog.',
@@ -40,7 +42,12 @@ module.exports = {
       'ga': 'UA-102731925-1'
     },
     'flowchart': {},
-    '@vuepress/back-to-top': {}
+    '@vuepress/back-to-top': {},
+    'feed': {
+      canonical_base: 'https://wxsm.space',
+      posts_directories: ['/posts'],
+      sort: entries => _.reverse(entries)
+    }
   },
   markdown: {
     // toc: {

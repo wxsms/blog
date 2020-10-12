@@ -1,6 +1,8 @@
 ---
 title: 'Links'
 layout: Page
+feed:
+  enable: false
 ---
 
 * [Aquariuslt blog](https://zexo.dev)
