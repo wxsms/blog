@@ -53,7 +53,7 @@ jQuery 曾经存在 3 种绑定事件的方法：bind / live / delegate，后来
 
 Talk is cheap, show me the code.
 
-```
+```javascript
 //Some browser diff issue handler
 function getEventTarget(e) {
   e = e || window.event;

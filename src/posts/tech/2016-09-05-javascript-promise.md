@@ -23,7 +23,7 @@ JavaScript Promise 是一种用来取代超长回调嵌套编程风格（特指 
 
 比如：
 
-```
+```javascript
 getAsync("/api/something", (error, result) => {
     if(error){
         //error
@@ -34,7 +34,7 @@ getAsync("/api/something", (error, result) => {
 
 将可以写作：
 
-```
+```javascript
 let promise = getAsyncPromise("/api/something"); 
 promise.then((result) => {
     //success
@@ -61,7 +61,7 @@ MDN 定义：
 
 创建一个 Promise：
 
-```
+```javascript
 let promise = new Promise((resolve, reject) => {
     //success -> resolve(data)
     //error -> reject(data)
@@ -72,7 +72,7 @@ let promise = new Promise((resolve, reject) => {
 
 处理 Promise 结果：
 
-```
+```javascript
 promise.then(onFulfilled, onRejected)
 ```
 
@@ -80,13 +80,13 @@ promise.then(onFulfilled, onRejected)
 
 不过，对于失败处理，更加推荐的方式是使用 `catch`  方法：
 
-```
+```javascript
 promise.catch(onRejected)
 ```
 
 这两个方法可以进行链式操作。组合示例：
 
-```
+```javascript
 function asyncFunction() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -129,7 +129,7 @@ Promise 对象的状态，从 Pending 转换为 Fulfilled 或 Rejected 之
 
 例如：
 
-```
+```javascript
 function taskA() {
     console.log("Task A");
 }
@@ -165,7 +165,7 @@ promise
 
 比如说，TaskA 出现异常：
 
-```
+```javascript
 function taskA() {
     console.log("Task A");
     throw new Error("throw Error @ Task A")
@@ -190,7 +190,7 @@ promise
 
 这里的输出应该就是：
 
-```
+```javascript
 //Task A
 //Error: throw Error @ Task A
 //Final Task
@@ -204,7 +204,7 @@ promise
 
 Promise 可以实现递归调用，在用来一次性抓取所有分页内容的时候有用。例：
 
-```
+```javascript
 function get(url, p) {
   return $.get(url + "?page=" + p)
       .then(function(data) {
@@ -232,7 +232,7 @@ get("urlurl", 1).then(function(list) {
 
 例：
 
-```
+```javascript
 function taskA() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -272,7 +272,7 @@ main()
 
 跟 `Promise.all`  类似，略有区别，从名字就能看出来，只要有一个 Task 执行完毕，整个 Promise 就会返回。但是需要注意的是，返回以后并不会取消其它未完成的 Promise 的执行。
 
-```
+```javascript
 function taskA() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {

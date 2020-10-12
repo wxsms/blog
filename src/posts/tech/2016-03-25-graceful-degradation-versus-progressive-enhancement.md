@@ -22,7 +22,7 @@ tags:
 
 一些博文将其简单地归结为如下内容：
 
-```
+```css
 .transition {   /*渐进增强写法*/
   -webkit-transition: all .5s;
      -moz-transition: all .5s;
@@ -73,7 +73,7 @@ tags:
 
 有时候我们会想让用户可以点击一个链接或按钮以打印整个页面，于是拍脑袋就有了如下代码：
 
-```
+```html
 <p id="printthis">
   <a href="javascript:window.print()">Print this page</a>
 </p>
@@ -85,7 +85,7 @@ tags:
 
 告诉用户这个链接可能会不起作用，或者提供替代方案。一般来说我们会使用 `noscript` 元素来达到目的，就像这样：
 
-```
+```html
 <p id="printthis">
   <a href="javascript:window.print()">Print this page</a>
 </p>
@@ -106,7 +106,7 @@ tags:
 
 下面这种方式可能会更好些：
 
-```
+```html
 <p id="printthis">
   <a href="javascript:window.print()">Print this page</a>
 </p>
@@ -127,13 +127,13 @@ tags:
 
 第二步，告诉用户去打印这个页面，就这么简单：
 
-```
+```html
 <p id="printthis">Thank you for your order. Please print this page for your records.</p>
 ```
 
 注意，这无论在什么情况下都一定是适用的。接下来，我们使用“循序渐进”的 JavaScript 来给支持此功能的浏览器添加一个打印按钮：
 
-```
+```html
 <p id="printthis">Thank you for your order. Please print this page for your records.</p>
 <script type="text/javascript">
 (function(){

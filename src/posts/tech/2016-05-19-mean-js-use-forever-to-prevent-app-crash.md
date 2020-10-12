@@ -29,7 +29,7 @@ npm install grunt-forever -save
 
 在 tasks（initConfig） 中加多一项：
 
-```
+```javascript
 forever: {
   server: {
     options: {
@@ -46,7 +46,7 @@ forever: {
 
 最后更改一下 prod task：
 
-```
+```javascript
 // Run the project in production mode
 grunt.registerTask('prod', ['build', 'env:prod', 'mkdir:upload', 'copy:localConfig', 'forever:server:start']);
 ```

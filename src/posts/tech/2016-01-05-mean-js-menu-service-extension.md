@@ -20,21 +20,21 @@ MEAN.js解决方案只提供了1级/2级菜单栏的service支持，最近项目
 
 初始的Menu Service中为使用者写了两个添加菜单项的方法：
 
-```
+```javascript
 // Add menu item object
 this.addMenuItem = function (menuId, options)
 ```
 
 以及
 
-```
+```javascript
 // Add submenu item object
 this.addSubMenuItem = function (menuId, parentItemState, options)
 ```
 
 第一个方法很显然就是用来添加顶级菜单了，第二个在没有看代码以前我曾经天真地以为它可以无限嵌套，然而并没有，它做的事情仅限于添加第2级菜单。所以现在我需要自己写第三个方法来完成添加第三级菜单。考虑到三级循环的效率问题，虽然一般来说菜单项不会有太多，但看起来就是非常不爽，所以我给每个Menu项都添加了一个哈希表来储存其下面所有菜单项的引用，这样多花费一点点内存就可以不用写循环嵌套了。由于使用了哈希表，对原2级菜单做了一些修改：
 
-```
+```javascript
 // Add submenu item object
     this.addSubMenuItem = function (menuId, parentItemState, options) {
         options = options || {};
@@ -73,7 +73,7 @@ this.addSubMenuItem = function (menuId, parentItemState, options)
 
 然后是新的添加3级菜单的方法：
 
-```
+```javascript
 //For level 3 menu items
     this.addSubMenuItemToSubMenu = function (menuId, parentItemState, options) {
         options = options || {};
@@ -102,7 +102,7 @@ this.addSubMenuItem = function (menuId, parentItemState, options)
 
 原Header模板中嵌套了两层Angular循环来遍历菜单项，我们给它加一层就好了，改完以后就像这样：
 
-```
+```html
 <nav class="collapse navbar-collapse" uib-collapse="!isCollapsed" role="navigation">
     <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
       <li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);"
@@ -170,7 +170,7 @@ this.addSubMenuItem = function (menuId, parentItemState, options)
 
 为了让菜单看起来更自然些，这里修改的是 `core.css`，添加以下内容：
 
-```
+```css
 .dropdown-submenu {
     position: relative;
 }
@@ -228,7 +228,7 @@ this.addSubMenuItem = function (menuId, parentItemState, options)
 
 3级菜单的定义方法与2级菜单一模一样，除了直接调用 `addSubMenuItemToSubMenu`  以外，还可以通过在2级菜单内定义 `items` 来实现添加子菜单，示例如下，高亮部分则为3级菜单：
 
-```
+```javascript
 Menus.addMenuItem('topbar', {
             title: '...',
             state: '...',

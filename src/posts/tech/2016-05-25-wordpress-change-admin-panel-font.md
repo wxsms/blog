@@ -15,7 +15,7 @@ tags:
 
 在当前主题的 `functions.php` 中，加上如下代码：
 
-```
+```php
 /**
  * 更改后台字体为雅黑
  */
@@ -29,7 +29,7 @@ add_action('admin_head', 'change_admin_font');
 
 <!--more-->
 
-```
+```css
 /* reset font */
 body,
 button,

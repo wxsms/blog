@@ -36,7 +36,7 @@ SVG 的特点是矢量绘图（与 Canvas 不同），除了预设样式以外�
 
 比如，画一个园圈，坐标为 (100, 50)，半径为 40px，拥有 2px 的黑色 border，以及红色填充：
 
-```
+```html
 <svg>
     <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
 </svg>
@@ -67,7 +67,7 @@ D3 使用与 jQuery 类似的选择器来获取 HTML 元素。常用的方法有
 
 顾名思义，`selectAll` 就是选择所有符合条件的元素了，那么 `select` 选择的是符合条件的第一个元素。如：
 
-```
+```javascript
 d3.select('body') //选择 body 元素
 
 d3.selectAll('p') //选择所有 p 元素
@@ -101,7 +101,7 @@ d3.selectAll('.className') //选择所有 class 包含 className 的元素
 
 下面引用一个例子来说明这二者的不同。假设有如下三个节点：
 
-```
+```html
 <p>Apple</p>
 <p>Pear</p>
 <p>Banana</p>
@@ -111,7 +111,7 @@ d3.selectAll('.className') //选择所有 class 包含 className 的元素
 
 执行以下代码：
 
-```
+```javascript
 let str = 'datum';
 let p = d3.selectAll('p');
 
@@ -133,7 +133,7 @@ Element 2 bind with datum
 
 执行以下代码：
 
-```
+```javascript
 let strArr = ['data0', 'data1', 'data2'];
 let p = d3.selectAll('p');
 
@@ -155,7 +155,7 @@ Element 2 bind with data2
 
 先定义一个 SVG 画布，并将它插入到 HTML 的 body 中去：
 
-```
+```javascript
 let width = 300,
   height = 300；
 
@@ -169,13 +169,13 @@ let svg = d3.select('body')
 
 然后，定义一组数据：
 
-```
+```javascript
 let data = [250, 210, 170, 100, 190];
 ```
 
 最后使用以上数据画出柱状图，柱子使用 SVG 预定义的 `rect` 元素：
 
-```
+```javascript
 let rectWidth = 25;
 
 svg.selectAll('rect')

@@ -126,7 +126,7 @@ Angular Router支持两种使用方式：
 
 点击Edit/Delete/Add/Show几个链接，可以发现下面的内容发生了变化。同时地址栏的URL也相应地变了。也可以尝试前进、后退、收藏等操作（在独立页面进行）。 代码如下：
 
-```
+```html
 <!DOCTYPE html>
 <html>
 

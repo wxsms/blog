@@ -30,7 +30,7 @@ tags:
 
 更多的例子：
 
-```
+```html
 <!DOCTYPE html>
 <html>
 

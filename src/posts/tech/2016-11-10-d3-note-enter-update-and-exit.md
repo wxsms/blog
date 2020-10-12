@@ -13,7 +13,7 @@ tags:
 
 在 D3 的使用过程中，我们见得最多的应当是类似如下的代码：
 
-```
+```javascript
 let div = d3.select('body')
   .selectAll('p')
   .data([3, 6, 9, 12, 15])
@@ -24,7 +24,7 @@ let div = d3.select('body')
 
 将得到：
 
-```
+```html
 <body>
 <p>3</p>
 <p>6</p>
@@ -80,7 +80,7 @@ let div = d3.select('body')
 
 通常，对于 `exit` 集的操作，都是 `remove`：
 
-```
+```javascript
 selection.exit().remove()
 ```
 

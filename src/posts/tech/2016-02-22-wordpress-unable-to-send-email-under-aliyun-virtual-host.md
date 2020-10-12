@@ -26,7 +26,7 @@ tags:
 
 找到代码安装路径下的 `wp-includes/class-smtp.php` 文件，搜索以下代码段：
 
-```
+```php
 $this->smtp_conn = @stream_socket_client(
     $host . ":" . $port,
     $errno,
@@ -39,7 +39,7 @@ $this->smtp_conn = @stream_socket_client(
 
 将其**替换**成：
 
-```
+```php
 $this->smtp_conn = fsockopen($host, $port, $errno, $errstr);
 ```
 

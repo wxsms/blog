@@ -21,13 +21,13 @@ tags:
 
 既然是因为Cache产生的问题，那么就很容易解决，在API调用（主要是GET）中都添加一个随机数或者时间戳就行了，强制浏览器刷新。比如，原本请求的应该是这样的地址：
 
-```
+```javascript
 var url = '/api/metadata/entity/list?type=car&name=qq'
 ```
 
 可以通过添加一个时间戳修改成这样：
 
-```
+```javascript
 var url = '/api/metadata/entity/list?type=car&name=qq&_t=' + new Date().getTime()
 ```
 
@@ -39,7 +39,7 @@ var url = '/api/metadata/entity/list?type=car&name=qq&_t=' + new Date().getTime(
 
 以下是一本万利的解决思路：
 
-```
+```javascript
 // No cache for RESTful APIs
     app.use('/api/*', function (req, res, next) {
         res.header("Cache-Control", "no-cache, no-store, must-revalidate");

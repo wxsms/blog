@@ -93,7 +93,7 @@ Session 不是爬虫可以接触到的东西。
 
 比如 Night Watch JS：
 
-```
+```javascript
 module.exports = {
  'Demo test Google' : function (client) {
  client

@@ -49,7 +49,7 @@ BFC 对浮动元素的定位与清除都很重要：
 
 先来看一个没有 BFC 的例子：
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,7 +84,7 @@ BFC 对浮动元素的定位与清除都很重要：
 
 我们给 `.main` 添加一个属性，让它成为独立的 BFC：
 
-```
+```css
 .main {
     overflow: hidden;
 }
@@ -106,7 +106,7 @@ BFC 对浮动元素的定位与清除都很重要：
 
 就像这样：
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -23,7 +23,7 @@ tags:
 
 核心代码如下（由百度提供）：
 
-```
+```php
 $urls = array(
     'http://www.example.com/1.html',
     'http://www.example.com/2.html',
@@ -92,7 +92,7 @@ API返回的 `$result` 是一个 JSON 对象，若推送成功可能包含以�
 
 示例：
 
-```
+```json
 {
     "remain":4999998,
     "success":2,
@@ -152,7 +152,7 @@ API返回的 `$result` 是一个 JSON 对象，若推送成功可能包含以�
 
 示例：
 
-```
+```json
 {
     "error":401,
     "message":"token is not valid"

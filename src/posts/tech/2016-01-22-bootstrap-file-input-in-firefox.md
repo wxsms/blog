@@ -14,7 +14,7 @@ tags:
 
 默认的Bootstrap文件上传框在Chrome/Firefox/IE上的表现都不一样，如下所示。 代码：
 
-```
+```html
 <input class="form-control" type="file">
 ```
 
@@ -32,7 +32,7 @@ IE:
 
 先忽略掉文字表述的差异（由浏览器所使用语言引起），可以看到File input在Chrome和FF下的表现比较相似，IE则差距略大。但是至少Chrome和IE是可以正常显示其样式的，FF则出现了奇怪的样式问题，好像因为按钮太大而超出了输入框。 解决方法也很简单，最快捷的：
 
-```
+```css
 .form-control {
     height: auto;
 }
@@ -40,7 +40,7 @@ IE:
 
 但是这个方法可能会影响到其它输入框组，可以稍作修改：
 
-```
+```css
 .form-control[type=file] {
     height: auto;
 }

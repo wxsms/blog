@@ -38,7 +38,7 @@ Reflow （回流）和 Repaint（重绘）是浏览器的两种动作。
 
 比如说：
 
-```
+```html
 <body>
 <div>
 	<h4>Hello World</h4>
