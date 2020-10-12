@@ -46,7 +46,7 @@ module.exports = {
     'feed': {
       canonical_base: 'https://wxsm.space',
       posts_directories: ['/posts'],
-      sort: entries => _.reverse(entries)
+      sort: entries => _.reverse(_.sortBy(entries, 'date'))
     }
   },
   markdown: {
