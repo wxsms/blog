@@ -15,6 +15,7 @@ module.exports = {
   ],
   theme: 'mini',
   themeConfig: {
+    smoothScroll: true,
     lastUpdated: 'Last Updated',
     siteName: 'wxsm\'s space',
     author: 'wxsm',
