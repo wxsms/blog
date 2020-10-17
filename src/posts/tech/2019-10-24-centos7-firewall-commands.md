@@ -5,8 +5,6 @@ date: 2019-10-24T01:28:04.174Z
 tags: [centos, centos7]
 ---
 
-[[toc]]
-
 **FirewallD** (firewall daemon) 作为 **iptables** 服务的替代品，已经默认被安装到了 CentOS7 上面。
 
 ## 管理

@@ -6,11 +6,7 @@ categories: [Web-Front-end]
 tags: [Ajax, HTTP, NodeJs]
 sidebar: false
 draft: false
-
 ---
-
-[[toc]]
-
 
 CORS HTTP Header 是解决 Ajax 跨域问题的方案之一。详情查看：[MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)
 

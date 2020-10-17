@@ -7,8 +7,6 @@ tags: [webpack,vue]
 
 <!-- 「」 -->
 
-[[toc]]
-
 ## package.json
 
 Change webpack related devDependencies versions:
