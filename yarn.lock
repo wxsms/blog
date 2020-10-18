@@ -2923,7 +2923,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^2.5.1:
+date-fns@2.16.1:
   version "2.16.1"
   resolved "https://registry.npm.taobao.org/date-fns/download/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
   integrity sha1-BXdXksPzMx2oEq8lPhqTWFHTg0s=
@@ -5019,6 +5019,25 @@ leancloud-realtime@^5.0.0-alpha.3, leancloud-realtime@^5.0.0-rc.2:
     protobufjs "^5.0.1"
     uuid "^3.0.0"
 
+leancloud-storage@4.7.0:
+  version "4.7.0"
+  resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-4.7.0.tgz#b4ae3184ca574463990f1f821cf66cae278de4b8"
+  integrity sha1-tK4xhMpXRGOZDx+CHPZsrieN5Lg=
+  dependencies:
+    "@leancloud/adapter-types" "^3.0.0"
+    "@leancloud/platform-adapters-browser" "^1.1.0"
+    "@leancloud/platform-adapters-node" "^1.1.0"
+    "@leancloud/platform-adapters-weapp" "^1.2.0"
+    babel-runtime "^6.26.0"
+    debug "^3.1.0"
+    eventemitter3 "^2.0.3"
+    leancloud-realtime "^5.0.0-rc.2"
+    leancloud-realtime-plugin-live-query "^1.2.0"
+    md5 "^2.0.0"
+    promise-timeout "^1.3.0"
+    underscore "^1.8.3"
+    uuid "^3.3.2"
+
 leancloud-storage@^3.0.4:
   version "3.15.0"
   resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-3.15.0.tgz#6d3b010a313189985bb69ab08c75c7ad74bd1788"
@@ -5032,25 +5051,6 @@ leancloud-storage@^3.0.4:
     localstorage-memory "^1.0.1"
     md5 "^2.0.0"
     superagent "^3.3.1"
-    underscore "^1.8.3"
-    uuid "^3.3.2"
-
-leancloud-storage@^4.0.0:
-  version "4.6.1"
-  resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-4.6.1.tgz#48d11ab0a8a313e320f5de3f1b5d2c8983fb8491"
-  integrity sha1-SNEasKijE+Mg9d4/G10siYP7hJE=
-  dependencies:
-    "@leancloud/adapter-types" "^3.0.0"
-    "@leancloud/platform-adapters-browser" "^1.1.0"
-    "@leancloud/platform-adapters-node" "^1.1.0"
-    "@leancloud/platform-adapters-weapp" "^1.2.0"
-    babel-runtime "^6.26.0"
-    debug "^3.1.0"
-    eventemitter3 "^2.0.3"
-    leancloud-realtime "^5.0.0-rc.2"
-    leancloud-realtime-plugin-live-query "^1.2.0"
-    md5 "^2.0.0"
-    promise-timeout "^1.3.0"
     underscore "^1.8.3"
     uuid "^3.3.2"
 
@@ -8238,7 +8238,7 @@ uuid@^3.0.0, uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.npm.taobao.org/uuid/download/uuid-3.4.0.tgz?cache=0&sync_timestamp=1595887683255&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
 
-valine@^1.3.10:
+valine@1.4.14:
   version "1.4.14"
   resolved "https://registry.npm.taobao.org/valine/download/valine-1.4.14.tgz#771d103c0b87cb7aa2f0b6a4ad65cae795c92f3b"
   integrity sha1-dx0QPAuHy3qi8LakrWXK55XJLzs=
@@ -8375,7 +8375,7 @@ vuepress-plugin-feed@0.1.8:
   dependencies:
     flowchart.js "^1.11.3"
 
-vuepress-plugin-right-anchor@^0.2.1:
+vuepress-plugin-right-anchor@0.2.1:
   version "0.2.1"
   resolved "https://registry.npm.taobao.org/vuepress-plugin-right-anchor/download/vuepress-plugin-right-anchor-0.2.1.tgz#17f7a2aeb87e3ad4b330da7ac34aba2e906d2677"
   integrity sha1-F/eirrh+OtSzMNp6w0q6LpBtJnc=
@@ -8396,15 +8396,15 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.2.0.tgz#55642c2e798c44c992b8a9082cd8436266bc52d6"
-  integrity sha1-VWQsLnmMRMmSuKkILNhDYma8UtY=
+vuepress-theme-mini@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.2.1.tgz#f80bcb3603ebaab2205c84a8dbed1df897e62f1a"
+  integrity sha1-+AvLNgPrqrIgXISo2+0d+JfmLxo=
   dependencies:
-    date-fns "^2.5.1"
-    leancloud-storage "^4.0.0"
-    valine "^1.3.10"
-    vuepress-plugin-right-anchor "^0.2.1"
+    date-fns "2.16.1"
+    leancloud-storage "4.7.0"
+    valine "1.4.14"
+    vuepress-plugin-right-anchor "0.2.1"
 
 vuepress@1.7.1:
   version "1.7.1"
