@@ -8375,6 +8375,13 @@ vuepress-plugin-feed@0.1.8:
   dependencies:
     flowchart.js "^1.11.3"
 
+vuepress-plugin-right-anchor@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.npm.taobao.org/vuepress-plugin-right-anchor/download/vuepress-plugin-right-anchor-0.2.1.tgz#17f7a2aeb87e3ad4b330da7ac34aba2e906d2677"
+  integrity sha1-F/eirrh+OtSzMNp6w0q6LpBtJnc=
+  dependencies:
+    lodash.debounce "^4.0.8"
+
 vuepress-plugin-sitemap@2.3.1:
   version "2.3.1"
   resolved "https://registry.npm.taobao.org/vuepress-plugin-sitemap/download/vuepress-plugin-sitemap-2.3.1.tgz#51298aca77a5de96396fdbd1103e1637dd61ae6a"
@@ -8389,14 +8396,15 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.1.1.tgz#648a89f9858fcd55d7366dcfa6898aa4b4ecff5b"
-  integrity sha1-ZIqJ+YWPzVXXNm3PpomKpLTs/1s=
+vuepress-theme-mini@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.2.0.tgz#55642c2e798c44c992b8a9082cd8436266bc52d6"
+  integrity sha1-VWQsLnmMRMmSuKkILNhDYma8UtY=
   dependencies:
     date-fns "^2.5.1"
     leancloud-storage "^4.0.0"
     valine "^1.3.10"
+    vuepress-plugin-right-anchor "^0.2.1"
 
 vuepress@1.7.1:
   version "1.7.1"
