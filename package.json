@@ -18,7 +18,7 @@
     "simple-git": "2.21.0",
     "vuepress": "1.7.1",
     "vuepress-plugin-feed": "0.1.8",
-    "vuepress-plugin-flowchart": "https://github.com/wxsms/vuepress-plugin-flowchart#17dbc78b0d51ab777a1c04c061263811c98e1c0b",
+    "vuepress-plugin-flowchart": "https://github.com/wxsms/vuepress-plugin-flowchart#be866e6b20007930d47d93c730c387885f4c34ab",
     "vuepress-plugin-sitemap": "2.3.1",
     "vuepress-theme-mini": "1.2.4",
     "yaml-front-matter": "4.1.0"

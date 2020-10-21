@@ -8369,9 +8369,9 @@ vuepress-plugin-feed@0.1.8:
     remove-markdown "0.3.0"
     striptags "3.1.1"
 
-"vuepress-plugin-flowchart@https://github.com/wxsms/vuepress-plugin-flowchart#17dbc78b0d51ab777a1c04c061263811c98e1c0b":
+"vuepress-plugin-flowchart@https://github.com/wxsms/vuepress-plugin-flowchart#be866e6b20007930d47d93c730c387885f4c34ab":
   version "1.4.3"
-  resolved "https://github.com/wxsms/vuepress-plugin-flowchart#17dbc78b0d51ab777a1c04c061263811c98e1c0b"
+  resolved "https://github.com/wxsms/vuepress-plugin-flowchart#be866e6b20007930d47d93c730c387885f4c34ab"
   dependencies:
     flowchart.js "^1.11.3"
 
