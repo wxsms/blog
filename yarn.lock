@@ -5130,7 +5130,7 @@ lodash.clonedeep@^4.5.0:
   resolved "https://registry.npm.taobao.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
-lodash.debounce@^4.0.8:
+lodash.debounce@4.0.8, lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npm.taobao.org/lodash.debounce/download/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
@@ -8389,14 +8389,14 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.2.3.tgz#91582c2d63f5a79141ceed19e1c1cd30b4777370"
-  integrity sha1-kVgsLWP1p5FBzu0Z4cHNMLR3c3A=
+vuepress-theme-mini@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.2.4.tgz#7ff69fd6fe47239c9ee8443b6187d216c2b2bf9c"
+  integrity sha1-f/af1v5HI5ye6EQ7YYfSFsKyv5w=
   dependencies:
     date-fns "2.16.1"
     leancloud-storage "4.7.0"
-    lodash.debounce "^4.0.8"
+    lodash.debounce "4.0.8"
     valine "1.4.14"
 
 vuepress@1.7.1:
