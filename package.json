@@ -20,7 +20,7 @@
     "vuepress-plugin-feed": "0.1.8",
     "vuepress-plugin-flowchart": "https://github.com/wxsms/vuepress-plugin-flowchart#b09ce141070e6be46c69060aa7a2129f8a4ce422",
     "vuepress-plugin-sitemap": "2.3.1",
-    "vuepress-theme-mini": "1.2.1",
+    "vuepress-theme-mini": "1.2.2",
     "yaml-front-matter": "4.1.0"
   }
 }
