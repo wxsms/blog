@@ -17,7 +17,21 @@ tags: [ci]
 
 举例：服务器使用 PM2 管理部署。纯手工操作：
 
-<Charts-K8s1/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地打包前端代码
+op2=>operation: 将：
+前端构建完毕的代码/服务端原始代码
+scp 或 sftp 命令上传到远程机器
+op3=>operation: ssh 登录远程机器
+op4=>operation: 解压缩到指定位置
+op5=>operation: 为服务端代码执行 npm install/yarn
+op6=>operation: pm2 restart/reload
+op7=>operation: 退出远程机器
+
+st->op1->op2->op3->op4->op5->op6->op7->e
+```
 
 ### 总结
 
@@ -43,13 +57,29 @@ tags: [ci]
 
 ### 流程图
 
-<Charts-K8s2/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 通过 scp 将代码上传到远程机器
+op6=>operation: Gitlab 通过 ssh 登录上远程机器
+op7=>operation: Gitlab 在远程机器上执行 pm2 重启命令
+op8=>operation: Gitlab 退出远程机器
+cond1=>condition: 是否为发布分支？
+
+st(bottom)->op1(bottom)->op2(left)->op3(bottom)->cond1
+cond1(yes,right)->op4->op5->op6->op7->op8(left)->e
+cond1(no,bottom)->e
+```
 
 ### 技术细节
 
 配置文件 `.gitlab-ci.yml`:
 
-```yaml
+```
 image: node
 
 before_script:
@@ -122,7 +152,29 @@ deploy-dev:
 
 ### 流程图
 
-<Charts-K8s3/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 更新文件服务器
+op6=>operation: 在 Agent 平台上点击发布
+op7=>operation: Agent 在指定机器上
+执行发布脚本：
+从文件服务器拉取最新代码，
+解压并执行重启命令
+op8=>operation: Agent 退出远程机器
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 立即发布？
+
+st->op1->op2->op3->cond1
+cond1(yes,bottom)->op4(bottom)->op5->cond2
+cond1(no,right)->e
+cond2(yes,bottom)->op6->op7->op8(right)->e
+cond2(no,right)->e
+```
 
 ### 总结
 
@@ -158,7 +210,35 @@ k8s 基础知识：
 
 ### 流程图
 
-<Charts-K8s4/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 更新文件服务器
+op6=>operation: 更改 k8s 相应配置
+使用指定 commit sha 发布
+op7=>operation: k8s 识别到配置更新
+重启指定服务
+op8=>operation: 向服务节点发送 kill 命令
+CI过程到此结束
+op9=>operation: k8s pod 收到命令，进程退出
+op10=>operation: k8s 自动重新拉起该 pod
+op11=>operation: pod 重新拉取名为 latest 的代码
+op15=>operation: pod 安装 nodejs 依赖
+op12=>operation: pod 启动 nodejs 进程
+完成重启
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 是否为线上发布分支？
+
+st->op1->op2->op3->cond1
+cond1(yes)->op4->op5->cond2
+cond1(no,right)->e
+cond2(yes,left)->op6->op7->e
+cond2(no,bottom)->op8->op9->op10->op11->op15->op12->e
+```
 
 ### 技术细节
 
@@ -238,7 +318,42 @@ Consul 是为基础设施提供服务发现和服务配置的工具，包含多�
 
 ### 流程图
 
-<Charts-K8s5/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 更新文件服务器
+op6=>operation: 更改 k8s 相应配置
+使用指定 commit sha 发布
+op7=>operation: k8s 识别到配置更新
+重启指定服务
+（滚动更新）
+op13=>operation: Gitlab 从 Consul 获取
+所有活着的节点
+op8=>operation: Gitlab 向服务节点列表
+逐个发送 kill 命令
+CI 过程到此结束
+op9=>operation: k8s pod 收到命令，进程退出
+op10=>operation: k8s 自动重新拉起该 pod
+op11=>operation: pod 重新拉取名为 latest 的代码
+op15=>operation: pod 安装 nodejs 依赖
+op14=>operation: pod 启动 nodejs 进程，并：
+以 pod name 为 id
+1. 从 Consul 解注册所有同名服务
+2. 向 Consul 注册自己
+op12=>operation: pod 完成重启
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 是否为线上发布分支？
+
+st->op1->op2->op3->cond1
+cond1(yes,bottom)->op4->op5->cond2
+cond1(no,right)->e
+cond2(yes,left)->op6->op7->e
+cond2(no,bottom)->op13->op8->op9->op10->op11->op15->op14->op12->e
+```
 
 ### 技术细节
 
@@ -252,7 +367,25 @@ Consul 是为基础设施提供服务发现和服务配置的工具，包含多�
 
 流程：
 
-<Charts-K8s6/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 获取所有在 Consul 上注册了的节点
+op2=>operation: 从下标 0 开始
+循环发送 kill 指令
+op3=>operation: 等待并检测其重启完毕
+cond1=>condition: kill 指令返回成功？
+cond2=>condition: 检测成功且未超时？
+cond3=>condition: 该节点是最后一个？
+
+st->op1->op2->cond1
+cond1(no,right)->op2
+cond1(yes)->op3->cond2
+cond2(no,left)->op2
+cond2(yes)->cond3
+cond3(yes)->e
+cond3(no,right)->op2
+```
 
 代码：
 
@@ -380,7 +513,7 @@ async function sleep (time) {
 
 `.gitlab-ci.yml`:
 
-```yaml
+```
 # ...
 deploy-dev:
   stage: deploy
@@ -404,7 +537,20 @@ Consul 在注册服务时并没有类似“主键”的概念，一个 Consul �
 
 流程：
 
-<Charts-K8s7/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 获取所有在 Consul 上注册了的节点
+op2=>operation: 找到所有同名服务
+op3=>operation: 从下标 0 开始，
+循环发送解注册请求
+op4=>operation: 向 Consul 注册自己
+cond1=>condition: 已全部解除？
+
+st->op1->op2->op3->cond1
+cond1(no)->op3
+cond1(yes)->op4->e
+```
 
 ### 总结
 
@@ -430,7 +576,44 @@ Consul 在注册服务时并没有类似“主键”的概念，一个 Consul �
 
 ### 流程图
 
-<Charts-K8s8/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op15=>operation: Gitlab 根据 Dockerfile
+构建项目的完整镜像
+op16=>operation: Gitlab 将打好 tag 的
+镜像上传到私有云
+op6=>operation: 更改 k8s 相应配置
+使用指定 commit sha 发布
+op7=>operation: k8s 识别到配置更新
+重启指定服务
+（滚动更新）
+op13=>operation: Gitlab 从 Consul 获取
+所有活着的节点
+op8=>operation: Gitlab 向服务节点列表
+逐个发送 kill 命令
+CI 过程到此结束
+op9=>operation: k8s pod 收到命令，进程退出
+op10=>operation: k8s 使用已经构建完成的
+最新镜像自动重新拉起该 pod
+op14=>operation: pod 启动 nodejs 进程，并：
+以 pod name 为 id
+1. 从 Consul 解注册所有同名服务
+2. 向 Consul 注册自己
+op12=>operation: pod 完成重启
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 是否为线上发布分支？
+
+st->op1->op2->op3->cond1
+cond1(yes,bottom)->op4->op15->op16->cond2
+cond1(no,right)->e
+cond2(yes,left)->op6->op7->e
+cond2(no,bottom)->op13->op8->op9->op10->op14->op12->e
+```
 
 ### 技术细节
 

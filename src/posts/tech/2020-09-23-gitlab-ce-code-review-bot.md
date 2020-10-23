@@ -38,7 +38,29 @@ tags: [gitlab,nodejs]
 
 整个评审流程如下所示：
 
-<Charts-GitlabBot1/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+s1=>operation: 同事 A 往业务分支 feat/a 推送代码
+s2=>operation: 同事 A 请求将 feat/a 合并到主干分支 dev，
+创建了 MR
+s3=>operation: Gitlab 通过 Web hook 通知到评审系统
+s4=>operation: 评审系统从预定义的评审员从随机抽取 N 位，
+假设为 2 位：同事 B 和同事 C
+并通过 @ 的方式通知
+s5=>operation: 评审员 B/C 在 Gitlab 上进行评审
+c1=>condition: 评审通过？
+s6=>operation: 同事 B/C 评论 lgtm
+s7=>operation: 同事 B/C 指出问题，
+在 Gitlab 上的代码中，
+具体到某一行进行评论
+s8=>operation: 同事 A 修改代码，再次提交
+s9=>operation: 评审系统执行合并
+
+st->s1->s2->s3->s4->s5->c1
+c1(yes,right)->s6->s9->e
+c1(no,bottom)->s7(left)->s8(top)->s5
+```
 
 可以看到，除了最后的「合并」操作外，评审系统只是作为一个「旁观者」的角色，帮助我们完成了整个评审流程，并没有任何侵入性的操作。
 
@@ -138,7 +160,26 @@ if (sourceBranch.protected || !targetBranch.protected) {
 
 在 `mrc(ctx)` 中，可以实现 MR 收到新评论时的逻辑，如下图所示：
 
-<Charts-GitlabBot2/>
+```flowchart
+st=>start: 开始
+e=>end: 结束
+s1=>operation: MR 收到新评论
+c1=>condition: 检查评论是否包含 lgtm
+c2=>condition: 检查评论者是否为受邀评审员
+s2=>operation: 忽略该评论
+c3=>condition: 通过 API 获取到该 MR 下的所有评论，
+检查是否还存在其它评审员未评审
+s4=>operation: 去除 MR 的 WIP 标记
+s5=>operation: 执行合并
+
+st->s1->c1
+c1(yes,bottom)->c2
+c1(no,right)->s2(bottom)->e
+c2(yes,bottom)->c3
+c2(no,right)->s2(bottom)->e
+c3(yes,right)->e
+c3(no,bottom)->s4(bottom)->s5(right)->e
+```
 
 部分关键代码：
 
