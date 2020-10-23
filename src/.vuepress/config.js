@@ -1,6 +1,7 @@
 const _ = require('lodash')
 
 module.exports = {
+  shouldPrefetch: () => false,
   title: `wxsm's space`,
   description: 'Just another personal blog.',
   head: [
