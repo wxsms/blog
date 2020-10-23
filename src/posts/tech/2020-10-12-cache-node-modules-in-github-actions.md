@@ -9,7 +9,7 @@ tags: [CI,nodejs]
 
 在 CI 中缓存安装下来的依赖项是提速的关键，[Github Actions 官方文档](https://docs.github.com/en/free-pro-team@latest/actions/guides/caching-dependencies-to-speed-up-workflows) 提供了如下方案 (NPM)：
 
-```yaml
+```
 jobs:
   build:
     # ...
@@ -32,7 +32,7 @@ jobs:
 
 Yarn 则复杂，多了一步操作（[文档](https://github.com/actions/cache/blob/9ab95382c899bf0953a0c6c1374373fc40456ffe/examples.md#node---yarn)）:
 
-```yaml
+```
 - name: Get yarn cache directory path
   id: yarn-cache-dir-path
   run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -47,7 +47,7 @@ Yarn 则复杂，多了一步操作（[文档](https://github.com/actions/cache/
 
 这些方案可以说是又臭又长，我只想简单做个 cache，何必让我关心那么多东西？项目多的话，简直疯了。看看人家 Gitlab 的方案：
 
-```yaml
+```
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -58,7 +58,7 @@ cache:
 
 因此，我找到了这个 action [c-hive/gha-yarn-cache](https://github.com/c-hive/gha-yarn-cache) 作为替代，现在代码可以简化为：
 
-```yaml
+```
 jobs:
   build:
       # ...

@@ -21,7 +21,7 @@ Gitlab 有一套内置的 CI 系统，相比集成 Jenkins 来说更加方便一
 
 一份较为完整的配置文件样例：
 
-```yaml
+```
 #指定 docker 镜像
 image: node:9.3.0
 

@@ -34,7 +34,7 @@ Travis CI 是一款免费的持续集成工具，可以与 Github 无缝集成�
 
 `.travis.yml` 文件内容：
 
-```yaml
+```
 language: node_js
 cache:
   directories:
@@ -98,7 +98,7 @@ deploy:
 
 `.travis.yml` 文件内容：
 
-```yaml
+```
 language: node_js
 cache:
   directories:
