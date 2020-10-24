@@ -57,7 +57,7 @@ module.exports = {
       noSSR: '404.html',
       // remove scripts
       noScript: [
-        '/posts/2018-07-19-gitlab-ci-setup.html'
+        // '**/2018-07-19-gitlab-ci-setup.html'
       ]
     }
   },
