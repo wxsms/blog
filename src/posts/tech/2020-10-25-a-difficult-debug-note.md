@@ -20,8 +20,9 @@ This node type does not support this method.
 该错误：
 
 1. 只会在 build 模式出现；
-2. 只会在某些博文中出现；
-3. 只会在直接从链接进入该博文，或者在该博文页面刷新时出现。
+1. 只会在发布上 Github Pages 后出现；
+1. 只会在某些博文中出现；
+1. 只会在直接从链接进入该博文，或者在该博文页面刷新时出现。
 
 该错误带来的影响，**会导致页面上的所有 JavaScript 功能全部失效**，具体来说是与 Vue.js 相关的功能。如：导航链接（因为使用了 Vue-Router），评论框，一些依赖于 Vue.js 的 VuePress 插件，等等。
 
