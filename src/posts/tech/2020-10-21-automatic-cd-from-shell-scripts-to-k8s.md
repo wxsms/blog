@@ -79,7 +79,7 @@ cond1(no,bottom)->e
 
 配置文件 `.gitlab-ci.yml`:
 
-```
+```yaml
 image: node
 
 before_script:
@@ -513,7 +513,7 @@ async function sleep (time) {
 
 `.gitlab-ci.yml`:
 
-```
+```yaml
 # ...
 deploy-dev:
   stage: deploy

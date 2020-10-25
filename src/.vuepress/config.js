@@ -16,7 +16,7 @@ module.exports = {
   ],
   theme: 'mini',
   themeConfig: {
-    useSimpleLinkOnNavBar: true,
+    // useSimpleLinkOnNavBar: true,
     smoothScroll: true,
     lastUpdated: 'Last Updated',
     siteName: 'wxsm\'s space',
