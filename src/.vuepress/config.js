@@ -50,16 +50,16 @@ module.exports = {
       canonical_base: 'https://wxsm.space',
       posts_directories: ['/posts'],
       sort: entries => _.reverse(_.sortBy(entries, 'date'))
-    },
-    'vuepress-plugin-serve': {},
-    'vuepress-plugin-dehydrate': {
-      // disable SSR
-      noSSR: '404.html',
-      // remove scripts
-      noScript: [
-        // '**/2018-07-19-gitlab-ci-setup.html'
-      ]
     }
+    // 'vuepress-plugin-serve': {},
+    // 'vuepress-plugin-dehydrate': {
+    //   // disable SSR
+    //   noSSR: '404.html',
+    //   // remove scripts
+    //   noScript: [
+    //     // '**/2018-07-19-gitlab-ci-setup.html'
+    //   ]
+    // }
   },
   markdown: {
     // toc: {
