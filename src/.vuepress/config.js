@@ -17,7 +17,8 @@ module.exports = {
   theme: 'mini',
   themeConfig: {
     // useSimpleLinkOnNavBar: true,
-    smoothScroll: true,
+    // 这个平滑滚动是通过 css 实现的，会导致一些不必要的动画，较为烦人
+    smoothScroll: false,
     lastUpdated: 'Last Updated',
     siteName: 'wxsm\'s space',
     author: 'wxsm',
