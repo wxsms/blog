@@ -94,7 +94,7 @@ watch: {
       livereload: true
     }
   },
-      //......
+  //......
 }
 ```
 
