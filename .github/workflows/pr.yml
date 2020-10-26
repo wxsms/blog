@@ -7,6 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@v1.1.1
+        with:
+          timezone: Asia/Shanghai
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
