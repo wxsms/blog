@@ -105,7 +105,7 @@ This node type does not support this method.
 
 虽然从使用性的层面上来说问题算是解决了，但是我还是很在意以上几点。因此仍在持续地探究问题根源。
 
-后来，我在 netlify 上看到了这样一个帖子：[netlify](https://community.netlify.com/t/vuepress-deployment-on-netlify-succeeds-but-experience-errors-when-reloading-specific-pages/12606/8)
+后来，我在 netlify 上看到了这样一个帖子：[VuePress deployment on Netlify succeeds, but experience errors when reloading specific pages](https://community.netlify.com/t/vuepress-deployment-on-netlify-succeeds-but-experience-errors-when-reloading-specific-pages/12606/8)
 
 作者所提到的问题基本跟我一模一样：
 
