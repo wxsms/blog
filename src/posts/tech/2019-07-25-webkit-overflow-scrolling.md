@@ -13,6 +13,8 @@ tags: [CSS]
 * `auto` 普通滚动行为，当手指离开屏幕时，滚动会立即停止（默认）
 * `touch` 基于动量的滚动行为，当手指离开屏幕时，滚动会根据手势强度以相应的速度持续一段时间，同时会赋予滚动回弹的效果
 
+<!-- more -->
+
 一个例子：
 
 <<< @/src/.vuepress/components/Demo/WebkitOverflowScrolling.vue

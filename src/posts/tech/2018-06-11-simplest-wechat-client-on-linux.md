@@ -18,6 +18,8 @@ draft: false
 
 然而，实际上还有一种更简单的方式：通过 Chrome 将网页直接转化为桌面应用。
 
+<!-- more -->
+
 步骤：
 
 1. 使用 Chrome 打开[网页版微信](https://wx.qq.com/)

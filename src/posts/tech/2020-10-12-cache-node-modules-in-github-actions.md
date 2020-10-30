@@ -9,6 +9,8 @@ tags: [CI,nodejs]
 
 在 CI 中缓存安装下来的依赖项是提速的关键，[Github Actions 官方文档](https://docs.github.com/en/free-pro-team@latest/actions/guides/caching-dependencies-to-speed-up-workflows) 提供了如下方案 (NPM)：
 
+<!-- more -->
+
 ```
 jobs:
   build:

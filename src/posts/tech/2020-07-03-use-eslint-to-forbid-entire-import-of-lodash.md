@@ -7,6 +7,8 @@ tags: [JavaScript]
 
 前端项目使用 lodash 时需要注意，一不小心就会把整个库引入进来，大大增加最终打包体积。
 
+<!-- more -->
+
 两种真正可以实现按 method 引入的方式，一是：
 
 ```javascript

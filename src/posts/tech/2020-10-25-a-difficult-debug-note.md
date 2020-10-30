@@ -26,6 +26,9 @@ This node type does not support this method.
 
 该错误带来的影响，**会导致页面上的所有 JavaScript 功能全部失效**，具体来说是与 Vue.js 相关的功能。如：导航链接（因为使用了 Vue-Router），评论框，一些依赖于 Vue.js 的 VuePress 插件，等等。
 
+
+<!-- more -->
+
 ## 主题？
 
 初次看到这个报错时，我的第一想法是：是不是我不经意间在哪里调用了 `appendChild` 这个方法导致的？因为我的博客使用了我自己发布的主题，有可能是我哪个地方写得不好导致了这个问题。

@@ -14,3 +14,5 @@ tags: []
 ![截图](https://i.stack.imgur.com/mkJgH.png)
 
 这样一来，每次只要打开以上格式的文件，编辑器就会自动开启 SoftWrap，一劳永逸。
+
+<!-- more -->

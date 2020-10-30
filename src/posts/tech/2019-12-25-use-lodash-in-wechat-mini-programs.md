@@ -15,6 +15,8 @@ tags: [JavaScript, WechatMiniProgram]
 Uncaught TypeError: Cannot read property 'prototype' of undefined
 ```
 
+<!-- more -->
+
 解决方案：
 
 1. 安装独立的 lodash method package，如 [lodash.get](https://www.npmjs.com/package/lodash.get)

@@ -7,6 +7,8 @@ tags: [centos, centos7]
 
 **FirewallD** (firewall daemon) 作为 **iptables** 服务的替代品，已经默认被安装到了 CentOS7 上面。
 
+<!-- more -->
+
 ## 管理
 
 ### 服务启动/停止

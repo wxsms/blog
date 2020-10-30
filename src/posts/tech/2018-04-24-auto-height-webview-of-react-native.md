@@ -11,6 +11,8 @@ draft: false
 
 不过本方案目前也只适用于自己拼接的 HTML，不适用于直接打开链接的 Webview，应用场景主要是在 ReactNative 应用内打开由 CMS 编辑的类新闻页面。
 
+<!-- more -->
+
 主要思路为：通过 Webview 提供的 `postMessage` 交互方式，不断地从 HTML 页面把自己计算好的高度抛送给 APP 端。但是这里其实有个问题，ReactNative Webview 的 `postMessage` 必须在页面加载完成以后才会注入，因此可以先加载一个空白页，待 `postMessage` 注入完成以后，再将实际文章内容插入到 `body` 中。
 
 但是这么做有一个问题就是，页面将无法知道真正的内容“是否已加载完”，因为 `window.onload` 事件在加载开始之前就已经结束了。因此它只能不停地抛送高度信息，直到页面被销毁。

@@ -24,8 +24,8 @@ module.exports = {
     author: 'wxsm',
     navbar: true,
     nav: [
-      { text: 'tech', link: '/tech/' },
-      { text: 'life', link: '/life/' },
+      { text: 'home', link: '/' },
+      { text: 'about', link: '/about/' },
       { text: 'links', link: '/links/' }
     ],
     valine: {

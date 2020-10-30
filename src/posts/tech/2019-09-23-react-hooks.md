@@ -9,6 +9,8 @@ tags: [React,Vue,JavaScript]
 
 而 [Vue Function-based API](https://zhuanlan.zhihu.com/p/68477600) 是将来会出现在 Vue.js 3.0 大版本中的一个 API 变革的整体预览，二者（至少）在形式上保持了高度统一，而 yyx 也在文章中直言是受到了 React Hooks 的启发，二者分别解决了自身框架的一些痛点，并允许开发写编者更加「纯粹」的函数式组件。也许可以认为是未来前端框架发展的一个大方向？
 
+<!-- more -->
+
 以下代码例子大部分来自于[官方文档](https://reactjs.org/docs/hooks-intro.html)。
 
 ## 简介

@@ -7,8 +7,6 @@ tags: [gitlab,nodejs]
 
 <!-- 「」 -->
 
-## 前言
-
 由于 Gitlab CE 做代码评审时缺少了关键的评审员功能（详情参考此 [issue](https://gitlab.com/gitlab-org/gitlab-foss/-/issues/42096)），因此在使用 CE 的同时又想要做代码评审的话，就必须要自己想办法了。
 
 网上能找到的最多的解决方案就是在 Gitlab 前面再部署一套 Gerrit，通过拦截推送的代码以及同步两个库来实现。但是这种方案有诸多弊端。比如：
@@ -25,6 +23,8 @@ tags: [gitlab,nodejs]
 3. 最好是可以可以自动化整个流程（评审人自动分配、评审完自动合并，等等）。
 
 好在，Gitlab 有一套完备的 [Web hook](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html) 以及 [API](https://docs.gitlab.com/ee/api/) 系统，可以支撑起我的想法。
+
+<!-- more -->
 
 ## 实现原理
 

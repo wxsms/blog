@@ -7,11 +7,13 @@ tags: []
 
 <!-- 「」 -->
 
+Linux 的命令行与构建工具一般来说要比 Windows 好用，但 Windows 的用户界面毫无疑问要比 Linux 好用。以往在 Windows 10 上安装 Linux，要么是使用虚拟机，要么是使用双系统，总是无法做到两头兼顾。现在 Windows 10 有了 WSL 技术，使得「二者合一」成为了可能。
+
+<!-- more -->
+
 ## WSL
 
 ### 安装
-
-Linux 的命令行与构建工具一般来说要比 Windows 好用，但 Windows 的用户界面毫无疑问要比 Linux 好用。以往在 Windows 10 上安装 Linux，要么是使用虚拟机，要么是使用双系统，总是无法做到两头兼顾。现在 Windows 10 有了 WSL 技术，使得「二者合一」成为了可能。
 
 关于如何安装 WSL，可以参考 [适用于 Linux 的 Windows 子系统安装指南 (Windows 10)](https://docs.microsoft.com/zh-cn/windows/wsl/install-win10)，总的来说：
 
