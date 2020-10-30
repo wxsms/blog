@@ -43,7 +43,7 @@ svg.selectAll('rect')
 * Continuous Scales（连续映射）
 * Ordinal Scales（散点映射）
 
-<!--more-->
+<!-- more -->
 
 ## Continuous Scales
 

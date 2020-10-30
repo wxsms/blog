@@ -23,7 +23,7 @@ NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
 项目使用 MIT 许可，随便用。
 
-<!--more-->
+<!-- more -->
 
 ## 简单介绍
 

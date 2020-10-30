@@ -6,11 +6,7 @@ categories: [JavaScript]
 tags: [PM2]
 sidebar: false
 draft: false
-
 ---
-
-
-
 
 Command (2.4.0+):
 
@@ -24,5 +20,6 @@ For example:
 $ pm2 serve /dist 80
 ```
 
-
 By default, it displays `404.html` from the serving directory when that happens (NOT configurable).
+
+<!-- more -->

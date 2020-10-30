@@ -15,7 +15,7 @@ jQuery 曾经存在 3 种绑定事件的方法：bind / live / delegate，后来
 
 一开始我觉得很奇怪，像 delegate 这样的方法是怎么实现的呢？通过监听 DOM 树变化吗？性能开销会不会特别大？后来知道了 JavaScript 有一种机制叫事件代理（event delegation），也就是本文要说的东西，才明白，原来一切都很简单。
 
-<!--more-->
+<!-- more -->
 
 ## 事件代理及其工作原理
 

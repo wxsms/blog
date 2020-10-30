@@ -8,11 +8,7 @@ categories:
 tags:
   - AngularJs
   - MEAN-Stack
-
 ---
-
-
-
 
 如题，经过长期痛苦的观察以及 debug 过程，以下原因被一一排除：
 
@@ -28,3 +24,5 @@ tags:
 
 * 要么将全局依赖去掉，改为各自添加依赖
 * 要么使用 `transition: none !important`
+
+<!-- more -->

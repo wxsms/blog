@@ -36,7 +36,7 @@ let div = d3.select('body')
 
 光看代码完全不能理解 D3 到底做了些什么，其实这里关键是 `enter` 的使用。
 
-<!--more-->
+<!-- more -->
 
 ## Overall
 

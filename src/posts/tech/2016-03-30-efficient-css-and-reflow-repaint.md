@@ -23,7 +23,7 @@ Antti Koivisto 是 Webkit 核心的贡献者之一，他曾说：
 
 那么 CSS 的性能还能通过什么方式提升呢？这就是下面的内容。
 
-<!--more-->
+<!-- more -->
 
 ## Reflow & Repaint
 

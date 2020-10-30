@@ -8,7 +8,7 @@ tags: []
 
 Personal common-used commands list, including windows, osx, git, etc.
 
-<!--more-->
+<!-- more -->
 
 ## Git
 

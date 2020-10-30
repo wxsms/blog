@@ -15,7 +15,7 @@ Travis CI 是一款免费的持续集成工具，可以与 Github 无缝集成�
 
 至于具体操作内容，由项目根目录的 `.travis.yml` 文件决定。这个文件的简单用法由下面两个具体例子来说明。
 
-<!--more-->
+<!-- more -->
 
 ## wxsms.github.io
 

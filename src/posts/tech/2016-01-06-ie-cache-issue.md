@@ -15,7 +15,7 @@ tags:
 
 昨天发现了一个奇怪的问题，一个Web Application Update Entity的功能，在Chrome/Firefox上测试都正常运行，到了IE 11上就不行了，主要表现就是Update成功以后再次读取记录会读取出Update之前的值。功能逻辑就是一些简单的通过RESTful API来执行CRUD操作的Ajax调用。在IE上用控制台仔细调试一番后，发现在打开控制台的时候居然能表现正常，而关掉以后就立刻不行，这明显就是IE爸爸不走寻常路，把API也Cache下来了。于是就有了以下的解决方案。
 
-<!--more-->
+<!-- more -->
 
 ## 前端解决方案
 

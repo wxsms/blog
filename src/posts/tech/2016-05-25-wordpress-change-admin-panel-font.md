@@ -27,7 +27,7 @@ add_action('admin_head', 'change_admin_font');
 
 顺便提供一下更改 Twenty Sixteen 主题字体的代码吧，要改的地方挺多的。
 
-<!--more-->
+<!-- more -->
 
 ```css
 /* reset font */

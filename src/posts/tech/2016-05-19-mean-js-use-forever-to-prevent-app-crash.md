@@ -17,7 +17,7 @@ MEANJS 预设的 Grunt task 中没有提供类似出错自动重启的任务，�
 
 个人觉得 MEANJS 在 production mode 中也使用 nodemon 来跑 watch 任务有些鸡肋，因为我们并不需要在产品服务器上频繁地更改代码。因此，我直接把它替换掉了。
 
-<!--more-->
+<!-- more -->
 
 这里需要注意的是，我们不能直接用 forever 去跑 `server.js` 脚本，因为这样的话下层代码拿不到 env settings，就会把启动模式设置为默认的开发模式。
 

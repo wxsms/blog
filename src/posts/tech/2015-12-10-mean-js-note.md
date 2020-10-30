@@ -16,6 +16,8 @@ tags:
 
 之前一直以为 MEAN 只是一个概念上的东西，表示以 [Mongodb](http://mongodb.org/) [Express](http://expressjs.com/) [AngularJs](http://angularjs.org/) [NodeJs](http://nodejs.org/) 为基础的全栈应用开发模式。这几天在公司接手相应项目的时候发现已经有人做出来并且维护着一些这样的 App 结构体，用过以后觉得还不错。[MEANJS](https://github.com/meanjs/mean) 是一个开源的 JavaScript 全栈应用解决方案，主要用到的技术自然就是以上提到的那些。使用成熟的解决方案可以使自己的项目更加易于开发以及维护，等等好处就不再赘述。
 
+<!-- more -->
+
 ## 关于MEAN
 
 本文主要关注 MEANJS本 身，对于MEAN之中的种种技术就不再多做介绍。下面贴MEANJS给出的一些链接。

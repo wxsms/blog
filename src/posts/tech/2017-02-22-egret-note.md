@@ -18,7 +18,7 @@ Egret Engine 的学习笔记。
 
 Egret Engine 是一款基于 JavaScript 的游戏制作引擎，支持 2D 与 3D 模式，支持 Canvas 与 WebGL 渲染，目前使用 TypeScript 编写。
 
-<!--more-->
+<!-- more -->
 
 ## 显示对象
 

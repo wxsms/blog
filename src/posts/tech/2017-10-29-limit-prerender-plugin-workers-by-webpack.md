@@ -6,10 +6,7 @@ categories: [JavaScript]
 tags: [Vue, Webpack, Travis-CI]
 sidebar: false
 draft: false
-
 ---
-
-
 
 
 [Prerender SPA Plugin](https://github.com/chrisvfritz/prerender-spa-plugin) 是一个可以将 Vue 页面预渲染为静态 HTML 的 webpack 插件，对静态小站（比如博客）来说很棒棒。但是最近用的时候总发现一个问题：它的 build 失败率越来越高，尤其是在 CI 上。后来在其 repo 的一个 [issue](https://github.com/chrisvfritz/prerender-spa-plugin/issues/53) 中发现了问题所在，就是它没有限制 PhantomJS workers 的数量，导致页面一多就直接全部卡死不动，然后超时。
@@ -17,6 +14,8 @@ draft: false
 > (Workers) Default is as many workers as routes.
 
 虽然有人已经发了 [PR](https://github.com/chrisvfritz/prerender-spa-plugin/pull/55) 来修复这个问题，然而好几个月过去了也没有 merge，不知道是什么情况。于是我在自己的尝试中找到了一种可以接受的解决方案：虽然我不能限制你插件 workers 的数量，但是可以限制每个插件渲染的 route 数量呀。
+
+<!-- more -->
 
 具体思路就是：
 

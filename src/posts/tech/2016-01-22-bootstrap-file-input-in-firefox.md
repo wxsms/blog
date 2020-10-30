@@ -7,16 +7,15 @@ categories:
 tags:
   - Bootstrap
   - Firefox
-
 ---
-
-
 
 默认的Bootstrap文件上传框在Chrome/Firefox/IE上的表现都不一样，如下所示。 代码：
 
 ```html
 <input class="form-control" type="file">
 ```
+
+<!-- more -->
 
 Chrome:
 
