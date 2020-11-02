@@ -18,6 +18,15 @@ tags: []
 发布 GitHub Pages 使用的是 [crazy-max/ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages) 这个 action：
 
 ```yaml
+# publish_pages.yaml
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
   deploy_gh_pages:
     runs-on: ubuntu-latest
     steps:
@@ -47,6 +56,15 @@ tags: []
 1. 为 Release 附加需要的 assets，使用 [actions/upload-release-asset](https://github.com/actions/upload-release-asset)
 
 ```yaml
+# publish_release.yaml
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
   deploy_release:
     runs-on: ubuntu-latest
     steps:
@@ -100,6 +118,15 @@ tags: []
 注：下面的 `NPM_TOKEN` 是需要自行配置的。
 
 ```yaml
+# publish_npm.yaml
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
   deploy_npm:
     runs-on: ubuntu-latest
     steps:
@@ -126,6 +153,15 @@ GitHub Registry 与 NPM 不一样的是，它要求发布的包必须是以当�
 这里为求简便，使用了 [deef0000dragon1/json-edit-action](https://github.com/deef0000dragon1/json-edit-action) 来执行替换。实际上熟悉 shell 命令的话一行代码也可以完成。
 
 ```yaml
+# publish_github.yaml
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
   publish_github:
     runs-on: ubuntu-latest
     steps:
