@@ -5,9 +5,11 @@ date: 2020-11-02T08:25:10.612Z
 tags: []
 ---
 
-一些常用发布动作的总结。需要注意的是，以下所提到的 `secrets.GITHUB_TOKEN` 均是 GitHub Action 内置的 Access Token，无需自行创建。而其它 Token 则需要在项目主页 `Settings` -> `Secrets` 处创建。
+本文是一些 GitHub Actions 常用发布动作的总结。
 
-强烈建议将所有 Publish actions 分开执行，不要集中到一个 Workflow 内。原因是如果其中一个动作因为某些原因失败了，GitHub 目前只能重启整个 Workflow，而如果 Workflow 内某个 job 已经成功了，那么该 job 下一次执行必然是失败，因此这一个提交的 Workflow 将永远不可能成功。
+强烈建议将所有 Publish actions 分开执行，不要集中到一个 Workflow 内。原因是如果其中一个动作因为某些原因失败了，GitHub 目前只能重启整个 Workflow，而如果 Workflow 内某个 Job 已经成功了，那么该 Job 下一次执行必然是失败（因为此类任务一般不能对同一个版本号执行两次，发布成功一次以后第二次尝试将会被拒绝发布），因此这一个提交的 Workflow 将永远不可能成功。
+
+需要注意的是，以下所提到的 `secrets.GITHUB_TOKEN` 均是 GitHub Action 内置的 Access Token，无需自行创建。而其它 secrets 则需要在 `项目主页` -> `Settings` -> `Secrets` 处创建。
 
 <!-- more -->
 
@@ -93,9 +95,9 @@ tags: []
 
 ## NPM
 
-发布 npm 有一个预定义的 action: [JS-DevTools/npm-publish](https://github.com/JS-DevTools/npm-publish)，但是用过以后我觉得实际上没有自己敲命令行好用，因为它会做一些额外的不必要的动作，可能会导致发布出错（如：第一次发布，因为它会检查历史包）。
+发布 npm 有一个预定义的 action: [JS-DevTools/npm-publish](https://github.com/JS-DevTools/npm-publish)，但是用过以后我觉得实际上没有自己敲命令行好用，因为它会做一些额外的不必要的动作，可能会导致发布出错。如：第一次发布时，它默认会检查历史包而报找不到 package 的错误，虽然它文档提示可以通过参数关闭该功能，但实测下来并不行。
 
-注：此处的 `NPM_TOKEN` 是需要自行配置的。
+注：下面的 `NPM_TOKEN` 是需要自行配置的。
 
 ```yaml
   deploy_npm:
@@ -119,7 +121,7 @@ tags: []
 
 ## NPM GitHub Registry
 
-GitHub Registry 与 NPM 不一样的是，它要求发布的包必须是以当前仓库所属的 username scoped 的。因此如果要同时发布 NPM 和 GitHub，`package.json` 需要做一点小更改：将包名改为 scoped 的。
+GitHub Registry 与 NPM 不一样的是，它要求发布的包必须是以当前仓库所属的 username 为 scope 的。因此如果要同时发布 NPM 和 GitHub Registry，在执行此步骤时 `package.json` 需要做一点小更改：将包名改为 scoped 的。
 
 这里为求简便，使用了 [deef0000dragon1/json-edit-action](https://github.com/deef0000dragon1/json-edit-action) 来执行替换。实际上熟悉 shell 命令的话一行代码也可以完成。
 
@@ -146,4 +148,4 @@ GitHub Registry 与 NPM 不一样的是，它要求发布的包必须是以当�
       - run: npm publish --registry=https://npm.pkg.github.com
 ```
 
-关于 `npmrc` 这一步，实际上这里使用 `NODE_AUTH_TOKEN` 环境变量应该也可以达到相同目的。
+关于 `npmrc` 这一步，使用 `NODE_AUTH_TOKEN` 环境变量应该也可以达到相同目的。
