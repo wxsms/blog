@@ -47,6 +47,15 @@ jobs:
           fqdn: some.domain.com # 自定义域名，需要时填写
 ```
 
+如果想要在 push 到分支时就直接 deploy，可以使用：
+
+```yaml
+on:
+  push:
+    branches:
+      - master
+```
+
 ## GitHub Release
 
 发布 Release 包含几个动作：
