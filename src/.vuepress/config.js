@@ -25,6 +25,7 @@ module.exports = {
     navbar: true,
     nav: [
       { text: 'home', link: '/' },
+      { text: 'projects', link: '/projects/' },
       { text: 'about', link: '/about/' },
       { text: 'links', link: '/links/' }
     ],

@@ -1,4 +1,5 @@
 ---
+title: About
 layout: Page
 feed:
   enable: false
