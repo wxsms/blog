@@ -3,8 +3,9 @@ layout: Page
 title: Projects
 feed:
   enable: false
-
 ---
+
+My public works on [GitHub](https://github.com/wxsms).
 
 ## uiv
 
@@ -16,11 +17,9 @@ feed:
 
 Bootstrap 3 components implemented by Vue 2.
 
-GitHub: [https://github.com/uiv-lib/uiv](https://github.com/uiv-lib/uiv)
-
-Homepage: [https://uiv.wxsm.space](https://uiv.wxsm.space/)
-
-NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
+* GitHub: [https://github.com/uiv-lib/uiv](https://github.com/uiv-lib/uiv)
+* Homepage: [https://uiv.wxsm.space](https://uiv.wxsm.space/)
+* NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
 ## vue-md-loader
 
@@ -32,11 +31,9 @@ NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
 Webpack loader for converting Markdown files to ✨ALIVE Vue components.
 
-GitHub: [https://github.com/wxsms/vue-md-loader](https://github.com/wxsms/vue-md-loader)
-
-Homepage: [https://vue-md-loader.wxsm.space](https://vue-md-loader.wxsm.space/)
-
-NPM: [https://www.npmjs.com/package/vue-md-loader](https://www.npmjs.com/package/vue-md-loader)
+* GitHub: [https://github.com/wxsms/vue-md-loader](https://github.com/wxsms/vue-md-loader)
+* Homepage: [https://vue-md-loader.wxsm.space](https://vue-md-loader.wxsm.space/)
+* NPM: [https://www.npmjs.com/package/vue-md-loader](https://www.npmjs.com/package/vue-md-loader)
 
 ## vuepress-theme-mini
 
@@ -48,8 +45,16 @@ NPM: [https://www.npmjs.com/package/vue-md-loader](https://www.npmjs.com/package
 
 🎨 &nbsp;A minimal blogging theme of VuePress.
 
-GitHub: [https://github.com/wxsms/vuepress-theme-mini](https://github.com/wxsms/vuepress-theme-mini)
+* GitHub: [https://github.com/wxsms/vuepress-theme-mini](https://github.com/wxsms/vuepress-theme-mini)
+* Homepage: [https://vuepress-theme-mini.wxsm.space](https://vuepress-theme-mini.wxsm.space/)
+* NPM: [https://www.npmjs.com/package/vuepress-theme-mini](https://www.npmjs.com/package/vuepress-theme-mini)
 
-Homepage: [https://vuepress-theme-mini.wxsm.space](https://vuepress-theme-mini.wxsm.space/)
+## blog
 
-NPM: [https://www.npmjs.com/package/vuepress-theme-mini](https://www.npmjs.com/package/vuepress-theme-mini)
+[![Build Status](https://github.com/wxsms/blog/workflows/CI/badge.svg)](https://github.com/wxsms/blog)
+[![GitHub stars](https://badgen.net/github/stars/wxsms/blog)](https://GitHub.com/wxsms/blog/stargazers/)
+
+:pencil: &nbsp;My personal blog, used to be self-developed (tagged as [self-developed](https://github.com/wxsms/blog/tree/self-developed)), now built with [vuepress](https://vuepress.vuejs.org/) for better focus on blogging.
+
+* GitHub: [https://github.com/wxsms/blog](https://github.com/wxsms/blog)
+* Homepage: [https://wxsm.space](https://wxsm.space/)
