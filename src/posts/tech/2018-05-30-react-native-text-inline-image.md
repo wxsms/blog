@@ -65,11 +65,11 @@ AppRegistry.registerComponent('App', () => App);
 
 它在 ios 下看起来是这样的：
 
-![ios-before](https://user-images.githubusercontent.com/5960988/48595774-3ac02200-e991-11e8-8320-d5763b33b4e1.png)
+![ios-before](https://static.wxsm.space/blog/48595774-3ac02200-e991-11e8-8320-d5763b33b4e1.png)
 
 而在 Android 下看起来是这样的：
 
-![android-before](https://user-images.githubusercontent.com/5960988/48595773-3ac02200-e991-11e8-90a8-f7cc619eed50.png)
+![android-before](https://static.wxsm.space/blog/48595773-3ac02200-e991-11e8-90a8-f7cc619eed50.png)
 
 **可以看到，在 Android 下面这张图异常地小！**
 
@@ -129,7 +129,7 @@ AppRegistry.registerComponent('App', () => App);
 
 结果：
 
-![android-after](https://user-images.githubusercontent.com/5960988/48595772-3a278b80-e991-11e8-922d-f2a5885debfc.png)
+![android-after](https://static.wxsm.space/blog/48595772-3a278b80-e991-11e8-922d-f2a5885debfc.png)
 
 如此一来，内联图片在 Android 下就能以正常缩放比显示了。
 

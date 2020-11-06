@@ -137,7 +137,7 @@ await service.updateMergeRequest(pid, mid, {
 
 效果如下图所示：
 
-![wip](https://user-images.githubusercontent.com/5960988/93973898-8e7ace00-fda7-11ea-9735-8ee3de0e663d.png)
+![wip](https://static.wxsm.space/blog/93973898-8e7ace00-fda7-11ea-9735-8ee3de0e663d.png)
 
 可以看到，WIP 并不是一个强制状态。在 Web UI 上点击 `Resolve WIP status` 或手动去除标题中的 `WIP:` 都可以解除 WIP 状态，从而允许手动合并。也就是说，这是一个「防君子不防小人」的状态。如果是在一个团队内的成员中使用，我觉得这样已经足够了。
 

@@ -186,7 +186,7 @@ API返回的 `$result` 是一个 JSON 对象，若推送成功可能包含以�
 
 实际的效果就像这样（<del>点此参观</del> 2016-03-10更新：由于已更换为插件模式，原页面失效）：
 
-![](https://user-images.githubusercontent.com/5960988/48595794-3eec3f80-e991-11e8-9965-17782fe609a2.jpg)
+![](https://static.wxsm.space/blog/48595794-3eec3f80-e991-11e8-9965-17782fe609a2.jpg)
 
 这个工具目前还很简陋。当然，如果你没有登录或者已登陆但没有管理员权限的话，点击Submit是会被拒绝的。
 

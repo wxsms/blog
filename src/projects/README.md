@@ -9,7 +9,7 @@ My works on [GitHub](https://github.com/wxsms).
 
 ## uiv
 
-![logo](https://uiv.wxsm.space/assets/image/logo.png)
+![logo](https://static.wxsm.space/uiv/logo.png)
 
 [![Build Status](https://github.com/uiv-lib/uiv/workflows/CI/badge.svg)](https://github.com/uiv-lib/uiv)
 [![Build Status](https://badgen.net/npm/dm/uiv)](https://www.npmjs.com/package/uiv)
@@ -69,4 +69,4 @@ For some reasons, this repository can't be public.
 
 Search **IBD 日记** in Wechat, or scan the QR-code below.
 
-![qrcode](https://user-images.githubusercontent.com/5960988/98328272-4b5f7c00-2030-11eb-8594-fc9ccbb04896.jpg)
+![qrcode](https://static.wxsm.space/ibd-diary/logo.jpg)

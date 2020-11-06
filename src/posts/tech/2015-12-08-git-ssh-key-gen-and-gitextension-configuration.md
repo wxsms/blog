@@ -36,7 +36,7 @@ $ git config --global user.email "xxx@xxx.xxx"
 
 生成结束后需要将公钥上传到相应 server，以 <a href="https://github.com" target="_blank">Github</a> 为例：
 
-![](https://user-images.githubusercontent.com/5960988/48595777-3b58b880-e991-11e8-8ba0-c12bab65ad9e.png)
+![](https://static.wxsm.space/blog/48595777-3b58b880-e991-11e8-8ba0-c12bab65ad9e.png)
 
 将公钥文件中的所有内容copy到key输入框中，添加保存即可。
 
@@ -44,4 +44,4 @@ $ git config --global user.email "xxx@xxx.xxx"
 
 以上步骤执行完后可以使用命令行执行推拉等操作，但是在Git Extension就死活不行，后来发现这个工具安装的时候默认使用了putty作为ssh代理，需要手动换成git自带的ssh工具，如图所示：
 
-![](https://user-images.githubusercontent.com/5960988/48595778-3b58b880-e991-11e8-831a-0966dd6ec738.png)
+![](https://static.wxsm.space/blog/48595778-3b58b880-e991-11e8-831a-0966dd6ec738.png)

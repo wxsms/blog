@@ -25,7 +25,7 @@ tags:
 
 下载文档的链接可以在<a href="http://docs.sencha.com/extjs/6.0/" target="_blank">http://docs.sencha.com/extjs/6.0/</a>找到，如图所示：
 
-![](https://user-images.githubusercontent.com/5960988/48595776-3b58b880-e991-11e8-9c65-216cefe812c6.png)
+![](https://static.wxsm.space/blog/48595776-3b58b880-e991-11e8-9c65-216cefe812c6.png)
 
 ## 关于是否使用Sencha Architect
 

@@ -22,11 +22,11 @@ tags:
 
 打开Tools -> Deployment -> Configuration
 
-![](https://user-images.githubusercontent.com/5960988/48595786-3d227c00-e991-11e8-8b42-bbf3f871ab10.png)
+![](https://static.wxsm.space/blog/48595786-3d227c00-e991-11e8-8b42-bbf3f871ab10.png)
 
 在弹出的界面中点击 `+` 按钮，添加一个服务器。
 
-![](https://user-images.githubusercontent.com/5960988/48595787-3dbb1280-e991-11e8-9519-0876ffc4f595.png)
+![](https://static.wxsm.space/blog/48595787-3dbb1280-e991-11e8-9519-0876ffc4f595.png)
 
 如下图所示，填写主机地址，端口（如果不一样），用户名与密码以后，就可以点 `Test FTP connection` 按钮进行连接测试，如果连接成功，IDEA会有相应的提示。以下的步骤需要以此为前提。
 
@@ -34,7 +34,7 @@ tags:
 
 最下面的 `Web server root URL` 字段可以填写网站的实际访问地址，这样在使用IDEA的实时预览功能时，浏览器就会以该Domain为基准进行路由。
 
-![](https://user-images.githubusercontent.com/5960988/48595788-3dbb1280-e991-11e8-9438-a8d09ef6921f.png)
+![](https://static.wxsm.space/blog/48595788-3dbb1280-e991-11e8-9438-a8d09ef6921f.png)
 
 切换到 `Mappings` 标签，我们需要填写的字段也如下图。
 
@@ -42,14 +42,14 @@ tags:
 
 `Deployment path`则是FTP服务器上实际同步的位置，在此选择代码所处的文件夹即可。以上都填好后点击 `OK` 按钮。
 
-![](https://user-images.githubusercontent.com/5960988/48595789-3dbb1280-e991-11e8-9332-0cbd1058f81d.png)
+![](https://static.wxsm.space/blog/48595789-3dbb1280-e991-11e8-9332-0cbd1058f81d.png)
 
 现在就大功告成了。我们可以选中一些文件或者文件夹，右键，然后就可以看到 Deployment 菜单，其子菜单有 Upload，Download，Compare，Sync四个。其中 Sync 就是我们所期望的功能，IDEA 会帮我们完成文件比较，与 VCS 的文件比较系统非常相似，确认无误后点击绿色的向右箭头按钮，代码就同步到服务器上去了。如下所示。
 
-![](https://user-images.githubusercontent.com/5960988/48595790-3e53a900-e991-11e8-80bf-0f6212ac3d70.png)
+![](https://static.wxsm.space/blog/48595790-3e53a900-e991-11e8-80bf-0f6212ac3d70.png)
 
 当然每次都要右键然后找到 Sync 选项可能会有点太麻烦。我们可以把这个功能放到主工具栏上去，以后每次点它就行了。
 
-![](https://user-images.githubusercontent.com/5960988/48595791-3e53a900-e991-11e8-9a35-1116a1f7461f.png)
+![](https://static.wxsm.space/blog/48595791-3e53a900-e991-11e8-9a35-1116a1f7461f.png)
 
 接下来就可以享受愉快的开发体验了。唯一需要注意的是在网络不是非常理想的情况下，Sync 的时候不要选择项目根目录，选择真正有改变的文件或者文件夹即可，因为它毕竟不是 VCS，所有文件一个个比对的话实在是太慢。当然我们也可以配合 VCS 使用，效果更佳，这里就不再赘述。
