@@ -7,6 +7,8 @@ tags: [gitlab,nodejs]
 
 <!-- 「」 -->
 
+![gitlab-logo](https://static.wxsm.space/others/gitlab-logo.svg =250x)
+
 由于 Gitlab CE 做代码评审时缺少了关键的评审员功能（详情参考此 [issue](https://gitlab.com/gitlab-org/gitlab-foss/-/issues/42096)），因此在使用 CE 的同时又想要做代码评审的话，就必须要自己想办法了。
 
 网上能找到的最多的解决方案就是在 Gitlab 前面再部署一套 Gerrit，通过拦截推送的代码以及同步两个库来实现。但是这种方案有诸多弊端。比如：

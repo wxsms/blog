@@ -8,7 +8,7 @@ draft: false
 
 ---
 
-原文地址（需科学上网）：[medium.com](https://medium.com/@yloeza/react-native-text-inline-image-6055dabd9399)
+原文地址（需科学上网）：[React Native Text Inline Image](https://medium.com/@yloeza/react-native-text-inline-image-6055dabd9399)
 
 RN 版本：0.49
 

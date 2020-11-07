@@ -68,6 +68,9 @@ module.exports = {
     //   containerHeaderHtml: '<p>目录：</p>',
     //   containerFooterHtml: '<br/>'
     // },
-    lineNumbers: false
+    lineNumbers: false,
+    extendMarkdown: md => {
+      md.use(require('markdown-it-imsize'))
+    }
   }
 }
