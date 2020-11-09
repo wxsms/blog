@@ -17,11 +17,11 @@ tags: [CSS]
 
 一个例子：
 
-<<< @/src/.vuepress/components/Demo/WebkitOverflowScrolling.vue
+<<< @/src/.vuepress/components/demos/WebkitOverflowScrolling.vue
 
 结果（需要使用 ios 设备观察）：
 
-<Demo-WebkitOverflowScrolling/>
+<demos-WebkitOverflowScrolling/>
 
 但是，这个属性在当容器内有 `position: fixed` 元素时会产生冲突，`fixed` 元素会在平滑滚动结束时才回到正确的位置，解决方案通常是重新整理组件树，使 `fixed` 元素不出现在滚动容器之内即可。
 
