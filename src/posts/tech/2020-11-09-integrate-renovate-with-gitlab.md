@@ -72,6 +72,8 @@ GITHUB_COM_TOKEN=your-github-token renovate \
 5. `log-level` 为 `debug` 时才能得到详细的日志，方便调试；
 6. 项目内一般自带了 yarnrc 与 npmrc，如果项目内自带的已经覆盖了私有源则无需配置，否则需要配置。需要注意的是，如果使用 npm 则只需要提供 `npmrc`，但如果使用 yarn 则需要同时提供 `yarnrc` 与 `npmrc`，缺一不可。
 
+命令行可以作为本地调试工具，最终部署的话还是直接使用打包好的镜像更好用一些。
+
 ### 方式2：使用 Docker 镜像
 
 Renovate 提供了构建好的 [renovate/renovate](https://hub.docker.com/r/renovate/renovate/) 镜像，可以直接使用。
@@ -80,7 +82,12 @@ Renovate 提供了构建好的 [renovate/renovate](https://hub.docker.com/r/reno
 docker run --rm -v "/path/to/your/config.js:/usr/src/app/config.js" renovate/renovate
 ```
 
-可以使用 GitLab CI 与该镜像直接集成，`image` 使用该镜像即可。但是由于 Renovate 是一个需要持续周期性执行的任务，放置在 CI 中略显不合适。因此我选择使用 k8s 集成。
+这个镜像有多个版本，其中大体区分为 `slim` 版与完整版。它们之间的区别是：
+
+1. 完整版包含了所有可能要用到的构件工具，如 `Python` 等，约 1.3GB；
+2. `slim` 版仅包含 Renovate 自身，约 130MB。
+
+可以使用 GitLab CI 与该镜像直接集成，`image` 指定 `renovate/renovate` 即可。但是由于 Renovate 是一个需要持续周期性执行的任务，放置在 CI 中略显不合适。因此我选择使用 k8s 集成。
 
 ### 方式3：使用 Kubernetes
 
@@ -186,8 +193,9 @@ stringData:
 
 但是有几点需要注意：
 
-1. 由于评审机器人使用了 `WIP` 来阻止 MR 被手动合并，因此 Renovate 的配置中也需要将 MR 设置为 draft 状态，这样才能维持 MR 的 `WIP` 标记。否则，Renovate 会在发起 MR 后的第二次扫描中尝试去除 MR 的 `WIP` 标记。
-2. 最好给 Renovate 开设一个独立的账号。如果与其他用户或程序共用账号，Renovate 可能会在 force-push 的过程中使某些由其它用户做出的改动丢失。
+1. 由于评审机器人使用了 `WIP` 来阻止 MR 被手动合并，因此 Renovate 的配置中也需要将 MR 设置为 draft 状态，这样才能维持 MR 的 `WIP` 标记。否则，Renovate 会在发起 MR 后的第二次扫描中尝试去除 MR 的 `WIP` 标记；
+2. 最好给 Renovate 开设一个独立的账号。如果与其他用户或程序共用账号，Renovate 可能会在 force-push 的过程中使某些由其它用户做出的改动丢失；
+3. 因为 Renovate 的设计中存在一些高危操作（分支删除，强制推送等），因此最好只赋予 Developer 权限。实际上如果不启用自动合并，它也只需要 Developer 权限。
 
 符合我需求的最终配置 `renovate.json`：
 
@@ -220,3 +228,8 @@ stringData:
 }
 ```
 
+## 遇到的问题
+
+1. 将 Renovate 部署上 Kubernetes 的时候，要注意能够分配的节点是否都有私有源的访问权限。如果 CronJob 被分配到了无权访问的节点会导致私有包 Lookup Failed，从而更新失败。如果只有部分节点拥有访问权限，可以用 `nodeSelector` 或 `nodeName` 指定节点；
+1. Changelog 在 GitLab 上面会丢失格式，如图所示：![screenshot](https://static.wxsm.space/blog/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png)
+   这个问题目前没有找到很好的解决方案，后续如果解决了会更新。
