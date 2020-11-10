@@ -231,5 +231,5 @@ stringData:
 ## 遇到的问题
 
 1. 将 Renovate 部署上 Kubernetes 的时候，要注意能够分配的节点是否都有私有源的访问权限。如果 CronJob 被分配到了无权访问的节点会导致私有包 Lookup Failed，从而更新失败。如果只有部分节点拥有访问权限，可以用 `nodeSelector` 或 `nodeName` 指定节点；
-1. Changelog 在 GitLab 上面会丢失格式，如图所示：![screenshot](https://static.wxsm.space/blog/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png)
-   这个问题目前没有找到很好的解决方案，后续如果解决了会更新。
+1. Changelog 在 GitLab (10.3.2) 上面会丢失格式，如图所示：![screenshot](https://static.wxsm.space/blog/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png)
+   这个问题猜测是由于我司的 GitLab 版本过低导致的。因为 [gitlab.com](http://gitlab.com/) (13.x) 上不存在这个问题。但是因为 GitLab 不在我的管辖范围内，因此目前没有找到很好的解决方案，后续如果解决了会更新。
