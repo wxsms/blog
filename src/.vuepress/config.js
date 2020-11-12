@@ -46,7 +46,7 @@ module.exports = {
     '@vuepress/google-analytics': {
       'ga': 'UA-102731925-1'
     },
-    'flowchart': {},
+    'flowchart-js': {},
     '@vuepress/back-to-top': {},
     'feed': {
       canonical_base: 'https://wxsm.space',

@@ -3731,10 +3731,10 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-flowchart.js@^1.11.3:
-  version "1.14.1"
-  resolved "https://registry.npm.taobao.org/flowchart.js/download/flowchart.js-1.14.1.tgz#aec39bf1f8b7f2f181c2872d9f190b5239ffa3b5"
-  integrity sha1-rsOb8fi38vGBwoctnxkLUjn/o7U=
+flowchart.js@1.15.0:
+  version "1.15.0"
+  resolved "https://registry.npm.taobao.org/flowchart.js/download/flowchart.js-1.15.0.tgz#132ba2df14af0a65e67280026ef05a1ffd16569f"
+  integrity sha1-Eyui3xSvCmXmcoACbvBaH/0WVp8=
   dependencies:
     raphael "2.3.0"
 
@@ -8381,11 +8381,12 @@ vuepress-plugin-feed@0.1.9:
     remove-markdown "0.3.0"
     striptags "3.1.1"
 
-"vuepress-plugin-flowchart@https://github.com/wxsms/vuepress-plugin-flowchart#be866e6b20007930d47d93c730c387885f4c34ab":
-  version "1.4.3"
-  resolved "https://github.com/wxsms/vuepress-plugin-flowchart#be866e6b20007930d47d93c730c387885f4c34ab"
+vuepress-plugin-flowchart-js@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/vuepress-plugin-flowchart-js/download/vuepress-plugin-flowchart-js-2.0.2.tgz#68c81ebf32f4470c0a461bd4fa93cf67586d8cce"
+  integrity sha1-aMgevzL0RwwKRhvU+pPPZ1htjM4=
   dependencies:
-    flowchart.js "^1.11.3"
+    flowchart.js "1.15.0"
 
 vuepress-plugin-serve@2.0.4:
   version "2.0.4"
