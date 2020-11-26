@@ -19,10 +19,8 @@
     "readline-sync": "1.4.10",
     "simple-git": "2.22.0",
     "vuepress": "1.7.1",
-    "vuepress-plugin-dehydrate": "1.1.5",
     "vuepress-plugin-feed": "0.1.9",
     "vuepress-plugin-flowchart-js": "2.0.2",
-    "vuepress-plugin-serve": "2.0.4",
     "vuepress-plugin-sitemap": "2.3.1",
     "vuepress-theme-mini": "1.5.6",
     "yaml-front-matter": "4.1.0"
