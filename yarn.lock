@@ -7289,10 +7289,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.3.tgz?cache=0&sync_timestamp=1593529702917&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsignal-exit%2Fdownload%2Fsignal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
 
-simple-git@2.24.0:
-  version "2.24.0"
-  resolved "https://registry.npm.taobao.org/simple-git/download/simple-git-2.24.0.tgz?cache=0&sync_timestamp=1606477404280&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsimple-git%2Fdownload%2Fsimple-git-2.24.0.tgz#7ee22898d4155b3917b301ab97e937c52a33247d"
-  integrity sha1-fuIomNQVWzkXswGrl+k3xSozJH0=
+simple-git@2.25.0:
+  version "2.25.0"
+  resolved "https://registry.npm.taobao.org/simple-git/download/simple-git-2.25.0.tgz?cache=0&sync_timestamp=1607414683192&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsimple-git%2Fdownload%2Fsimple-git-2.25.0.tgz#55cf97e70817f760db61b8785f5c46f992f29482"
+  integrity sha1-Vc+X5wgX92DbYbh4X1xG+ZLylII=
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
