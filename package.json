@@ -22,7 +22,7 @@
     "vuepress-plugin-feed": "0.1.9",
     "vuepress-plugin-flowchart-js": "2.0.2",
     "vuepress-plugin-sitemap": "2.3.1",
-    "vuepress-theme-mini": "1.5.6",
+    "vuepress-theme-mini": "1.6.0",
     "yaml-front-matter": "4.1.0"
   }
 }
