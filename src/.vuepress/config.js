@@ -10,6 +10,8 @@ module.exports = {
   ],
   theme: 'mini',
   themeConfig: {
+    hostname: 'https://wxsm.space',
+    ga: 'UA-102731925-1',
     smoothScroll: false,
     lastUpdated: 'Last Updated',
     siteName: 'wxsm\'s space',
@@ -29,21 +31,6 @@ module.exports = {
       notify: false,
       avatar: 'retro',
       lang: 'en'
-    }
-  },
-  plugins: {
-    'sitemap': {
-      hostname: 'https://wxsm.space'
-    },
-    '@vuepress/google-analytics': {
-      'ga': 'UA-102731925-1'
-    },
-    'flowchart-js': {},
-    '@vuepress/back-to-top': {},
-    'feed': {
-      canonical_base: 'https://wxsm.space',
-      posts_directories: ['/posts'],
-      sort: entries => _.reverse(_.sortBy(entries, 'date'))
     }
   },
   markdown: {

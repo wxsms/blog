@@ -5026,10 +5026,10 @@ leancloud-realtime@^5.0.0-alpha.3, leancloud-realtime@^5.0.0-rc.2:
     protobufjs "^5.0.1"
     uuid "^3.0.0"
 
-leancloud-storage@4.7.0:
-  version "4.7.0"
-  resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-4.7.0.tgz#b4ae3184ca574463990f1f821cf66cae278de4b8"
-  integrity sha1-tK4xhMpXRGOZDx+CHPZsrieN5Lg=
+leancloud-storage@4.8.2:
+  version "4.8.2"
+  resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-4.8.2.tgz#efa3e65c431fc2cd63f46cab6ffd9dc68a6905e2"
+  integrity sha1-76PmXEMfws1j9Gyrb/2dxoppBeI=
   dependencies:
     "@leancloud/adapter-types" "^3.0.0"
     "@leancloud/platform-adapters-browser" "^1.1.0"
@@ -5167,7 +5167,12 @@ lodash.padstart@^4.6.1:
   resolved "https://registry.npm.taobao.org/lodash.padstart/download/lodash.padstart-4.6.1.tgz#d2e3eebff0d9d39ad50f5cbd1b52a7bce6bb611b"
   integrity sha1-0uPuv/DZ05rVD1y9G1KnvOa7YRs=
 
-lodash.sortby@^4.7.0:
+lodash.reverse@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/lodash.reverse/download/lodash.reverse-4.0.1.tgz#1f2afedace2e16e660f3aa7c59d3300a6f25d13c"
+  integrity sha1-Hyr+2s4uFuZg86p8WdMwCm8l0Tw=
+
+lodash.sortby@4.7.0, lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.npm.taobao.org/lodash.sortby/download/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
@@ -8402,16 +8407,23 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@1.5.6:
-  version "1.5.6"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.5.6.tgz?cache=0&sync_timestamp=1604630340587&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvuepress-theme-mini%2Fdownload%2Fvuepress-theme-mini-1.5.6.tgz#d60e87a69886dfd3a7a9b62a23e08c3abb577d66"
-  integrity sha1-1g6HppiG39OnqbYqI+CMOrtXfWY=
+vuepress-theme-mini@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.6.0.tgz#54e21c1e0fb1158560924bfb1ec626f58a68449f"
+  integrity sha1-VOIcHg+xFYVgkkv7HsYm9YpoRJ8=
   dependencies:
+    "@vuepress/plugin-back-to-top" "1.7.1"
+    "@vuepress/plugin-google-analytics" "1.7.1"
     date-fns "2.16.1"
-    leancloud-storage "4.7.0"
+    leancloud-storage "4.8.2"
     lodash.chunk "4.2.0"
     lodash.debounce "4.0.8"
+    lodash.reverse "4.0.1"
+    lodash.sortby "4.7.0"
     valine "1.4.14"
+    vuepress-plugin-feed "0.1.9"
+    vuepress-plugin-flowchart-js "2.0.2"
+    vuepress-plugin-sitemap "2.3.1"
 
 vuepress@1.7.1:
   version "1.7.1"
