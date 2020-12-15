@@ -18,6 +18,6 @@
     "simple-git": "2.27.0",
     "vuepress": "1.7.1",
     "vuepress-theme-mini": "1.6.0",
-    "yaml-front-matter": "4.1.0"
+    "yaml-front-matter": "4.1.1"
   }
 }
