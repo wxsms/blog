@@ -15,7 +15,7 @@
     "markdown-it-imsize": "2.0.1",
     "pinyin": "2.9.1",
     "readline-sync": "1.4.10",
-    "simple-git": "2.29.0",
+    "simple-git": "2.31.0",
     "vuepress": "1.7.1",
     "vuepress-theme-mini": "1.6.0",
     "yaml-front-matter": "4.1.1"
