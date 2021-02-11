@@ -16,7 +16,7 @@
     "pinyin": "2.9.1",
     "readline-sync": "1.4.10",
     "simple-git": "2.34.2",
-    "vuepress": "1.8.0",
+    "vuepress": "1.8.1",
     "vuepress-theme-mini": "1.6.2",
     "yaml-front-matter": "4.1.1"
   }
