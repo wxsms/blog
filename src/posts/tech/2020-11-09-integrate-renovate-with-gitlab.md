@@ -231,5 +231,55 @@ stringData:
 ## 遇到的问题
 
 1. 将 Renovate 部署上 Kubernetes 的时候，要注意能够分配的节点是否都有私有源的访问权限。如果 CronJob 被分配到了无权访问的节点会导致私有包 Lookup Failed，从而更新失败。如果只有部分节点拥有访问权限，可以用 `nodeSelector` 或 `nodeName` 指定节点；
-1. Changelog 在 GitLab (10.3.2) 上面会丢失格式，如图所示：![screenshot](https://static.wxsm.space/blog/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png)
+1. Changelog 在 GitLab (10.3.2) 上面会丢失，并且格式错乱，如图所示：![screenshot](https://static.wxsm.space/blog/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png)
    这个问题猜测是由于我司的 GitLab 版本过低导致的。因为 [gitlab.com](http://gitlab.com/) (13.x) 上不存在这个问题。但是因为 GitLab 不在我的管辖范围内，因此目前没有找到很好的解决方案，后续如果解决了会更新。
+
+### 解决 Changelog 问题
+
+我在 GitHub 上提了一个 [issue](https://github.com/renovatebot/renovate/issues/7689)，但是作者表示这是老版本 GitLab 出现的问题，建议升级 GitLab，不会为其做出改动及修复。不过他建议可以修改源码内的某些文件并自己构建一个 Docker 镜像来达到目的：
+
+> You could perhaps try building your own image with a modified version of that file, or even just sed replace parts of it at runtime. You can find it at dist/workers/pr/changelog/hbs-template.js in the built/distributed version.
+
+但是我不是很喜欢这种做法，这样的话会更新镜像会比较麻烦。不过如他所说，也可以选择在运行时进行替换。由于之前开发过一款 [评审机器人](/posts/2020-09-23-gitlab-ce-code-review-bot.html)，机器人的执行逻辑刚好适合用来做这一块的热修复。只需要在 MR 创建逻辑内加多一个判断，如果是来自 renovate 的 MR 则执行修复操作；
+
+1. 解决格式错乱问题：读取 MR 的 `description` 字段，并将 `<details>` 节点去除；
+2. 解决 changelog 丢失问题：调用 GitLab API 获取 Changelog，并粘贴到 `description` 中；
+3. Renovate 更新 MR 时会丢失 `description` 中的更改，为了保险起见，再将 Changelog 作为输出到评论中去。
+
+大致代码：
+
+```javascript
+if (isRenovateMR && enableRenovateFix) {
+  try {
+    // renovate 在旧版 gitlab 上有问题，此处为修复逻辑
+    const { description } = object_attributes
+    // 根据 mr 内容获取项目名与 tag 名
+    // getStringBetween 函数：截取头尾字符串中间的内容
+    const projectName = getStringBetween(description, '<summary>', '</summary>')
+    const tagName = getStringBetween(description, '[Compare Source]', ')').split('...')[1]
+    // 获取 release note
+    const tag = await service.getTagInfo(projectName, tagName)
+    const releaseNote = _.get(tag, 'release.description', '')
+    // 移除 details 标签，并添加 release note
+    const _desc = description.replace('<details>', '').replace('</details>', releaseNote)
+    // 更新 mr 内容
+    await service.updateMergeRequest(pid, mid, {
+      description: _desc
+    })
+    // 添加评论
+    if (!!releaseNote) {
+      await service.addMergeRequestComment(pid, mid, `
+更新日志：
+
+${releaseNote}
+`)
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
+```
+
+效果如图所示：
+
+![screenshot](https://static.wxsm.space/blog/20210217165423.png)
