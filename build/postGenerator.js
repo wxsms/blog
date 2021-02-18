@@ -44,6 +44,7 @@ function getDirectories (source) {
   const folders = getDirectories(postsPath)
   const str = fs.readFileSync(path.join(__dirname, 'templates', 'post-template.md'), 'utf8')
   const postTitle = read.question('Enter post title: ') || ''
+  const postId = read.question('Enter post id (auto-generate if leave blank): ') || ''
   const tags = read.question('Enter tags (separate by comma): ') || ''
   const folderIndex = read.keyInSelect(folders, 'Which folder?')
   if (folderIndex === -1) {
@@ -51,7 +52,7 @@ function getDirectories (source) {
   }
   const folder = folders[folderIndex]
   const isoDateStr = new Date().toISOString()
-  const slug = `${isoDateStr.substr(0, 10)}-${titleToSlug(postTitle)}`
+  const slug = `${isoDateStr.substr(0, 10)}-${postId || titleToSlug(postTitle)}`
   const filename = `${slug}.md`
   const permalink = `/posts/${slug}.html`
 
