@@ -1258,17 +1258,17 @@
   dependencies:
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-back-to-top@1.8.0":
-  version "1.8.0"
-  resolved "https://registry.npm.taobao.org/@vuepress/plugin-back-to-top/download/@vuepress/plugin-back-to-top-1.8.0.tgz#eb7062e33cd65f4582e012702f7f69ccf0f55ae7"
-  integrity sha1-63Bi4zzWX0WC4BJwL39pzPD1Wuc=
+"@vuepress/plugin-back-to-top@1.8.2":
+  version "1.8.2"
+  resolved "https://registry.npm.taobao.org/@vuepress/plugin-back-to-top/download/@vuepress/plugin-back-to-top-1.8.2.tgz#e9794409d1d589e4952b0700291270d2696e6d01"
+  integrity sha1-6XlECdHVieSVKwcAKRJw0mlubQE=
   dependencies:
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-google-analytics@1.8.0":
-  version "1.8.0"
-  resolved "https://registry.npm.taobao.org/@vuepress/plugin-google-analytics/download/@vuepress/plugin-google-analytics-1.8.0.tgz#99752be07867730df27e830a15c95b3f25b04741"
-  integrity sha1-mXUr4Hhncw3yfoMKFclbPyWwR0E=
+"@vuepress/plugin-google-analytics@1.8.2":
+  version "1.8.2"
+  resolved "https://registry.npm.taobao.org/@vuepress/plugin-google-analytics/download/@vuepress/plugin-google-analytics-1.8.2.tgz#96cf65f1f0ecbb3bcf6b0d10089dafe2aea875bc"
+  integrity sha1-ls9l8fDsuzvPaw0QCJ2v4q6odbw=
 
 "@vuepress/plugin-last-updated@1.8.2":
   version "1.8.2"
@@ -2977,10 +2977,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@2.16.1:
-  version "2.16.1"
-  resolved "https://registry.npm.taobao.org/date-fns/download/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
-  integrity sha1-BXdXksPzMx2oEq8lPhqTWFHTg0s=
+date-fns@2.17.0:
+  version "2.17.0"
+  resolved "https://registry.npm.taobao.org/date-fns/download/date-fns-2.17.0.tgz#afa55daea539239db0a64e236ce716ef3d681ba1"
+  integrity sha1-r6VdrqU5I52wpk4jbOcW7z1oG6E=
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -8488,14 +8488,14 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@1.6.2:
-  version "1.6.2"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.6.2.tgz#1be5f3d9c748b8230025c102f8c8b5e0c970655b"
-  integrity sha1-G+Xz2cdIuCMAJcEC+Mi14MlwZVs=
+vuepress-theme-mini@1.6.3:
+  version "1.6.3"
+  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.6.3.tgz#40e080721411ea144595ee1d624cec9697aef41b"
+  integrity sha1-QOCAchQR6hRFle4dYkzslpeu9Bs=
   dependencies:
-    "@vuepress/plugin-back-to-top" "1.8.0"
-    "@vuepress/plugin-google-analytics" "1.8.0"
-    date-fns "2.16.1"
+    "@vuepress/plugin-back-to-top" "1.8.2"
+    "@vuepress/plugin-google-analytics" "1.8.2"
+    date-fns "2.17.0"
     leancloud-storage "4.10.0"
     lodash.chunk "4.2.0"
     lodash.debounce "4.0.8"
