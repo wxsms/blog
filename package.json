@@ -11,7 +11,7 @@
     "serve": "vuepress serve src --build"
   },
   "devDependencies": {
-    "lodash": "4.17.20",
+    "lodash": "4.17.21",
     "markdown-it-imsize": "2.0.1",
     "pinyin": "2.9.1",
     "readline-sync": "1.4.10",
