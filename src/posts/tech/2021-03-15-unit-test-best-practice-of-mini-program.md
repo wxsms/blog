@@ -254,6 +254,7 @@ page = await global.mp.navigateTo('/pages/index/index')
 // 耗时在 500ms 左右
 const btn = await page.$('#some-nav-btn')
 await btn.tap()
+// 实际上所有耗时几乎都发生在这里，等待导航动画结束
 await page.waitFor(500)
 page = await global.mp.currentPage()
 ```
