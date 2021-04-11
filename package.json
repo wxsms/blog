@@ -13,7 +13,7 @@
   "devDependencies": {
     "lodash": "4.17.21",
     "markdown-it-imsize": "2.0.1",
-    "pinyin": "2.9.1",
+    "pinyin": "2.10.2",
     "readline-sync": "1.4.10",
     "simple-git": "2.37.0",
     "vuepress": "1.8.2",
