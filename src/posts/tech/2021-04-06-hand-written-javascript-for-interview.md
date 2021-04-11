@@ -13,6 +13,8 @@ tags: [javascript]
 
 ## 内置函数实现
 
+首先解释一下，此处的实现以学习为目的，不考虑过多的边界情况，以及旧时代的糟粕兼容性，以功能实现以及原理解释为主。
+
 ### `typeof`
 
 
@@ -112,3 +114,120 @@ _typeof(myDate2)
 > The `Symbol.toStringTag` well-known symbol is a string valued property that is used in the creation of the default string description of an object. It is accessed internally by the `Object.prototype.toString()` method.
 
 参考：[https://wiki.developer.mozilla.org/.../Symbol/toStringTag](https://wiki.developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag)
+
+### `array.forEach`
+
+`forEach` 为数组中的每一个元素执行一次 sideEffect 方法。
+
+这个实现相比于 [Polyfill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#polyfill) 而言，不过多关注边界问题。下同。
+
+```javascript
+/**
+ * The forEach() method executes a provided function once for each array element.
+ * 
+ * @param callback(currentValue, index, array)
+ * @param thisArg
+ * @private
+ */
+Array.prototype._forEach = function (callback, thisArg) {
+  if (typeof callback !== 'function') {
+    throw new TypeError('callback is not a function');
+  }
+  for (let i = 0; i < this.length; ++i) {
+    callback.call(thisArg, this[i], i, this)
+  }
+}
+
+// [1, 2, 3]._forEach(console.log)
+// 1 0 [1, 2, 3]
+// 2 1 [1, 2, 3]
+// 3 2 [1, 2, 3]
+```
+
+### `array.map`
+
+`map` 的实现与 `forEach` 类似，只不过多了返回值。
+
+```javascript
+/**
+ * The map() method creates a new array populated with the results 
+ * of calling a provided function on every element in the calling array.
+ * 
+ * @param callback(currentValue, index, array)
+ * @param thisArg
+ * @returns {[]}
+ * @private
+ */
+Array.prototype._map = function (callback, thisArg) {
+  if (typeof callback !== 'function') {
+    throw new TypeError('callback is not a function');
+  }
+  const res = [];
+  for (let i = 0; i < this.length; ++i) {
+    res[i] = callback.call(thisArg, this[i], i, this)
+  }
+  return res;
+}
+
+// [1, 2, 3]._map(v => v + 1)
+// [2, 3, 4]
+```
+
+### `array.filter`
+
+同上。
+
+```javascript
+/**
+ * The filter() method creates a new array with all elements 
+ * that pass the test implemented by the provided function.
+ * 
+ * @param callback(currentValue, index, array)
+ * @param thisArg
+ * @returns {[]}
+ * @private
+ */
+Array.prototype._filter = function (callback, thisArg) {
+  if (typeof callback !== 'function') {
+    throw new TypeError('callback is not a function');
+  }
+  const res = [];
+  for (let i = 0; i < this.length; ++i) {
+    callback.call(thisArg, this[i], i, this) && res.push(this[i])
+  }
+  return res;
+}
+
+// [1, 2, 3]._filter(v => v < 3)
+// [1, 2]
+```
+
+### `array.some`
+
+同上。
+
+```javascript
+/**
+ * The some() method tests whether at least one element in the array
+ * passes the test implemented by the provided function. It returns a Boolean value.
+ * 
+ * @param callback(currentValue, index, array)
+ * @param thisArg
+ * @returns boolean
+ * @private
+ */
+Array.prototype._some = function (callback, thisArg) {
+  if (typeof callback !== 'function') {
+    throw new TypeError('callback is not a function');
+  }
+  for (let i = 0; i < this.length; ++i) {
+    if (callback.call(thisArg, this[i], i, this)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// [1, 2, 3]._some(v => v > 2)
+// true
+```
