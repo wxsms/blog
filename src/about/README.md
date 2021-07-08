@@ -7,7 +7,7 @@ feed:
 
 :bust_in_silhouette: &nbsp;wxsm
 
-:clipboard: &nbsp;Front-end / full-stack developer, DOTAer, fans of soul-like games, currently working at [SeasunGame](https://www.seasungames.com/) (Zhuhai, China).
+:clipboard: &nbsp;Front-end / full-stack developer, DOTAer, fans of soul-like games, currently working at **Kingsoft** (Zhuhai, China).
 
 :pencil: &nbsp;This is my blog.
 
