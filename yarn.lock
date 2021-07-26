@@ -2977,10 +2977,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@2.17.0:
-  version "2.17.0"
-  resolved "https://registry.npm.taobao.org/date-fns/download/date-fns-2.17.0.tgz#afa55daea539239db0a64e236ce716ef3d681ba1"
-  integrity sha1-r6VdrqU5I52wpk4jbOcW7z1oG6E=
+date-fns@2.23.0:
+  version "2.23.0"
+  resolved "https://registry.nlark.com/date-fns/download/date-fns-2.23.0.tgz#4e886c941659af0cf7b30fafdd1eaa37e88788a9"
+  integrity sha1-TohslBZZrwz3sw+v3R6qN+iHiKk=
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -5107,10 +5107,10 @@ leancloud-realtime@^5.0.0-rc.4:
     protobufjs "^5.0.1"
     uuid "^3.0.0"
 
-leancloud-storage@4.10.0:
-  version "4.10.0"
-  resolved "https://registry.npm.taobao.org/leancloud-storage/download/leancloud-storage-4.10.0.tgz#7570509193b82fbaf1338e3c7b817dbda8ac5c73"
-  integrity sha1-dXBQkZO4L7rxM448e4F9vaisXHM=
+leancloud-storage@4.11.1:
+  version "4.11.1"
+  resolved "https://registry.nlark.com/leancloud-storage/download/leancloud-storage-4.11.1.tgz#9ba7ecf2b083aeabafc92acd6bbafc31426aec74"
+  integrity sha1-m6fs8rCDrquvySrNa7r8MUJq7HQ=
   dependencies:
     "@leancloud/adapter-types" "^5.0.0"
     "@leancloud/platform-adapters-browser" "^1.5.2"
@@ -8493,15 +8493,15 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@1.6.3:
-  version "1.6.3"
-  resolved "https://registry.npm.taobao.org/vuepress-theme-mini/download/vuepress-theme-mini-1.6.3.tgz#40e080721411ea144595ee1d624cec9697aef41b"
-  integrity sha1-QOCAchQR6hRFle4dYkzslpeu9Bs=
+vuepress-theme-mini@1.6.4:
+  version "1.6.4"
+  resolved "https://registry.nlark.com/vuepress-theme-mini/download/vuepress-theme-mini-1.6.4.tgz#d70b7e50a58131e9830b85b4afdf4ce255dae8e8"
+  integrity sha1-1wt+UKWBMemDC4W0r99M4lXa6Og=
   dependencies:
     "@vuepress/plugin-back-to-top" "1.8.2"
     "@vuepress/plugin-google-analytics" "1.8.2"
-    date-fns "2.17.0"
-    leancloud-storage "4.10.0"
+    date-fns "2.23.0"
+    leancloud-storage "4.11.1"
     lodash.chunk "4.2.0"
     lodash.debounce "4.0.8"
     lodash.reverse "4.0.1"
