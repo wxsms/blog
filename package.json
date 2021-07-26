@@ -17,7 +17,7 @@
     "readline-sync": "1.4.10",
     "simple-git": "2.41.1",
     "vuepress": "1.8.2",
-    "vuepress-theme-mini": "1.6.3",
+    "vuepress-theme-mini": "1.6.4",
     "yaml-front-matter": "4.1.1"
   }
 }
