@@ -12,7 +12,7 @@ tags: [javascript,react,vue,hooks]
 * React 16.8 新增了 [Hooks API](https://reactjs.org/docs/hooks-intro.html) （简称 hooks)
 * Vue 3.0 新增了 [Composite API](https://v3.cn.vuejs.org/guide/composition-api-introduction.html) （简称 VCA）
 
-二者为了共同的目的，在接近的时间点，以非常相似但是又带有本质区别的方式，推出了各自对于未来前端代码结构发展的新思路。本文不会对它们作过多的具体介绍，而是重点关注二者之间的统一与区别。
+二者为了共同的目的，在接近的时间点，以非常相似但是又带有本质区别的方式，推出了各自对于未来前端代码结构发展的新思路。本文在对二者做一些简单介绍的同时，也会重点关注二者之间的统一与区别。
 
 <!-- more -->
 
@@ -118,9 +118,15 @@ Directive（指令）是一种特殊的代码复用，它的目的非常局限�
 
 **hooks**
 
-当 `useEffect` 的 `deps` 为空数组时，回调函数当且仅当在组件创建时执行一次。
+React Hooks 摒弃了 mount / unmount / update 等生命周期概念，转而引入了一个新的 [useEffect](https://reactjs.org/docs/hooks-effect.html) 函数，简而盖之：
 
-使用 `useEffect` 同时模拟 mount 与 unmount 事件：
+1. `useEffect` 接收两个参数，第一个是回调函数 `callback`，第二个是数组 `deps`
+2. 当组件初次挂载，或者每当 `deps` 里面的任意一个元素发生变化的时候（这个时机由 React 判断），回调函数将会被执行一次
+3. 特殊情况：
+   1. `deps` 未传：`callback` 在每次渲染的时候都会执行一次
+   2. `deps` 为空数组：`callback` 当且仅当组件第一次挂载的时候执行一次
+
+因此，可以使用 `useEffect` 同时模拟 mount 与 unmount 事件：
 
 ```tsx
 // componentDidMount (mounted)
@@ -143,7 +149,10 @@ useEffect(() => {
 
 **vca**
 
-传统的 mounted 与 unmount 事件，只不过换了个形式：
+与 Hooks 大相庭径：
+
+1. VCA 保留了传统的 mounted 与 unmount 事件，只不过换了个形式
+2. VCA 不需要写 `deps`
 
 ```typescript
 export default defineComponent({
@@ -177,7 +186,7 @@ export default defineComponent({
 
 当 `useEffect` 的 `deps` 不为空时，回调函数在组件第一次挂载时，以及后续每次 `deps` 的其中之一变化时都会执行。
 
-注：除 `useRef` 以外，其它所有回调函数中用到的变量都需要写进 `deps`，包括 `state` / `memo` / `callback` 等，否则函数调用时永远会拿到旧的值。
+这里有一点需要注意的是：**除 `useRef` 以及 `useState` 的 setter 以外，其它所有回调函数中用到的变量，都需要写进 `deps`**，包括 `state` / `memo` / `callback` 等，否则（因为闭包的存在）函数调用时永远会拿到旧的值。
 
 ```tsx
 // componentDidUpdate (watch / updated)
@@ -195,6 +204,11 @@ useEffect(() => {
 ```
 
 **vca**
+
+VCA 的 updated 与 watch 与原 API 也基本类似，但是有几个需要注意的点：
+
+1. 增加了一个新的概念 `watchEffect`，与 `useEffect` 十分类似，但是不需要写 `deps`！
+2. `watch` 与 `watchEffect` 都**不能**直接监听 `reactive` 本身——因为只有 reactive 下面的属性才是真正意义上的 reactive
 
 ```typescript
 onUpdated(() => {
@@ -226,18 +240,19 @@ watchEffect(() => {
 
 总体区别：
 
-* React hooks 内原则上不允许直接定义任何变量，包括常量、方法等，因为组件每次渲染时都会重新初始化。直接定义的变量会成为响应式变量。
-* VCA 无此限制。直接定义的变量为常量。
+* hooks 内原则上不允许直接定义任何变量，包括常量、方法等，因为**组件每次渲染时都会重新初始化**。因此从某种意义上来说，直接定义的变量也是一种响应式变量（当能够正确赋予初始值的时候）。
+* VCA 无此限制。并且直接定义的变量为常量。
 
 #### 1. 变量
 
 **hooks**
 
-* `useState`: 响应式变量
-* `useMemo`: 常量（不可变）或计算值
-* `useRef`: 变量（可改变，但不影响渲染）
+hooks 大致提供了以下几种定义变量的方法：
 
-直接定义：错误的写法
+* `useState`: 响应式变量，不需要 `deps`
+* `useMemo`: 常量（不可变）或计算值，需要写 `deps`
+* `useRef`: 变量（可改变，但不影响渲染），不需要 `deps`
+* 直接定义: 通常来说是错误的写法
 
 ```tsx
 // state， 影响渲染
@@ -257,10 +272,14 @@ const renderEveryTime = count * 2
 
 **vca**
 
-* ref: 基础类型
-* reactive: 复杂类型
-* computed: 计算值
-* 直接定义：常量
+VCA 提供了以下几种定义变量的方法：
+
+* `ref`: 基础类型，之所以存在，是因为基础类型目前来说无法做到响应式，所以必须通过一个对象来包裹，通过 `xxx.value` 访问基础类型才能获得响应式
+* `reactive`: 复杂类型，对象与数组
+* `computed`: 计算值
+* 直接定义: 常量
+
+无论哪种方式，VCA 都不需要写 deps
 
 ```typescript
 // state， 影响渲染
