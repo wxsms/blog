@@ -90,7 +90,7 @@ Directive（指令）是一种特殊的代码复用，它的目的非常局限�
 
 在以**职能**来组织代码的时候，当我们的组件开始变得更大时，**逻辑关注点**的列表也会增长，举例（一张来自 Vue 文档的图片）：
 
-![](../../assets/images/vue-sfc.png)
+![](./2021-07-28-react-hooks-vs-vca/vue-sfc.png)
 
 相信对于这类文件写过 Vue 的同学都深有体会。当我们需要查找跟某项功能相关的代码的时候，需要在文件中不停地搜索、上下跳动。非常难受。
 
@@ -107,7 +107,7 @@ Directive（指令）是一种特殊的代码复用，它的目的非常局限�
 
 这个区别具体代表了什么，需要在下文继续阐释。
 
-## 常用 API 差异
+## 常用场景差异
 
 ### 生命周期
 
@@ -121,8 +121,9 @@ Directive（指令）是一种特殊的代码复用，它的目的非常局限�
 React Hooks 摒弃了 mount / unmount / update 等生命周期概念，转而引入了一个新的 [useEffect](https://reactjs.org/docs/hooks-effect.html) 函数，简而盖之：
 
 1. `useEffect` 接收两个参数，第一个是回调函数 `callback`，第二个是数组 `deps`
-2. 当组件初次挂载，或者每当 `deps` 里面的任意一个元素发生变化的时候（这个时机由 React 判断），回调函数将会被执行一次
-3. 特殊情况：
+2. `callback` 可以没有返回值，也可以返回一个函数，如果返回了函数，那将会是这个 effect 的「清除」函数
+3. 当组件初次挂载，或者每当 `deps` 里面的任意一个元素发生变化的时候（这个时机由 React 判断），回调函数将会被执行一次
+4. 特殊情况：
    1. `deps` 未传：`callback` 在每次渲染的时候都会执行一次
    2. `deps` 为空数组：`callback` 当且仅当组件第一次挂载的时候执行一次
 
@@ -268,7 +269,7 @@ const doubleCountRef = useRef(count * 2)
 const renderEveryTime = count * 2
 ```
 
-![](../../assets/images/cf7fa8cb-e185-4e49-b81a-297d402633cb.gif)
+![](./2021-07-28-react-hooks-vs-vca/cf7fa8cb-e185-4e49-b81a-297d402633cb.gif)
 
 **vca**
 
@@ -292,7 +293,7 @@ const double = computed(() => count.value * 2)
 const doubleCountRef = count.value * 2;
 ```
 
-![](../../assets/images/35dff667-33ef-4403-86d4-ded321ea8bea.gif)
+![](./2021-07-28-react-hooks-vs-vca/35dff667-33ef-4403-86d4-ded321ea8bea.gif)
 
 #### 2. 方法
 
@@ -323,7 +324,7 @@ const addCount = useCallback(() => {
 
 **vca**
 
-没什么限制。
+没什么限制，可以随心所欲。
 
 ```typescript
 const addCount = function () {
@@ -333,7 +334,7 @@ const addCount = function () {
 
 ### 代码复用
 
-二者十分类似。
+二者在代码复用这一块的理念十分类似，最终体现在代码上就像是两兄弟。
 
 **hooks**
 
@@ -374,7 +375,7 @@ export default memo(
 )
 ```
 
-![](../../assets/images/b39cea16-d17f-4472-8fa4-671cd4a459c4.gif)
+![](./2021-07-28-react-hooks-vs-vca/b39cea16-d17f-4472-8fa4-671cd4a459c4.gif)
 
 **vca**
 
@@ -406,10 +407,16 @@ export default defineComponent({
 })
 ```
 
-![](../../assets/images/2ab2c69e-41bf-458d-8d69-074ee188044e.gif)
+![](./2021-07-28-react-hooks-vs-vca/2ab2c69e-41bf-458d-8d69-074ee188044e.gif)
 
-坑
--
+## 存在的问题
+
+简单来说，由于两个框架各自的特性，问题也通常来自于：
+
+1. deps (hook)
+2. Proxy (VCA)
+
+不过有一个好消息是，React 提供了一个插件 [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) 可以帮忙检测 deps 的缺失，并且后续有计划通过代码静态分析去除掉这个烦人的依赖项。
 
 ### Hook: 忘记写 deps 导致变量不更新
 
@@ -423,7 +430,7 @@ const addCount = useCallback(() => {
 }, [])
 ```
 
-![](../../assets/images/f9bafbe2-24f7-46bf-89a4-fee6aae5c33c.gif)
+![](./2021-07-28-react-hooks-vs-vca/f9bafbe2-24f7-46bf-89a4-fee6aae5c33c.gif)
 
 ### Hook: Deps 写不好导致死循环
 
@@ -431,7 +438,7 @@ const addCount = useCallback(() => {
 
 常见于列表加载：
 
-1. 首页数据可以直接 setState
+1. 首页数据可以直接 `setState`
 2. 后续分页的数据要在现有基础上追加
 
 ```typescript
@@ -446,7 +453,7 @@ useEffect(() => {
 }, [addCount])
 ```
 
-![](../../assets/images/f88339f0-a7f2-401b-a5b3-03de5cf75e3c.gif)
+![](./2021-07-28-react-hooks-vs-vca/f88339f0-a7f2-401b-a5b3-03de5cf75e3c.gif)
 
 #### 案例二： useEffect 忘记写 deps
 
@@ -503,7 +510,7 @@ export default defineComponent({
 })
 ```
 
-![](../../assets/images/f773cbbb-79bd-4920-8164-cdd998748c02.gif)
+![](./2021-07-28-react-hooks-vs-vca/f773cbbb-79bd-4920-8164-cdd998748c02.gif)
 
 ## 总结
 
@@ -524,10 +531,12 @@ export default defineComponent({
 优点：
 
 * 目前为止最好的代码复用方式（之一）
-* 心智负担较 hooks 更低
+* 作为 setup，上手难度相较 hooks 可谓是极低，心智负担极低
 
 缺点：
 
-* 与 Hooks 相比，API 设计不够精炼
-* 对 TypeScript 的支持始终不如 tsx
-* 解构丢失响应性
+* 与 Hooks 相比，API 设计（也许）不够精炼，受制于历史包袱
+* Proxy 虽然带来了便利，但是也带来了麻烦，经常需要考虑：
+  * 一个对象能否解构？
+  * 一个属性到底应该用 `ref` 还是 `reactive`？
+  * 取值的时候要不要加 `.value`（常常被忘记）？
