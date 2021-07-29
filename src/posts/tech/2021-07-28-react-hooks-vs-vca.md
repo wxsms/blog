@@ -90,7 +90,7 @@ Directive（指令）是一种特殊的代码复用，它的目的非常局限�
 
 在以**职能**来组织代码的时候，当我们的组件开始变得更大时，**逻辑关注点**的列表也会增长，举例（一张来自 Vue 文档的图片）：
 
-![](./2021-07-28-react-hooks-vs-vca/vue-sfc.png)
+![](images/2021-07-28-react-hooks-vs-vca/vue-sfc.png)
 
 相信对于这类文件写过 Vue 的同学都深有体会。当我们需要查找跟某项功能相关的代码的时候，需要在文件中不停地搜索、上下跳动。非常难受。
 
@@ -269,7 +269,7 @@ const doubleCountRef = useRef(count * 2)
 const renderEveryTime = count * 2
 ```
 
-![](./2021-07-28-react-hooks-vs-vca/cf7fa8cb-e185-4e49-b81a-297d402633cb.gif)
+![](images/2021-07-28-react-hooks-vs-vca/cf7fa8cb-e185-4e49-b81a-297d402633cb.gif)
 
 **vca**
 
@@ -293,7 +293,7 @@ const double = computed(() => count.value * 2)
 const doubleCountRef = count.value * 2;
 ```
 
-![](./2021-07-28-react-hooks-vs-vca/35dff667-33ef-4403-86d4-ded321ea8bea.gif)
+![](images/2021-07-28-react-hooks-vs-vca/35dff667-33ef-4403-86d4-ded321ea8bea.gif)
 
 #### 2. 方法
 
@@ -375,7 +375,7 @@ export default memo(
 )
 ```
 
-![](./2021-07-28-react-hooks-vs-vca/b39cea16-d17f-4472-8fa4-671cd4a459c4.gif)
+![](images/2021-07-28-react-hooks-vs-vca/b39cea16-d17f-4472-8fa4-671cd4a459c4.gif)
 
 **vca**
 
@@ -407,7 +407,7 @@ export default defineComponent({
 })
 ```
 
-![](./2021-07-28-react-hooks-vs-vca/2ab2c69e-41bf-458d-8d69-074ee188044e.gif)
+![](images/2021-07-28-react-hooks-vs-vca/2ab2c69e-41bf-458d-8d69-074ee188044e.gif)
 
 ## 存在的问题
 
@@ -430,7 +430,7 @@ const addCount = useCallback(() => {
 }, [])
 ```
 
-![](./2021-07-28-react-hooks-vs-vca/f9bafbe2-24f7-46bf-89a4-fee6aae5c33c.gif)
+![](images/2021-07-28-react-hooks-vs-vca/f9bafbe2-24f7-46bf-89a4-fee6aae5c33c.gif)
 
 ### Hook: Deps 写不好导致死循环
 
@@ -453,7 +453,7 @@ useEffect(() => {
 }, [addCount])
 ```
 
-![](./2021-07-28-react-hooks-vs-vca/f88339f0-a7f2-401b-a5b3-03de5cf75e3c.gif)
+![](images/2021-07-28-react-hooks-vs-vca/f88339f0-a7f2-401b-a5b3-03de5cf75e3c.gif)
 
 #### 案例二： useEffect 忘记写 deps
 
@@ -510,7 +510,7 @@ export default defineComponent({
 })
 ```
 
-![](./2021-07-28-react-hooks-vs-vca/f773cbbb-79bd-4920-8164-cdd998748c02.gif)
+![](images/2021-07-28-react-hooks-vs-vca/f773cbbb-79bd-4920-8164-cdd998748c02.gif)
 
 ## 总结
 
