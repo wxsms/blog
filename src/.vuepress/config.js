@@ -2,7 +2,7 @@ const _ = require('lodash')
 
 module.exports = {
   title: `wxsm's space`,
-  description: 'Just another personal blog.',
+  description: 'wxsm 的个人网站',
   head: [
     ['meta', { name: 'google-site-verification', content: 'ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg' }],
     ['link', { rel: 'shortcut icon', type: 'image/png', href: 'favicon.png' }],
@@ -13,15 +13,15 @@ module.exports = {
     hostname: 'https://wxsm.space',
     ga: 'UA-102731925-1',
     smoothScroll: false,
-    lastUpdated: 'Last Updated',
+    lastUpdated: '最后更新于',
     siteName: 'wxsm\'s space',
     author: 'wxsm',
     navbar: true,
     nav: [
-      { text: 'home', link: '/' },
-      { text: 'projects', link: '/projects/' },
-      { text: 'about', link: '/about/' },
-      { text: 'links', link: '/links/' }
+      { text: '主页', link: '/' },
+      { text: '项目', link: '/projects/' },
+      { text: '关于', link: '/about/' },
+      { text: '友链', link: '/links/' }
     ],
     valine: {
       appId: 'PXFnynf8h6Qnpm9cIWT0BMgG-gzGzoHsz',

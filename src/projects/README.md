@@ -1,11 +1,11 @@
 ---
 layout: Page
-title: Projects
+title: 项目
 feed:
   enable: false
 ---
 
-My works on [GitHub](https://github.com/wxsms).
+我在 [GitHub](https://github.com/wxsms) 上的个人项目：
 
 ## uiv
 
@@ -17,10 +17,10 @@ My works on [GitHub](https://github.com/wxsms).
 [![GitHub stars](https://badgen.net/github/stars/uiv-lib/uiv)](https://GitHub.com/uiv-lib/uiv/stargazers/)
 [![GitHub forks](https://badgen.net/github/forks/uiv-lib/uiv)](https://github.com/uiv-lib/uiv/network/members)
 
-Bootstrap 3 components implemented by Vue 2.
+Vue 2 实现的 Bootstrap 3 组件库。
 
 * GitHub: [https://github.com/uiv-lib/uiv](https://github.com/uiv-lib/uiv)
-* Homepage: [https://uiv.wxsm.space](https://uiv.wxsm.space/)
+* 主页: [https://uiv.wxsm.space](https://uiv.wxsm.space/)
 * NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
 ## vue-md-loader
@@ -31,10 +31,10 @@ Bootstrap 3 components implemented by Vue 2.
 [![GitHub stars](https://badgen.net/github/stars/wxsms/vue-md-loader)](https://GitHub.com/wxsms/vue-md-loader/stargazers/)
 [![GitHub forks](https://badgen.net/github/forks/wxsms/vue-md-loader)](https://github.com/wxsms/vue-md-loader/network/members)
 
-Webpack loader for converting Markdown files to ✨ALIVE Vue components.
+将 Markdown 转换为 (魔法) Vue 组件的 webpack loader。
 
 * GitHub: [https://github.com/wxsms/vue-md-loader](https://github.com/wxsms/vue-md-loader)
-* Homepage: [https://vue-md-loader.wxsm.space](https://vue-md-loader.wxsm.space/)
+* 主页: [https://vue-md-loader.wxsm.space](https://vue-md-loader.wxsm.space/)
 * NPM: [https://www.npmjs.com/package/vue-md-loader](https://www.npmjs.com/package/vue-md-loader)
 
 ## vuepress-theme-mini
@@ -45,28 +45,18 @@ Webpack loader for converting Markdown files to ✨ALIVE Vue components.
 [![GitHub stars](https://badgen.net/github/stars/wxsms/vuepress-theme-mini)](https://GitHub.com/wxsms/vuepress-theme-mini/stargazers/)
 [![GitHub forks](https://badgen.net/github/forks/wxsms/vuepress-theme-mini)](https://github.com/wxsms/vuepress-theme-mini/network/members)
 
-🎨 &nbsp;A minimal blogging theme of VuePress.
+VuePress 的一个主题。
 
 * GitHub: [https://github.com/wxsms/vuepress-theme-mini](https://github.com/wxsms/vuepress-theme-mini)
-* Homepage: [https://vuepress-theme-mini.wxsm.space](https://vuepress-theme-mini.wxsm.space/)
+* 主页: [https://vuepress-theme-mini.wxsm.space](https://vuepress-theme-mini.wxsm.space/)
 * NPM: [https://www.npmjs.com/package/vuepress-theme-mini](https://www.npmjs.com/package/vuepress-theme-mini)
 
-## blog
+## IBD 日记
 
-[![Build Status](https://github.com/wxsms/blog/workflows/CI/badge.svg)](https://github.com/wxsms/blog)
-[![GitHub stars](https://badgen.net/github/stars/wxsms/blog)](https://GitHub.com/wxsms/blog/stargazers/)
+一个微信小程序，帮助 IBD ([wiki](https://en.wikipedia.org/wiki/Inflammatory_bowel_disease)) 病人记录每日饮食与状况。
 
-:pencil: &nbsp;My personal blog, used to be self-developed (tagged as [self-developed](https://github.com/wxsms/blog/tree/self-developed)), now built with [vuepress](https://vuepress.vuejs.org/) for better focus on blogging.
+因为某些不可描述的原因，该仓库的代码无法公开。
 
-* GitHub: [https://github.com/wxsms/blog](https://github.com/wxsms/blog)
-* Homepage: [https://wxsm.space](https://wxsm.space/)
-
-## IBD Diary
-
-A Wechat miniprogram that helps IBD ([wiki](https://en.wikipedia.org/wiki/Inflammatory_bowel_disease)) patients record their daily diet and status. Serving more than 1,000 people.
-
-For some reasons, this repository can't be public.
-
-Search **IBD 日记** in Wechat, or scan the QR-code below.
+在微信中搜索**IBD 日记**，或扫描下面的二维码以体验：
 
 ![qrcode](https://static.wxsm.space/ibd-diary/logo.jpg)

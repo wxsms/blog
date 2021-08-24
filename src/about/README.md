@@ -1,15 +1,40 @@
 ---
-title: About
+title: 关于
 layout: Page
 feed:
   enable: false
 ---
 
-:bust_in_silhouette: &nbsp;wxsm
+## 我
 
-:clipboard: &nbsp;Front-end / full-stack developer, DOTAer, fans of soul-like games, currently working at **Kingsoft** (Zhuhai, China).
+#### 昵称
 
-:pencil: &nbsp;This is my blog.
+wxsm （长夜漫漫，**无心睡眠**。）
 
-:email: &nbsp;Contact: [@E-mail](http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hfL99uj2xePq-ejk7Omr5uro) / [@GitHub](https://github.com/wxsms)
+#### 本名
 
+郭凯瑞。
+
+#### 职业
+
+码农。
+
+曾就职于 OOCL、西山居，目前在金山办公（珠海）上班。
+
+#### 爱好
+
+* DOTA(2)；
+* 魂类游戏；
+* 优秀番剧。
+
+#### 联系
+
+* [@email](http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hfL99uj2xePq-ejk7Omr5uro)
+* [@github](https://github.com/wxsms)
+* [@steam](https://steamcommunity.com/id/wxsm)
+
+## 本网站
+
+本网站是用 VuePress 搭建的静态网站，部署于 GitHub Pages，由 CloudFlare 代理。
+
+主要用于个人文章写作记录。题材以编程技术为主，但不限于此。
