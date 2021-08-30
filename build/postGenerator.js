@@ -35,6 +35,7 @@ function getDirectories (source) {
   const filename = `index.md`;
 
   fs.mkdirSync(slug);
+  fs.mkdirSync(path.join(slug, 'assets'))
 
   const file = str
     .replace('{{title}}', postTitle)
@@ -42,7 +43,10 @@ function getDirectories (source) {
     .replace('{{date}}', isoDateStr);
 
   const filePath = path.join(slug, filename);
+  const gitKeepPath = path.join(slug, 'assets', '.gitkeep')
   fs.writeFileSync(filePath, file);
+  fs.writeFileSync(gitKeepPath, '')
   await git.add(filePath);
+  await git.add(gitKeepPath);
   console.log(`${filename} created.`);
 })();
