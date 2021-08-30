@@ -7,8 +7,6 @@ tags: [ci]
 
 <!-- 「」 -->
 
-![](https://static.wxsm.space/others/revonate.png)
-
 企业项目群中往往会有部分代码逻辑需要公用，将其抽离作为公共包发布到私有源的做法是比较优雅的解决方式。但是这么做的话后期需要面临一个问题：**当一个公共依赖包的使用者数量逐渐庞大的时候，如何保证当此包发布新版本时，所有使用者都能尽可能快地得到更新？**
 
 传统的解决方案：
@@ -231,7 +229,7 @@ stringData:
 ## 遇到的问题
 
 1. 将 Renovate 部署上 Kubernetes 的时候，要注意能够分配的节点是否都有私有源的访问权限。如果 CronJob 被分配到了无权访问的节点会导致私有包 Lookup Failed，从而更新失败。如果只有部分节点拥有访问权限，可以用 `nodeSelector` 或 `nodeName` 指定节点；
-1. Changelog 在 GitLab (10.3.2) 上面会丢失，并且格式错乱，如图所示：![screenshot](https://static.wxsm.space/blog/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png)
+1. Changelog 在 GitLab (10.3.2) 上面会丢失，并且格式错乱，如图所示：![screenshot](./assets/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png)
    这个问题猜测是由于我司的 GitLab 版本过低导致的。因为 [gitlab.com](http://gitlab.com/) (13.x) 上不存在这个问题。但是因为 GitLab 不在我的管辖范围内，因此目前没有找到很好的解决方案，后续如果解决了会更新。
 
 ### 解决 Changelog 问题
@@ -282,4 +280,4 @@ ${releaseNote}
 
 效果如图所示：
 
-![screenshot](https://static.wxsm.space/blog/20210217165423.png)
+![screenshot](./assets/20210217165423.png)

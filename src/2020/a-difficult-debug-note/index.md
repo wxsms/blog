@@ -17,7 +17,7 @@ DOMException: Failed to execute 'appendChild' on 'Node':
 This node type does not support this method.
 ```
 
-![screenshot](https://static.wxsm.space/blog/97097835-c465e780-16b0-11eb-8d93-ac2cee64895b.png)
+![screenshot](./assets/97097835-c465e780-16b0-11eb-8d93-ac2cee64895b.png)
 
 该错误：
 

@@ -2,7 +2,7 @@
 
 title: '从零开始'
 date: 2021-01-22T05:10:17.996Z
-tags: [ACG]
+tags: [acg]
 ---
 
 ![](https://qdlm.pvp.xoyo.com/e3e847fc2c84d2e59ddf939eb6921d02/c51dda0a29bb4413ab850ac41ef0de72?imageslim)

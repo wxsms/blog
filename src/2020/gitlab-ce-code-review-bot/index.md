@@ -7,8 +7,6 @@ tags: [gitlab,nodejs]
 
 <!-- 「」 -->
 
-![gitlab-logo](https://static.wxsm.space/others/gitlab-logo.svg =250x)
-
 由于 Gitlab CE 做代码评审时缺少了关键的评审员功能（详情参考此 [issue](https://gitlab.com/gitlab-org/gitlab-foss/-/issues/42096)），因此在使用 CE 的同时又想要做代码评审的话，就必须要自己想办法了。
 
 网上能找到的最多的解决方案就是在 Gitlab 前面再部署一套 Gerrit，通过拦截推送的代码以及同步两个库来实现。但是这种方案有诸多弊端。比如：
@@ -139,7 +137,7 @@ await service.updateMergeRequest(pid, mid, {
 
 效果如下图所示：
 
-![wip](https://static.wxsm.space/blog/93973898-8e7ace00-fda7-11ea-9735-8ee3de0e663d.png)
+![wip](./assets/93973898-8e7ace00-fda7-11ea-9735-8ee3de0e663d.png)
 
 可以看到，WIP 并不是一个强制状态。在 Web UI 上点击 `Resolve WIP status` 或手动去除标题中的 `WIP:` 都可以解除 WIP 状态，从而允许手动合并。也就是说，这是一个「防君子不防小人」的状态。如果是在一个团队内的成员中使用，我觉得这样已经足够了。
 

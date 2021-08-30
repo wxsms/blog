@@ -11,8 +11,6 @@ tags: []
 
 打开设置，找到：`Editor` > `General` > `Soft Wraps`，将 `Soft-wrap files` 选项勾上即可。IDE 默认已经填上了 `*.md; *.txt; *.rst; *.adoc`，因此不需要再做别的事情。
 
-![image](https://static.wxsm.space/blog/98069913-fc341280-1e9a-11eb-82d4-2dbaa96672bd.png)
+![image](./assets/98069913-fc341280-1e9a-11eb-82d4-2dbaa96672bd.png)
 
 这样一来，每次只要打开以上格式的文件，编辑器就会自动开启 SoftWrap，一劳永逸。
-
-<!-- more -->
