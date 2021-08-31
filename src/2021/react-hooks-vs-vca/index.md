@@ -1,13 +1,12 @@
 ---
-
-title: 'React Hooks vs. VCA'
+title: '前端 MVC 的未来：浅谈 Hooks 与 VCA 在设计思路上的异同'
 date: 2021-07-28T09:18:04.925Z
 tags: [javascript,react,vue,hooks]
 ---
 
 <!-- 「」 -->
 
-关于 hooks 与 VCA：
+关于 React Hooks 与 Vue Composite API：
 
 * React 16.8 新增了 [Hooks API](https://reactjs.org/docs/hooks-intro.html) （简称 hooks)
 * Vue 3.0 新增了 [Composite API](https://v3.cn.vuejs.org/guide/composition-api-introduction.html) （简称 VCA）
@@ -102,10 +101,10 @@ Directive（指令）是一种特殊的代码复用，它的目的非常局限�
 
 二者的区别，说来非常简单，但是又非常巨大：
 
-1. React Hooks 是 **effect**，在组件**每次渲染的时候都会执行**
-2. VCA 是 **setup**，仅在组件初始化的时候**执行一次**
+1. React Hooks 是 **effect** (副作用)，在组件**每次渲染的时候都会执行**
+2. VCA 是 **setup** (安装/配置)，仅在组件初始化的时候**执行一次**
 
-这些区别具体代表了什么，需要在下文继续阐释。
+这些区别是由框架本身的特性决定的，而它们具体代表了什么，需要在下文继续阐释。
 
 ## 常用场景差异
 
@@ -255,8 +254,12 @@ watchEffect(() => {
 
 总体区别：
 
-* hooks 内原则上不允许直接定义任何变量，包括常量、方法等，因为**组件每次渲染时都会重新初始化**。因此从某种意义上来说，直接定义的变量也是一种响应式变量（当能够正确赋予初始值的时候）。
+* 从利于维护的角度出发，hooks 内原则上不允许直接定义任何变量，包括常量、方法等，因为**组件每次渲染时都会重新初始化**。因此从某种意义上来说，直接定义的变量也是一种响应式变量（当能够正确赋予初始值的时候）。
 * VCA 无此限制。并且直接定义的变量为常量。
+
+注：关于第一点，社区一直存在争议。争议的关键点在于每次渲染都重新初始化变量到底会不会对性能造成压力。[官方文档](https://zh-hans.reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-functions-in-render) 的说法是**不会**，但是从目前的 benchmark 结果来看，React Hooks 确实已经处于下风了（当然这里面也会有其它方面的影响因素）：
+
+![](./assets/bench.png)
 
 #### 1. 变量
 
@@ -290,7 +293,7 @@ const renderEveryTime = count * 2
 VCA 提供了以下几种定义变量的方法：
 
 * `ref`: 基础类型，之所以存在，是因为基础类型目前来说无法做到响应式，所以必须通过一个对象来包裹，通过 `xxx.value` 访问基础类型才能获得响应式
-* `reactive`: 复杂类型，对象与数组
+* `reactive`: 通常来说，用于复杂类型，如对象与数组，以实现深度响应式监听
 * `computed`: 计算值
 * 直接定义: 常量
 
@@ -313,7 +316,7 @@ const doubleCountRef = count.value * 2;
 
 **hooks**
 
-* 方法定义必须使用 `useCallback` 包裹，某则每次渲染都会被重新创建。
+* 从利于维护的角度出发，方法定义需要使用 `useCallback` 包裹，某则每次渲染都会被重新创建，并且当方法作为 PureComponent 子组件的参数使用时会触发子组件的重新渲染。
 * 方法必须正确定义 `deps`，否则内部取值将得不到变化后的值
 * 方法的 `deps` 一旦改变，方法将会被重新创建，闭包也会得到更新
 
@@ -481,20 +484,26 @@ useEffect(() => {
 })
 ```
 
-#### 案例三：deps 里面填入了直接定义的变量
+#### 案例三：deps 里面填入了直接定义的引用类型变量
 
 ```typescript
 let someValue = []
 const [count, setCount] = useState(0)
 
+// 由于 someValue 每次渲染时都会重新初始化，
+// 而引用类型重新初始化后其地址是不等的，
+// 因此会触发死循环
 useEffect(() => {
 setCount(v => ++v)
 }, [someValue])
 ```
 
-### Hooks: 不能在条件和循环体内定义 hook
+### Hooks: 定义位置的限制
 
-因为 Hooks 的实现原理是链表，必须保证每次组件渲染得到的 hooks 及其顺序都是一致的。
+因为 Hooks 的实现原理是链表，必须保证每次组件渲染得到的 hooks 及其顺序都是一致的，因此使用 Hook 需要遵循两条额外的规则：
+
+* 只能在 React 函数中调用 Hook，不能在普通的 JavaScript 函数中调用；
+* 不能在循环，条件或嵌套函数中调用 Hook
 
 ```typescript
 // 错误的写法，会直接报错
@@ -538,7 +547,7 @@ export default defineComponent({
 缺点：
 
 * 需要写 `deps`
-* 每次渲染都执行带来的额外心智负担
+* 由于其每次渲染都执行 (effect) 的特点，目前被业界公认为心智负担极重
 
 ### Vue Composite API
 
