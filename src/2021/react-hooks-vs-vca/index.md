@@ -570,5 +570,4 @@ export default defineComponent({
 2. [Vue Composite API 官方文档](https://v3.cn.vuejs.org/guide/composition-api-introduction.html)
 3. [知乎：Vue3 究竟好在哪里？（和 React Hook 的详细对比）](https://zhuanlan.zhihu.com/p/133819602)
 4. [知乎：新版react中，useCallback 和 useMemo 是不是值得大量使用？](https://www.zhihu.com/question/390974405)
-5. [掘金：useCallback/useMemo 的使用误区](https://juejin.cn/post/6847902217261809671)
-6. [Vue 3.2 Released!](https://blog.vuejs.org/posts/vue-3.2.html)
+5. [Vue 3.2 Released!](https://blog.vuejs.org/posts/vue-3.2.html)
