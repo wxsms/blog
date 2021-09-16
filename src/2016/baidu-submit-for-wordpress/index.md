@@ -204,4 +204,4 @@ API返回的 `$result` 是一个 JSON 对象，若推送成功可能包含以�
 
 如无意外，这些都将在之后的版本更新。
 
-Github: <https://github.com/edisond/baidu-submit-for-wordpress>
+GitHub: [https://github.com/wxsms/baidu-submit-for-wordpress](https://github.com/wxsms/baidu-submit-for-wordpress)

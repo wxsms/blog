@@ -114,7 +114,7 @@ after_success: 'npm run coveralls'
 deploy:
   - provider: npm
     skip_cleanup: true
-    email: "edisond@qq.com"
+    email: "address@email.com"
     api_key: $NPM_TOKEN
     on:
       tags: true

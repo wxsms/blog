@@ -17,7 +17,7 @@ tags:
 
 工具的主要功能目前为止并没有什么变化，至于这个过程中获得的少许 WordPress 插件开发经验下次再总结，好在没走多少弯路。
 
-使用方式：Clone <a href="https://github.com/edisond/baidu-submit-for-wordpress" target="_blank">https://github.com/edisond/baidu-submit-for-wordpress</a> 仓库并上传至主机的 
+使用方式：Clone [https://github.com/wxsms/baidu-submit-for-wordpress](https://github.com/wxsms/baidu-submit-for-wordpress) 仓库并上传至主机的 
 
 ```
 /wp-content/plugins
