@@ -5,14 +5,14 @@
   "author": "wxsm",
   "private": true,
   "scripts": {
-    "post": "node build/postGenerator.js",
+    "gen:post": "node build/postGenerator.js",
     "dev": "vuepress dev src",
-    "build": "vuepress build src && node build/buildDistConfigs.js",
-    "serve": "vuepress serve src --build"
+    "build": "vuepress build src && node build/buildDistConfigs.js"
   },
   "devDependencies": {
     "lodash": "4.17.21",
     "readline-sync": "1.4.10",
+    "recursive-readdir": "^2.2.2",
     "simple-git": "2.45.1",
     "vuepress": "1.8.2",
     "vuepress-theme-mini": "1.6.4",

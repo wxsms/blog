@@ -32,7 +32,7 @@ function getDirectories (source) {
 
   const isoDateStr = new Date().toISOString();
   const slug = path.join(postsPath, postId);
-  const filename = `index.md`;
+  const filename = `README.md`;
 
   fs.mkdirSync(slug);
   fs.mkdirSync(path.join(slug, 'assets'))
