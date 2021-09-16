@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "lodash": "4.17.21",
-    "markdown-it-imsize": "2.0.1",
     "readline-sync": "1.4.10",
     "simple-git": "2.45.1",
     "vuepress": "1.8.2",
