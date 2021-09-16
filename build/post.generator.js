@@ -25,7 +25,7 @@ function getDirectories (source) {
     fs.mkdirSync(postsPath);
   }
 
-  const str = fs.readFileSync(path.join(__dirname, 'templates', 'post-template.md'), 'utf8');
+  const str = fs.readFileSync(path.join(__dirname, 'templates', 'post.template.md'), 'utf8');
   const postTitle = read.question('Enter post title: ') || '';
   const postId = read.question('Enter post id: ') || '';
   const tags = read.question('Enter tags (separate by comma): ') || '';
