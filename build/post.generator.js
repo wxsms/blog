@@ -48,5 +48,5 @@ function getDirectories (source) {
   fs.writeFileSync(gitKeepPath, '')
   await git.add(filePath);
   await git.add(gitKeepPath);
-  console.log(`${filename} created.`);
+  console.log(`${filePath} created.`);
 })();

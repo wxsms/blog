@@ -1,6 +1,9 @@
-const _ = require('lodash')
+const evergreen = process.env.NODE_ENV === 'development'
+
+console.log('evergreen:', evergreen)
 
 module.exports = {
+  evergreen: evergreen,
   title: `wxsm's space`,
   description: 'wxsm 的个人网站',
   // shouldPrefetch: () => false,
