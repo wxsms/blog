@@ -9,9 +9,21 @@ module.exports = {
   // shouldPrefetch: () => false,
   head: [
     ['meta', { name: 'google-site-verification', content: 'ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg' }],
-    ['link', { rel: 'shortcut icon', type: 'image/png', href: 'favicon.png' }],
-    ['link', { rel: 'apple-touch-icon', size: '200x200', href: 'favicon-iphone.png' }]
+    ['link', { rel: 'shortcut icon', type: 'image/png', href: '/favicon.png' }],
+    ['link', { rel: 'apple-touch-icon', size: '200x200', href: '/favicon-iphone.png' }],
+    ['link', { rel: 'icon', href: '/favicon-iphone.png' }],
+    ['link', { rel: 'manifest', href: '/manifest.json' }],
+    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
+    ['link', { rel: 'apple-touch-icon', href: '/favicon-iphone.png' }],
+    ['meta', { name: 'msapplication-TileImage', content: '/favicon-iphone.png' }],
+    ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
   ],
+  plugins: ['@vuepress/pwa', {
+    serviceWorker: true,
+    updatePopup: true
+  }],
   theme: 'mini',
   themeConfig: {
     hostname: 'https://wxsm.space',

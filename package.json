@@ -10,6 +10,7 @@
     "build": "vuepress build src && node build/dist.generator.js"
   },
   "devDependencies": {
+    "@vuepress/plugin-pwa": "^1.8.2",
     "lodash": "4.17.21",
     "readline-sync": "1.4.10",
     "recursive-readdir": "2.2.2",
