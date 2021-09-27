@@ -1323,10 +1323,10 @@
   dependencies:
     nprogress "^0.2.0"
 
-"@vuepress/plugin-pwa@^1.8.2":
+"@vuepress/plugin-pwa@1.8.2":
   version "1.8.2"
-  resolved "https://registry.nlark.com/@vuepress/plugin-pwa/download/@vuepress/plugin-pwa-1.8.2.tgz#a82ecaa9f920bfc79f283fb3c224a42540109e19"
-  integrity sha1-qC7Kqfkgv8efKD+zwiSkJUAQnhk=
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.8.2.tgz#a82ecaa9f920bfc79f283fb3c224a42540109e19"
+  integrity sha512-6dQXMI+oqTQtHK22Ba+crhzP5yyAf+V1qVfapgPb8JxLXUasOhr+083VRz5LMYqDzu6CAXM+P8cUgSSBNjifXw==
   dependencies:
     "@vuepress/shared-utils" "1.8.2"
     register-service-worker "^1.7.0"
