@@ -40,7 +40,9 @@ module.exports = {
       { text: '友链', link: '/links/' }
     ],
     comment: {
-      serverURL: 'https://blog-api-8pvwfy3l9-wxsms.vercel.app'
+      serverURL: 'https://blog-api-8pvwfy3l9-wxsms.vercel.app',
+      avatar: 'retro',
+      visitor: true
     }
   },
   markdown: {
