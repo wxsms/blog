@@ -3,7 +3,7 @@
   "short_name": "wxsm's space",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#3eaf7c",
+  "background_color": "#ffffff",
   "description": "wxsm's personal blog.",
   "icons": [
     {
