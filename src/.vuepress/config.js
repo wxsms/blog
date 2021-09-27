@@ -39,14 +39,8 @@ module.exports = {
       { text: '关于', link: '/about/' },
       { text: '友链', link: '/links/' }
     ],
-    valine: {
-      appId: 'PXFnynf8h6Qnpm9cIWT0BMgG-gzGzoHsz',
-      appKey: 'GshYVR9jngnBj94to63biynJ',
-      placeholder: 'Leave a comment...',
-      verify: false,
-      notify: false,
-      avatar: 'retro',
-      lang: 'en'
+    comment: {
+      serverURL: 'https://blog-api-8pvwfy3l9-wxsms.vercel.app'
     }
   },
   markdown: {

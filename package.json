@@ -16,7 +16,7 @@
     "recursive-readdir": "2.2.2",
     "simple-git": "2.45.1",
     "vuepress": "1.8.2",
-    "vuepress-theme-mini": "1.6.4",
+    "vuepress-theme-mini": "2.0.0",
     "yaml-front-matter": "4.1.1"
   }
 }
