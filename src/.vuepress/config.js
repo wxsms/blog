@@ -42,7 +42,9 @@ module.exports = {
     comment: {
       serverURL: 'https://blog-api-8pvwfy3l9-wxsms.vercel.app',
       avatar: 'retro',
-      visitor: true
+      visitor: true,
+      uploadImage: false,
+      copyright: false
     }
   },
   markdown: {

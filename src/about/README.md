@@ -11,10 +11,6 @@ feed:
 
 wxsm （长夜漫漫，**无心睡眠**。）
 
-#### 本名
-
-郭凯瑞。
-
 #### 职业
 
 码农。
@@ -35,6 +31,6 @@ wxsm （长夜漫漫，**无心睡眠**。）
 
 ## 本网站
 
-本网站是用 VuePress 搭建的静态网站，部署于 GitHub Pages，由 CloudFlare 代理。
+本站是用 [VuePress](https://vuepress.vuejs.org) 搭建的静态网站，主题为 [vuepress-theme-mini](https://github.com/wxsms/vuepress-theme-mini)，部署于 GitHub Pages，由 CloudFlare 代理。
 
-主要用于个人文章写作记录，题材以编程技术为主。
+网站主要用于个人文章写作记录，题材以编程技术为主。
