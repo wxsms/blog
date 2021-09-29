@@ -13,7 +13,7 @@
     "lodash": "4.17.21",
     "readline-sync": "1.4.10",
     "recursive-readdir": "2.2.2",
-    "simple-git": "2.45.1",
+    "simple-git": "2.46.0",
     "vuepress": "1.8.2",
     "vuepress-theme-mini": "2.1.0",
     "yaml-front-matter": "4.1.1"
