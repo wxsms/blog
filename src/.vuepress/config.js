@@ -37,6 +37,7 @@ module.exports = {
     navbar: true,
     nav: [
       { text: '主页', link: '/' },
+      { text: '归档', link: '/archive/' },
       { text: '项目', link: '/projects/' },
       { text: '关于', link: '/about/' },
       { text: '友链', link: '/links/' }
