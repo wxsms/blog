@@ -7727,6 +7727,11 @@ vuepress-plugin-flowchart-js@^2.0.2:
   dependencies:
     flowchart.js "1.15.0"
 
+vuepress-plugin-named-chunks@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-named-chunks/-/vuepress-plugin-named-chunks-1.1.4.tgz#c65e121a8d0bbb4201766ec06816a2aa67dae3b7"
+  integrity sha512-zCRVmbf10VAf8NcrVLlm1b6eGU3vkc/iLVNvpIL3sBvtCCVaZheT2OlaV0CMPE6OjjTYbMrYXjugu4vcpiXrNQ==
+
 vuepress-plugin-sitemap@^2.3.1:
   version "2.3.1"
   resolved "https://registry.npm.taobao.org/vuepress-plugin-sitemap/download/vuepress-plugin-sitemap-2.3.1.tgz#51298aca77a5de96396fdbd1103e1637dd61ae6a"
@@ -7741,10 +7746,10 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.npmmirror.com/vuepress-theme-mini/download/vuepress-theme-mini-2.1.0.tgz?cache=0&sync_timestamp=1632720241029&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fvuepress-theme-mini%2Fdownload%2Fvuepress-theme-mini-2.1.0.tgz#bf2d27083afdfc22531eede6445e618ef355158f"
-  integrity sha1-vy0nCDr9/CJTHu3mRF5hjvNVFY8=
+vuepress-theme-mini@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-mini/-/vuepress-theme-mini-3.0.0.tgz#d242c0140ef27208c51697a41102da514e7c44c9"
+  integrity sha512-9kgILS9ysUbgYOqT1L1wxfTu+g1/n8IWBVBz3pm/gR+8LVq0xJhoheCqSTCRT3YJR3b9ojqRloj2uMDfpK+Wew==
   dependencies:
     "@vuepress/plugin-back-to-top" "^1.8.2"
     "@vuepress/plugin-google-analytics" "^1.8.2"
@@ -7756,6 +7761,7 @@ vuepress-theme-mini@2.1.0:
     lodash.sortby "^4.7.0"
     vuepress-plugin-feed "^0.1.9"
     vuepress-plugin-flowchart-js "^2.0.2"
+    vuepress-plugin-named-chunks "^1.1.4"
     vuepress-plugin-sitemap "^2.3.1"
 
 vuepress@1.8.2:

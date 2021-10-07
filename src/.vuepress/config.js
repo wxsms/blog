@@ -6,7 +6,9 @@ module.exports = {
   evergreen: evergreen,
   title: `wxsm's space`,
   description: 'wxsm 的个人网站',
-  // shouldPrefetch: () => false,
+  shouldPrefetch: (name) => {
+    return name.includes('vendors~') || name.includes('layout-')
+  },
   head: [
     ['meta', { name: 'google-site-verification', content: 'ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg' }],
     ['link', { rel: 'shortcut icon', type: 'image/png', href: '/favicon.png' }],
