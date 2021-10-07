@@ -1,5 +1,5 @@
 ---
-layout: ArticleWithExcerptPager
+layout: Pager
 feed:
   enable: false
 ---
