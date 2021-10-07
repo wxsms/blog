@@ -7746,10 +7746,10 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress-theme-mini@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/vuepress-theme-mini/-/vuepress-theme-mini-3.0.0.tgz#d242c0140ef27208c51697a41102da514e7c44c9"
-  integrity sha512-9kgILS9ysUbgYOqT1L1wxfTu+g1/n8IWBVBz3pm/gR+8LVq0xJhoheCqSTCRT3YJR3b9ojqRloj2uMDfpK+Wew==
+vuepress-theme-mini@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-mini/-/vuepress-theme-mini-3.0.1.tgz#66414dd61c717a8f86e2abb6cb9942401b7d4539"
+  integrity sha512-Elg7MthGSiEsV2Syaw71YTv+bQRLVmyVyYQow7cfYEXK0laxNq5NvK63IGCZbA/j+WgPUJWGON8vp6rDrKT57g==
   dependencies:
     "@vuepress/plugin-back-to-top" "^1.8.2"
     "@vuepress/plugin-google-analytics" "^1.8.2"
