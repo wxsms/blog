@@ -1,9 +1,8 @@
 ---
-
-
 title: 'Blog Migrated to VuePress'
 date: 2019-07-23T03:40:08.642Z
 tags: []
+readMore: false
 ---
 
 博客正式迁移到了 [VuePress](https://vuepress.vuejs.org/)，有以下两点原因：

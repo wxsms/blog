@@ -2,6 +2,7 @@
 title: '简单 CSS 实现暗黑模式'
 date: 2021-10-08T03:38:08.745Z
 tags: [css]
+readMore: false
 ---
 
 <!-- 「」 -->

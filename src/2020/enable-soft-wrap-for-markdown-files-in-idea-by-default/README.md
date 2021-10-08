@@ -1,8 +1,8 @@
 ---
-
 title: 'IDEA 为 Markdown 文件默认启用 SoftWrap'
 date: 2020-10-26T03:23:49.630Z
 tags: []
+readMore: false
 ---
 
 <!-- 「」 -->
