@@ -5,9 +5,9 @@
   "author": "wxsm",
   "private": true,
   "scripts": {
-    "gen:post": "node build/post.generator.js",
+    "post": "node build/generatePost.js",
     "dev": "vuepress dev src",
-    "build": "vuepress build src && node build/dist.generator.js"
+    "build": "vuepress build src && node build/buildDistConfig.js"
   },
   "devDependencies": {
     "lodash": "4.17.21",
