@@ -22,5 +22,9 @@
     "hexo-renderer-stylus": "^2.0.0",
     "hexo-server": "^2.0.0",
     "hexo-theme-next": "^8.8.0"
+  },
+  "devDependencies": {
+    "recursive-readdir": "^2.2.2",
+    "yaml-front-matter": "^4.1.1"
   }
 }
