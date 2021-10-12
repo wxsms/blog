@@ -1,21 +1,26 @@
 {
-  "name": "wxsms-space",
-  "version": "1.0.0",
-  "description": "Just another blog system.",
-  "author": "wxsm",
+  "name": "hexo-site",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "post": "node build/generatePost.js",
-    "dev": "vuepress dev src",
-    "build": "vuepress build src && node build/buildDistConfig.js"
+    "build": "hexo generate",
+    "clean": "hexo clean",
+    "deploy": "hexo deploy",
+    "server": "hexo server"
   },
-  "devDependencies": {
-    "lodash": "4.17.21",
-    "readline-sync": "1.4.10",
-    "recursive-readdir": "2.2.2",
-    "simple-git": "2.46.0",
-    "vuepress": "1.8.2",
-    "vuepress-theme-mini": "3.1.0",
-    "yaml-front-matter": "4.1.1"
+  "hexo": {
+    "version": "5.4.0"
+  },
+  "dependencies": {
+    "hexo": "^5.0.0",
+    "hexo-generator-archive": "^1.0.0",
+    "hexo-generator-category": "^1.0.0",
+    "hexo-generator-index": "^2.0.0",
+    "hexo-generator-tag": "^1.0.0",
+    "hexo-renderer-ejs": "^1.0.0",
+    "hexo-renderer-marked": "^4.0.0",
+    "hexo-renderer-stylus": "^2.0.0",
+    "hexo-server": "^2.0.0",
+    "hexo-theme-next": "^8.8.0"
   }
 }

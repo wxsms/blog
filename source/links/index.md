@@ -1,8 +1,5 @@
 ---
-title: '友链'
-layout: Page
-feed:
-  enable: false
+title: 友链
 ---
 
 * [Aquariuslt blog](https://zexo.dev)

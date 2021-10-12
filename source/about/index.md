@@ -1,29 +1,26 @@
 ---
 title: 关于
-layout: Page
-feed:
-  enable: false
 ---
 
 ## 我
 
-#### 昵称
+### 昵称
 
 wxsm （长夜漫漫，**无心睡眠**。）
 
-#### 职业
+### 职业
 
 码农。
 
 曾就职于 OOCL、西山居，目前在金山办公（珠海）上班。
 
-#### 爱好
+### 爱好
 
 * DOTA(2)；
 * 魂类游戏；
 * 优秀番剧。
 
-#### 联系
+### 联系
 
 * [@email](http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=hfL99uj2xePq-ejk7Omr5uro)
 * [@github](https://github.com/wxsms)

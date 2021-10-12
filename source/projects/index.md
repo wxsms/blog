@@ -1,8 +1,5 @@
 ---
-layout: Page
 title: 项目
-feed:
-  enable: false
 ---
 
 我在 [GitHub](https://github.com/wxsms) 上的个人项目：
