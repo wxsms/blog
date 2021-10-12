@@ -25,6 +25,7 @@
     "hexo-theme-next": "^8.8.0"
   },
   "devDependencies": {
+    "hexo-generator-sitemap": "^2.1.0",
     "recursive-readdir": "^2.2.2",
     "yaml-front-matter": "^4.1.1"
   }
