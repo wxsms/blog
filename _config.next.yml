@@ -883,3 +883,22 @@ vendors:
 css: css
 js: js
 images: images
+
+# Waline
+# For more information: https://waline.js.org, https://github.com/walinejs/waline
+waline:
+  enable: true
+  serverURL: https://blog-api-8pvwfy3l9-wxsms.vercel.app # Waline server address url
+  #  placeholder: Just go go # Comment box placeholder
+  avatar: retro # Gravatar style
+  #  meta: [nick, mail, link] # Custom comment header
+  pageSize: 10 # Pagination size
+  lang: zh-cn # Language, available values: en, zh-cn
+  # Warning: Do not enable both `waline.visitor` and `leancloud_visitors`.
+  visitor: true # Article reading statistic
+  comment_count: false # If false, comment count will only be displayed in post page, not in home page
+  requiredFields: [ ] # Set required fields: [nick] | [nick, mail]
+  libUrl: # Set custom library cdn url
+  uploadImage: false
+  copyright: false
+  dark: 'auto'
