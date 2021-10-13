@@ -28,7 +28,7 @@ custom_file_path:
 #bodyEnd: source/_data/body-end.njk
 #variable: source/_data/variables.styl
 #mixin: source/_data/mixins.styl
-#style: source/_data/styles.styl
+  style: source/_data/styles.styl
 
 
 # ---------------------------------------------------------------
@@ -91,7 +91,7 @@ menu:
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
-  友链: /links/ || fa fa-link
+  #友链: /links/ || fa fa-link
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
@@ -168,6 +168,9 @@ links_settings:
 
 links:
 #Title: https://example.com
+  Aquariuslt blog: https://zexo.dev
+  Lz's blog: https://lz5z.com
+  冷石的博客: https://coldstone.fun/
 
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
@@ -256,13 +259,13 @@ tag_icon: false
 # Front-matter variable (nonsupport animation).
 reward_settings:
   # If true, a donate button will be displayed in every article by default.
-  enable: false
+  enable: true
   animation: false
-  #comment: Buy me a coffee
+  comment:
 
 reward:
-#wechatpay: /images/wechatpay.png
-#alipay: /images/alipay.png
+  wechatpay: /images/wechatpay.png
+  alipay: /images/alipay.png
 #paypal: /images/paypal.png
 #bitcoin: /images/bitcoin.png
 
@@ -290,8 +293,8 @@ related_posts:
 # Post edit
 # Easily browse and edit blog source code online.
 post_edit:
-  enable: false
-  url: https://github.com/user-name/repo-name/tree/branch-name/subdirectory-name/ # Link for view source
+  enable: true
+  url: https://github.com/wxsms/blog/tree/master/source/ # Link for view source
   #url: https://github.com/user-name/repo-name/edit/branch-name/subdirectory-name/ # Link for fork & edit
 
 # Show previous post and next post in post footer if exists
@@ -900,5 +903,5 @@ waline:
   requiredFields: [ ] # Set required fields: [nick] | [nick, mail]
   libUrl: # Set custom library cdn url
   uploadImage: false
-  copyright: false
+  copyright: true
   dark: 'auto'

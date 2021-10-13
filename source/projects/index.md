@@ -7,13 +7,18 @@ comments: false
 
 ## uiv
 
+
 ![logo](https://static.wxsm.space/uiv/logo.png)
 
-[![Build Status](https://github.com/uiv-lib/uiv/workflows/CI/badge.svg)](https://github.com/uiv-lib/uiv)
-[![Build Status](https://badgen.net/npm/dm/uiv)](https://www.npmjs.com/package/uiv)
-[![Build Status](https://badgen.net/npm/v/uiv)](https://www.npmjs.com/package/uiv)
-[![GitHub stars](https://badgen.net/github/stars/uiv-lib/uiv)](https://GitHub.com/uiv-lib/uiv/stargazers/)
-[![GitHub forks](https://badgen.net/github/forks/uiv-lib/uiv)](https://github.com/uiv-lib/uiv/network/members)
+<p class="wxsm-github-badges">
+<a href="https://github.com/uiv-lib/uiv" target="_blank"><img src="https://github.com/uiv-lib/uiv/workflows/CI/badge.svg" alt="Build Status"></a>
+<a href="https://www.npmjs.com/package/uiv" target="_blank"><img src="https://badgen.net/npm/dm/uiv" alt="NPM downloads"></a>
+<a href="https://www.npmjs.com/package/uiv" target="_blank"><img src="https://badgen.net/npm/v/uiv" alt="NPM version"></a>
+<a href="https://GitHub.com/uiv-lib/uiv/stargazers/" target="_blank"><img src="https://badgen.net/github/stars/uiv-lib/uiv" alt="GitHub stars"></a>
+<a href="https://github.com/uiv-lib/uiv/network/members" target="_blank"><img src="https://badgen.net/github/forks/uiv-lib/uiv" alt="GitHub forks"></a>
+</p>
+
+
 
 Vue 2 实现的 Bootstrap 3 组件库。
 
@@ -23,11 +28,13 @@ Vue 2 实现的 Bootstrap 3 组件库。
 
 ## vue-md-loader
 
-[![Build Status](https://github.com/wxsms/vue-md-loader/workflows/CI/badge.svg)](https://github.com/wxsms/vue-md-loader)
-[![Build Status](https://badgen.net/npm/dm/vue-md-loader)](https://www.npmjs.com/package/vue-md-loader)
-[![Build Status](https://badgen.net/npm/v/vue-md-loader)](https://www.npmjs.com/package/vue-md-loader)
-[![GitHub stars](https://badgen.net/github/stars/wxsms/vue-md-loader)](https://GitHub.com/wxsms/vue-md-loader/stargazers/)
-[![GitHub forks](https://badgen.net/github/forks/wxsms/vue-md-loader)](https://github.com/wxsms/vue-md-loader/network/members)
+<p class="wxsm-github-badges">
+<a href="https://github.com/wxsms/vue-md-loader" target="_blank"><img src="https://github.com/wxsms/vue-md-loader/workflows/CI/badge.svg" alt="Build Status"></a>
+<a href="https://www.npmjs.com/package/vue-md-loader" target="_blank"><img src="https://badgen.net/npm/dm/vue-md-loader" alt="NPM downloads"></a>
+<a href="https://www.npmjs.com/package/vue-md-loader" target="_blank"><img src="https://badgen.net/npm/v/vue-md-loader" alt="NPM version"></a>
+<a href="https://GitHub.com/wxsms/vue-md-loader/stargazers/" target="_blank"><img src="https://badgen.net/github/stars/wxsms/vue-md-loader" alt="GitHub stars"></a>
+<a href="https://github.com/wxsms/vue-md-loader/network/members" target="_blank"><img src="https://badgen.net/github/forks/wxsms/vue-md-loader" alt="GitHub forks"></a>
+</p>
 
 将 Markdown 转换为 (魔法) Vue 组件的 webpack loader。
 
@@ -37,11 +44,13 @@ Vue 2 实现的 Bootstrap 3 组件库。
 
 ## vuepress-theme-mini
 
-[![Build Status](https://github.com/wxsms/vuepress-theme-mini/workflows/CI/badge.svg)](https://github.com/wxsms/vuepress-theme-mini)
-[![Build Status](https://badgen.net/npm/dm/vuepress-theme-mini)](https://www.npmjs.com/package/vuepress-theme-mini)
-[![Build Status](https://badgen.net/npm/v/vuepress-theme-mini)](https://www.npmjs.com/package/vuepress-theme-mini)
-[![GitHub stars](https://badgen.net/github/stars/wxsms/vuepress-theme-mini)](https://GitHub.com/wxsms/vuepress-theme-mini/stargazers/)
-[![GitHub forks](https://badgen.net/github/forks/wxsms/vuepress-theme-mini)](https://github.com/wxsms/vuepress-theme-mini/network/members)
+<p class="wxsm-github-badges">
+<a href="https://github.com/wxsms/vuepress-theme-mini" target="_blank"><img src="https://github.com/wxsms/vuepress-theme-mini/workflows/CI/badge.svg" alt="Build Status"></a>
+<a href="https://www.npmjs.com/package/vuepress-theme-mini" target="_blank"><img src="https://badgen.net/npm/dm/vuepress-theme-mini" alt="NPM downloads"></a>
+<a href="https://www.npmjs.com/package/vuepress-theme-mini" target="_blank"><img src="https://badgen.net/npm/v/vuepress-theme-mini" alt="NPM version"></a>
+<a href="https://GitHub.com/wxsms/vuepress-theme-mini/stargazers/" target="_blank"><img src="https://badgen.net/github/stars/wxsms/vuepress-theme-mini" alt="GitHub stars"></a>
+<a href="https://github.com/wxsms/vuepress-theme-mini/network/members" target="_blank"><img src="https://badgen.net/github/forks/wxsms/vuepress-theme-mini" alt="GitHub forks"></a>
+</p>
 
 VuePress 的一个主题。
 
