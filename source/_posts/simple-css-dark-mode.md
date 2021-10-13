@@ -2,7 +2,6 @@
 title: '简单 CSS 实现暗黑模式'
 date: 2021-10-08T03:38:08.745Z
 tags: [css]
-readMore: false
 ---
 
 <!-- 「」 -->
@@ -27,5 +26,3 @@ readMore: false
 3. 将图片、视频等其它不需要被反转的元素再反转回来，并加一个透明度，让其不那么刺眼；
 4. 如果 html 反转 `90%`，则图片等元素需要反转 `110%`；
 5. `div[class*="language-"]` 对应的是本站 (VuePress) 上的代码块。
-
-<!-- more -->

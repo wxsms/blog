@@ -6,7 +6,6 @@ categories:
 tags:
   - IntelliJ-IDEA
   - Webpack
-readMore: false
 ---
 
 1. goto 'File | Settings | Appearance & Behavior | System Settings';
@@ -15,5 +14,3 @@ readMore: false
 ![](https://static.wxsm.space/blog/48595804-414e9980-e991-11e8-9582-113c7048e340.jpg)
 
 Problem solved.
-
-<!-- more -->

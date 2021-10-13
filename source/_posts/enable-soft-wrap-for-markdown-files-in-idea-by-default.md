@@ -2,7 +2,6 @@
 title: 'IDEA 为 Markdown 文件默认启用 SoftWrap'
 date: 2020-10-26T03:23:49.630Z
 tags: []
-readMore: false
 ---
 
 <!-- 「」 -->
@@ -15,4 +14,3 @@ readMore: false
 
 这样一来，每次只要打开以上格式的文件，编辑器就会自动开启 SoftWrap，一劳永逸。
 
-<!-- more -->
