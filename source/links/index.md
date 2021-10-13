@@ -1,5 +1,6 @@
 ---
 title: 友链
+comments: false
 ---
 
 * [Aquariuslt blog](https://zexo.dev)

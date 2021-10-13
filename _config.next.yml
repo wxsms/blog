@@ -19,16 +19,16 @@ minify: false
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
 custom_file_path:
-  #head: source/_data/head.njk
-  #header: source/_data/header.njk
-  #sidebar: source/_data/sidebar.njk
-  #postMeta: source/_data/post-meta.njk
-  #postBodyEnd: source/_data/post-body-end.njk
-  #footer: source/_data/footer.njk
-  #bodyEnd: source/_data/body-end.njk
-  #variable: source/_data/variables.styl
-  #mixin: source/_data/mixins.styl
-  #style: source/_data/styles.styl
+#head: source/_data/head.njk
+#header: source/_data/header.njk
+#sidebar: source/_data/sidebar.njk
+#postMeta: source/_data/post-meta.njk
+#postBodyEnd: source/_data/post-body-end.njk
+#footer: source/_data/footer.njk
+#bodyEnd: source/_data/body-end.njk
+#variable: source/_data/variables.styl
+#mixin: source/_data/mixins.styl
+#style: source/_data/styles.styl
 
 
 # ---------------------------------------------------------------
@@ -66,11 +66,11 @@ creative_commons:
   license: by-nc-sa
   # Available values: big | small
   size: small
-  sidebar: false
-  post: false
+  sidebar: true
+  post: true
   # You can set a language value if you prefer a translated version of CC license, e.g. deed.zh
   # CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org
-  language:
+  language: deed.zh
 
 
 # ---------------------------------------------------------------
@@ -84,8 +84,8 @@ creative_commons:
 menu:
   home: / || fa fa-home
   about: /about/ || fa fa-user
-  项目: /projects/ || fa fa-user
-  #tags: /tags/ || fa fa-tags
+  项目: /projects/ || fa fa-star
+  tags: /tags/ || fa fa-tags
   #categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
@@ -129,9 +129,9 @@ sidebar:
 # Sidebar Avatar
 avatar:
   # Replace the default image and set the url here.
-  url: #/images/avatar.gif
+  url: /images/avatar.jpg
   # If true, the avatar will be displayed in circle.
-  rounded: false
+  rounded: true
   # If true, the avatar will be rotated with the cursor.
   rotated: false
 
@@ -143,16 +143,16 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  #GitHub: https://github.com/yourname || fab fa-github
-  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
-  #Weibo: https://weibo.com/yourname || fab fa-weibo
-  #Google: https://plus.google.com/yourname || fab fa-google
-  #Twitter: https://twitter.com/yourname || fab fa-twitter
-  #FB Page: https://www.facebook.com/yourname || fab fa-facebook
-  #StackOverflow: https://stackoverflow.com/yourname || fab fa-stack-overflow
-  #YouTube: https://youtube.com/yourname || fab fa-youtube
-  #Instagram: https://instagram.com/yourname || fab fa-instagram
-  #Skype: skype:yourname?call|chat || fab fa-skype
+  GitHub: https://github.com/wxsms || fab fa-github
+  E-Mail: mailto:wxsms@foxmail.com || fa fa-envelope
+#Weibo: https://weibo.com/yourname || fab fa-weibo
+#Google: https://plus.google.com/yourname || fab fa-google
+#Twitter: https://twitter.com/yourname || fab fa-twitter
+#FB Page: https://www.facebook.com/yourname || fab fa-facebook
+#  StackOverflow: https://stackoverflow.com/wxsm || fab fa-stack-overflow
+#YouTube: https://youtube.com/yourname || fab fa-youtube
+#Instagram: https://instagram.com/yourname || fab fa-instagram
+#Skype: skype:yourname?call|chat || fab fa-skype
 
 social_icons:
   enable: true
@@ -167,7 +167,7 @@ links_settings:
   layout: block
 
 links:
-  #Title: https://example.com
+#Title: https://example.com
 
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
@@ -261,18 +261,18 @@ reward_settings:
   #comment: Buy me a coffee
 
 reward:
-  #wechatpay: /images/wechatpay.png
-  #alipay: /images/alipay.png
-  #paypal: /images/paypal.png
-  #bitcoin: /images/bitcoin.png
+#wechatpay: /images/wechatpay.png
+#alipay: /images/alipay.png
+#paypal: /images/paypal.png
+#bitcoin: /images/bitcoin.png
 
 # Subscribe through Telegram Channel, Twitter, etc.
 # Usage: `Key: permalink || icon` (Font Awesome)
 follow_me:
-  #Twitter: https://twitter.com/username || fab fa-twitter
-  #Telegram: https://t.me/channel_name || fab fa-telegram
-  #WeChat: /images/wechat_channel.jpg || fab fa-weixin
-  #RSS: /atom.xml || fa fa-rss
+#Twitter: https://twitter.com/username || fab fa-twitter
+#Telegram: https://t.me/channel_name || fab fa-telegram
+#WeChat: /images/wechat_channel.jpg || fab fa-weixin
+#RSS: /atom.xml || fa fa-rss
 
 # Related popular posts
 # Dependencies: https://github.com/tea3/hexo-related-popular-posts
@@ -574,11 +574,11 @@ comments:
   lazyload: false
   # Modify texts or order for any naves, here are some examples.
   nav:
-    #disqus:
-    #  text: Load Disqus
-    #  order: -1
-    #gitalk:
-    #  order: -2
+  #disqus:
+  #  text: Load Disqus
+  #  order: -1
+  #gitalk:
+  #  order: -2
 
 # Disqus
 # For more information: https://disqus.com
@@ -652,7 +652,7 @@ isso: # <data_isso>
 rating:
   enable: false
   id:     # <app_id>
-  color:  "#fc6423"
+  color: "#fc6423"
 
 # AddThis Share. See: https://www.addthis.com
 # Go to https://www.addthis.com/dashboard to customize your tools.
