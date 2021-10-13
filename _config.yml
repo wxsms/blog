@@ -4,9 +4,9 @@
 
 # Site
 title: wxsm's pace
-subtitle: ''
-description: 'just another personal blog.'
-keywords:
+subtitle:
+description:
+keywords: blog,javascript,nodejs,vue,react,php,python,golang
 author: wxsm
 language: zh-CN
 timezone: 'Asia/Shanghai'
@@ -48,7 +48,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace: ''
   wrap: true
