@@ -1,5 +1,5 @@
 ---
-title: blog-migrate-to-hexo
+title: 博客迁移至 Hexo
 date: 2021-10-13 17:23:16
 tags:
 ---
