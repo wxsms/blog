@@ -1,6 +1,7 @@
+.DS_Store
+Thumbs.db
+db.json
+*.log
 node_modules/
-.idea/
-*.iml
-yarn-error.log
-/src/.vuepress/dist
-*.zip
+public/
+.deploy*/
