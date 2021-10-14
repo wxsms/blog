@@ -83,15 +83,14 @@ creative_commons:
 # External url should start with http:// or https://
 menu:
   home: / || fa fa-home
-  about: /about/ || fa fa-user
-  项目: /projects/ || fa fa-star
   tags: /tags/ || fa fa-tags
+  项目: /projects/ || fa fa-star
   #categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
+  about: /about/ || fa fa-user
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
-  #友链: /links/ || fa fa-link
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
