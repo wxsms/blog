@@ -36,9 +36,9 @@ custom_file_path:
 # ---------------------------------------------------------------
 
 # Schemes
-#scheme: Muse
+scheme: Muse
 #scheme: Mist
-scheme: Pisces
+#scheme: Pisces
 #scheme: Gemini
 
 # Dark Mode
@@ -95,7 +95,7 @@ menu:
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
-  icons: true
+  icons: false
   badges: false
 
 
@@ -205,7 +205,7 @@ footer:
     # If you want to animate the icon, set it to true.
     animated: false
     # Change the color of icon, using Hex Code.
-    color: "#ff0000"
+    color: "#999999"
 
   # If not defined, `author` from Hexo `_config.yml` will be used.
   copyright:
@@ -862,7 +862,7 @@ pace:
 canvas_ribbon:
   enable: true
   size: 300 # The width of the ribbon
-  alpha: 0.6 # The transparency of the ribbon
+  alpha: 0.45 # The transparency of the ribbon
   zIndex: -1 # The display level of the ribbon
 
 
