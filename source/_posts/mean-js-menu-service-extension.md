@@ -162,7 +162,7 @@ this.addSubMenuItem = function (menuId, parentItemState, options)
 
 ## 修改CSS
 
-为了让菜单看起来更自然些，这里修改的是 `core.css`，添加以下内容：
+为了让菜单看起来更自然些，这里修改的是 `core.css`，添加以下内容：
 
 ```css
 .dropdown-submenu {
@@ -220,7 +220,7 @@ this.addSubMenuItem = function (menuId, parentItemState, options)
 
 ## 使用方法
 
-3级菜单的定义方法与2级菜单一模一样，除了直接调用 `addSubMenuItemToSubMenu`  以外，还可以通过在2级菜单内定义 `items` 来实现添加子菜单，示例如下，高亮部分则为3级菜单：
+3级菜单的定义方法与2级菜单一模一样，除了直接调用 `addSubMenuItemToSubMenu`  以外，还可以通过在2级菜单内定义 `items` 来实现添加子菜单，示例如下，高亮部分则为3级菜单：
 
 ```javascript
 Menus.addMenuItem('topbar', {

@@ -10,13 +10,13 @@ tags: [php,wordpress]
 
 ## 更改主机设置
 
-首先阿里云虚拟主机发邮件相关的函数只开放了一个，即 `fsockopen`，默认情况下还是禁用的，所以我们要去控制台打开它（主机管理 ⇒ 站点信息 ⇒ 高级环境设置 ⇒ PHP.ini设置）。如图所示。
+首先阿里云虚拟主机发邮件相关的函数只开放了一个，即 `fsockopen`，默认情况下还是禁用的，所以我们要去控制台打开它（主机管理 ⇒ 站点信息 ⇒ 高级环境设置 ⇒ PHP.ini设置）。如图所示。
 
 ![](https://static.wxsm.space/blog/48595792-3e53a900-e991-11e8-9513-b8e2070d461e.jpg)
 
 ## 更改Wordpress代码
 
-找到代码安装路径下的 `wp-includes/class-smtp.php` 文件，搜索以下代码段：
+找到代码安装路径下的 `wp-includes/class-smtp.php` 文件，搜索以下代码段：
 
 ```php
 $this->smtp_conn = @stream_socket_client(

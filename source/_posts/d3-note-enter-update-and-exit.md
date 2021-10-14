@@ -43,31 +43,31 @@ let div = d3.select('body')
 > 
 > The enter selection is typically used to create “missing” elements corresponding to new data.
 
-简述就是，`enter` 会根据现有 selection 与绑定的数据量，自动“补齐”所缺失的元素。
+简述就是，`enter` 会根据现有 selection 与绑定的数据量，自动“补齐”所缺失的元素。
 
-比如，例子中，如果 `.selectAll('p')` 返回的 selection 中包含 3 个元素，那么因为 data 的长度为 5，`enter` 就会补齐缺失的 2 个元素，并返回包含这三个补齐元素的 selection，接下来的操作，就是针对这个 selection 进行的。
+比如，例子中，如果 `.selectAll('p')` 返回的 selection 中包含 3 个元素，那么因为 data 的长度为 5，`enter` 就会补齐缺失的 2 个元素，并返回包含这三个补齐元素的 selection，接下来的操作，就是针对这个 selection 进行的。
 
 因此，在进行 `enter` 操作时，一般会事先把相关现有元素尽数清除，以免出现漏操作的情况。
 
-至于再对 `enter` 选择集进行 `append` 操作时为什么会追加到 body 节点上去，这里就涉及到另一个概念：`selection.update`
+至于再对 `enter` 选择集进行 `append` 操作时为什么会追加到 body 节点上去，这里就涉及到另一个概念：`selection.update`
 
 ## selection.update
 
 理解了 `enter`，`update` 就很简单了，顾名思义，所指就是已有的，能够与绑定 data 一一对应上的元素的选择集。
 
-因此，实际上并没有 `selection.update` 这个方法，因为没有必要，当前选到的就是 `update` 集了。
+因此，实际上并没有 `selection.update` 这个方法，因为没有必要，当前选到的就是 `update` 集了。
 
 至于为什么例子中的 `enter` 集能够追加到 `body` 中去，根据 D3 文档：
 
 > If the specified type is a string, appends a new element of this type (tag name) as the last child of each selected element, or the next following sibling in the update selection if this is an enter selection.
 
-当进行 `selection.append` 操作时，如果 selection 是一个 `enter` 集，那么 `append` 就会向相应 `update` 集的末尾追加。那么，自然，如果 `update` 集为空，就会往父元素内追加。
+当进行 `selection.append` 操作时，如果 selection 是一个 `enter` 集，那么 `append` 就会向相应 `update` 集的末尾追加。那么，自然，如果 `update` 集为空，就会往父元素内追加。
 
 ## selection.exit
 
 > Returns the exit selection: existing DOM elements in the selection for which no new datum was found.
 
-对于已有 DOM 元素但没有 data 与之绑定的集合，使用 `selection.exit` 来获取。
+对于已有 DOM 元素但没有 data 与之绑定的集合，使用 `selection.exit` 来获取。
 
 如果集合没有绑定 data，则返回空集合。如果多次调用 `exit`，之后的 `exit` 会返回空集合。
 

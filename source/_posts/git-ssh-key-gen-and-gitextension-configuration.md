@@ -19,15 +19,15 @@ $ git config --global user.email "xxx@xxx.xxx"
 
 #### 查看是否已有密钥
 
-有的教程说通过 `$ cd ~/.ssh` 查看目录是否存在，不过我的机器上测试无论有没有这一步的结果都是不存在。所以我的方法是到c:/users/username/下查看是否存在.ssh文件夹，存在则将里面的内容删除。
+有的教程说通过 `$ cd ~/.ssh` 查看目录是否存在，不过我的机器上测试无论有没有这一步的结果都是不存在。所以我的方法是到c:/users/username/下查看是否存在.ssh文件夹，存在则将里面的内容删除。
 
 #### 生成密钥
 
-执行 `$ ssh-keygen`，连续回车确认，到最后 ssh key 就会在 `.ssh` 文件夹下生成，带 .pub 后缀的为公钥。遇到找不到路径的情况则需要手动指定 `.ssh` 文件夹的正确位置，我尝试把它放在 D 盘结果 server 不认，还是要指定 `c:/users/username/.ssh` 这个目录去生成，密钥名字为 id_rsa
+执行 `$ ssh-keygen`，连续回车确认，到最后 ssh key 就会在 `.ssh` 文件夹下生成，带 .pub 后缀的为公钥。遇到找不到路径的情况则需要手动指定 `.ssh` 文件夹的正确位置，我尝试把它放在 D 盘结果 server 不认，还是要指定 `c:/users/username/.ssh` 这个目录去生成，密钥名字为 id_rsa
 
 #### 上传到server
 
-生成结束后需要将公钥上传到相应 server，以 <a href="https://github.com" target="_blank">Github</a> 为例：
+生成结束后需要将公钥上传到相应 server，以 <a href="https://github.com" target="_blank">Github</a> 为例：
 
 ![](https://static.wxsm.space/blog/48595777-3b58b880-e991-11e8-8ba0-c12bab65ad9e.png)
 

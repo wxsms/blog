@@ -26,7 +26,7 @@ Antti Koivisto 是 Webkit 核心的贡献者之一，他曾说：
 
 Reflow （回流）和 Repaint（重绘）是浏览器的两种动作。
 
-  * Repaint 会在某个元素的外观发生变化，但没有影响布局时触发。比如说 `visibility`  / `outline`  / `background-color`  等 CSS 属性的变化将会触发 Repaint
+  * Repaint 会在某个元素的外观发生变化，但没有影响布局时触发。比如说 `visibility`  / `outline`  / `background-color`  等 CSS 属性的变化将会触发 Repaint
   * Reflow 在元素变化影响到布局时触发
 
 显然，Reflow 的代价要比 Repaint 高昂得多，它影响到了页面部分（或者所有）的布局。一个 元素的 Reflow 动作同时也会触发它的所有后代 / 祖先 / 跟随它的 DOM 节点产生 Reflow
@@ -47,7 +47,7 @@ Reflow （回流）和 Repaint（重绘）是浏览器的两种动作。
 </body>
 ```
 
-对这一小段 HTML 来说，如果 `<p>` 元素上产生了 Reflow，那么 `<strong>` 将会受到影响（因为它属于前者的后代元素），当然也跑不了 `<div>` 和 `<body>` （祖先元素），`<h5>` 和 `<ol>` 则躺枪：没事跟在别人后面干啥呢。
+对这一小段 HTML 来说，如果 `<p>` 元素上产生了 Reflow，那么 `<strong>` 将会受到影响（因为它属于前者的后代元素），当然也跑不了 `<div>` 和 `<body>` （祖先元素），`<h5>` 和 `<ol>` 则躺枪：没事跟在别人后面干啥呢。
 
 因此，大多数的 Reflow，其实都导致了整个页面重新渲染。这对于计算能力稍低的设备（如手机）来说是非常困难的。我经常发现桌面计算机上运行良好的动画效果到了手机上就看起来很痛苦。
 
@@ -57,10 +57,10 @@ Reflow （回流）和 Repaint（重绘）是浏览器的两种动作。
   * 改变字体
   * 增删样式表
   * 内容改变，比如用户在输入框中输入
-  * 触发 CSS 伪类，比如 `:hover`  等
+  * 触发 CSS 伪类，比如 `:hover`  等
   * 更改 class 属性
   * 脚本操作 DOM
-  * 计算 `offsetWidth` 与 `offsetHeight`
+  * 计算 `offsetWidth` 与 `offsetHeight`
   * 更改 style 属性
   * &#8230;&#8230;
 
@@ -78,7 +78,7 @@ Reflow （回流）和 Repaint（重绘）是浏览器的两种动作。
 
 这里的意思其实是说不要使用 JS 来给元素按部就班地设置样式 —— 因为每一次样式变化都会引起一次 Reflow，最好把样式整合为一个 Class 然后一次性加到元素上面去。
 
-还有另外一种解决办法是在设置样式前先将其脱离正常文档流，比如 `display` 属性设为 `none`，然后所有设置都完成后再变回来。这样也是可以接受的。
+还有另外一种解决办法是在设置样式前先将其脱离正常文档流，比如 `display` 属性设为 `none`，然后所有设置都完成后再变回来。这样也是可以接受的。
 
 #### 如果要使用动画尽量选择 Position 为 Fixed 或 Absolute 的元素
 

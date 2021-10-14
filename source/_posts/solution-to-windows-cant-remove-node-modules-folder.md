@@ -4,11 +4,11 @@ date: 2016-07-28T16:56:40+00:00
 tags: [nodejs,windows,npm]
 ---
 
-在 Windows 操作系统下开发 NodeJS 项目的时候经常会遇到无法删除 Node_modules 文件夹的尴尬（因为依赖过多，文件路径长度爆炸），解决办法如下。
+在 Windows 操作系统下开发 NodeJS 项目的时候经常会遇到无法删除 Node_modules 文件夹的尴尬（因为依赖过多，文件路径长度爆炸），解决办法如下。
 
 <!-- more -->
 
-全局安装 `rimraf` 模块到系统下：
+全局安装 `rimraf` 模块到系统下：
 
 ```
 npm install -g rimraf

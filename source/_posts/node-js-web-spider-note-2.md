@@ -33,7 +33,7 @@ Cookie 虽然方便，但是由于保存在客户端，可保存的长度有限�
   * Cookie 保存在客户端
   * Session 保存在服务端
 
-Cookie 与 Session 储存的都是客户端与服务器之间的会话状态信息，它们之间主要靠一个秘钥来进行匹配，称之为 `SESSION_ID` ，如 express 中默认为 `connect.sid` 字段。只要浏览器发出的 SESSION\_ID 与服务器储存的字段匹配上，那么服务器就将其认作为一个 Session，只要 SESSION\_ID 的长度足够大，几乎是不可能被伪造的。因此，敏感信息储存在 Session 中要比 Cookie 安全得多。
+Cookie 与 Session 储存的都是客户端与服务器之间的会话状态信息，它们之间主要靠一个秘钥来进行匹配，称之为 `SESSION_ID` ，如 express 中默认为 `connect.sid` 字段。只要浏览器发出的 SESSION\_ID 与服务器储存的字段匹配上，那么服务器就将其认作为一个 Session，只要 SESSION\_ID 的长度足够大，几乎是不可能被伪造的。因此，敏感信息储存在 Session 中要比 Cookie 安全得多。
 
 常见的 Session 存放媒介有：
 

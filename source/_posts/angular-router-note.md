@@ -19,83 +19,83 @@ tags:
       <td>
       </td>
       <td>
-         <strong>Server Forward</strong>
+         <strong>Server Forward</strong>
       </td>
       <td>
-         <strong>Server Redirect</strong>
+         <strong>Server Redirect</strong>
       </td>
       <td>
-         <strong>Client Redirect</strong>
-      </td>
-    </tr>
-    <tr>
-      <td>
-         <strong>Request(s) </strong>
-      </td>
-      <td>
-         1
-      </td>
-      <td>
-         <span style="color: #ff0000;">2</span>
-      </td>
-      <td>
-         1
+         <strong>Client Redirect</strong>
       </td>
     </tr>
     <tr>
       <td>
-         <strong>Browser URL Change</strong>
+         <strong>Request(s) </strong>
       </td>
       <td>
-         <span style="color: #ff0000;">NO</span>
+         1
       </td>
       <td>
-         YES
+         <span style="color: #ff0000;">2</span>
       </td>
       <td>
-         YES
-      </td>
-    </tr>
-    <tr>
-      <td>
-         <strong>Page Refresh </strong>
-      </td>
-      <td>
-         YES
-      </td>
-      <td>
-         YES
-      </td>
-      <td>
-         YES
+         1
       </td>
     </tr>
     <tr>
       <td>
-         <strong>Maintainable</strong>
+         <strong>Browser URL Change</strong>
       </td>
       <td>
-         YES
+         <span style="color: #ff0000;">NO</span>
       </td>
       <td>
-         YES
+         YES
       </td>
       <td>
-         <span style="color: #ff0000;">NO</span>
+         YES
       </td>
     </tr>
     <tr>
       <td>
-         <strong>Browser Actions</strong>
+         <strong>Page Refresh </strong>
       </td>
       <td>
-         <span style="color: #ff0000;">NO</span>
+         YES
       </td>
       <td>
-         YES
+         YES
       </td>
       <td>
-         YES
+         YES
+      </td>
+    </tr>
+    <tr>
+      <td>
+         <strong>Maintainable</strong>
+      </td>
+      <td>
+         YES
+      </td>
+      <td>
+         YES
+      </td>
+      <td>
+         <span style="color: #ff0000;">NO</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+         <strong>Browser Actions</strong>
+      </td>
+      <td>
+         <span style="color: #ff0000;">NO</span>
+      </td>
+      <td>
+         YES
+      </td>
+      <td>
+         YES
       </td>
     </tr>
   </table>
@@ -172,6 +172,6 @@ Angular Router支持两种使用方式：
 
 ## 关于$routeProvider与$route
 
-这个路由功能是由Angular的一个服务提供者（service provider）实现的，它的名字就叫做`$routeProvider` 。Angular服务是由服务工厂创建出来的一系列单例对象，而工厂则是由服务提供者来创建。服务提供者必须实现一个`$get`方法，它就是该服务的工厂方法了。 当我们使用AngularJS的依赖注入给控制器注入一个服务对象的时候，Angular会使用`$injector`来查找相应的注入器。一旦找到了，它就会调用相应`$get`方法来或取服务对象的实例。有时候服务提供者在实例化服务对象之前需要其调用者提供一些参数。
+这个路由功能是由Angular的一个服务提供者（service provider）实现的，它的名字就叫做`$routeProvider` 。Angular服务是由服务工厂创建出来的一系列单例对象，而工厂则是由服务提供者来创建。服务提供者必须实现一个`$get`方法，它就是该服务的工厂方法了。 当我们使用AngularJS的依赖注入给控制器注入一个服务对象的时候，Angular会使用`$injector`来查找相应的注入器。一旦找到了，它就会调用相应`$get`方法来或取服务对象的实例。有时候服务提供者在实例化服务对象之前需要其调用者提供一些参数。
 
 Angular路由功能是由`$routeProvider`声明的，同时它也是`$route`服务的提供者。

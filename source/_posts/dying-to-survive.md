@@ -1,7 +1,7 @@
 ---
 title: '《中国药神》'
 date: 2018-07-09T06:48:13.964Z
-tags: [review,personal]
+tags: [review]
 ---
 
 《我不是药神》是一部好电影。

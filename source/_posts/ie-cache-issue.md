@@ -22,7 +22,7 @@ var url = '/api/metadata/entity/list?type=car&name=qq'
 var url = '/api/metadata/entity/list?type=car&name=qq&_t=' + new Date().getTime()
 ```
 
-其中添加的 `_t` 参数如果服务端没有定义的话就会自然而然地被扔掉（如果是有意义的参数就换个key，或者不写key也行），浏览器缓存也会因为每次请求的URL实际上都不一样而失效，这样问题就解决了。但是，对于一个大型项目来说，如果每个URL都要怎么来一遍，那么用软件工程界的专业术语来说，叫做不好维护。很有可能什么时候漏掉了一个URL没有加时间戳，就埋下了一个BUG的种子。
+其中添加的 `_t` 参数如果服务端没有定义的话就会自然而然地被扔掉（如果是有意义的参数就换个key，或者不写key也行），浏览器缓存也会因为每次请求的URL实际上都不一样而失效，这样问题就解决了。但是，对于一个大型项目来说，如果每个URL都要怎么来一遍，那么用软件工程界的专业术语来说，叫做不好维护。很有可能什么时候漏掉了一个URL没有加时间戳，就埋下了一个BUG的种子。
 
 ## 服务端解决方案
 
@@ -42,18 +42,18 @@ var url = '/api/metadata/entity/list?type=car&name=qq&_t=' + new Date().getTime(
 
 这段代码所做的事情是，对于所有进来的以&#8217;/api&#8217;开头为路由的请求，都执行以下操作：
 
-  * 给响应头添加 `"Cache-Control": "no-cache, no-store, must-revalidate"` 键值对
-  * 给响应头添加 `"Pragma": "no-cache"` 键值对
-  * 给响应头添加 `"Expires": 0` 键值对
+  * 给响应头添加 `"Cache-Control": "no-cache, no-store, must-revalidate"` 键值对
+  * 给响应头添加 `"Pragma": "no-cache"` 键值对
+  * 给响应头添加 `"Expires": 0` 键值对
   * 将请求交给下游中间件，继续处理，该干嘛干嘛
 
-Cache-Control ：
+Cache-Control ：
 
   * no-cache：指示请求或响应消息不能缓存
   * no-store：用于防止重要的信息被无意的发布。在请求消息中发送将使得请求和响应消息都不使用缓存。
   * must-revalidate：字面理解，必须重新验证
 
-Pragma ：
+Pragma ：
 
   * no-cache：在HTTP/1.1协议中，它的含义和Cache- Control:no-cache相同
 
