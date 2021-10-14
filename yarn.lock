@@ -658,10 +658,10 @@ hexo-generator-category@1.0.0:
   dependencies:
     hexo-pagination "1.0.0"
 
-hexo-generator-feed@^3.0.0:
+hexo-generator-feed@3.0.0:
   version "3.0.0"
-  resolved "https://registry.npm.taobao.org/hexo-generator-feed/download/hexo-generator-feed-3.0.0.tgz#4126ef5e308264c42599fb0efdaf88ed11fa599e"
-  integrity sha1-QSbvXjCCZMQlmfsO/a+I7RH6WZ4=
+  resolved "https://registry.yarnpkg.com/hexo-generator-feed/-/hexo-generator-feed-3.0.0.tgz#4126ef5e308264c42599fb0efdaf88ed11fa599e"
+  integrity sha512-Jo35VSRSNeMitS2JmjCq3OHAXXYU4+JIODujHtubdG/NRj2++b3Tgyz9pwTmROx6Yxr2php/hC8og5AGZHh8UQ==
   dependencies:
     hexo-util "^2.1.0"
     nunjucks "^3.0.0"
