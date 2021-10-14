@@ -8,6 +8,126 @@ Php 个人速查笔记。
 
 <!-- more -->
 
+## 基础
+
+### 字符串长度
+
+```php
+strlen($string)
+```
+
+### 数组长度
+
+```php
+count($arr)
+```
+
+### 日期
+
+#### 获取当前时间
+
+```php
+$d1 = new DateTime();
+```
+
+#### 获取指定时间
+
+```php
+$d2 = new DateTime('2021-01-01');
+```
+
+### 正则匹配
+
+```php
+preg_match("/^[A-Za-z]+$/", $Lastname)
+// boolean
+```
+
+#### 获取时间差
+
+```php
+$diff = $d2->diff($d1);
+// 年份差
+echo $diff->y;
+```
+
+### 循环
+
+```php
+foreach ($posts as $key=>$value) {
+    // todo
+}
+```
+
+### EOT
+
+```php
+<?php foreach ($csv as $i => $value) {
+    $dateToDisplay = date('F d, Y', $value[0]);
+    echo <<<EOT
+  <div class="post-preview">
+    <a href="post.php?author=$value[2]&date=$value[0]&image=$value[1]&content=$value[3]&comment=$value[4]">
+      <h2 class="post-title">
+        <img class="Post1" src="./files/$value[1]" alt="farm" height="380px" width="720px">
+      </h2>
+      <h3 class="post-subtitle">$value[5]</h3>
+    </a>
+    <p class="post-meta">Posted by
+      <a href="about.php">$value[2]</a>
+      on $dateToDisplay
+    </p>
+  </div>
+  <hr>
+EOT;
+} ?>
+```
+
+
+### 获取请求方法
+
+```php
+$request = $_SERVER['REQUEST_METHOD'];
+// POST or GET or anything else
+```
+
+### 输入过滤
+
+#### 单条
+
+```php
+$id  = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+```
+
+#### 一次性
+
+```php
+$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+```
+
+### 发请求
+
+```php
+$json_url = 'https://data.winnipeg.ca/resource/tx3d-pfxq.json';
+$json = file_get_contents($json_url);
+$list = json_decode($json, true);
+```
+
+## JSON
+
+### 解码
+
+```php
+$json = json_decode(file_get_contents("./member.json"), true);
+$points = $json['points']
+```
+
+### 编码
+
+```php
+$json = json_encode($array);
+echo $json;
+```
+
 ## MySQLi
 
 ### 连接
@@ -183,7 +303,40 @@ if (!isset($_SESSION['user'])) {
 }
 ```
 
-## 其他
+### 密码加密
+
+```php
+$hashed_password = hash('ripemd128', $psw);
+```
+
+### Basic Auth
+
+```php
+define('ADMIN_LOGIN','wally');
+define('ADMIN_PASSWORD','mypass');
+if (!isset($_SERVER['PHP_AUTH_USER']) || 
+!isset($_SERVER['PHP_AUTH_PW']) || 
+($_SERVER['PHP_AUTH_USER'] != ADMIN_LOGIN) || 
+($_SERVER['PHP_AUTH_PW'] != ADMIN_PASSWORD)) {
+    header('HTTP/1.1 401 Unauthorized');
+    header('WWW-Authenticate: Basic realm="Our Blog"');
+    exit("Access Denied: Username and password required.");
+}
+```
+
+## Memcached
+
+```php
+$memcached = new Memcached();
+$memcached->addServer('localhost', 11211);
+$memcached->set('test', 'testcache');
+var_dump($memcached->get('test'));
+$memcached->set('test2', '123');
+var_dump($memcached->get('test2'));
+var_dump($memcached->get('test3'));
+```
+
+## 业务场景
 
 ### 为导航设置激活状态
 
@@ -199,16 +352,74 @@ $page = 'home';
 <li><a class="<?= ($page == 'home') ? "current" : ""; ?>" href="index.php">Home</a></li>
 ```
 
-### 输入过滤
+### 文件上传
 
-#### 单条
+#### 保存至文件系统
 
 ```php
-$id  = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// upload photo to images/photos
+$photo = '';
+$photoExt = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+$photo = time() . "." . $photoExt;
+move_uploaded_file($_FILES['photo']['tmp_name'], "images/photos/" . $photo);
+
+// insert photo to database
+$query = $conn->prepare("insert into Photo (photo, description, type, userId) value (?,?,?,?)");
+$query->bind_param('sssi', $photo, $_POST['description'], $_POST['type'], $_SESSION['user'][0]);
+$query->execute();
+$id = $query->insert_id;
+
+// go homepage
+header('Location: index.php');
+die();
 ```
 
-#### 一次性
+#### 保存至数据库
 
 ```php
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+$fileContent = file_get_contents($_FILES['fileContent']['tmp_name']);
+$contentName = mysql_fix_string($conn, $_POST['contentName']);
+$query = $conn->prepare("INSERT INTO files (contentName, fileContent, userId) values (?,?,?)");
+$query->bind_param('ssi', $contentName, $fileContent, $user[0]);
+$query->execute();
+$query->close();
+```
+
+### MySQLi 初始化数据库
+
+```php
+$conn = new mysqli($host, $user, $password);
+if ($conn->connect_error) {
+    die($conn->connect_error);
+}
+
+// create database
+$sql = "CREATE DATABASE if not exists $db";
+if ($conn->query($sql) === TRUE) {
+    echo "Database $db created.";
+} else {
+    echo "Error creating database: " . $conn->error;
+}
+
+
+// connect to database
+$conn = new mysqli($host, $user, $password, $db);
+if ($conn->connect_error) {
+    // connection error
+    die($conn->connect_error);
+}
+
+$sql = "
+create table if not exists faculty
+(
+    id   int  not null auto_increment primary key,
+    name text not null
+);
+";
+
+if ($conn->query($sql) === TRUE) {
+    echo "<br/> faculty table created successfully";
+} else {
+    echo "<br/> faculty table create error:" . $conn->error;
+}
 ```
