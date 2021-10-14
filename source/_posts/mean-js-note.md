@@ -1,15 +1,7 @@
 ---
-
 title: MEAN.js 学习笔记
 date: 2015-12-10T16:35:33+00:00
-categories:
-  - JavaScript
-tags:
-  - AngularJs
-  - ExpressJs
-  - MEAN-Stack
-  - MongoDB
-  - NodeJs
+tags: [meanjs, note]
 ---
 
 ![](https://static.wxsm.space/blog/48595806-414e9980-e991-11e8-8e9c-1922fa56a501.png)

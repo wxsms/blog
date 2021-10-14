@@ -1,16 +1,10 @@
 ---
-
 title: MEAN.js Menu Service Extension
 date: 2016-01-05T17:34:47+00:00
-categories:
-  - JavaScript
 tags:
-  - AngularJs
-  - MEAN-Stack
-
+  - angularjs
+  - meanjs
 ---
-
-
 
 MEAN.js解决方案只提供了1级/2级菜单栏的service支持，最近项目中需要用到第3级菜单，所以需要进行一个小的功能扩展。一开始我以为可以很容易地做到无限级，真正做起来以后发现并没有那么简单，所以目前通过这个办法只能达到第3级。
 

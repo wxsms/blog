@@ -1,8 +1,7 @@
 ---
-
 title: 'Publish using GitHub Action'
 date: 2020-11-02T08:25:10.612Z
-tags: []
+tags: [github,devops]
 ---
 
 本文是一些 GitHub Actions 常用发布动作的总结。

@@ -1,13 +1,8 @@
 ---
-
 title: '失望'
 date: 2018-08-08T06:32:16.001Z
-tags: []
-sidebar: false
-draft: false
+tags: [personal]
 ---
-
-<!-- 「」 -->
 
 今年的 TI 本子到目前为止已经充了 ￥850 左右，770 级。
 

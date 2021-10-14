@@ -1,17 +1,8 @@
 ---
-
 title: '使用 Puppeteer 自动输入京东滑动验证码'
 date: 2018-11-05T09:39:33.386Z
-tags: [Puppeteer, NodeJs]
-sidebar: false
-draft: false
-
+tags: [puppeteer,nodejs]
 ---
-
-
-
-
-<!-- 「」 -->
 
 京东网页端登录有时候需要输入滑动验证码，就像这样：
 

@@ -1,11 +1,8 @@
 ---
-
 title: '记一次艰难的 Debug'
 date: 2020-10-25T04:08:13.685Z
-tags: []
+tags: [javascript,vue,ssr,cloudflare]
 ---
-
-<!-- 「」 -->
 
 这是一次关于本博客的 Debug 经历，过程非常曲折。关键词：**Vue / SSR / 错配**。
 

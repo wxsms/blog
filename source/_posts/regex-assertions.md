@@ -1,11 +1,8 @@
 ---
-
 title: '正则断言'
 date: 2021-04-03T11:59:18.278Z
-tags: [javascript]
+tags: [javascript,regex]
 ---
-
-<!-- 「」 -->
 
 > Assertions include boundaries, which indicate the beginnings and endings of lines and words, and other patterns indicating in some way that a match is possible (including look-ahead, look-behind, and conditional expressions).
 

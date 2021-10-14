@@ -1,7 +1,7 @@
 ---
 title: '在 JetBrains IDE 中向 Markdown 粘贴图片'
 date: 2021-09-30T09:14:26.910Z
-tags: [ide]
+tags: [idea]
 ---
 
 其实不需要装任何插件，IDE 自带的 Markdown 插件即可支持该操作：

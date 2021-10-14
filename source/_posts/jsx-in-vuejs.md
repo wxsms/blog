@@ -1,15 +1,8 @@
 ---
-
 title: 'JSX in Vue.js'
 date: 2017-12-13T04:41:42.021Z
-tags: [Vue, JSX, Babel, Webpack]
-sidebar: false
-draft: false
-
+tags: [vue, jsx, webpack]
 ---
-
-
-
 
 在基于 Webpack 的 Vue 项目中添加 JSX 支持：
 

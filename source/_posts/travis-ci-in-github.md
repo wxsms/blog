@@ -1,12 +1,7 @@
 ---
-
-title: 'Travis CI in Github'
+title: 'Travis CI in GitHub'
 date: 2017-04-12 17:35:00
-categories:
-  - CI
-tags:
-  - Github
-  - Travis-CI
+tags: [github,devops]
 ---
 
 Travis CI 是一款免费的持续集成工具，可以与 Github 无缝集成。能够自动完成项目代码的日常测试、编译、部署等工作。现在，我把它应用到了我的两个项目中。

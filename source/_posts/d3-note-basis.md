@@ -1,15 +1,8 @@
 ---
-
 title: 'D3 Note - Basis'
 date: 2016-10-25T10:40:44+00:00
-categories:
-  - JavaScript
-tags:
-  - D3
-
+tags: [d3]
 ---
-
-
 
 D3 (Data-Driven Documents) 是一个 JavaScript Library，用来做 Web 端的数据可视化实现以及各种绘图。
 

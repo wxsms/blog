@@ -1,8 +1,7 @@
 ---
-
 title: '使用 Eslint 来禁止 Lodash 的整体引入'
 date: 2020-07-03T09:57:39.599Z
-tags: [JavaScript]
+tags: [javascript,eslint]
 ---
 
 前端项目使用 lodash 时需要注意，一不小心就会把整个库引入进来，大大增加最终打包体积。

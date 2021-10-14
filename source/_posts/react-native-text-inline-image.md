@@ -1,11 +1,7 @@
 ---
-
 title: 'React Native Text Inline Image'
 date: 2018-05-30T02:09:05.427Z
-tags: [ReactNative]
-sidebar: false
-draft: false
-
+tags: [reactnative]
 ---
 
 原文地址（需科学上网）：[React Native Text Inline Image](https://medium.com/@yloeza/react-native-text-inline-image-6055dabd9399)

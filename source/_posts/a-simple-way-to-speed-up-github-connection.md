@@ -1,8 +1,7 @@
 ---
-
 title: '比较简单的 GitHub 加速方式'
 date: 2021-07-26T03:39:37.923Z
-tags: []
+tags: [github,gfw]
 ---
 
 在不想全局 vpn 的情况下，可以用 host 加速。

@@ -1,13 +1,8 @@
 ---
-
 title: JavaScript 事件代理
 date: 2016-04-01T11:38:12+00:00
-categories:
-  - JavaScript
-
+tags: [javascript]
 ---
-
-
 
 jQuery 曾经存在 3 种绑定事件的方法：bind / live / delegate，后来 live 被砍掉了，只留下 bind 与 delegate，它们之间的区别是，通过 bind 方法绑定的事件，只对当前存在的元素生效，而通过 delegate 则可以绑定“现在”以及“将来”的所有元素。
 

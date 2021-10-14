@@ -1,10 +1,8 @@
 ---
 title: 'IDEA 为 Markdown 文件默认启用 SoftWrap'
 date: 2020-10-26T03:23:49.630Z
-tags: []
+tags: [idea,markdown]
 ---
-
-<!-- 「」 -->
 
 应该 JetBrains 家的所有 IDE 都有这个配置。习惯了用 Markdown 写博客的人每次都要手动点一下 SoftWrap 挺烦的。后来发现了一个配置可以帮我省去这一步：
 

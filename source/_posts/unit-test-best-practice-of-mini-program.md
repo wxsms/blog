@@ -1,8 +1,7 @@
 ---
-
 title: '小程序单元测试最佳实践'
 date: 2021-03-15T04:26:49.652Z
-tags: [mini-program,javascript,test]
+tags: [miniprogram,javascript,test]
 ---
 
 微信小程序单元测试的可查资料少得可怜，由于微信官方开发的自动化测试驱动器 [miniprogram-automator](https://www.npmjs.com/package/miniprogram-automator) 不开源，唯一靠谱的地方只有这 [一份简单的文档](https://developers.weixin.qq.com/miniprogram/dev/devtools/auto/)。然而实际使用下来发现文档介绍的方式有不少问题。

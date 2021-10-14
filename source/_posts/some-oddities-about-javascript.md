@@ -1,15 +1,8 @@
 ---
-
 title: JavaScript 的一些古怪之处
 date: 2016-02-15T16:47:27+00:00
-categories:
-  - JavaScript
-tags:
-  - Error
-
+tags: [javascript]
 ---
-
-
 
 大概一年前在看一本介绍JavaScript与jQuery的书籍之时看到了这么一个有趣的章节，当时印象挺深刻的。现在突然回想起来了这回事，于是就重新翻出来做了个笔记。作者将这些材料归结为两类：神奇的知识点以及WTF。这里去除了与浏览器有关的部分，因为那些和JavaScript本身并没有关联。
 

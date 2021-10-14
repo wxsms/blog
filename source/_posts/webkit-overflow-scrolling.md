@@ -1,9 +1,7 @@
 ---
-
-
 title: '-webkit-overflow-scrolling'
 date: 2019-07-25T02:01:20.712Z
-tags: [CSS]
+tags: [css]
 ---
 
 `-webkit-overflow-scrolling` CSS 属性可以让滚动元素在 ios 设备上获得接近原生的平滑滚动以及滚动回弹效果。

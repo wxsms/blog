@@ -1,8 +1,7 @@
 ---
-
 title: 'React Hooks'
 date: 2019-09-23T02:13:05.102Z
-tags: [React,Vue,JavaScript]
+tags: [react,vue,javascript]
 ---
 
 [Hooks](https://reactjs.org/docs/hooks-intro.html) 是 React 在 v16.8.0 版本所支持的一个新特性，允许开发者在 Functional Component 中实现「状态」以及「生命周期」等原本只能在 Class Component 中实现的特性。

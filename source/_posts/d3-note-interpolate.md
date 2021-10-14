@@ -1,11 +1,7 @@
 ---
-
 title: 'D3 Note - Interpolate'
 date: 2016-12-05 14:17:00
-categories:
-  - JavaScript
-tags:
-  - D3
+tags: [d3]
 ---
 
 `d3-interpolate` 是 D3 的核心模块之一，与比例尺有些类似，`interpolate` （插值）所做的也是一些数值映射的工作。区别是，`interpolate` 的定义域始终是 **0 ~ 1**，并且始终为线性的。所以，更多时候它用来与 D3 的一些其他模组集成使用（如 transition, scale 等）。

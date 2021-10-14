@@ -1,17 +1,8 @@
 ---
-
 title: '基于 Vue 2 与 Bootstrap 3 的组件库 uiv 发布啦'
 date: 2017-03-30 12:03:00
-categories:
-  - JavaScript
-tags:
-  - Vue
-  - Bootstrap
-
+tags: [vue,bootstrap]
 ---
-
-
-
 
 一点微小的工作。
 

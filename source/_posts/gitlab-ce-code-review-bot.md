@@ -1,11 +1,8 @@
 ---
-
 title: 'Gitlab CE Code-Review Bot'
 date: 2020-09-23T05:00:24.748Z
 tags: [gitlab,nodejs]
 ---
-
-<!-- 「」 -->
 
 由于 Gitlab CE 做代码评审时缺少了关键的评审员功能（详情参考此 [issue](https://gitlab.com/gitlab-org/gitlab-foss/-/issues/42096)），因此在使用 CE 的同时又想要做代码评审的话，就必须要自己想办法了。
 

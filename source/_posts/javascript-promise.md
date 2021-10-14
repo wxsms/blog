@@ -1,17 +1,8 @@
 ---
-
 title: JavaScript Promise
 date: 2016-09-05T17:27:26+00:00
-categories:
-  - JavaScript
-tags:
-  - Async
-  - ES6
-  - Promise
-
+tags: [javascript]
 ---
-
-
 
 知乎上有一个黑 JavaScript 的段子，大概是说：
 

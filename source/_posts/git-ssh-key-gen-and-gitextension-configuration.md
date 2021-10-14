@@ -1,15 +1,8 @@
 ---
-
 title: Git SSH key 生成与 GitExtension 配置
 date: 2015-12-08T16:26:07+00:00
-categories:
-  - VCS
-tags:
-  - Git
-
+tags: [git]
 ---
-
-
 
 使用ssh key配置git可以省去每次操作时输入ID/Password的麻烦，操作一旦频繁起来还是很有必要的。实际操作需要添加一些环境变量，或者到git/bin目录下执行。<!-- more -->
 

@@ -1,10 +1,7 @@
 ---
-
 title: 'ReactNative WebView 接入支付宝与微信支付'
 date: 2019-03-14T07:22:18.133Z
-tags: [ReactNative]
-sidebar: false
-draft: false
+tags: [reactnative]
 ---
 
 在 ReactNative App 的 WebView 中接入支付宝与微信支付其实很简单。首先前提是：使用 H5 网页提前做好了支付相关的动作，ReactNative 方面只负责展示 H5 页面，以及调起相应的 App 来完成支付，不需要接入底层相关的 SDK 或其它代码。

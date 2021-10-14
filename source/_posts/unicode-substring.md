@@ -1,10 +1,7 @@
 ---
-
-title: 'Unicode substring'
+title: 'Unicode Substring'
 date: 2018-09-06T06:46:40.741Z
-tags: [JavaScript]
-sidebar: false
-draft: false
+tags: [javascript]
 ---
 
 最近遇到一个问题：在做字符串截取操作时，如果字符串中包含了 emoji 字符（一个表情占多个 unicode 字符），而碰巧又把它截断了，程序会出错。在 ReactNative App 下的具体表现就是崩溃。由于以前做的是网页比较多，基本没有输入表情字符的案例，而在手机上就不一样了，因此这个问题还是第一次发现。

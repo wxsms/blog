@@ -84,9 +84,9 @@ creative_commons:
 menu:
   home: / || fa fa-home
   tags: /tags/ || fa fa-tags
-  项目: /projects/ || fa fa-star
   #categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
+  项目: /projects/ || fa fa-star
   about: /about/ || fa fa-user
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
@@ -371,7 +371,7 @@ codeblock:
   copy_button:
     enable: true
     # Available values: default | flat | mac
-    style: flat
+    style: mac
 
 back2top:
   enable: true

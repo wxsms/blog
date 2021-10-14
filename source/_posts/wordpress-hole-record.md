@@ -1,15 +1,8 @@
 ---
-
 title: WordPress 掉坑记录
 date: 2016-09-20T15:14:47+00:00
-categories:
-  - CMS
-tags:
-  - Wordpress
-
+tags: [wordpress]
 ---
-
-
 
 忍无可忍，长期更新。
 

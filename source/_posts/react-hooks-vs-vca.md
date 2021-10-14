@@ -1,10 +1,8 @@
 ---
 title: '前端 MVC 的未来：浅谈 Hooks 与 VCA 在设计思路上的异同'
 date: 2021-07-28T09:18:04.925Z
-tags: [javascript,react,vue,hooks]
+tags: [javascript,react,vue]
 ---
-
-<!-- 「」 -->
 
 关于 React Hooks 与 Vue Composite API：
 

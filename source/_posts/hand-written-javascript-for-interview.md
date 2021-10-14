@@ -1,11 +1,8 @@
 ---
-
 title: 'JavaScript 手写八股'
 date: 2021-04-06T04:28:24.206Z
 tags: [javascript]
 ---
-
-<!-- 「」 -->
 
 <!-- more -->
 

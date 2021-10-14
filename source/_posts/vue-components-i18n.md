@@ -1,12 +1,7 @@
 ---
-
 title: '为 Vue 组件库实现国际化支持'
 date: 2017-06-08 15:27:00
-categories:
-  - JavaScript
-tags:
-  - Vue
-  - i18n
+tags: [vue,i18n]
 ---
 
 其实这部分代码主要是参考着 element ui 和 iview 做的（iview 又是抄的 element），对关键代码进行了一些简化。主要需要实现的需求有：

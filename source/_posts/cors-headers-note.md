@@ -1,11 +1,7 @@
 ---
-
 title: 'CORS Headers Note'
 date: 2017-10-12T06:44:39.617Z
-categories: [Web-Front-end]
-tags: [Ajax, HTTP, NodeJs]
-sidebar: false
-draft: false
+tags: [ajax, nodeJs]
 ---
 
 CORS HTTP Header 是解决 Ajax 跨域问题的方案之一。详情查看：[MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)

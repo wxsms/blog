@@ -112,7 +112,7 @@ sitemap:
   #  template: ./sitemap_template.xml
   rel: false
   tags: true
-  categories: true
+  categories: false
 
 search:
   path: search.xml

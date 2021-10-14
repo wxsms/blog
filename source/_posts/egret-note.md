@@ -1,18 +1,8 @@
 ---
-
 title: 'Egret Note'
 date: 2017-02-22 16:17:00
-sidebar: false
-categories:
-  - JavaScript
-  - Game-Engine
-tags:
-  - Egret-Engine
-
+tags: [egret,note]
 ---
-
-
-
 
 Egret Engine 的学习笔记。
 

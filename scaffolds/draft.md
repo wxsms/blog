@@ -2,3 +2,5 @@
 title: {{ title }}
 tags:
 ---
+
+<!-- more -->

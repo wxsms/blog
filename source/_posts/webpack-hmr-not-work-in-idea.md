@@ -1,11 +1,7 @@
 ---
 title: Webpack HMR Not Work in IDEA
 date: 2016-11-07T09:44:41+00:00
-categories:
-  - IDE
-tags:
-  - IntelliJ-IDEA
-  - Webpack
+tags: [webpack,idea]
 ---
 
 1. goto 'File | Settings | Appearance & Behavior | System Settings';

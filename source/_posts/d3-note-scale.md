@@ -1,16 +1,8 @@
 ---
-
 title: 'D3 Note - Scale'
 date: 2016-11-22 09:00:00
-categories:
-  - JavaScript
-tags:
-  - D3
-
+tags: [d3]
 ---
-
-
-
 
 之前做的柱状图例子：
 

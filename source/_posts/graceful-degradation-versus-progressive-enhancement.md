@@ -1,16 +1,8 @@
 ---
-
 title: “渐进增强”与“优雅降级”
 date: 2016-03-25T09:35:10+00:00
-categories:
-  - Web-Front-end
-tags:
-  - CSS3
-  - User-Experience
-
+tags: [css]
 ---
-
-
 
 “渐进增强”与“优雅降级”是 Web 页面两种不同的开发理念，为了简单起见，先给出定义（By W3C）：
 

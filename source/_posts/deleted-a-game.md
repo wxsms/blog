@@ -1,15 +1,8 @@
 ---
-
 title: 删除了一个游戏
 date: 2016-07-27T15:13:22+00:00
-views:
-  - "21"
-categories:
-  - Personal
-
+tags: [personal,review]
 ---
-
-
 
 今天，在N连跪呕心沥血终于推倒对面一座塔赢了以后，我把皇室战争这个游戏删了。
 

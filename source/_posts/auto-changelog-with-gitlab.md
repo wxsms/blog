@@ -1,11 +1,8 @@
 ---
-
 title: 'Auto Changelog with GitLab'
 date: 2020-11-19T02:43:53.946Z
-tags: [gitlab, ci]
+tags: [gitlab, devops]
 ---
-
-<!-- 「」 -->
 
 上一篇博文 [Integrate Renovate with GitLab](/posts/2020-11-09-integrate-renovate-with-gitlab.html) 中介绍了为私有代码仓库与私有源提供依赖自动检测更新并发起 Merge Request 的方式。Renovate 可以自动通过 Release Notes 获取到版本之间的更新日志，并在 MR 中展示，这为执行合并的评审人提供了极大的便利。
 

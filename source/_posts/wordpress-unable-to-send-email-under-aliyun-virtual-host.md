@@ -1,16 +1,8 @@
 ---
-
 title: WordPress 在阿里云虚拟主机下无法发送邮件
 date: 2016-02-22T11:16:24+00:00
-categories:
-  - CMS
-tags:
-  - PHP
-  - Wordpress
-
+tags: [php,wordpress]
 ---
-
-
 
 安装在阿里云虚拟主机环境下的Wordpress死活都发不出邮件，用户注册的邮件发不出，评论总结也发不出，等等等等，尝试了各种方法都以失败告终。今天用更改代码+SMTP插件终于试成功了，以下是解决方案。
 

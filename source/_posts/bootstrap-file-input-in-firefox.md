@@ -1,12 +1,7 @@
 ---
-
 title: Bootstrap file input in Firefox
 date: 2016-01-22T09:20:46+00:00
-categories:
-  - CSS
-tags:
-  - Bootstrap
-  - Firefox
+tags: [bootstrap,firefox]
 ---
 
 默认的Bootstrap文件上传框在Chrome/Firefox/IE上的表现都不一样，如下所示。 代码：

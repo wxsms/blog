@@ -1,17 +1,8 @@
 ---
-
 title: 'React Note - Basic'
 date: 2017-02-08 11:33:00
-sidebar: false
-categories:
-  - JavaScript
-tags:
-  - React
-
+tags: [react,note]
 ---
-
-
-
 
 React 学习笔记（基础篇）。
 

@@ -1,8 +1,7 @@
 ---
 title: Static Blog Built with Vue
 date: 2016-11-16 16:55:00
-categories:
-  - Personal
+tags: [blog]
 ---
 
 博客再次迁移，这次是从 Wordpress 转向静态博客（自建）。

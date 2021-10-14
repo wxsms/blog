@@ -1,8 +1,7 @@
 ---
-
 title: '在微信小程序中使用 lodash'
 date: 2019-12-25T09:44:44.883Z
-tags: [JavaScript, WechatMiniProgram]
+tags: [javascript, miniprogram]
 ---
 
 由于微信小程序中的 JavaScript 运行环境与浏览器有些许区别，因此在引用某些 npm lib 时会发生问题。这时候需要对源码做出一些改动。

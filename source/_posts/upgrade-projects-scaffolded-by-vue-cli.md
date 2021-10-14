@@ -1,10 +1,7 @@
 ---
-
 title: 'Upgrade Projects Built by vue-cli'
 date: 2017-12-18T12:08:22.025Z
-tags: [Vue, Webpack]
-sidebar: false
-draft: false
+tags: [vue,webpack]
 ---
 
 使用 [vue-cli](https://github.com/vuejs/vue-cli) 创建的脚手架项目，目前最大的问题是创建后无法自动地进行升级。虽然 3.0 版本已经计划将其作为头等大事来进行改善 ([#589](https://github.com/vuejs/vue-cli/issues/589))，但是现行的版本依然要面对它。以下基于 webpack template 来进行升级时的一些要点解析。

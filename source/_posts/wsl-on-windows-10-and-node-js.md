@@ -1,11 +1,8 @@
 ---
-
 title: 'WSL on Windows 10 and Node.js'
 date: 2020-07-17T14:13:02.853Z
-tags: []
+tags: [windows,linux,wsl,nodejs]
 ---
-
-<!-- 「」 -->
 
 Linux 的命令行与构建工具一般来说要比 Windows 好用，但 Windows 的用户界面毫无疑问要比 Linux 好用。以往在 Windows 10 上安装 Linux，要么是使用虚拟机，要么是使用双系统，总是无法做到两头兼顾。现在 Windows 10 有了 WSL 技术，使得「二者合一」成为了可能。
 
