@@ -239,12 +239,12 @@ read_more_btn: true
 
 # Post meta display settings
 post_meta:
-  item_text: true
+  item_text: false
   created_at: true
   updated_at:
-    enable: true
+    enable: false
     another_day: true
-  categories: true
+  categories: false
 
 # Post wordcount display settings
 # Dependencies: https://github.com/next-theme/hexo-word-counter
@@ -370,9 +370,9 @@ codeblock:
     dark: prism-dark
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: true
     # Available values: default | flat | mac
-    style:
+    style: flat
 
 back2top:
   enable: true
@@ -898,7 +898,7 @@ waline:
   pageSize: 10 # Pagination size
   lang: zh-cn # Language, available values: en, zh-cn
   # Warning: Do not enable both `waline.visitor` and `leancloud_visitors`.
-  visitor: true # Article reading statistic
+  visitor: false # Article reading statistic
   comment_count: false # If false, comment count will only be displayed in post page, not in home page
   requiredFields: [ ] # Set required fields: [nick] | [nick, mail]
   libUrl: # Set custom library cdn url

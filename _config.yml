@@ -56,7 +56,7 @@ highlight:
 prismjs:
   enable: false
   preprocess: true
-  line_number: true
+  line_number: false
   tab_replace: ''
 
 # Home page setting
