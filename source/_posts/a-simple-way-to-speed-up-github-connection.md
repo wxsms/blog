@@ -9,7 +9,6 @@ tags: []
 
 该方法主要利用 [github.com/ineo6/hosts](https://github.com/ineo6/hosts) 的 hosts 文件，国内镜像 [gitee.com/ineo6/hosts](https://gitee.com/ineo6/hosts)。
 
-<!-- more -->
 
 ## 方法一：手动
 
