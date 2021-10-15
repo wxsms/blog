@@ -14,7 +14,7 @@ Change webpack related devDependencies versions:
 1. Replace `extract-text-webpack-plugin` with `mini-css-extract-plugin`
 1. Replace `uglifyjs-webpack-plugin` with `terser-webpack-plugin`
 
-```json{3-7}
+```json
 {
   "devDependencies": { 
     "mini-css-extract-plugin": "^1",
@@ -30,7 +30,7 @@ Change webpack related devDependencies versions:
 
 Add `mode` option.
 
-```javascript{4}
+```javascript
 // ...
 
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
 1. Replace `ExtractTextPlugin` with `MiniCssExtractPlugin`
 1. Remove `UglifyJsPlugin` and all `webpack.optimize.CommonsChunkPlugin`
 
-```javascript{2-3,7-38,58-61}
+```javascript
 // ...
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin');

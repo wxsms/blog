@@ -132,7 +132,7 @@ spec:
 
 [lib/config/env.ts](https://github.com/renovatebot/renovate/blob/53ca91301f6a36c0c87e7d6b06b1bd8c9ec1b283/lib/config/env.ts):
 
-```typescript{8-9}
+```typescript
 export function getEnvName(option: Partial<RenovateOptions>): string {
   if (option.env === false) {
     return '';

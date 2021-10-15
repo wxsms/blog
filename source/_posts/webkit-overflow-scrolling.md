@@ -15,7 +15,7 @@ tags: [css]
 
 一个例子：
 
-```vue
+```html
 <template>
   <section>
     <div class="scroll-touch">
