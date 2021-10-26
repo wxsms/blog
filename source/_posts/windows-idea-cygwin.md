@@ -1,5 +1,5 @@
 ---
-title: 在 Windows 中使用 Cgwin
+title: 在 Windows 中使用 Cygwin
 date: 2021-10-25 10:23:24
 tags: windows
 ---
