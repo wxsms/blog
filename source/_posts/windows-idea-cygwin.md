@@ -14,7 +14,7 @@ tags: windows
 
 注意，后面的 `C:\cygwin64` 换成实际安装路径。
 
-### 增加 cgwin 配置
+### 增加 cygwin 配置
 
 ![](fc7090eae0d94fd881cf53c5b6c8b1ce.png)
 
