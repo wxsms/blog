@@ -891,7 +891,7 @@ images: images
 # For more information: https://waline.js.org, https://github.com/walinejs/waline
 waline:
   enable: true
-  serverURL: https://blog-api-8pvwfy3l9-wxsms.vercel.app # Waline server address url
+  serverURL: https://blog-api.wxsm.space # Waline server address url
   #  placeholder: Just go go # Comment box placeholder
   avatar: retro # Gravatar style
   #  meta: [nick, mail, link] # Custom comment header
