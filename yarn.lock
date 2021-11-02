@@ -760,10 +760,10 @@ hexo-server@2.0.0:
     open "^7.0.0"
     serve-static "^1.14.1"
 
-hexo-theme-next@8.8.0:
-  version "8.8.0"
-  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.8.0.tgz#8f8591803cd89567a4ff2a70785f967d53ce50b2"
-  integrity sha512-Qypz33aaoHZ+BuuLJmdW7ptn6cvrwOkLOLnZ63KcJ36BhUOnqv6oAYKMr64eSL5PurqQ5HsjOUn3CxXRJM45aw==
+hexo-theme-next@8.8.1:
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.8.1.tgz#f5a09bb145fc76a3a17973a093c7125aad6eaa05"
+  integrity sha512-Wfr3aTtUNnt+/9tsyWWv7/yTUXW6jXWzvgh4oEdjYYOYFtkVH/KGZgBwAZRRtTDTsbSTvj+N3daPcya1Vw/ocQ==
 
 hexo-util@2.5.0, hexo-util@^2.0.0, hexo-util@^2.1.0, hexo-util@^2.4.0, hexo-util@^2.5.0:
   version "2.5.0"
