@@ -26,7 +26,7 @@ date: 2021-11-08 12:56:13
 
 ![](6cb8e2d058f24013bb676be47b50d8a0.png)
 
-2009 年，Node.js 诞生，NPM 的雏形也正在酝酿。
+2009 年，Node.js 诞生，NPM（Node.js Package Manager）的雏形也正在酝酿。
 
 2011 年，NPM 发布了 1.0 版本。
 
