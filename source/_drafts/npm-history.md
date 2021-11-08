@@ -219,11 +219,44 @@ Yarn 1.0 带来的另一个特性是 workspace，也是 monorepo 能够发展起
 
 那么这时候在使用 workspace 模式安装的话，将得到以下结构：
 
-![npm-history2 (4).png](./npm-history/1cc9f1880e2e4bd2853b9f85b1cbe778.png)
+![npm-history-workspace.png](./npm-history/1f0f6d098ccb400f8ec3459df29ca033.png)
 
 其中，node_modules 中的 package-a 只是实际文件的链接。也就是说，Yarn workspace 模式可以将项目底下的子项目的依赖提升到根目录来进行扁平化安装，这样可以节省更多的磁盘空间，带来更快的安装效率，也可以使得项目管理更方便。
 
 **但是**，结合上面所提到的两个问题，workspace 带来的问题只会更多，不会更少。这里就不详细展开了，[应用级 Monorepo 优化方案](https://segmentfault.com/a/1190000040291971)  这篇文章总结得很好。
 
-## PNPM
+## pnpm
+
+通过一个例子来看 pnpm 的特点：安装 vue@3.x。
+
+vue 的依赖项：
+
+```json
+"dependencies": {
+    "@vue/shared": "3.2.21",
+    "@vue/compiler-dom": "3.2.21",
+    "@vue/runtime-dom": "3.2.21",
+    "@vue/compiler-sfc": "3.2.21",
+    "@vue/server-renderer": "3.2.21"
+}
+```
+
+安装后，node_modules 结构是这样的：
+
+![npm-history2 (5).png](./npm-history/1af6ff019331462bad37c36f746801d4.png)
+
+咋一看复杂很多，其实要比 Yarn 和 NPM 的扁平化设计更简单，且设计得更巧妙：
+
+1. 顶层 `node_modules` 除了显示指定的依赖以外，不会出现其它的包。
+2. 顶层 `node_modules` 中的包均是软链，链接向 `.pnpm` 文件夹中的具体包
+3. `.pnpm` 文件夹中，下一级是包名+版本号
+4. 再下一级是 `node_modules`
+5. 再下一级是顶层依赖的软链目标，这里假设为 A，另外以及所有它的依赖项
+6. 在这一层级，除 A 以外，所有包都是一个中心仓库 `.pnpm-store` 的软链
+
+这个设计：
+
+1. 完美利用了 NodeJS 原本的依赖查找规则（从当前目录逐级向上查找），这样一来一个包只会查找到自己所指定的依赖（解决“双胞胎陌生人”问题）
+2. 顶层只放置显示指定的依赖软链（解决“幽灵依赖”问题）
+3. 出显示指定的依赖外，所有其它间接依赖均是中心仓库的软链（解决安装速度慢、扁平化算法耗时问题、磁盘占用空间大问题）
 
