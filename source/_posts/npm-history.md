@@ -236,7 +236,8 @@ Yarn 1.0 带来的另一个特性是 workspace，也是 monorepo 能够发展起
 
 ### Lerna
 
-![](565e279a82f74d659b29f09c743d86d2.png)
+![lerna.png](8f1ef8b7ea174596bdc8b6ebf0601dc0.png)
+
 
 由于 Workspace 的特性实在是太过好用，monorepo（multi-package repositories, multi-project repositories）开始迅速发展。许多知名的开源库开始转向 monorepo，还有更激进者将 monorepo 使用在业务项目中。Lerna 顺势而生。
 
@@ -311,7 +312,7 @@ pnpm 能够自动解决锁文件的冲突。当冲突发生时，只需要运行
 
 ### Workspace & Rush
 
-![](22ec00fe16bb43f39b5848ef200d8547.png)
+![rush.png](74e9d763d51b4d02a39c8b8628be2f35.png)
 
 TODO
 
