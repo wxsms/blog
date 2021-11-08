@@ -1,42 +1,48 @@
 ---
-title: NodeJS 包管理器发展史
+title: Node.js 包管理器发展史
 tags: nodejs
+date: 2021-11-08 12:56:13
 ---
-
-<!-- more -->
 
 ## 在没有包管理器之前
 
+正确来说 Node.js 是不存在没有包管理器的时期的。从 [A brief history of Node.js](https://nodejs.dev/learn/a-brief-history-of-nodejs) 里面可以看到，当 2009 年 Node.js 问世的时候 NPM 的雏形也发布了。当然因为 Node.js 跟前端绑得很死，这里主要谈一谈前端在没有包管理器的时期是怎样的。
+
+那时候做得最多的事情就是：
+
+1. 网上寻找各软件的官网，比如 jQuery；
+2. 找到下载地址，下载 zip 包；
+3. 解压，放到项目中一个叫 libs 的目录中；
+4. 想更方便的话，直接将 CDN 链接粘贴到 HTML 中。
+
+四个字总结：刀耕火种。 模块化管理？版本号管理？依赖升级？不存在的。当然，那时候前端也没有那么复杂，这种模式勉强来说也不是不能用。
+
+<!-- more -->
+
+
 ## NPM v1-v2
 
-2009 年，NodeJS 诞生，NPM 的雏形也正在酝酿。
+![Npm-logo.svg_.png](789e830b6b4247a9807fa4639815b53c.png)
+
+![](6cb8e2d058f24013bb676be47b50d8a0.png)
+
+2009 年，Node.js 诞生，NPM 的雏形也正在酝酿。
 
 2011 年，NPM 发布了 1.0 版本。
 
 初版 NPM 带来的文件结构，是嵌套结构：
 
-```
-node_modules
-└─ foo
-   ├─ index.js
-   ├─ package.json
-   └─ node_modules
-      └─ bar
-         ├─ index.js
-         └─ package.json
-```
-
-我们可以在代码中通过 `require` 或 `import` 导入包。
+![npm-history-0.png](bd96f102244c4a498c544bf759266e81.png)
 
 一切都很美好，除了...
 
-![](./npm-history/77ed4d7193bb4cf8b1125915e1b532ad.png)
+![](77ed4d7193bb4cf8b1125915e1b532ad.png)
 
-图来自：[https://github.com/tj/node-prune](https://github.com/tj/node-prune)
+node_modules 堪比黑洞，图来自 [https://github.com/tj/node-prune](https://github.com/tj/node-prune) 。
 
 ### node_modules 体积过大
 
-显而易见的问题。这种形式的结构很快就能把磁盘占满。`rm -rf node_modules` 成为了前端程序员最常用的命令之一。
+显而易见的问题，如果一个库，比如 lodash，被不同的包依赖了，那么它就会被安装两次。这种形式的结构很快就能把磁盘占满。`rm -rf node_modules` 成为了前端程序员最常用的命令之一。
 
 ### node_modules 嵌套层级过深
 
@@ -44,29 +50,28 @@ node_modules
 
 具体到实际的问题，相信早期 NPM 的 windows 用户都见过这个弹窗：
 
-![](./npm-history/c28854e4264a401e8a1e33d53e3d8397.png)
+![](c28854e4264a401e8a1e33d53e3d8397.png)
 
 （node_modules 文件夹无法删除，因为超过了 windows 能处理的最大路径长度）
 
+详情见 [这个 issue](https://github.com/nodejs/node-v0.x-archive/issues/6960) 。
+
 ## Yarn & NPM v3
+
+![yarn-logo-F5E7A65FA2-seeklogo.com.png](53b38bd1375e42f5b66151d782598f7b.png)
+
+![](1d2e4d8068d34d24aadb23a5b27e07d3.png)
 
 2016 年，yarn 诞生了。yarn 解决了 npm 几个最为迫在眉睫的问题：
 
 1. 安装太慢（加缓存、多线程）
-2. 目录嵌套（扁平化）
+2. 嵌套结构（扁平化）
 3. 无依赖锁（yarn.lock）
 
 yarn 带来对的扁平化结构：
 
-```
-node_modules
-├─ foo
-|  ├─ index.js
-|  └─ package.json
-└─ bar
-   ├─ index.js
-   └─ package.json
-```
+![npm-history-yarn.png](281c08a568254878bd9c2c04e12a199c.png)
+
 
 扁平化后，实际需要安装的包数量大大减少，再加上 Yarn 首发的缓存机制，因此依赖的安装速度也得到了**史诗级**提升。
 
@@ -114,15 +119,16 @@ node_modules
 
 这个词在英文中是 doppelgangers，意思是它们长得很像，但是除此以外又完全没有其它的关联。
 
-![](./npm-history/d51b29d640de4f6fa97858e68db9144a.png)
+![](d51b29d640de4f6fa97858e68db9144a.png)
 
 想象一下有一个 library-a，它同时依赖了 library-b、c、d、f：
 
-![](./npm-history/cd65cf82b99048a39c28a30ebd02dbe4.png)
+![npm-history (1).png](17d47edd486b4a67ad6462bacd1a4c94.png)
 
 而 b 和 c 依赖了 f@1.0.0，d 和 e 依赖了 f@2.0.0：
 
-![](./npm-history/4a6a9b5275d84976bee665548b56db99.png)
+![npm-history.png](9eb92971cb044cb3a05c62a43dd23142.png)
+
 
 这时候，node_modules 树需要做出选择了，到底是将 f@1.0.0 还是 f@2.0.0 扁平化，然后将另一个放到嵌套的 node_modules 中？
 
@@ -130,29 +136,31 @@ node_modules
 
 举例，将 f@1.0.0 扁平化的结果：
 
-![npm-history2.png](./npm-history/483505f999a549778e513b36a6340223.png)
+![npm-history-3.png](79bed46a30504448bb38f03bf47084fa.png)
+
 
 将 f@2.0.0 扁平化的结果：
 
-![npm-history2 (1).png](./npm-history/4bce52d178c74440b398f8d5dc7fcfbc.png)
+![npm-history-4.png](2d30a4d64bd54a1db200eb317798da85.png)
+
 
 无论如何，这个选择必须做，我们必然会在 node_modules 中拥有多份的 library-f，窘境将是无法避免的。因此它们也就成为了“双胞胎陌生人”。
 
-其它编程语言没有这种问题，这是 NodeJS & NPM 独有的。 这种问题会造成：
+其它编程语言没有这种问题，这是 Node.js & NPM 独有的。 这种问题会造成：
 
 1. 安装更慢
 2. 耗费的磁盘空间更大
 3. 某些只能存在单例的库（比如 React 或 Vue）如果被同时安装了两个版本则会出现问题
 4. 当使用依赖 f 使用了 TypeScript 时会造成 .d.ts 文件混乱，导致编译器报错
-5. 假设 f 有一个依赖 g，项目里也存在 g 的“双胞胎陌生人”，那么根据 NodeJS 的依赖查找原则（从当前目录逐级向上查找），两个 f 有可能会检索到不同版本的 g，这可能导致高度混乱的编译器错误。
+5. 假设 f 有一个依赖 g，项目里也存在 g 的“双胞胎陌生人”，那么根据 Node.js 的依赖查找原则（从当前目录逐级向上查找），两个 f 有可能会检索到不同版本的 g，这可能导致高度混乱的编译器错误。
 
 ### 幽灵依赖
 
-![](./npm-history/91ba2aeacbb640fe931c2b3f9e762b2b.png)
+![](91ba2aeacbb640fe931c2b3f9e762b2b.png)
 
 假设我们有以下依赖：
 
-```
+```json
 {
   "name": "my-library",
   "version": "1.0.0",
@@ -168,7 +176,7 @@ node_modules
 
 理论上来说，我们项目的代码中可以使用的依赖只有 minimatch。但是实际上，以下代码也能运行：
 
-```
+```js
 var minimatch = require("minimatch")
 var expand = require("brace-expansion");  // ???
 var glob = require("glob")  // ???
@@ -176,10 +184,9 @@ var glob = require("glob")  // ???
 // ???
 ```
 
-这是因为扁平化结构将一些没有直接依赖的包也提升到了 node_modules 的一级目录，但是 NodeJS 并没有对其校验。所以引用它们也不会报错。
+这是因为扁平化结构将一些没有直接依赖的包也提升到了 node_modules 的一级目录，但是 Node.js 并没有对其校验。所以引用它们也不会报错。
 
-![npm-history2 (2).png](./npm-history/3d7518ea82cc4549af0ffc69ec3db360.png)
-
+![npm-history2.png](6f98da1d2d6f4821bd803b3cfcea5a9f.png)
 
 这种情况带来的问题：
 
@@ -219,7 +226,7 @@ Yarn 1.0 带来的另一个特性是 workspace，也是 monorepo 能够发展起
 
 那么这时候在使用 workspace 模式安装的话，将得到以下结构：
 
-![npm-history-workspace.png](./npm-history/1f0f6d098ccb400f8ec3459df29ca033.png)
+![npm-history-workspace.png](a167fbb7eb1a4e068bdfd9b2aa3c1f4e.png)
 
 其中，node_modules 中的 package-a 只是实际文件的链接。也就是说，Yarn workspace 模式可以将项目底下的子项目的依赖提升到根目录来进行扁平化安装，这样可以节省更多的磁盘空间，带来更快的安装效率，也可以使得项目管理更方便。
 
@@ -227,36 +234,71 @@ Yarn 1.0 带来的另一个特性是 workspace，也是 monorepo 能够发展起
 
 ## pnpm
 
-通过一个例子来看 pnpm 的特点：安装 vue@3.x。
+![](5d35909dba0c443cbc67ece57750fb92.png)
 
-vue 的依赖项：
 
-```json
-"dependencies": {
-    "@vue/shared": "3.2.21",
-    "@vue/compiler-dom": "3.2.21",
-    "@vue/runtime-dom": "3.2.21",
-    "@vue/compiler-sfc": "3.2.21",
-    "@vue/server-renderer": "3.2.21"
-}
-```
+![](8909e5d0c4b747f787b3787314f7e8d8.png)
 
-安装后，node_modules 结构是这样的：
 
-![npm-history2 (5).png](./npm-history/1af6ff019331462bad37c36f746801d4.png)
+P for Performance —— 性能更强的 NPM。
 
-咋一看复杂很多，其实要比 Yarn 和 NPM 的扁平化设计更简单，且设计得更巧妙：
+PNPM 复刻了 NPM 的所有命令，同时在安装目录结构上做了大幅改进。 
 
-1. 顶层 `node_modules` 除了显示指定的依赖以外，不会出现其它的包。
-2. 顶层 `node_modules` 中的包均是软链，链接向 `.pnpm` 文件夹中的具体包
-3. `.pnpm` 文件夹中，下一级是包名+版本号
-4. 再下一级是 `node_modules`
-5. 再下一级是顶层依赖的软链目标，这里假设为 A，另外以及所有它的依赖项
-6. 在这一层级，除 A 以外，所有包都是一个中心仓库 `.pnpm-store` 的软链
+### 善用链接
 
-这个设计：
+这里通过一个例子来看 pnpm 的安装结构特点。
 
-1. 完美利用了 NodeJS 原本的依赖查找规则（从当前目录逐级向上查找），这样一来一个包只会查找到自己所指定的依赖（解决“双胞胎陌生人”问题）
-2. 顶层只放置显示指定的依赖软链（解决“幽灵依赖”问题）
-3. 出显示指定的依赖外，所有其它间接依赖均是中心仓库的软链（解决安装速度慢、扁平化算法耗时问题、磁盘占用空间大问题）
+#### 安装依赖
+
+假设我们要安装一个 foo 包，它依赖了 bar。首先，pnpm 会先将所有直接和间接依赖安装进来，并“摊平”（注意，这里没有扁平化算法，是字面意义上的摊平）：
+
+![npm-history-pnpm1.png](88b24d6586164844971a21531cb4fe40.png)
+
+你可能注意到，在 `xxx@1.0.0` 的目录下面，首先是一个 `node_modules` 目录，然后才是 `xxx`，这么做的目的是：
+
+1. 允许包引用自己
+2. 将包自身和其依赖打平，避免循环结构。在 Node.js 中，这么做其实跟原本的样子并没有太大区别。
+
+#### 处理间接依赖
+
+然后，在 `foo` 的平级创建一个 `bar` 文件夹，链接至 `bar@1.0.0` 下面的 `bar`：
+
+![npm-history-pnpm2.png](7601019bdc044ca786896c2d54de955a.png)
+
+#### 处理直接依赖
+
+在顶层 `node_modules` 创建一个 `foo` 硬链接，连接至 `foo@1.0.0` 中的 `foo`，以供应用访问：
+
+![npm-history-pnpm3.png](92c7961c84ae4c64a15588cfad9b4294.png)
+
+
+
+#### 处理更深层次的间接依赖
+
+假设 `foo` 和 `bar` 都依赖了 `qar@2.0.0`：
+
+![npm-history-pnpm4.png](672ca3805fb342a988899ee8fc0bcc31.png)
+
+
+可以看到，虽然依赖层级变深了，但是文件树并没有变深。这就是 pnpm 的特色结构：通过硬链接创造的依赖“树”。
+
+### 性能对比
+
+由于硬链接的巨大优势加成，在绝大多数情况下，pnpm 的安装速度都要比 yarn 和 npm 更快：
+
+![](27ade74c8a634c0890e78052594d3321.png)
+
+### 自动解决锁冲突
+
+pnpm 能够自动解决锁文件的冲突。当冲突发生时，只需要运行一次 `pnpm install`，冲突就能自动由 pnpm 解决。很人性化。不过，据说 Yarn 从 1.0 版本开始也提供了类似的功能。
+
+## 参考链接
+
+* [Symlinked `node_modules` structure](https://pnpm.io/symlinked-node-modules-structure)
+* [Frequently Asked Questions](https://pnpm.io/faq)
+* [Rush: Phantom dependencies](https://rushjs.io/pages/advanced/phantom_deps/)
+* [Rush: NPM doppelgangers](https://rushjs.io/pages/advanced/npm_doppelgangers/)
+* [tj/node-prune: Remove unnecessary files from node_modules](https://github.com/tj/node-prune)
+* [Node's nested node_modules approach is basically incompatible with Windows #6960](https://github.com/nodejs/node-v0.x-archive/issues/6960)
+
 
