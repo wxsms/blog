@@ -234,6 +234,21 @@ Yarn 1.0 带来的另一个特性是 workspace，也是 monorepo 能够发展起
 
 **但是**，结合上面所提到的两个问题，workspace 带来的问题只会更多，不会更少。这里就不详细展开了，[应用级 Monorepo 优化方案](https://segmentfault.com/a/1190000040291971)  这篇文章总结得很好。
 
+### Lerna
+
+![](565e279a82f74d659b29f09c743d86d2.png)
+
+由于 Workspace 的特性实在是太过好用，monorepo（multi-package repositories, multi-project repositories）开始迅速发展。许多知名的开源库开始转向 monorepo，还有更激进者将 monorepo 使用在业务项目中。Lerna 顺势而生。
+
+但是，Lerna 并不是 Node.js 包管理器的一部分，也没有解决任何已存在的包管理器问题。它所做的只是将 monorepo 的使用体验变得更舒服了，比如：
+
+1. 可以更方便地创建 monorepo
+2. 可以更方便地管理 packages 中的依赖项
+3. 可以一键发布 packages、自动根据 git commit log 更新每个 package 的 changelog
+4. 等等
+
+仅此而已。按照官网的说法，Lerna 所做的事情是“优化了这个流程（optimizes the workflow）”。
+
 ## pnpm
 
 ![](5d35909dba0c443cbc67ece57750fb92.png)
@@ -293,6 +308,12 @@ PNPM 复刻了 NPM 的所有命令，同时在安装目录结构上做了大幅�
 ### 自动解决锁冲突
 
 pnpm 能够自动解决锁文件的冲突。当冲突发生时，只需要运行一次 `pnpm install`，冲突就能自动由 pnpm 解决。很人性化。不过，据说 Yarn 从 1.0 版本开始也提供了类似的功能。
+
+### Workspace & Rush
+
+![](22ec00fe16bb43f39b5848ef200d8547.png)
+
+TODO
 
 ## 参考链接
 
