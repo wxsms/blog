@@ -20,17 +20,17 @@ date: 2021-11-08 12:56:13
 <!-- more -->
 
 
-## NPM v1-v2
+## npm v1-v2
 
 ![Npm-logo.svg_.png](789e830b6b4247a9807fa4639815b53c.png)
 
 ![](6cb8e2d058f24013bb676be47b50d8a0.png)
 
-2009 年，Node.js 诞生，NPM（Node.js Package Manager）的雏形也正在酝酿。
+2009 年，Node.js 诞生，npm（Node.js Package Manager）的雏形也正在酝酿。
 
-2011 年，NPM 发布了 1.0 版本。
+2011 年，npm 发布了 1.0 版本。
 
-初版 NPM 带来的文件结构，是嵌套结构：
+初版 npm 带来的文件结构，是嵌套结构：
 
 ![npm-history-0.png](bd96f102244c4a498c544bf759266e81.png)
 
@@ -48,7 +48,7 @@ node_modules 堪比黑洞，图来自 [https://github.com/tj/node-prune](https:/
 
 只有当找到一片不依赖任何第三方包的叶子时，这棵树才能走到尽头。因此 node_modules 的嵌套深度十分可怕。
 
-具体到实际的问题，相信早期 NPM 的 windows 用户都见过这个弹窗：
+具体到实际的问题，相信早期 npm 的 windows 用户都见过这个弹窗：
 
 ![](c28854e4264a401e8a1e33d53e3d8397.png)
 
@@ -56,7 +56,7 @@ node_modules 堪比黑洞，图来自 [https://github.com/tj/node-prune](https:/
 
 详情见 [这个 issue](https://github.com/nodejs/node-v0.x-archive/issues/6960) 。
 
-## Yarn & NPM v3
+## Yarn & npm v3
 
 ![yarn-logo-F5E7A65FA2-seeklogo.com.png](53b38bd1375e42f5b66151d782598f7b.png)
 
@@ -77,9 +77,9 @@ yarn 带来对的扁平化结构：
 
 ### 依赖锁
 
-相比于扁平化结构，可以说 yarn 更大的贡献是发明了 yarn.lock。而 NPM 在一年后的 v5 才跟上了脚步，发布了 package-lock.json。
+相比于扁平化结构，可以说 yarn 更大的贡献是发明了 yarn.lock。而 npm 在一年后的 v5 才跟上了脚步，发布了 package-lock.json。
 
-在没有依赖锁的年代，即使没有改动任何一行代码，一次 `npm install` 带来的实际代码量变更很可能是非常巨大的。 因为 NPM 采用 [语义化版本](https://semver.org/lang/zh-CN/) 约定，简单来说，`a.b.c` 代表着：
+在没有依赖锁的年代，即使没有改动任何一行代码，一次 `npm install` 带来的实际代码量变更很可能是非常巨大的。 因为 npm 采用 [语义化版本](https://semver.org/lang/zh-CN/) 约定，简单来说，`a.b.c` 代表着：
 
 1. `a` 主版本号：当你做了不兼容的 API 修改
 2. `b` 次版本号：当你做了向下兼容的功能性新增
@@ -148,7 +148,7 @@ yarn 带来对的扁平化结构：
 
 无论如何，这个选择必须做，我们必然会在 node_modules 中拥有多份的 library-f，窘境将是无法避免的。因此它们也就成为了“双胞胎陌生人”。
 
-其它编程语言没有这种问题，这是 Node.js & NPM 独有的。 这种问题会造成：
+其它编程语言没有这种问题，这是 Node.js & npm 独有的。 这种问题会造成：
 
 1. 安装更慢
 2. 耗费的磁盘空间更大
@@ -258,9 +258,9 @@ Yarn 1.0 带来的另一个特性是 workspace，也是 monorepo 能够发展起
 ![](8909e5d0c4b747f787b3787314f7e8d8.png)
 
 
-P for Performance —— 性能更强的 NPM。
+P for Performance —— 性能更强的 npm。
 
-PNPM 复刻了 NPM 的所有命令，同时在安装目录结构上做了大幅改进。 
+pnpm 复刻了 npm 的所有命令，同时在安装目录结构上做了大幅改进。 
 
 ### 善用链接
 
@@ -310,19 +310,46 @@ PNPM 复刻了 NPM 的所有命令，同时在安装目录结构上做了大幅�
 
 pnpm 能够自动解决锁文件的冲突。当冲突发生时，只需要运行一次 `pnpm install`，冲突就能自动由 pnpm 解决。很人性化。不过，据说 Yarn 从 1.0 版本开始也提供了类似的功能。
 
-### Workspace & Rush
+### Rush
 
 ![rush.png](74e9d763d51b4d02a39c8b8628be2f35.png)
 
-TODO
+[Rush](https://rushjs.io/) 是微软出品的一款 monorepo 管理工具。与 Lerna 不同的是：Rush 不仅做了许多“优化流程”的工作，还提供了一套与 pnpm 十分类似的**硬链接目录结构方案**来解决超大型项目中的依赖管理问题。
+
+虽然它声称支持全部的三种包管理工具，但是：
+
+1. 配合高版本 npm 使用时有 bug，只能使用 4.x 版本
+2. 配合 Yarn 使用时无法启用 workspace，因为这会跟硬链接方案冲突
+3. 只有在配合 pnpm 使用时才能解决“双胞胎陌生人”问题
+
+很显然，如果想要正常使用，pnpm 几乎是唯一选择。
+
+这里只简单列出一些 Rush 提供的独有功能，具体就等后面学习完以后再细说了：
+
+1. 顺序构建：自动检测包的依赖关系，按照从下至上有序构建
+2. 多进程构建：对于可以同时构建的包，开启多个 Node.js 进程同时构建
+3. 增量构建：只对发生了变化的包，以及所有受影响的上游或下游包启动构建
+4. 增量发布：自动检测需要发布的包并执行发布，甚至可以将发布任务设置为定时执行
+5. 等等......
+
+![](4c43709b3dbd431a95fc6cfb42ca828c.png)
+
+
+总的来说，微软的一套理论是：企业的项目（不管是业务还是基础）都应该尽可能地放在一个超大型仓库中来管理。并且微软声称自己确实是这么做的（见 [Rush: Why one big repo⁈](https://rushjs.io/pages/intro/why_mono/) ）。Rush 的目的也是为了解决这套方法论的后顾之忧，比如:
+
+1. npm 扁平化结构的各种问题
+2. 项目逐渐庞大以后的构建速度问题
+3. 项目如何发布的问题
+
+
 
 ## 参考链接
 
 * [Symlinked `node_modules` structure](https://pnpm.io/symlinked-node-modules-structure)
 * [Frequently Asked Questions](https://pnpm.io/faq)
-* [Rush: Phantom dependencies](https://rushjs.io/pages/advanced/phantom_deps/)
-* [Rush: NPM doppelgangers](https://rushjs.io/pages/advanced/npm_doppelgangers/)
 * [tj/node-prune: Remove unnecessary files from node_modules](https://github.com/tj/node-prune)
 * [Node's nested node_modules approach is basically incompatible with Windows #6960](https://github.com/nodejs/node-v0.x-archive/issues/6960)
-
+* [Rush: Why one big repo⁈](https://rushjs.io/pages/intro/why_mono/)
+* [Rush: Phantom dependencies](https://rushjs.io/pages/advanced/phantom_deps/)
+* [Rush: NPM doppelgangers](https://rushjs.io/pages/advanced/npm_doppelgangers/)
 
