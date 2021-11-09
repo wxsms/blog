@@ -188,7 +188,8 @@ var glob = require("glob")  // ???
 
 这是因为扁平化结构将一些没有直接依赖的包也提升到了 node_modules 的一级目录，但是 Node.js 并没有对其校验。所以引用它们也不会报错。
 
-![npm-history2.png](6f98da1d2d6f4821bd803b3cfcea5a9f.png)
+![npm-history-ghost-deps.png](bdb7f88e64b8463387c78f563e709ce4.png)
+
 
 这种情况带来的问题：
 
