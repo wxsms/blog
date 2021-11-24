@@ -6,9 +6,10 @@ toc:
     enable: false
 ---
 
-wxsm (长夜漫漫，**无心睡眠**)。
+wxsm（长夜漫漫，**无心睡眠**）。
 
-码农(以前端和 Node.js 为主，也会点 php/python/golang)， 曾就职于 OOCL、西山居，目前在金山办公(珠海)上班。
+码农（以前端和 Node.js 为主，也会点 php/python/golang）。
+曾就职于 OOCL、西山居，目前在金山办公(珠海)上班。
 JetBrains 忠实用户。
 克罗恩病患者。
 
