@@ -15,7 +15,7 @@ specifiers:
   hexo-renderer-marked: 4.1.0
   hexo-renderer-stylus: 2.0.1
   hexo-server: 2.0.0
-  hexo-theme-next: 8.8.1
+  hexo-theme-next: 8.8.2
   prism-themes: 1.9.0
   recursive-readdir: 2.2.2
   yaml-front-matter: 4.1.1
@@ -35,7 +35,7 @@ dependencies:
   hexo-renderer-marked: 4.1.0
   hexo-renderer-stylus: 2.0.1
   hexo-server: 2.0.0
-  hexo-theme-next: 8.8.1
+  hexo-theme-next: 8.8.2
   prism-themes: 1.9.0
 
 devDependencies:
@@ -775,8 +775,8 @@ packages:
       serve-static: 1.14.1
     dev: false
 
-  /hexo-theme-next/8.8.1:
-    resolution: {integrity: sha512-Wfr3aTtUNnt+/9tsyWWv7/yTUXW6jXWzvgh4oEdjYYOYFtkVH/KGZgBwAZRRtTDTsbSTvj+N3daPcya1Vw/ocQ==}
+  /hexo-theme-next/8.8.2:
+    resolution: {integrity: sha512-eXpou/NG1ZdYTVRmntpsh1YpQ/P0mlyUb3mas3VQ4qoW7Ky3bGE5+/zB5A53D6l6PBe/UUco4kK9NlNWqRj14A==}
     dev: false
 
   /hexo-util/2.5.0:
