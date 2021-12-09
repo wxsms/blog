@@ -77,12 +77,12 @@ Renovate 提供了构建好的 [renovate/renovate](https://hub.docker.com/r/reno
 docker run --rm -v "/path/to/your/config.js:/usr/src/app/config.js" renovate/renovate
 ```
 
-这个镜像有多个版本，其中大体区分为 `slim` 版与完整版。它们之间的区别是：
+这个镜像有多个版本，其中大体区分为 slim 版与完整版。它们之间的区别是：
 
-1. 完整版包含了所有可能要用到的构件工具，如 `Python` 等，约 1.3GB；
-2. `slim` 版仅包含 Renovate 自身，约 130MB。
+1. 完整版包含了所有可能要用到的构件工具，如 Python 等，约 1.3GB；
+2. slim 版仅包含 Renovate 自身，约 130MB。
 
-可以使用 GitLab CI 与该镜像直接集成，`image` 指定 `renovate/renovate` 即可。但是由于 Renovate 是一个需要持续周期性执行的任务，放置在 CI 中略显不合适。因此我选择使用 k8s 集成。
+可以使用 GitLab CI 与该镜像直接集成，image 指定 `renovate/renovate` 即可。但是，最终我选择了使用 k8s 集成。
 
 ### 方式3：使用 Kubernetes
 
@@ -188,7 +188,7 @@ stringData:
 
 但是有几点需要注意：
 
-1. 由于评审机器人使用了 `WIP` 来阻止 MR 被手动合并，因此 Renovate 的配置中也需要将 MR 设置为 draft 状态，这样才能维持 MR 的 `WIP` 标记。否则，Renovate 会在发起 MR 后的第二次扫描中尝试去除 MR 的 `WIP` 标记；
+1. 由于评审机器人使用了 WIP 来阻止 MR 被手动合并，因此 Renovate 的配置中也需要将 MR 设置为 draft 状态，这样才能维持 MR 的 WIP 标记。否则，Renovate 会在发起 MR 后的第二次扫描中尝试去除 MR 的 WIP 标记；
 2. 最好给 Renovate 开设一个独立的账号。如果与其他用户或程序共用账号，Renovate 可能会在 force-push 的过程中使某些由其它用户做出的改动丢失；
 3. 因为 Renovate 的设计中存在一些高危操作（分支删除，强制推送等），因此最好只赋予 Developer 权限。实际上如果不启用自动合并，它也只需要 Developer 权限。
 
@@ -198,7 +198,8 @@ stringData:
 {
   "extends": [
     "config:base",
-    // 除了 peerDependencies 以外所有依赖都 pin
+    // 除了 peerDependencies 以外所有依赖都 pin，
+    // 注意仅适用于业务项目，在 library 中不要这样做
     ":pinAllExceptPeerDependencies"
   ],
   // 仅启用 npm 依赖管理，项目里有其它依赖项不想被 Renovate 管理的，
@@ -237,9 +238,9 @@ stringData:
 
 但是我不是很喜欢这种做法，这样的话会更新镜像会比较麻烦。不过如他所说，也可以选择在运行时进行替换。由于之前开发过一款 [评审机器人](/posts/2020-09-23-gitlab-ce-code-review-bot.html)，机器人的执行逻辑刚好适合用来做这一块的热修复。只需要在 MR 创建逻辑内加多一个判断，如果是来自 renovate 的 MR 则执行修复操作；
 
-1. 解决格式错乱问题：读取 MR 的 `description` 字段，并将 `<details>` 节点去除；
-2. 解决 changelog 丢失问题：调用 GitLab API 获取 Changelog，并粘贴到 `description` 中；
-3. Renovate 更新 MR 时会丢失 `description` 中的更改，为了保险起见，再将 Changelog 作为输出到评论中去。
+1. 解决格式错乱问题：读取 MR 的 description 字段，并将 `<details>` 节点去除；
+2. 解决 changelog 丢失问题：调用 GitLab API 获取 Changelog，并粘贴到 description 中；
+3. Renovate 更新 MR 时会丢失 description 中的更改，为了保险起见，再将 Changelog 作为输出到评论中去。
 
 大致代码：
 
