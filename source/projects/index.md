@@ -10,7 +10,6 @@ toc:
 
 ## uiv
 
-
 ![logo](https://static.wxsm.space/uiv/logo.png)
 
 <p class="wxsm-github-badges">
@@ -21,12 +20,10 @@ toc:
 <a href="https://github.com/uiv-lib/uiv/network/members" target="_blank"><img src="https://badgen.net/github/forks/uiv-lib/uiv" alt="GitHub forks"></a>
 </p>
 
-
-
 Vue 2 实现的 Bootstrap 3 组件库。
 
-* GitHub: [https://github.com/uiv-lib/uiv](https://github.com/uiv-lib/uiv)
 * 主页: [https://uiv.wxsm.space](https://uiv.wxsm.space/)
+* GitHub: [https://github.com/uiv-lib/uiv](https://github.com/uiv-lib/uiv)
 * NPM: [https://www.npmjs.com/package/uiv](https://www.npmjs.com/package/uiv)
 
 ## vue-md-loader
@@ -39,10 +36,10 @@ Vue 2 实现的 Bootstrap 3 组件库。
 <a href="https://github.com/wxsms/vue-md-loader/network/members" target="_blank"><img src="https://badgen.net/github/forks/wxsms/vue-md-loader" alt="GitHub forks"></a>
 </p>
 
-将 Markdown 转换为 (魔法) Vue 组件的 webpack loader。
+将 Markdown 以及其内部的代码块转换为 Vue 组件的 webpack loader。
 
-* GitHub: [https://github.com/wxsms/vue-md-loader](https://github.com/wxsms/vue-md-loader)
 * 主页: [https://vue-md-loader.wxsm.space](https://vue-md-loader.wxsm.space/)
+* GitHub: [https://github.com/wxsms/vue-md-loader](https://github.com/wxsms/vue-md-loader)
 * NPM: [https://www.npmjs.com/package/vue-md-loader](https://www.npmjs.com/package/vue-md-loader)
 
 ## vuepress-theme-mini
@@ -55,17 +52,17 @@ Vue 2 实现的 Bootstrap 3 组件库。
 <a href="https://github.com/wxsms/vuepress-theme-mini/network/members" target="_blank"><img src="https://badgen.net/github/forks/wxsms/vuepress-theme-mini" alt="GitHub forks"></a>
 </p>
 
-VuePress 的一个主题。
+VuePress 的一个主题，适用于轻量级博客。
 
-* GitHub: [https://github.com/wxsms/vuepress-theme-mini](https://github.com/wxsms/vuepress-theme-mini)
 * 主页: [https://vuepress-theme-mini.wxsm.space](https://vuepress-theme-mini.wxsm.space/)
+* GitHub: [https://github.com/wxsms/vuepress-theme-mini](https://github.com/wxsms/vuepress-theme-mini)
 * NPM: [https://www.npmjs.com/package/vuepress-theme-mini](https://www.npmjs.com/package/vuepress-theme-mini)
 
 ## IBD 日记
 
 一个微信小程序，帮助 IBD ([wiki](https://en.wikipedia.org/wiki/Inflammatory_bowel_disease)) 病人记录每日饮食与状况。
 
-因为某些不可描述的原因，该仓库的代码无法公开。
+因为不可描述的原因，该仓库无法公开。
 
 在微信中搜索**IBD 日记**，或扫描下面的二维码以体验：
 
