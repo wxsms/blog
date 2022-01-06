@@ -123,7 +123,7 @@ yarn 带来对的扁平化结构：
 
 ![](d51b29d640de4f6fa97858e68db9144a.png)
 
-想象一下有一个 library-a，它同时依赖了 library-b、c、d、f：
+想象一下有一个 library-a，它同时依赖了 library-b、c、d、e：
 
 ![npm-history (1).png](17d47edd486b4a67ad6462bacd1a4c94.png)
 
@@ -310,6 +310,11 @@ pnpm 复刻了 npm 的所有命令，同时在安装目录结构上做了大幅�
 ### 自动解决锁冲突
 
 pnpm 能够自动解决锁文件的冲突。当冲突发生时，只需要运行一次 `pnpm install`，冲突就能自动由 pnpm 解决。很人性化。不过，据说 Yarn 从 1.0 版本开始也提供了类似的功能。
+
+### 存在的问题
+
+1. 并不是所有项目都能“无痛”迁移至 pnpm。由于历史原因（扁平化），我们的应用或者应用的某些依赖并没有很好地遵循“使用到的包必须在 package.json 中声明”这一原则，或者把它当作一项 feature 享受其中。这样的话迁移至 pnpm 会导致原本会被提升到顶层的扁平化依赖重新回到正确的位置，从而无法被找到。如果问题出在应用上，那么只需要将依赖写入 package.json 即可。但是如果出在依赖就比较棘手了。不过官方也提供了[解决方案](https://pnpm.io/faq#pnpm-does-not-work-with-your-project-here)。
+2. 由于特殊的安装结构，以往一个很有用的打补丁工具 patch-package 用起来就不是那么顺手了。
 
 ### Rush
 
