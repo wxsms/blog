@@ -9,7 +9,7 @@ specifiers:
   hexo-generator-feed: 3.0.0
   hexo-generator-index: 2.0.0
   hexo-generator-searchdb: 1.4.0
-  hexo-generator-sitemap: 2.2.0
+  hexo-generator-sitemap: 3.0.0
   hexo-generator-tag: 1.0.0
   hexo-renderer-ejs: 2.0.0
   hexo-renderer-marked: 5.0.0
@@ -29,7 +29,7 @@ dependencies:
   hexo-generator-feed: 3.0.0
   hexo-generator-index: 2.0.0
   hexo-generator-searchdb: 1.4.0
-  hexo-generator-sitemap: 2.2.0
+  hexo-generator-sitemap: 3.0.0
   hexo-generator-tag: 1.0.0
   hexo-renderer-ejs: 2.0.0
   hexo-renderer-marked: 5.0.0
@@ -754,9 +754,9 @@ packages:
       - chokidar
     dev: false
 
-  /hexo-generator-sitemap/2.2.0:
-    resolution: {integrity: sha512-WoS/GpdrazoiFuhZXS3Qnb22L0uaiKHHWefcsoE7JLjh8WsksFom4v2FoNhr1RIYwFV7SudQFs91P5xcW+Gfow==}
-    engines: {node: '>=10.13.0'}
+  /hexo-generator-sitemap/3.0.0:
+    resolution: {integrity: sha512-Wv8tglblG4fHUtsUrxDSKSOCWn2f3RpXHlXPIcsnHluUaCGqmZ/b6KvCH1chxvtQ4IcMRu+rVZeUN3Z9UKoy4A==}
+    engines: {node: '>=12.13.0'}
     dependencies:
       hexo-util: 2.5.0
       micromatch: 4.0.4
