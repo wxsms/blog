@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@waline/hexo-next': 2.0.6
+  '@waline/hexo-next': 3.0.1
   hexo: 6.1.0
   hexo-generator-archive: 1.0.0
   hexo-generator-category: 1.0.0
@@ -21,7 +21,7 @@ specifiers:
   yaml-front-matter: 4.1.1
 
 dependencies:
-  '@waline/hexo-next': 2.0.6
+  '@waline/hexo-next': 3.0.1
   hexo: 6.1.0
   hexo-generator-archive: 1.0.0
   hexo-generator-category: 1.0.0
@@ -56,8 +56,8 @@ packages:
     engines: {node: '>= 10'}
     dev: false
 
-  /@waline/hexo-next/2.0.6:
-    resolution: {integrity: sha512-JOAkBFQoRBbThdBfM2lfZehT9fVTRxiOL2ieEAq3zIHW7L05piZj6F7kw1orxtw35ObI31oiTHfLRdtvDtJEng==}
+  /@waline/hexo-next/3.0.1:
+    resolution: {integrity: sha512-a6LUBTePKR9J38GEveahRKqWl6+Oou7dc4WnFJL3OK2I0immKeEtwXr3VvGO3j3KjHafbcAn3U2w+1Vci4WX5A==}
     dependencies:
       '@next-theme/utils': 1.3.0
     dev: false
