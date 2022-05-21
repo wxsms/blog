@@ -13,7 +13,7 @@ specifiers:
   hexo-generator-tag: 1.0.0
   hexo-renderer-ejs: 2.0.0
   hexo-renderer-marked: 5.0.0
-  hexo-renderer-stylus: 2.0.1
+  hexo-renderer-stylus: 2.1.0
   hexo-server: 3.0.0
   hexo-theme-next: 8.11.1
   prism-themes: 1.9.0
@@ -33,7 +33,7 @@ dependencies:
   hexo-generator-tag: 1.0.0
   hexo-renderer-ejs: 2.0.0
   hexo-renderer-marked: 5.0.0
-  hexo-renderer-stylus: 2.0.1
+  hexo-renderer-stylus: 2.1.0
   hexo-server: 3.0.0
   hexo-theme-next: 8.11.1
   prism-themes: 1.9.0
@@ -121,11 +121,6 @@ packages:
       debug: 4.3.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /amdefine/1.0.1:
-    resolution: {integrity: sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=}
-    engines: {node: '>=0.4.2'}
     dev: false
 
   /ansi-regex/5.0.1:
@@ -352,23 +347,12 @@ packages:
       which: 2.0.2
     dev: false
 
-  /css-parse/1.7.0:
-    resolution: {integrity: sha1-Mh9s9zeCpv91ERE5D8BeLGV9jJs=}
-    dev: false
-
-  /css-parse/2.0.0:
-    resolution: {integrity: sha1-pGjuZnwW2BzPBcWMONKpfHgNv9Q=}
-    dependencies:
-      css: 2.2.4
-    dev: false
-
-  /css/2.2.4:
-    resolution: {integrity: sha512-oUnjmWpy0niI3x/mPL8dVEI1l7MnG3+HHyRPHf+YFSbK+svOhXpmSOcDURUh2aOCgl2grzrOPt1nHLuCVFULLw==}
+  /css/3.0.0:
+    resolution: {integrity: sha512-DG9pFfwOrzc+hawpmqX/dHYHJG+Bsdb0klhyi1sDneOgGOXy9wQIC8hzyVp1e4NRYDBdxcylvywPkkXCHAzTyQ==}
     dependencies:
       inherits: 2.0.4
       source-map: 0.6.1
-      source-map-resolve: 0.5.3
-      urix: 0.1.0
+      source-map-resolve: 0.6.0
     dev: false
 
   /cssom/0.3.8:
@@ -401,17 +385,6 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-    dependencies:
-      ms: 2.0.0
-    dev: false
-
-  /debug/3.1.0:
-    resolution: {integrity: sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==}
     peerDependencies:
       supports-color: '*'
     peerDependenciesMeta:
@@ -654,17 +627,6 @@ packages:
       is-glob: 4.0.3
     dev: false
 
-  /glob/7.0.6:
-    resolution: {integrity: sha1-IRuvr0nlJbjNkyYNFKsTYVKz9Xo=}
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 3.0.4
-      once: 1.4.0
-      path-is-absolute: 1.0.1
-    dev: false
-
   /glob/7.2.0:
     resolution: {integrity: sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==}
     dependencies:
@@ -842,12 +804,12 @@ packages:
       - utf-8-validate
     dev: false
 
-  /hexo-renderer-stylus/2.0.1:
-    resolution: {integrity: sha512-1S4AG8RtzWqVrqKIYv2AJ4UYms5SHDjkdYS7IiGwgUejL24agbTktpAbnH2cG1JWZ15SRqYN0UGB9aAoSAgvEA==}
-    engines: {node: '>=10.13.0'}
+  /hexo-renderer-stylus/2.1.0:
+    resolution: {integrity: sha512-Nef4YCr7JX8jaRaByhzXMSsWnDed+RgJj6aU/ARnYu3Bn5xz/qRz52VJG7KqD0Xuysxa9TIBdVUgNzBrSFn3DQ==}
+    engines: {node: '>=12.13.0'}
     dependencies:
-      nib: 1.1.2
-      stylus: 0.54.8
+      nib: 1.2.0_stylus@0.57.0
+      stylus: 0.57.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1235,19 +1197,6 @@ packages:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: false
 
-  /mkdirp/0.5.5:
-    resolution: {integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==}
-    hasBin: true
-    dependencies:
-      minimist: 1.2.5
-    dev: false
-
-  /mkdirp/1.0.4:
-    resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: false
-
   /moize/6.1.0:
     resolution: {integrity: sha512-WrMcM+C2Jy+qyOC/UMhA3BCHGowxV34dhDZnDNfxsREW/8N+33SFjmc23Q61Xv1WUthUA1vYopTitP1sZ5jkeg==}
     dependencies:
@@ -1299,12 +1248,12 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /nib/1.1.2:
-    resolution: {integrity: sha1-amnt5AgblcDe+L4CSkyK4MLLtsc=}
+  /nib/1.2.0_stylus@0.57.0:
+    resolution: {integrity: sha512-7HgrnMl/3yOmWykueO8/D0q+0iWwe7Z+CK2Eaq/xQV8w1hK80WN1oReRQkfkrztbAAnp/nTHkUSl5EcVkor6JQ==}
+    peerDependencies:
+      stylus: '*'
     dependencies:
-      stylus: 0.54.5
-    transitivePeerDependencies:
-      - supports-color
+      stylus: 0.57.0
     dev: false
 
   /no-case/3.0.4:
@@ -1462,11 +1411,6 @@ packages:
       minimatch: 3.0.4
     dev: true
 
-  /resolve-url/0.2.1:
-    resolution: {integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=}
-    deprecated: https://github.com/lydell/resolve-url#deprecated
-    dev: false
-
   /resolve/1.22.0:
     resolution: {integrity: sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw==}
     hasBin: true
@@ -1488,10 +1432,6 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: false
 
-  /sax/0.5.8:
-    resolution: {integrity: sha1-1HLbIo6zMcJQaw6MFVJK25OdEsE=}
-    dev: false
-
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: false
@@ -1501,11 +1441,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       xmlchars: 2.2.0
-    dev: false
-
-  /semver/6.3.0:
-    resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
-    hasBin: true
     dev: false
 
   /send/0.17.1:
@@ -1557,25 +1492,12 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /source-map-resolve/0.5.3:
-    resolution: {integrity: sha512-Htz+RnsXWk5+P2slx5Jh3Q66vhQj1Cllm0zvnaY98+NFx+Dv2CF/f5O/t8x+KaNdrdIAsruNzoh/KpialbqAnw==}
+  /source-map-resolve/0.6.0:
+    resolution: {integrity: sha512-KXBr9d/fO/bWo97NXsPIAW1bFSBOuCnjbNTBMO7N59hsv5i9yzRDfcYwwt0l04+VqnKC+EwzvJZIP/qkuMgR/w==}
+    deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dependencies:
       atob: 2.1.2
       decode-uri-component: 0.2.0
-      resolve-url: 0.2.1
-      source-map-url: 0.4.1
-      urix: 0.1.0
-    dev: false
-
-  /source-map-url/0.4.1:
-    resolution: {integrity: sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==}
-    dev: false
-
-  /source-map/0.1.43:
-    resolution: {integrity: sha1-wkvBRspRfBRx9drL4lcbK3+eM0Y=}
-    engines: {node: '>=0.8.0'}
-    dependencies:
-      amdefine: 1.0.1
     dev: false
 
   /source-map/0.6.1:
@@ -1615,31 +1537,15 @@ packages:
       min-indent: 1.0.1
     dev: false
 
-  /stylus/0.54.5:
-    resolution: {integrity: sha1-QrlWCTHKcJDOhRWnmLqeaqPW3Hk=}
+  /stylus/0.57.0:
+    resolution: {integrity: sha512-yOI6G8WYfr0q8v8rRvE91wbxFU+rJPo760Va4MF6K0I6BZjO4r+xSynkvyPBP9tV1CIEUeRsiidjIs2rzb1CnQ==}
     hasBin: true
     dependencies:
-      css-parse: 1.7.0
+      css: 3.0.0
       debug: 4.3.2
-      glob: 7.0.6
-      mkdirp: 0.5.5
-      sax: 0.5.8
-      source-map: 0.1.43
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /stylus/0.54.8:
-    resolution: {integrity: sha512-vr54Or4BZ7pJafo2mpf0ZcwA74rpuYCZbxrHBsH8kbcXOwSfvBFwsRfpGO5OD5fhG5HDCFW737PKaawI7OqEAg==}
-    hasBin: true
-    dependencies:
-      css-parse: 2.0.0
-      debug: 3.1.0
       glob: 7.2.0
-      mkdirp: 1.0.4
       safer-buffer: 2.1.2
       sax: 1.2.4
-      semver: 6.3.0
       source-map: 0.7.3
     transitivePeerDependencies:
       - supports-color
@@ -1737,11 +1643,6 @@ packages:
   /unpipe/1.0.0:
     resolution: {integrity: sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=}
     engines: {node: '>= 0.8'}
-    dev: false
-
-  /urix/0.1.0:
-    resolution: {integrity: sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=}
-    deprecated: Please see https://github.com/lydell/urix#deprecated
     dev: false
 
   /utils-merge/1.0.1:
