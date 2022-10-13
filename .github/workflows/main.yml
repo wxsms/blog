@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup timezone
-        uses: zcong1993/setup-timezone@v1.1.2
+        uses: zcong1993/setup-timezone@v2.0.0
         with:
           timezone: Asia/Shanghai
       - uses: actions/checkout@v3
