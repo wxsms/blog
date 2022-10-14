@@ -4,7 +4,7 @@ specifiers:
   '@waline/hexo-next': 3.0.1
   hexo: 6.3.0
   hexo-generator-archive: 1.0.0
-  hexo-generator-category: 1.0.0
+  hexo-generator-category: 2.0.0
   hexo-generator-cname: 0.3.0
   hexo-generator-feed: 3.0.0
   hexo-generator-index: 2.0.0
@@ -24,7 +24,7 @@ dependencies:
   '@waline/hexo-next': 3.0.1
   hexo: 6.3.0
   hexo-generator-archive: 1.0.0
-  hexo-generator-category: 1.0.0
+  hexo-generator-category: 2.0.0
   hexo-generator-cname: 0.3.0
   hexo-generator-feed: 3.0.0
   hexo-generator-index: 2.0.0
@@ -687,11 +687,11 @@ packages:
       hexo-pagination: 1.0.0
     dev: false
 
-  /hexo-generator-category/1.0.0:
-    resolution: {integrity: sha512-kmtwT1SHYL2ismbGnYQXNtqLFSeTdtHNbJIqno3LKROpCK8ybST5QVXF1bZI9LkFcXV/H8ilt8gfg4/dNNcQQQ==}
-    engines: {node: '>=8.6.0'}
+  /hexo-generator-category/2.0.0:
+    resolution: {integrity: sha512-9OduRBf3WeRDa4BR0kAfRjOVHur7v3fm0NKAwbjUiqULigAdNZVZPO3cHKW2MlBbl/lI5PuWdhQ9zZ99CCCAgQ==}
+    engines: {node: '>=14'}
     dependencies:
-      hexo-pagination: 1.0.0
+      hexo-pagination: 3.0.0
     dev: false
 
   /hexo-generator-cname/0.3.0:
@@ -767,6 +767,11 @@ packages:
   /hexo-pagination/1.0.0:
     resolution: {integrity: sha512-miEVFgxchPr2qNWxw0JWpJ9R/Yaf7HjHBZVjvCCcqfbsLyYtCvIfJDxcEwz1sDOC/fLzYPqNnhUI73uNxBHRSA==}
     engines: {node: '>=8.6.0'}
+    dev: false
+
+  /hexo-pagination/3.0.0:
+    resolution: {integrity: sha512-8oo1iozloZo7TojPVYg4IxL3SJKCBdSJ908fTlIxIK7TWJIKdYnQlW31+12DBJ0NhVZA/lZisPObGF08wT8fKw==}
+    engines: {node: '>=14'}
     dev: false
 
   /hexo-renderer-ejs/2.0.0:
