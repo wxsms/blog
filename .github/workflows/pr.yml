@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-      - uses: pnpm/action-setup@v2.2.3
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: latest
       - run: pnpm i --frozen-lockfile
