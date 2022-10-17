@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@waline/hexo-next': 3.0.1
   hexo: 6.3.0
-  hexo-generator-archive: 1.0.0
+  hexo-generator-archive: 2.0.0
   hexo-generator-category: 2.0.0
   hexo-generator-cname: 0.3.0
   hexo-generator-feed: 3.0.0
@@ -23,7 +23,7 @@ specifiers:
 dependencies:
   '@waline/hexo-next': 3.0.1
   hexo: 6.3.0
-  hexo-generator-archive: 1.0.0
+  hexo-generator-archive: 2.0.0
   hexo-generator-category: 2.0.0
   hexo-generator-cname: 0.3.0
   hexo-generator-feed: 3.0.0
@@ -680,11 +680,11 @@ packages:
       hexo-util: 2.7.0
     dev: false
 
-  /hexo-generator-archive/1.0.0:
-    resolution: {integrity: sha512-24TeanDGpMBUIq37DHpSESQbeN6ssZ06edsGSI76tN4Yit50TgsgzP5g5DSu0yJk0jUtHJntysWE8NYAlFXibA==}
-    engines: {node: '>=8.6.0'}
+  /hexo-generator-archive/2.0.0:
+    resolution: {integrity: sha512-KikJk7dGFbtNHOgqtLFGf5T/S8n1paGp+Gy0KfVDz+HKYhGbXOouyiZkmc3O9KrYt6ja14rmkMhq7KKGtvfehw==}
+    engines: {node: '>=14'}
     dependencies:
-      hexo-pagination: 1.0.0
+      hexo-pagination: 3.0.0
     dev: false
 
   /hexo-generator-category/2.0.0:
