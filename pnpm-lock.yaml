@@ -8,7 +8,7 @@ specifiers:
   hexo-generator-cname: 0.3.0
   hexo-generator-feed: 3.0.0
   hexo-generator-index: 3.0.0
-  hexo-generator-searchdb: 1.4.0
+  hexo-generator-searchdb: 1.4.1
   hexo-generator-sitemap: 3.0.1
   hexo-generator-tag: 2.0.0
   hexo-renderer-ejs: 2.0.0
@@ -28,7 +28,7 @@ dependencies:
   hexo-generator-cname: 0.3.0
   hexo-generator-feed: 3.0.0
   hexo-generator-index: 3.0.0
-  hexo-generator-searchdb: 1.4.0
+  hexo-generator-searchdb: 1.4.1
   hexo-generator-sitemap: 3.0.1
   hexo-generator-tag: 2.0.0
   hexo-renderer-ejs: 2.0.0
@@ -719,8 +719,8 @@ packages:
       hexo-pagination: 3.0.0
     dev: false
 
-  /hexo-generator-searchdb/1.4.0:
-    resolution: {integrity: sha512-TkwxlqxptRIXHwYeI/V32O2TxXkfqWa37Rrmg347Q+YT1eqk7vQ31vR4zLudBAcSr85ST0VUedYd1/gLBSJl9Q==}
+  /hexo-generator-searchdb/1.4.1:
+    resolution: {integrity: sha512-7m8IBpZbI6iKb2jRYxs4pghD6Ln8ylQSRGl6MIC4G9wws21vYSXSD8rvC3MoCO+pWBHs6E/mTA/rjG+p2AZfVg==}
     dependencies:
       nunjucks: 3.2.3
     transitivePeerDependencies:
