@@ -5,7 +5,7 @@ tags: vue
 
 Vue3 与 Vue2 的最大不同点之一是响应式的实现方式。众所周知，Vue2 使用的是 `Object.defineProperty`，为每个对象设置 getter 与 setter，从而达到监听数据变化的目的。然而这种方式存在诸多限制，如对数组的支持不完善，无法监听到对象上的新增属性等。因此 Vue3 通过 Proxy API 对响应式系统进行了重写，并将这部分代码封装在了 `@vue/reactivity` 包中。
 
-本文主要记录对 Vue3 的响应式实现方式的学习过程以及一些思考。注意本文引用的代码与实际的 Vue3 实现方式会有出入，Vue3 需要更多地考虑高效，此处以易懂为主，但主要思想与其类似。
+本文主要记录对 Vue3 的响应式实现方式的学习过程以及一些思考。注意本文引用的代码与实际的 Vue3 实现方式会有出入，Vue3 需要更多地考虑高效与兼容各种边界情况，此处以易懂为主，但主要思想与其类似。
 
 本文中提到的所有代码可以在 [https://github.com/wxsms/learning-vue](https://github.com/wxsms/learning-vue) 找到，感谢 [mini-vue](https://github.com/cuixiaorui/mini-vue) 及其作者做出的学习指导。
 
@@ -114,7 +114,7 @@ export const depsMap = new Map();
 
 ### 依赖监听
 
-先放置一个骨架代码结构，一个依赖监听模块大致需要以下内容：
+一个依赖监听模块大致需要以下内容：
 
 ```javascript
 import { Dep, depsMap } from './dep';
@@ -157,7 +157,7 @@ export function trigger (target, prop) {
 
 #### `trigger`
 
-触发作用的代码非常简单，先来实现它：
+触发作用的代码非常简单，只需直接拿到对应的 dep，并触发它的 `trigger` 函数：
 
 ```javascript
 export function trigger (target, prop) {
@@ -165,11 +165,9 @@ export function trigger (target, prop) {
 }
 ```
 
-就是直接拿到了对应的 dep，并触发了它的 `trigger` 函数。
-
 #### `track`
 
-`trigger` 是将 dep 取出来并触发里面的 effects，那么 `track` 自然就是将 effect 存到 dep 中去。
+`trigger` 是将 dep 取出来并触发里面的 effects，那么 `track` 就是将 effect 存到 dep 中去。
 
 需要注意的是，因为 `depsMap` 一开始是空的，所以取 dep 会包含一个初始化的过程：
 
@@ -193,7 +191,7 @@ function getDep (target, prop) {
 }
 ```
 
-代码比较多，但逻辑很简单。下面就是 `track` 函数的实现：
+代码比较多，但逻辑很简单。下面是 `track` 函数的具体实现：
 
 ```javascript
 export function track (target, prop) {
@@ -204,8 +202,6 @@ export function track (target, prop) {
   let dep = getDep(target, prop);
   // 追踪正在运行中的作用
   dep.track(currentEffect);
-  // 作用也有一个 deps 变量，储存该作用的所有依赖。这部分在下面实现。
-  currentEffect.deps.add(dep);
 }
 ```
 
@@ -218,33 +214,23 @@ export function effect (fn) {
   let e = new ReactiveEffect(fn);
   // 直接运行
   e.run();
-  // 返回一个函数，用来停止 effect
-  return e.stop.bind(e);
 }
 ```
 
-#### ReactiveEffect
+#### `ReactiveEffect`
 
 最后来实现 ReactiveEffect 这个类。从上面的其它函数可以看出，这个类需要以下功能：
 
 1. 接收一个 `fn` 函数；
-2. 包含一个 `deps` 成员变量，储存有该作用的所有依赖；
-3. 包含一个 `run` 成员方法，可以运行一次该作用；
-4. 包含一个 `stop` 成员方法，可以停止该作用的自动执行；
+2. 包含一个 `run` 成员方法，可以运行一次该作用；
 
-以下我们来分别实现它们。
+下面我们来分别实现它们。
 
 **1. 构造器**
-
-这里没什么特别的，就是创建变量与赋值。
 
 ```javascript
 constructor (fn) {
    this.fn = fn;
-   // deps 同样是一个 set，自动去重
-   this.deps = new Set();
-   // active 变量用来标识该作用是否已停止
-   this.active = true;
 }
 ```
 
@@ -254,12 +240,6 @@ run 函数的关键在于 `currentEffect` 的赋值：我们在这里默认在 `
 
 ```javascript
 run () {
-  // 该作用已停止了，无需再收集依赖，
-  // 因此直接运行 fn 即可
-  if (!this.active) {
-    return this.fn();
-  }
- 
   // 赋值 currentEffect
   currentEffect = this;
   this.fn();
@@ -268,28 +248,25 @@ run () {
 };
 ```
 
-**3. `stop`**
-
-stop 函数只需做一些简单的清理工作即可：
+仔细看的话会发现，这里每一次调用 `run` 都会给 `currentEffect` 赋值，可以理解为发起了依赖收集的流程。换而言之，就是每一次执行这个作用都会收集一次依赖。这其实是必要的。因为函数里面的具体代码是未知的，举个例子：
 
 ```javascript
-stop () {
-  this.active = false;
-  // 从本作用依赖的左右 dep 中，取消追踪
-  for (let dep of this.deps) {
-    dep.untrack(this);
+effect(() => {
+  if (a.b && a.b.c) {
+    d = a.b.c;
+    // ...
   }
-  // 清除本作用的 deps
-  this.deps.clear();
-}
+})
 ```
+
+如果依赖收集只执行一次，并且第一次执行的时候 `a.b` 是 falsely 的，那么第一次执行就只收集到了 `a.b` 这个依赖，而 `a.b.c` 没有收集到。那么当只有 `a.b.c` 发生变化时，d 将不会被重新赋值，这显然是不符合预期的。
 
 ### 小结
 
 目前为止，我们定义了两个类以及一些工具函数：
 
 1. `Dep` 表示一个“依赖”，它内部含有一个 `effects` 集合，用来触发与它有关的作用；
-2. `ReactiveEffect` 表示一个“作用”。它内部也含有一个 `deps` 集合，但这里只是用来停止该 effect。
+2. `ReactiveEffect` 表示一个“作用”；
 3. `track` 与 `trigger` 函数，分别用来追踪依赖与触发作用。
 
 它们可以实现如下效果：
@@ -321,3 +298,116 @@ expect(fn).toHaveBeenCalledTimes(3);
 4. 当 `obj` 属性发生变化（调用 trigger）时，作用函数将自动运行
 
 看起来好像是那么回事了，但还有点抽象！距离我们的最终目标还有一定距离。另外我们目前为止还没有看到 Proxy 的使用，它将在下一节出现。
+
+## 响应式变量
+
+现在我们有了依赖与依赖追踪，是时候来实现第二个关键组件：`reactive` 了。 它将帮我们完成“在作用函数内部自动调用 `track()`”以及当依赖变化时自动调用 `trigger()` 的工作。
+
+众所周知，Vue3 使用了 Proxy 来实现响应式：
+
+```javascript
+import { track, trigger } from './effect.js';
+
+export function reactive (obj) {
+  return new Proxy(obj, {
+    get (target, p, receiver) {
+      // todo
+    },
+    set (target, p, value, receiver) {
+      // todo
+    }
+  });
+}
+```
+
+我们需要做的两件事：
+
+1. 当 `get` 触发时，追踪依赖
+2. 当 `set` 触发时，触发作用
+
+### `get`
+
+`get` 的第一版实现：
+
+```javascript
+ get (target, p, receiver) {
+   // 追踪依赖！
+   track(...arguments);
+   // 获取值并返回
+   let value = Reflect.get(...arguments);
+   return value;
+ }
+```
+
+Reflect 通常是与 Proxy 成对出现的 API，这里的 `Reflect.get(...arguments)` 约等于 `target[p]`。
+
+但是，这么做有个问题！因为 Proxy 代理的是浅层属性，举个例子，当我取 `a.b.c` 时，实际上分了两步：
+
+1. 先取 `a.b`，这里 `a` 是 reactive 对象，能够触发 getter，没问题；
+2. 再取 `b.c`，注意这里如果不做任何操作的话，`b` 将是一个普通对象，也就是说取值到这里响应性就丢失了。
+
+为了解决这个问题，我们需要做一点小小的改造：
+
+```javascript
+ get (target, p, receiver) {
+   // 追踪依赖！
+   track(...arguments);
+   // 获取值
+   let value = Reflect.get(...arguments);
+   // 如果 value 是一个对象，需要递归调用 reactive 将它再次包裹
+   if (value !== null && typeof value === 'object') {
+     return reactive(value);
+   }
+   return value;
+ }
+```
+
+### `set`
+
+实现 setter 需要注意的点是：
+
+1. 触发作用要在设置新值后进行；
+2. 需要判断新旧值是否相等以避免死循环。
+
+```javascript
+ set (target, p, value, receiver) {
+   // 先取值
+   let oldValue = Reflect.get(...arguments);
+   // 如果新旧值相等，则无需触发作用
+   if (oldValue === value) {
+      return value;
+   }
+   // 设置新的值，约等于 `target[p] = value`
+   Reflect.set(...arguments);
+   // 触发作用！这里是在设置新值后才进行的。
+   trigger(...arguments);
+   return value;
+ }
+```
+
+大功告成！
+
+### 小结
+
+我们现在可以：
+
+1. 定义响应式变量；
+2. 定义作用函数；
+3. 响应式变量发生变化时，函数将自动执行。
+
+```javascript
+let a = reactive({ value: 1 });
+let b;
+
+effect(() => {
+  b = a.value * 2;
+});
+expect(b).toEqual(2);
+
+a.value = 100;
+expect(b).toEqual(200);
+
+a.value = 300;
+expect(b).toEqual(600);
+```
+
