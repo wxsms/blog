@@ -7,6 +7,7 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "draft": "hexo new draft",
+    "publish": "hexo publish",
     "post": "hexo new post"
   },
   "hexo": {

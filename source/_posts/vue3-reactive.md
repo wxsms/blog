@@ -1,13 +1,15 @@
 ---
 title: Vue3 响应式原理
 tags: vue
+date: 2023-03-17 16:09:48
 ---
+
 
 Vue3 与 Vue2 的最大不同点之一是响应式的实现方式。众所周知，Vue2 使用的是 `Object.defineProperty`，为每个对象设置 getter 与 setter，从而达到监听数据变化的目的。然而这种方式存在诸多限制，如对数组的支持不完善，无法监听到对象上的新增属性等。因此 Vue3 通过 Proxy API 对响应式系统进行了重写，并将这部分代码封装在了 `@vue/reactivity` 包中。
 
 本文主要记录对 Vue3 的响应式实现方式的学习过程以及一些思考。注意本文引用的代码与实际的 Vue3 实现方式会有出入，Vue3 需要更多地考虑高效与兼容各种边界情况，此处以易懂为主，但主要思想与其类似。
 
-本文中提到的所有代码可以在 [https://github.com/wxsms/learning-vue](https://github.com/wxsms/learning-vue) 找到，感谢 [mini-vue](https://github.com/cuixiaorui/mini-vue) 及其作者做出的学习指导。
+本文中提到的大部分代码可以在 [https://github.com/wxsms/learning-vue](https://github.com/wxsms/learning-vue) 找到。
 
 <!-- more -->
 
@@ -214,6 +216,7 @@ export function effect (fn) {
   let e = new ReactiveEffect(fn);
   // 直接运行
   e.run();
+  return e;
 }
 ```
 
@@ -533,65 +536,291 @@ export function computed (eff) {
 
 > 立即运行一个函数，同时响应式地追踪其依赖，并在依赖更改时重新执行。
 
-也就是说，`watchEffect` 无需指定它监听的值，可以完成自动的追踪。
+也就是说，`watchEffect` 无需指定它监听的值，可以完成自动的追踪，且会立即执行。
 
-下面我们分别来实现它们。再次强调，这里的实现与 Vue.js 真正的实现是有区别的。
+然而在实现这两个 API 之前，需要先对 ReactiveEffect 做一点小小的扩展改造。
+
+#### effect 改造 - 允许停止运行
+
+Vue3 的 watch/watchEffect API 会返回一个 stop 函数，该函数可以将侦听器停止，停止后即不再自动触发。而我们目前的 ReactiveEffect 尚不支持停止。因此我们需要给它加一个 `stop` 函数。
+
+想要停止一个 effect，我们需要做的事情就是把它从所有的 dep 中移除，这样一来 effect 就不能被 dep 触发了。比如：
+
+```javascript
+for (let deps of depsMap) {
+  for (let dep of deps) {
+    dep.untrack(thisEffect);
+  }
+}
+```
+
+但是，这样做有几个问题：
+
+1. 太过暴力，性能堪忧；
+2. 由于 Vue3 实际上在第一层使用了 WeakMap，而 WeakMap 是不支持遍历的。
+
+因此，我们需要对 ReactiveEffect 做一些改造，将这些相关的 dep 存下来。
+
+```javascript
+export class ReactiveEffect {
+   constructor (fn) {
+      this.fn = fn;
+      // 新增一个 deps Set，表示所有与本 effect 相关的依赖
+      this.deps = new Set();
+      // 新增一个 active 属性，表示是否已停止
+      this.active = true;
+   }
+
+   run () {
+      // effect 已经停止了，无需再收集依赖。
+      // 但既然 run 被调用了，还是运行并返回一下吧！
+      if (!this.active) {
+         return this.fn();
+      }
+      // 与之前一样
+      // ...
+   };
+
+   /**
+    * 新增的 stop 函数，用来停止 effect
+    */
+   stop () {
+      // 将 active 设置为 false，表示已停止
+      this.active = false;
+      // 将本 effect 实例从所有 deps 中移除
+      for (let dep of this.deps) {
+         dep.untrack(this);
+      }
+      // 清空 deps
+      this.deps.clear();
+   }
+}
+```
+
+同时，我们需要在追踪依赖时，将依赖添加到 effect 的 deps 中（双向追踪）：
+
+```javascript
+export function track (target, prop) {
+  if (!currentEffect) {
+    return;
+  }
+  let dep = getDep(target, prop);
+  dep.track(currentEffect);
+  // 新增！将 dep 也添加到 currentEffect 的 deps 中
+  currentEffect.deps.add(dep);
+}
+```
 
 #### watchEffect
 
-```javascript
-import { effect } from './effect';
+加入 stop 函数后，watchEffect 实现如下：
 
-export const watchEffect = effect;
+```javascript
+export const watchEffect = (cb) => {
+   let e = effect(cb);
+   // 注意这里要 bind(e)，否则 this 指针会错乱
+   return e.stop.bind(e);
+};
 ```
 
-有点简单粗暴了。但是它实际上需要达到的效果就是和上面实现的 `effect` 是一模一样的。也就是说我们从一开始就已经实现了 `watchEffect`。
+非常地“水到渠成”。
 
 ```javascript
 let a = ref(1);
 let b = ref(0);
-watchEffect(() => {
+let stop = watchEffect(() => {
   b.value = a.value * 2;
 });
 expect(b.value).toEqual(2);
 
 a.value = 100;
 expect(b.value).toEqual(200);
+
+// 调用停止函数，后续 a.value 再变化时，函数将不再执行
+stop();
 ```
 
-然而，需要注意的是，`effectWatch` 根据官方文档，它会返回一个函数，该函数可以用来“清理”effect，即停止该 effect 的继续运行。我们在上面实现的 `ReactiveEffect` 类中并没有包含这部分逻辑。
+#### effect 改造 - 加入 scheduler
 
-#### watch
+与 watchEffect 不同的是，watch 有更多特性：
+
+1. watch 方法接收两个参数：source 和 callback，分别代表监听的对象和 effect 函数；
+2. effect 函数接收两个参数，value 和 oldValue，分别代表新的值和变化后的值；
+3. 初次定义时，effect 函数不会运行；
+4. 只有 source 的改变才能触发 effect。
+
+为了实现第 3&4 点，我们需要给 ReactiveEffect 加入一个 scheduler 的概念：它将决定 `run` 函数何时执行。
+
+首先我们需要修改一下 Dep 类：
 
 ```javascript
-export function watch (source, callback) {
-  let oldValue;
-  let firstrun = true;
+export class Dep {
+  // 同上...
 
-  return effect(() => {
-    if (firstrun) {
-      firstrun = false;
-      oldValue = JSON.parse(JSON.stringify(source));
-      return;
+  trigger () {
+    for (let e of this._effects) {
+      if (e.scheduler) {
+        // 如果存在 scheduler，则执行 scheduler
+        e.scheduler();
+      } else {
+        // 否则直接 run
+        e.run();
+      }
     }
-    callback(source, oldValue);
-    oldValue = JSON.parse(JSON.stringify(source));
-  });
+  }
 }
 ```
 
+然后修改 effect：
+
+```javascript
+export class ReactiveEffect {
+   constructor (fn, scheduler) {
+      // 同上...
+      // 但添加一个 scheduler 选项
+      this.scheduler = scheduler;
+   }
+    
+   // 同上...
+}
+
+// 添加了一个 scheduler 参数
+export function effect (fn, scheduler) {
+   let e = new ReactiveEffect(fn, scheduler);
+   e.run();
+   return e;
+}
+```
+
+OK，完成了。实际上只是添加了一个可以自由更改 run 执行时机的选项。但 scheduler 非常强大，Vue 的另一个核心功能 `nextTick` 也是基于它实现的，此处先不展开。
+
+#### watch
+
+watch 的函数重载非常多，为了简单起见，我们只实现其中一种形式：
+
+1. getter：函数，返回监听的值；
+2. cb：回调函数
+
+```javascript
+export function watch (getter, cb) {
+   let oldValue;
+
+   let job = () => {
+      // 获取新值
+      let newVal = e.run();
+      // 调用回调函数
+      cb(newVal, oldValue);
+      // 设置“新的旧值”
+      oldValue = newVal;
+   };
+   // 定义 effect
+   // 注意 effect 的本体是 getter，
+   // 也就是说只有 getter 可以触发依赖收集
+   // 而 job 将作为 scheduler 传入
+   let e = effect(getter, job);
+   // 首次运行，完成第一个旧值的获取
+   oldValue = e.run();
+   // 与 watchEffect 一样返回 stop 函数
+   return e.stop.bind(e);
+}
+```
+
+至此，watch 函数也实现完了。
+
 ```javascript
 let a = reactive({ value: 1 });
-let b = 0;
+let fn = jest.fn();
+let stop = watch(() => a.value, fn);
+expect(fn).not.toBeCalled();
 
-watch(a, (val, oldVal) => {
-  b = oldVal.value + val.value;
-});
-expect(b).toEqual(0);
+a.value = 2;
+expect(fn).toBeCalledWith(2, 1);
 
-a.value = 100;
-expect(b).toEqual(101);
+stop();
 
-a.value = 200;
-expect(b).toEqual(300);
+a.value = 3;
+expect(fn).toHaveBeenCalledTimes(1);
 ```
+
+### 小结
+
+在本节中，我们使用现成的 `effect` 与 `reactive` API 实现了 `ref` 与 `computed`，并且通过对 effect 扩展的两个功能（stop、scheduler）分别实现了 `watchEffect` 与 `watch`。
+
+至此，Vue3 响应式的核心功能已全部实现完！
+
+## One More Thing
+
+现在既然已经实现了响应式，那么我们回到最初的问题：
+
+```javascript
+let col = [1, 2, 3, 4, 5]
+let s = sum(col)
+```
+
+我们如何将这段代码变成响应式的，或者说，是否可以更进一步，直接将它变成响应式的 UI？
+
+那么我们直接来定义一个（似曾相识的）组件：
+
+```javascript
+const App = {
+   // 一个最原始的 render 函数，接收 ctx 参数
+   // 返回一个 HTML Node
+   render (ctx) {
+      let div = document.createElement('div');
+      // 使用 reduce 获得累加的和
+      div.textContent = ctx.col.reduce((a, b) => a + b, 0);
+      return div;
+   },
+   // 模仿组合式 API 的 setup 函数...
+   setup () {
+      const col = reactive([1, 2, 3, 4, 5])
+      return { col }
+   }
+}
+```
+
+然后，我们编写一个 createApp 函数：
+
+```javascript
+function createApp (Component) {
+   return {
+      // 挂载函数
+      mount (root) {
+         // 一点兼容代码，获取挂载的根节点
+         let rootNode = typeof root === 'string' ? document.querySelector(root) : root;
+         // 调用 setup 获取 context
+         let context = Component.setup();
+         // 每当 context 发生变化时，effect 都将自动执行
+         effect(() => {
+            rootNode.innerHTML = '';
+            let node = Component.render(context);
+            rootNode.append(node);
+         });
+      }
+   };
+}
+```
+
+最后，我们将组件挂载到 `#app` 上：
+
+```javascript
+createApp(App).mount('#app')
+```
+
+（当然我们还需要一个 HTML）：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="index.js" type="module"></script>
+</body>
+</html>
+```
+
+到这里，Vue3 的整体框架已经呼之欲出了。
