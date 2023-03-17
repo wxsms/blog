@@ -32,22 +32,11 @@ let s = sum(col)
 
 我们的目标：
 
-```javascript
-// 响应式对象
-let a = reactive({ value: 1 });
-let b;
+```mermaid
+graph LR
 
-// 自动运行的函数
-effect(() => {
-  b = a.value * 2;
-});
-
-// b 将被自动赋值为 1 * 2
-expect(b).toEqual(2);
-
-a.value = 100;
-// b 将再次被自动赋值为 100 * 2
-expect(b).toEqual(200);
+A[依赖变更] -->|自动触发| B[响应函数]
+B -->|自动监听| A
 ```
 
 ## 依赖与依赖监听
@@ -111,6 +100,15 @@ export const depsMap = new Map();
 2. 它的 value 又是一个 Map：
    1. 它的 key 是一个键名，如 `c = a.b + 1` 中，key 是 `b`；
    2. 它的 value 是一个 Dep 实例。
+
+```mermaid
+mindmap
+depsMap
+    A[Key: Object]
+    B[Value: Map]
+      C[Key: string]
+      D[Value: dep]
+```
 
 在实际的 Vue3 代码中，这里的第一层使用的是 WeakMap 而非 Map。原因很简单：WeakMap 对 key 是弱引用，当 key 在代码中的其它地方已经不存在应用时，它 (key) 以及对应的 value 都会被 GC。而如果使用 Map 的话，保有的是强引用，就会导致内存泄漏了。
 
@@ -328,6 +326,15 @@ export function reactive (obj) {
 1. 实现 getter：当 `get` 触发时，追踪依赖
 2. 实现 setter：当 `set` 触发时，触发作用
 
+```mermaid
+graph LR
+
+A[reactive] -->|发生读取| B[track]
+A[reactive] -->|发生变更| C[trigger]
+B --> D[ReactiveEffect]
+C --> D[ReactiveEffect]
+```
+
 ### `get`
 
 `get` 的第一版实现：
@@ -418,6 +425,16 @@ expect(b).toEqual(600);
 实际上当进行到这里的时候，响应式的两大基石就已经完成了。因此下面其它的 API 实现我决定都通过 `reactive` 与 `effect` 来实现。当然实际上 Vue3 考虑的更多，做的也会更复杂一些，但是原理是类似的。
 
 ## 其它响应式 API
+
+```mermaid
+mindmap
+   Reactive & Effect
+      A)ref(
+      A)computed(
+      A)watch(
+      A)watchEffect(
+      A)...(
+```
 
 ### ref
 
@@ -758,6 +775,13 @@ let s = sum(col)
 ```
 
 我们如何将这段代码变成响应式的，或者说，是否可以更进一步，直接将它变成响应式的 UI？
+
+```mermaid
+graph LR
+
+A[数据变更] -->|自动触发| B[界面渲染]
+B -->|自动监听| A
+```
 
 那么我们直接来定义一个（似曾相识的）组件：
 

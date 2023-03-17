@@ -47,14 +47,16 @@ marked:
 relative_link: false
 future: true
 highlight:
-  enable: false
+  exclude_languages:
+    - mermaid
+  enable: true
   line_number: false
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
-  enable: true
+  enable: false
   preprocess: true
   line_number: false
   tab_replace: ''
