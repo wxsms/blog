@@ -48,7 +48,7 @@ a.value = 100;
 expect(b).toEqual(200);
 ```
 
-## 一切的基石：依赖与依赖监听
+## 依赖与依赖监听
 
 让我们从零开始：当要实现一个响应式系统的时候，我们实际需要的是什么？
 
@@ -322,8 +322,8 @@ export function reactive (obj) {
 
 我们需要做的两件事：
 
-1. 当 `get` 触发时，追踪依赖
-2. 当 `set` 触发时，触发作用
+1. 实现 getter：当 `get` 触发时，追踪依赖
+2. 实现 setter：当 `set` 触发时，触发作用
 
 ### `get`
 
@@ -378,10 +378,11 @@ Reflect 通常是与 Proxy 成对出现的 API，这里的 `Reflect.get(...argum
       return value;
    }
    // 设置新的值，约等于 `target[p] = value`
-   Reflect.set(...arguments);
+   let newValue = Reflect.set(...arguments);
    // 触发作用！这里是在设置新值后才进行的。
    trigger(...arguments);
-   return value;
+   // 注意这里返回的是 Reflect.set 的返回值，而不是 value
+   return newValue;
  }
 ```
 
@@ -411,3 +412,186 @@ a.value = 300;
 expect(b).toEqual(600);
 ```
 
+实际上当进行到这里的时候，响应式的两大基石就已经完成了。因此下面其它的 API 实现我决定都通过 `reactive` 与 `effect` 来实现。当然实际上 Vue3 考虑的更多，做的也会更复杂一些，但是原理是类似的。
+
+## 其它响应式 API
+
+### ref
+
+上面的 `reactive` API 可以对对象和数组这样的复杂类型完成监听，但对于字符串、数组或布尔值这样的基本类型，它是无能为力的。因为 Proxy 不能监听这种基本类型。因此，我们需要对它进行一层包裹：先将它包裹到一个对象中，然后通过 `a.value` 来访问实际的值。这实际上是 Vue3 目前仍在致力于解决的问题之一，如通过[响应性语法糖](https://cn.vuejs.org/guide/extras/reactivity-transform.html)。
+
+下面，我们将以惊人的效率实现 `ref`：
+
+```javascript
+export function ref (value) {
+  return reactive({ value: value });
+}
+```
+
+这种方式非常简单直接，并且能够完美地运行：
+
+```javascript
+let a = ref(1);
+let b;
+
+effect(() => {
+  b = a.value * 2;
+});
+expect(b).toEqual(2);
+
+a.value = 100;
+expect(b).toEqual(200);
+```
+
+当然实际上 Vue3 不是这么干的：它实现了一个 `RefImpl` 类，并且与 `reactive` 类似地，通过 getter 与 setter 完成对 value 的追踪。
+
+### computed
+
+计算属性 (`computed`) 是经典的 Vue.js API，它能够接受一个 getter 函数，并且返回一个实时更新的值。
+
+#### 仅 getter
+
+我们先来实现一个最常见的版本：
+
+```javascript
+export function computed (getter) {
+   // 计算属性返回的是一个 ref
+   let result = ref(null);
+   // 调用 getter 函数，更新 ref 的值
+   effect(() => {
+      result.value = getter();
+   });
+   return result;
+}
+```
+
+这是一个只包含 getter 函数的计算属性，它可以这么用：
+
+```javascript
+let a = ref(1);
+let b = computed(() => a.value + 1);
+expect(b.value).toEqual(2);
+
+a.value = 100;
+expect(b.value).toEqual(101);
+
+a.value = 300;
+expect(b.value).toEqual(301);
+```
+
+#### getter & setter
+
+实际上，计算属性可以同时拥有 getter 和 setter：
+
+```javascript
+let a = ref(1);
+let b = computed({ get: () => a.value + 1, set: (val) => a.value = val - 1});
+```
+
+为了优雅起见，我们先对 computed 内部的函数做一下封装，首先是 getterEffect，它与上面的实现一样，接受一个 ref 与一个 effect 函数：
+
+```javascript
+function getterEff (computedRef, eff) {
+  effect(() => {
+    computedRef.value = eff();
+  });
+}
+```
+
+然后是 setterEffect：
+
+```javascript
+function setterEff (computedRef, eff) {
+  effect(() => {
+    eff(computedRef.value);
+  });
+}
+```
+
+与 getterEffect 不同的是，setter 是将 ref 值作为参数传入到 effect 函数内，而 getterEffect 是将 effect 函数的返回赋值给 ref。
+
+最后，我们就可以得到完整的 `computed` 函数了：
+
+```javascript
+export function computed (eff) {
+  let result = ref(null);
+  if (typeof eff === 'function') {
+    // 这是一个简单的 getter 函数
+    getterEff(result, eff);
+  } else {
+    // 同时传入了 getter 和 setter
+    getterEff(result, eff.get);
+    setterEff(result, eff.set);
+  }
+  return result;
+}
+```
+
+### watch
+
+除了经典的 `watch` API 以外，Vue3 还带来了一个新的 `watchEffect` API。与 `watch` 不同的是，它可以：
+
+> 立即运行一个函数，同时响应式地追踪其依赖，并在依赖更改时重新执行。
+
+也就是说，`watchEffect` 无需指定它监听的值，可以完成自动的追踪。
+
+下面我们分别来实现它们。再次强调，这里的实现与 Vue.js 真正的实现是有区别的。
+
+#### watchEffect
+
+```javascript
+import { effect } from './effect';
+
+export const watchEffect = effect;
+```
+
+有点简单粗暴了。但是它实际上需要达到的效果就是和上面实现的 `effect` 是一模一样的。也就是说我们从一开始就已经实现了 `watchEffect`。
+
+```javascript
+let a = ref(1);
+let b = ref(0);
+watchEffect(() => {
+  b.value = a.value * 2;
+});
+expect(b.value).toEqual(2);
+
+a.value = 100;
+expect(b.value).toEqual(200);
+```
+
+然而，需要注意的是，`effectWatch` 根据官方文档，它会返回一个函数，该函数可以用来“清理”effect，即停止该 effect 的继续运行。我们在上面实现的 `ReactiveEffect` 类中并没有包含这部分逻辑。
+
+#### watch
+
+```javascript
+export function watch (source, callback) {
+  let oldValue;
+  let firstrun = true;
+
+  return effect(() => {
+    if (firstrun) {
+      firstrun = false;
+      oldValue = JSON.parse(JSON.stringify(source));
+      return;
+    }
+    callback(source, oldValue);
+    oldValue = JSON.parse(JSON.stringify(source));
+  });
+}
+```
+
+```javascript
+let a = reactive({ value: 1 });
+let b = 0;
+
+watch(a, (val, oldVal) => {
+  b = oldVal.value + val.value;
+});
+expect(b).toEqual(0);
+
+a.value = 100;
+expect(b).toEqual(101);
+
+a.value = 200;
+expect(b).toEqual(300);
+```
