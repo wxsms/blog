@@ -1,5 +1,5 @@
 ---
-title: Vue3 响应式原理
+title: 从零开始实现 Vue3 响应式
 tags: vue
 date: 2023-03-17 16:09:48
 ---
@@ -7,9 +7,7 @@ date: 2023-03-17 16:09:48
 
 Vue3 与 Vue2 的最大不同点之一是响应式的实现方式。众所周知，Vue2 使用的是 `Object.defineProperty`，为每个对象设置 getter 与 setter，从而达到监听数据变化的目的。然而这种方式存在诸多限制，如对数组的支持不完善，无法监听到对象上的新增属性等。因此 Vue3 通过 Proxy API 对响应式系统进行了重写，并将这部分代码封装在了 `@vue/reactivity` 包中。
 
-本文主要记录对 Vue3 的响应式实现方式的学习过程以及一些思考。注意本文引用的代码与实际的 Vue3 实现方式会有出入，Vue3 需要更多地考虑高效与兼容各种边界情况，此处以易懂为主，但主要思想与其类似。
-
-本文中提到的大部分代码可以在 [https://github.com/wxsms/learning-vue](https://github.com/wxsms/learning-vue) 找到。
+本文将参照 Vue3 的设计，从零开始实现一套响应式系统。注意本文引用的代码与实际的 Vue3 实现方式有所出入，Vue3 需要更多地考虑高效与兼容各种边界情况，但此处以易懂为主。 文中提到的大部分代码可以在 [https://github.com/wxsms/learning-vue](https://github.com/wxsms/learning-vue) 找到。
 
 <!-- more -->
 
@@ -41,7 +39,7 @@ B -->|自动监听| A
 
 ## 依赖与依赖监听
 
-让我们从零开始：当要实现一个响应式系统的时候，我们实际需要的是什么？
+当要实现一个响应式系统的时候，我们实际需要的是什么？
 
 答案是**依赖**与**依赖的监听**。
 
@@ -52,33 +50,33 @@ B -->|自动监听| A
 那么我们先来实现**依赖**。 一个依赖：
 
 1. 代表了某个对象下面的某个值；
-2. 当值发生变化时，需要触发跟它有关的反应（后面称为作用，effect）。
+2. 当值发生变化时，需要触发跟它有关的作用（effect）。
 
 以下是实现代码：
 
 ```javascript
-// Dep === 依赖 Dependency
+// Dep -> Dependency 依赖
 // 比如上面提到的 `col` 是一个 dep，
 // `c = a.b + 1` 中，a.b 是一个 dep。
 export class Dep {
   constructor () {
-    // _effects 代表与这个依赖有关的“作用”
+    // 储存与这个依赖有关的“作用”
     // 这里使用 Set，可以利用其天然的去重属性，
     // 因为作用无需重复添加
     this._effects = new Set();
   }
 
-  // 取消作用 e 对本 dep 的追踪
+  // 取消作用对此依赖的追踪
   untrack (e) {
     this._effects.delete(e);
   }
 
-  // 作用 e 开始追踪本依赖
+  // 作用开始追踪此依赖
   track (e) {
     this._effects.add(e);
   }
 
-  // 触发追踪了本依赖的所有作用
+  // 触发追踪了此依赖的所有作用
   trigger () {
     for (let e of this._effects) {
       e.run();
@@ -87,7 +85,7 @@ export class Dep {
 }
 ```
 
-除此以外，我们还需要一个变量，用来存储所有的 dep：
+除此以外，我们还需要一个变量，用来存储所有的依赖：
 
 ```javascript
 // target (object) -> key (string) -> dep
@@ -110,7 +108,7 @@ depsMap
       D[Value: dep]
 ```
 
-在实际的 Vue3 代码中，这里的第一层使用的是 WeakMap 而非 Map。原因很简单：WeakMap 对 key 是弱引用，当 key 在代码中的其它地方已经不存在应用时，它 (key) 以及对应的 value 都会被 GC。而如果使用 Map 的话，保有的是强引用，就会导致内存泄漏了。
+在实际的 Vue3 代码中，这里的第一层使用的是 WeakMap 而非 Map。原因是 WeakMap 对 key 是弱引用，当 key 在代码中的其它地方已经不存在应用时，它 (key) 以及对应的 value 都会被 GC。而如果使用 Map 的话，保有的是强引用，就会导致内存泄漏。
 
 ### 依赖监听
 
@@ -157,7 +155,7 @@ export function trigger (target, prop) {
 
 #### `trigger`
 
-触发作用的代码非常简单，只需直接拿到对应的 dep，并触发它的 `trigger` 函数：
+触发作用的代码非常简单，只需直接拿到对应的 dep，并调用它的 `trigger` 函数：
 
 ```javascript
 export function trigger (target, prop) {
@@ -167,7 +165,7 @@ export function trigger (target, prop) {
 
 #### `track`
 
-`trigger` 是将 dep 取出来并触发里面的 effects，那么 `track` 就是将 effect 存到 dep 中去。
+与 `trigger` 相反：`trigger` 是将 dep 取出来并触发里面的 effects，而 `track` 是将 effect 保存到 dep 中去。
 
 需要注意的是，因为 `depsMap` 一开始是空的，所以取 dep 会包含一个初始化的过程：
 
@@ -175,29 +173,29 @@ export function trigger (target, prop) {
 function getDep (target, prop) {
   // 从 depsMap 中找到本 target 的 Map
   let deps = depsMap.get(target);
-  // 没找到，需要初始化
   if (!deps) {
-    deps = new Map();
+     // 没找到，需要初始化
+     deps = new Map();
     depsMap.set(target, deps);
   }
   // 从第二级的 Map 中找到本 prop 的 dep
   let dep = deps.get(prop);
-  // 没找到，需要初始化
   if (!dep) {
-    dep = new Dep();
+     // 没找到，需要初始化
+     dep = new Dep();
     deps.set(prop, dep);
   }
   return dep;
 }
 ```
 
-代码比较多，但逻辑很简单。下面是 `track` 函数的具体实现：
+下面是 `track` 函数的具体实现：
 
 ```javascript
 export function track (target, prop) {
-  // 当前没有正在运行中的作用，无需追踪，可直接退出
   if (!currentEffect) {
-    return;
+     // 当前没有正在运行中的作用，无需追踪，可直接退出
+     return;
   }
   let dep = getDep(target, prop);
   // 追踪正在运行中的作用
@@ -207,7 +205,7 @@ export function track (target, prop) {
 
 #### `effect`
 
-effect 函数也非常简单：
+effect 作为一个工厂函数，只需完成 ReactiveEffect 实例的创建并立即运行：
 
 ```javascript
 export function effect (fn) {
@@ -229,6 +227,8 @@ export function effect (fn) {
 
 **1. 构造器**
 
+简单赋值即可：
+
 ```javascript
 constructor (fn) {
    this.fn = fn;
@@ -237,19 +237,20 @@ constructor (fn) {
 
 **2. `run`**
 
-run 函数的关键在于 `currentEffect` 的赋值：我们在这里默认在 `fn` 函数运行的过程中，会发起对相应依赖的 `track()`，而 `track` 函数中会使用到 `currentEffect`，这也是为什么它需要作为一个全局变量单独抽离出来。
+run 函数的关键在于 `currentEffect` 的赋值：我们在这里默认在 `fn` 函数运行的过程中，会发起对相应依赖的 `track()`，而 `track` 函数中会使用到 `currentEffect`。这也是为什么它需要作为一个全局变量单独抽离出来，成为 track 与 effect 之间的纽带：
 
 ```javascript
 run () {
   // 赋值 currentEffect
   currentEffect = this;
+  // 运行用户传入的函数
   this.fn();
   // 取消赋值
   currentEffect = null;
 };
 ```
 
-仔细看的话会发现，这里每一次调用 `run` 都会给 `currentEffect` 赋值，可以理解为发起了依赖收集的流程。换而言之，就是每一次执行这个作用都会收集一次依赖。这其实是必要的。因为函数里面的具体代码是未知的，举个例子：
+仔细看的话会发现，这里每一次调用 `run` 都会给 `currentEffect` 赋值，可以理解为发起了依赖收集的流程。换而言之，每次执行这个作用都会收集依赖。为什么要这么做？举个例子：
 
 ```javascript
 effect(() => {
@@ -260,7 +261,7 @@ effect(() => {
 })
 ```
 
-如果依赖收集只执行一次，并且第一次执行的时候 `a.b` 是 falsely 的，那么第一次执行就只收集到了 `a.b` 这个依赖，而 `a.b.c` 没有收集到。那么当只有 `a.b.c` 发生变化时，d 将不会被重新赋值，这显然是不符合预期的。
+如果依赖收集只执行一次，并且第一次执行的时候 `a.b` 是 [falsely](https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy) 的，那么第一次执行就只收集到了 `a.b` 这个依赖，而 `a.b.c` 没有收集到。那么后续当只有 `a.b.c` 发生变化时，d 将不会被重新赋值，这是不符合预期的。因此，目前来说依赖收集需要在每次作用函数运行时都进行。
 
 ### 小结
 
@@ -275,6 +276,8 @@ effect(() => {
 ```javascript
 let obj = { a: 1, b: { c: 2 } };
 let fn = jest.fn(() => {
+   // 用户的函数中发起了依赖追踪，
+   // 后续该行为将被自动化
    track(obj, 'a');
    track(obj.b, 'c');
 });
@@ -282,27 +285,24 @@ effect(fn);
 // fn 总共被调用了 1 次
 expect(fn).toHaveBeenCalledTimes(1);
 
+obj.a = 2;
+// 依赖发生了变化，后续该行为将被自动化
 trigger(obj, 'a');
 // fn 总共被调用了 2 次
 expect(fn).toHaveBeenCalledTimes(2);
 
+obj.b.c = 3;
+// 依赖发生了变化，后续该行为将被自动化
 trigger(obj.b, 'c');
 // fn 总共被调用了 3 次
 expect(fn).toHaveBeenCalledTimes(3);
 ```
 
-简单来说，我们：
-
-1. 定义了一个对象 `obj`
-2. 定义了一个作用函数 `fn`
-3. `fn` 内部追踪了 `obj` 的两个属性
-4. 当 `obj` 属性发生变化（调用 trigger）时，作用函数将自动运行
-
-看起来好像是那么回事了，但还有点抽象！距离我们的最终目标还有一定距离。另外我们目前为止还没有看到 Proxy 的使用，它将在下一节出现。
+看起来好像是那么回事了，但还有点抽象，距离我们的最终目标还有一定距离。
 
 ## 响应式变量
 
-现在我们有了依赖与依赖追踪，是时候来实现第二个关键组件：`reactive` 了。 它将帮我们完成“在作用函数内部自动调用 `track()`”以及当依赖变化时自动调用 `trigger()` 的工作。
+现在我们有了依赖与依赖追踪，是时候来实现第二个关键组件 `reactive` 了。 它将帮我们完成“在作用函数内部自动调用 `track()`”以及“依赖变化时自动调用 `trigger()`”的工作。
 
 众所周知，Vue3 使用了 Proxy 来实现响应式：
 
@@ -311,10 +311,10 @@ import { track, trigger } from './effect.js';
 
 export function reactive (obj) {
   return new Proxy(obj, {
-    get (target, p, receiver) {
+    get (target, p) {
       // todo
     },
-    set (target, p, value, receiver) {
+    set (target, p, value) {
       // todo
     }
   });
@@ -340,7 +340,7 @@ C --> D[ReactiveEffect]
 `get` 的第一版实现：
 
 ```javascript
- get (target, p, receiver) {
+ get (target, p) {
    // 追踪依赖！
    track(...arguments);
    // 获取值并返回
@@ -364,9 +364,9 @@ Reflect 通常是与 Proxy 成对出现的 API，这里的 `Reflect.get(...argum
    track(...arguments);
    // 获取值
    let value = Reflect.get(...arguments);
-   // 如果 value 是一个对象，需要递归调用 reactive 将它再次包裹
    if (value !== null && typeof value === 'object') {
-     return reactive(value);
+      // 如果 value 是一个对象，需要递归调用 reactive 将它再次包裹
+      return reactive(value);
    }
    return value;
  }
@@ -383,15 +383,15 @@ Reflect 通常是与 Proxy 成对出现的 API，这里的 `Reflect.get(...argum
  set (target, p, value, receiver) {
    // 先取值
    let oldValue = Reflect.get(...arguments);
-   // 如果新旧值相等，则无需触发作用
    if (oldValue === value) {
+      // 如果新旧值相等，无需触发作用
       return value;
    }
    // 设置新的值，约等于 `target[p] = value`
    let newValue = Reflect.set(...arguments);
    // 触发作用！这里是在设置新值后才进行的。
    trigger(...arguments);
-   // 注意这里返回的是 Reflect.set 的返回值，而不是 value
+   // 注意这里返回的是 Reflect.set 的返回值
    return newValue;
  }
 ```
@@ -416,9 +416,11 @@ effect(() => {
 expect(b).toEqual(2);
 
 a.value = 100;
+// b 自动更新了！
 expect(b).toEqual(200);
 
 a.value = 300;
+// b 自动更新了！
 expect(b).toEqual(600);
 ```
 
@@ -438,7 +440,7 @@ mindmap
 
 ### ref
 
-上面的 `reactive` API 可以对对象和数组这样的复杂类型完成监听，但对于字符串、数组或布尔值这样的基本类型，它是无能为力的。因为 Proxy 不能监听这种基本类型。因此，我们需要对它进行一层包裹：先将它包裹到一个对象中，然后通过 `a.value` 来访问实际的值。这实际上是 Vue3 目前仍在致力于解决的问题之一，如通过[响应性语法糖](https://cn.vuejs.org/guide/extras/reactivity-transform.html)。
+上面的 `reactive` API 可以对对象和数组这样的复杂类型完成监听，但对于字符串、数组或布尔值这样的基本类型，它是无能为力的。因为 Proxy 不能监听这种基本类型。因此，我们需要对它进行一层包裹：先将它包裹到一个对象中，然后通过 `a.value` 来访问实际的值（这实际上是 Vue3 目前仍在致力于解决的问题之一）。
 
 下面，我们将以惊人的效率实现 `ref`：
 
@@ -463,7 +465,7 @@ a.value = 100;
 expect(b).toEqual(200);
 ```
 
-当然实际上 Vue3 不是这么干的：它实现了一个 `RefImpl` 类，并且与 `reactive` 类似地，通过 getter 与 setter 完成对 value 的追踪。
+当然，实际上 Vue3 不是这么干的：它实现了一个 `RefImpl` 类，并且与 `reactive` 类似地，通过 getter 与 setter 完成对 value 的追踪。
 
 ### computed
 
@@ -501,7 +503,7 @@ expect(b.value).toEqual(301);
 
 #### getter & setter
 
-实际上，计算属性可以同时拥有 getter 和 setter：
+复杂的计算属性可以同时拥有 getter 和 setter：
 
 ```javascript
 let a = ref(1);
@@ -640,7 +642,7 @@ export const watchEffect = (cb) => {
 };
 ```
 
-非常地“水到渠成”。
+非常地“水到渠成”！
 
 ```javascript
 let a = ref(1);
@@ -748,14 +750,17 @@ export function watch (getter, cb) {
 let a = reactive({ value: 1 });
 let fn = jest.fn();
 let stop = watch(() => a.value, fn);
+// 没有初次调用
 expect(fn).not.toBeCalled();
 
 a.value = 2;
+// 值改变后自动调用
 expect(fn).toBeCalledWith(2, 1);
 
 stop();
 
 a.value = 3;
+// 停止后，不再调用
 expect(fn).toHaveBeenCalledTimes(1);
 ```
 
@@ -765,7 +770,7 @@ expect(fn).toHaveBeenCalledTimes(1);
 
 至此，Vue3 响应式的核心功能已全部实现完！
 
-## One More Thing
+## 响应式 UI
 
 现在既然已经实现了响应式，那么我们回到最初的问题：
 
@@ -788,7 +793,7 @@ B -->|自动监听| A
 ```javascript
 const App = {
    // 一个最原始的 render 函数，接收 ctx 参数
-   // 返回一个 HTML Node
+   // 返回一个 HTML 节点
    render (ctx) {
       let div = document.createElement('div');
       // 使用 reduce 获得累加的和
@@ -803,7 +808,7 @@ const App = {
 }
 ```
 
-然后，我们编写一个 createApp 函数：
+然后，我们编写一个（似曾相识的） createApp 函数：
 
 ```javascript
 function createApp (Component) {
@@ -831,7 +836,7 @@ function createApp (Component) {
 createApp(App).mount('#app')
 ```
 
-（当然我们还需要一个 HTML）：
+（当然我们还需要一个 HTML 文件）：
 
 ```html
 <!DOCTYPE html>
@@ -847,4 +852,6 @@ createApp(App).mount('#app')
 </html>
 ```
 
-到这里，Vue3 的整体框架已经呼之欲出了。
+完成了！虽然还非常简陋，但我们已经用与 Vue 类似的方式实现了一个响应式的前端页面：当 `col` 更新时，页面上将显示新的求和值。
+
+再次强调，本文使用的实现思路与 Vue 大致相同，但简化了许多。对此感兴趣的同学，欢迎阅读 [vuejs/core](https://github.com/vuejs/core) 源码。

@@ -8,7 +8,8 @@
     "clean": "hexo clean",
     "draft": "hexo new draft",
     "publish": "hexo publish",
-    "post": "hexo new post"
+    "post": "hexo new post",
+    "lint": "zhlint source/_posts/**/*.md"
   },
   "hexo": {
     "version": "6.3.0"
