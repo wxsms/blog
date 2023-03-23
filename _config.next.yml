@@ -861,7 +861,7 @@ pace:
 canvas_ribbon:
   enable: true
   size: 300 # The width of the ribbon
-  alpha: 0.45 # The transparency of the ribbon
+  alpha: 0.4 # The transparency of the ribbon
   zIndex: -1 # The display level of the ribbon
 
 
