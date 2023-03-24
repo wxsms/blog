@@ -58,12 +58,9 @@ VuePress 的一个主题，适用于轻量级博客。
 * GitHub: [https://github.com/wxsms/vuepress-theme-mini](https://github.com/wxsms/vuepress-theme-mini)
 * NPM: [https://www.npmjs.com/package/vuepress-theme-mini](https://www.npmjs.com/package/vuepress-theme-mini)
 
-## IBD 日记
+## bv2mp3
 
-一个微信小程序，帮助 IBD ([wiki](https://en.wikipedia.org/wiki/Inflammatory_bowel_disease)) 病人记录每日饮食与状况。
+一款基于 Node.js 和 FFMPEG 的 Bilibili 视频下载器，并且可以将下载的视频自动转为 MP3。众所周知 B 站的音乐播放器并不好用，因此适合喜欢在 B 站听歌的朋友使用。
 
-因为不可描述的原因，该仓库无法公开。
-
-在微信中搜索**IBD 日记**，或扫描下面的二维码以体验：
-
-![qrcode](https://static.wxsm.space/ibd-diary/logo.jpg)
+* GitHub: [https://github.com/wxsms/bilibili-video2mp3](https://github.com/wxsms/bilibili-video2mp3)
+* NPM: [https://www.npmjs.com/package/bv2mp3](https://www.npmjs.com/package/bv2mp3)
