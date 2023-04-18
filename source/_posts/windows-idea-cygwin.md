@@ -6,6 +6,8 @@ tags: windows
 
 之前在 [WSL on Windows 10](/2020/wsl-on-windows-10-and-node-js/) 中尝试了 WSL，但是几经周折最后发现问题比较多，用得有点难受。最后还是换回了 windows。
 
+<!-- more -->
+
 ## 下载
 
 [https://www.cygwin.com/](https://www.cygwin.com/)
