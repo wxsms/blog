@@ -8,7 +8,7 @@ b 站上的歌姬，很多歌只发布在 b 站。比如说直播时唱的歌，
 
 我习惯用网易云听歌。网易云虽然版权方面很惨，但有它一个很好用的功能：云盘。每个用户有 60G 的云盘容量，基本用不完，不管是什么歌，有没有版权，只要上传上去了就能随时随地听。因此，我的目标是，希望可以有一个自动化的工具，帮我把B站上的歌以 mp3 的格式下载下来，让我可以上传到云盘，这样我就可以用网易云听歌了。
 
-综上所述，我就做了这么一个小工具：https://github.com/wxsms/bilibili-video2mp3 ，这是一个开源工具，完整的代码可以在代码仓库中找到。下面，我主要讲一下这个工具的实现思路以及优化过程。
+综上所述，我就做了这么一个小工具：[https://github.com/wxsms/bilibili-video2mp3](https://github.com/wxsms/bilibili-video2mp3) ，这是一个开源工具，完整的代码可以在代码仓库中找到。下面，我主要讲一下这个工具的实现思路以及优化过程。
 
 <!-- more -->
 
@@ -50,13 +50,13 @@ b 站上的歌姬，很多歌只发布在 b 站。比如说直播时唱的歌，
 
 ### 爬取B站网页
 
-以 https://www.bilibili.com/video/BV1wV411t7XQ 为例。这个列表里面共有 336 首歌，我需要把它们全部下载下来。
+以 [https://www.bilibili.com/video/BV1wV411t7XQ](https://github.com/wxsms/bilibili-video2mp3) 为例。这个列表里面共有 336 首歌，我需要把它们全部下载下来。
 
 点击列表中的视频，仔细观察可以发现，它们的 url 是有类似的模式的，比如：
 
-* 第一集是 https://www.bilibili.com/video/BV1wV411t7XQ?p=1，或者如果不加 `p=1`，默认就是第一集
-* 第二集是 https://www.bilibili.com/video/BV1wV411t7XQ?p=2
-* 第三集是 https://www.bilibili.com/video/BV1wV411t7XQ?p=3
+* 第一集是 [https://www.bilibili.com/video/BV1wV411t7XQ?p=1](https://github.com/wxsms/bilibili-video2mp3) ，或者如果不加 `p=1`，默认就是第一集
+* 第二集是 [https://www.bilibili.com/video/BV1wV411t7XQ?p=2](https://github.com/wxsms/bilibili-video2mp3)
+* 第三集是 [https://www.bilibili.com/video/BV1wV411t7XQ?p=3](https://github.com/wxsms/bilibili-video2mp3)
 * 以此类推...
 
 可以发现它们前面的格式都是一样的，区别只在后面的 `?p=x`。
@@ -146,7 +146,7 @@ agent({
 
 ### 转换mp3
 
-在最初的版本，我能直接想到的工具就是 https://ffmpeg.org ，代码里面简单粗暴地直接调用 ffmpeg：
+在最初的版本，我能直接想到的工具就是 [https://ffmpeg.org](https://github.com/wxsms/bilibili-video2mp3) ，代码里面简单粗暴地直接调用 ffmpeg：
 
 ```javascript
 import { exec } from 'child_process';
@@ -186,7 +186,7 @@ for (const c of pageChunks) {
 
 ### 展示进度条
 
-进度条对于一个下载工具来说至关重要，尤其是并行下载多个任务的时候。好在我不用自己实现，即使是命令行界面也有优秀的现成工具：https://github.com/visionmedia/node-progress 以及 https://github.com/pitaj/multi-progress 。
+进度条对于一个下载工具来说至关重要，尤其是并行下载多个任务的时候。好在我不用自己实现，即使是命令行界面也有优秀的现成工具：[https://github.com/visionmedia/node-progress](https://github.com/wxsms/bilibili-video2mp3) 以及 [https://github.com/pitaj/multi-progress](https://github.com/wxsms/bilibili-video2mp3) 。
 
 而我只需要对它做一点简单的封装即可：
 
@@ -310,7 +310,7 @@ export function getName(index, title, author, date) {
 
 ![](/2023/bv2mp3/bd22e7fc1754481198b53856c0d119f8.png)
 
-原来 ffmpeg 已经有了 wasm 版本：https://github.com/ffmpegwasm/ffmpeg.wasm 。将 ffmpeg 替换为 ffmpeg.wasm 后，使用时使就不再需要预先安装 C 语言版本的 ffmpeg，也无需设置 path，用户体验可以得到大幅度的提升。
+原来 ffmpeg 已经有了 wasm 版本：[https://github.com/ffmpegwasm/ffmpeg.wasm](https://github.com/wxsms/bilibili-video2mp3) 。将 ffmpeg 替换为 ffmpeg.wasm 后，使用时使就不再需要预先安装 C 语言版本的 ffmpeg，也无需设置 path，用户体验可以得到大幅度的提升。
 
 修改后的转换代码（大概长这样）：
 
