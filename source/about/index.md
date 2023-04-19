@@ -37,6 +37,16 @@ toc:
 
 当时我作为一个新手，它的代码非常丑陋，设计也不合理，但基本能流畅运行。除了有一个小问题：如果玩得太快的话，方块的显示可能会错位。
 
+### 珠海公交巴士实时地图
+
+[https://github.com/wxsms/zh-bus-realtime](https://github.com/wxsms/zh-bus-realtime)
+
+刚毕业的时候，有一段时间经常需要搭公交。珠海的公交有实时运行图，但是并不是十分好用：比如我从一个站坐到另一个站，有非常多的线路可以选择，但珠海公交的官方系统不能同时查看多条线路的车。只能一条一条地换着看。并且也没有地图可以直观地看到下一趟车离我有多远。
+
+于是我就做了这么一个系统：它可以同时监视任意条线路，并且能够在瓦片地图上显示它们的实时位置。它甚至可以记住我的常用线路，需要时完成一键查询。非常好用。
+
+可惜后来珠海公交貌似对它的 API 做了一些调整，尝试了一段时间均无法成功调用，因此这个项目就到此为止了。
+
 ### uiv
 
 [https://github.com/uiv-lib/uiv](https://github.com/uiv-lib/uiv)
@@ -75,8 +85,8 @@ toc:
 
 [https://github.com/wxsms/bilibili-video2mp3](https://github.com/wxsms/bilibili-video2mp3)
 
-一款基于 Node.js 和 ffmpeg 的 bilibili 视频下载器，并且可以将下载的视频自动转为 mp3。开发背景见{% post_link bv2mp3 '这篇博文' %}。
+一款基于 Node.js 和 ffmpeg 的 bilibili 视频下载器，并且可以将下载的视频自动转为 mp3。
 
-众所周知 B 站的音乐播放器并不好用，因此适合喜欢在 B 站听歌的朋友使用。
+众所周知 b 站的音乐播放器并不好用，所以就有了它。详见{% post_link bv2mp3 '这篇博文' %}。
 
 
