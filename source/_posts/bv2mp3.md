@@ -70,8 +70,8 @@ b 站上的歌姬，很多歌只发布在 b 站。比如说直播时唱的歌，
 从国际惯例来讲，为了实现步骤2，我需要去爬取这个网页，解析里面的 HTML，找到跟集数有关的节点。但是 b 站是个特例，它有更方便的办法。它的 HTML 网页上挂载了一个 `__INITIAL_STATE__` 对象，下面就有准确的信息。
 
 {% gp 2-2 %}
-![](/2023/bv2mp3/84d3afb467a54e999e35e9acc4fa2206.png)
-![](/2023/bv2mp3/1d085d07b0214fd6ad2c0ef871af2ae8.png)
+![](84d3afb467a54e999e35e9acc4fa2206.png)
+![](1d085d07b0214fd6ad2c0ef871af2ae8.png)
 {% endgp %}
 
 因此，这一步变得非常简单，只需要解析这个对象即可。
@@ -107,7 +107,7 @@ const playUrl = `https://interface.bilibili.com/v2/playurl?${params}&sign=${sign
 
 调用接口，可以得到一个 flv 的下载链接：
 
-![](/2023/bv2mp3/87679900c2fe4fce89f7d5bc113a0381.png)
+![](87679900c2fe4fce89f7d5bc113a0381.png)
 
 然后就是简单粗暴的下载环节：
 
@@ -308,7 +308,7 @@ export function getName(index, title, author, date) {
 
 做开源软件的好处，除了得到用户的肯定外，我永远可以从别人那里学到新的东西，比如：
 
-![](/2023/bv2mp3/bd22e7fc1754481198b53856c0d119f8.png)
+![](bd22e7fc1754481198b53856c0d119f8.png)
 
 原来 ffmpeg 已经有了 wasm 版本：[ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) 。将 ffmpeg 替换为 ffmpeg.wasm 后，使用时使就不再需要预先安装 C 语言版本的 ffmpeg，也无需设置 path，用户体验可以得到大幅度的提升。
 
@@ -458,10 +458,10 @@ export function flv2mp3(filename) {
 至今为止我已经用它下载了一千多首 yousa 的歌。这种自己开发工具来解决自己的问题，并且一步步地将它变得完美以及节约生命的愉快感真的是非常棒的。
 
 {% gp 2-2 %}
-![126f0ee04db59831d6a9820ac89c471.jpg](/2023/bv2mp3/d5ac4ae89b5c4827be79b324647af60c.jpg)
-![46ff0c8d1022eaf087e0e42b7cd0319.jpg](/2023/bv2mp3/4e382b83db7a4dd085e2d2087a774cec.jpg)
+![126f0ee04db59831d6a9820ac89c471.jpg](d5ac4ae89b5c4827be79b324647af60c.jpg)
+![46ff0c8d1022eaf087e0e42b7cd0319.jpg](4e382b83db7a4dd085e2d2087a774cec.jpg)
 {% endgp %}
 
 最后更开心的当然是，我做的工具同时也能给其它素不相识的人带来愉悦：
 
-![](/2023/bv2mp3/2ed49043d3f046f28740ad1e415b810f.png)
+![](2ed49043d3f046f28740ad1e415b810f.png)
