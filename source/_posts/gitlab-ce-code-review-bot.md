@@ -35,7 +35,7 @@ tags: [gitlab,nodejs]
 
 整个评审流程如下所示：
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 s1=>operation: 同事 A 往业务分支 feat/a 推送代码
@@ -157,7 +157,7 @@ if (sourceBranch.protected || !targetBranch.protected) {
 
 在 `mrc(ctx)` 中，可以实现 MR 收到新评论时的逻辑，如下图所示：
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 s1=>operation: MR 收到新评论

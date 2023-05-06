@@ -7,6 +7,9 @@ dependencies:
   hexo:
     specifier: 6.3.0
     version: 6.3.0
+  hexo-filter-flowchart:
+    specifier: ^1.0.4
+    version: 1.0.4
   hexo-generator-archive:
     specifier: 2.0.0
     version: 2.0.0
@@ -416,6 +419,13 @@ packages:
     engines: {node: '>=0.10'}
     dev: false
 
+  /deep-assign@2.0.0:
+    resolution: {integrity: sha512-2QhG3Kxulu4XIF3WL5C5x0sc/S17JLgm1SfvDfIRsR/5m7ZGmcejII7fZ2RyWhN0UWIJm0TNM/eKow6LAn3evQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      is-obj: 1.0.1
+    dev: false
+
   /deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
     dev: false
@@ -680,6 +690,12 @@ packages:
       minimist: 1.2.5
       resolve: 1.22.0
       tildify: 2.0.0
+    dev: false
+
+  /hexo-filter-flowchart@1.0.4:
+    resolution: {integrity: sha512-WlpLcr7jJc+ukOSl3IfUXq+WlUb89P8wFAeYopmVnmiSiHEd3P9NQfqchSRB2lCN3aKc5vK1kANi3VM0RojAoQ==}
+    dependencies:
+      deep-assign: 2.0.0
     dev: false
 
   /hexo-front-matter@3.0.0:
@@ -1032,6 +1048,11 @@ packages:
   /is-number@7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
+    dev: false
+
+  /is-obj@1.0.1:
+    resolution: {integrity: sha512-l4RyHgRqGN4Y3+9JHVrNqO+tN0rV5My76uW5/nuO4K1b6vw5G8d/cmFjP9tRfEsdhZNt0IFdZuK/c2Vr4Nb+Qg==}
+    engines: {node: '>=0.10.0'}
     dev: false
 
   /is-plain-object@5.0.0:

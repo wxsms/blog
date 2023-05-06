@@ -16,7 +16,7 @@ tags: [devops,k8s]
 
 举例：服务器使用 PM2 管理部署。纯手工操作：
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 本地打包前端代码
@@ -56,7 +56,7 @@ st->op1->op2->op3->op4->op5->op6->op7->e
 
 ### 流程图
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 本地 git 代码提交
@@ -151,7 +151,7 @@ deploy-dev:
 
 ### 流程图
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 本地 git 代码提交
@@ -209,7 +209,7 @@ k8s 基础知识：
 
 ### 流程图
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 本地 git 代码提交
@@ -317,7 +317,7 @@ Consul 是为基础设施提供服务发现和服务配置的工具，包含多�
 
 ### 流程图
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 本地 git 代码提交
@@ -366,7 +366,7 @@ cond2(no,bottom)->op13->op8->op9->op10->op11->op15->op14->op12->e
 
 流程：
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 获取所有在 Consul 上注册了的节点
@@ -536,7 +536,7 @@ Consul 在注册服务时并没有类似“主键”的概念，一个 Consul �
 
 流程：
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 获取所有在 Consul 上注册了的节点
@@ -575,7 +575,7 @@ cond1(yes)->op4->e
 
 ### 流程图
 
-```flowchart
+```flow
 st=>start: 开始
 e=>end: 结束
 op1=>operation: 本地 git 代码提交

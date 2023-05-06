@@ -135,3 +135,8 @@ feed:
   icon: icon.png
   autodiscovery: true
   template:
+
+# https://github.com/bubkoo/hexo-filter-flowchart#config
+flowchart:
+  raphael: https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js
+  flowchart: https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.17.1/flowchart.min.js
