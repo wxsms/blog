@@ -40,7 +40,7 @@ var url = '/api/metadata/entity/list?type=car&name=qq&_t=' + new Date().getTime(
     });
 ```
 
-这段代码所做的事情是，对于所有进来的以&#8217;/api&#8217;开头为路由的请求，都执行以下操作：
+这段代码所做的事情是，对于所有进来的以 `/api` 开头为路由的请求，都执行以下操作：
 
   * 给响应头添加 `"Cache-Control": "no-cache, no-store, must-revalidate"` 键值对
   * 给响应头添加 `"Pragma": "no-cache"` 键值对

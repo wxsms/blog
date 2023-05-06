@@ -228,4 +228,4 @@ var someVar;
 alert(someVar == undefined); //evaluates false!
 ```
 
-看起来很有趣的样子&#8230;&#8230;
+看起来很有趣的样子……

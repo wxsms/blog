@@ -62,7 +62,7 @@ Reflow （回流）和 Repaint（重绘）是浏览器的两种动作。
   * 脚本操作 DOM
   * 计算 `offsetWidth` 与 `offsetHeight`
   * 更改 style 属性
-  * &#8230;&#8230;
+  * ……
 
 ### 如何优化
 

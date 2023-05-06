@@ -6,7 +6,7 @@ tags: [javascript]
 
 知乎上有一个黑 JavaScript 的段子，大概是说：
 
-> N 年后，外星人截获了 NASA 发射的飞行器并破解其源代码，翻到最后发现好几页的 }}}}}}&#8230;&#8230;
+> N 年后，外星人截获了 NASA 发射的飞行器并破解其源代码，翻到最后发现好几页的 }}}}}}……
 
 这是因为 NASA 近年发射过使用 JavaScript 编程的飞行器，而 Node.js 环境下的 JavaScript 有个臭名昭著的特色：Callback hell（回调地狱的意思）
 
