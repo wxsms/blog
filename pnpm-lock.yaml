@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 dependencies:
   '@waline/hexo-next':
@@ -47,8 +51,8 @@ dependencies:
     specifier: 3.0.0
     version: 3.0.0
   hexo-theme-next:
-    specifier: 8.16.0
-    version: 8.16.0
+    specifier: 8.17.0
+    version: 8.17.0
   prism-themes:
     specifier: 1.9.0
     version: 1.9.0
@@ -851,8 +855,8 @@ packages:
       - supports-color
     dev: false
 
-  /hexo-theme-next@8.16.0:
-    resolution: {integrity: sha512-UPqJXDlAThsbqsthSgC0J2qzdW5HtTxTwMnHPevgo/292qlv4Yx5noIttRV+W0WUgrzTmIVuSGuL0Sok10UhRA==}
+  /hexo-theme-next@8.17.0:
+    resolution: {integrity: sha512-J51XPF6wlxxgJ6MW7MXi7LweIhR7i/57CwFk7GHIncju4GHYcD78D678p2UAc9MQc8MFQuyz2pgGopnUEXZ9BQ==}
     dev: false
 
   /hexo-util@2.5.0:
