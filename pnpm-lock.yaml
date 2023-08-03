@@ -882,7 +882,7 @@ packages:
       deepmerge: 4.2.2
       highlight.js: 10.7.3
       htmlparser2: 6.1.0
-      prismjs: 1.25.0
+      prismjs: 1.29.0
       strip-indent: 3.0.0
     dev: false
 
@@ -896,7 +896,7 @@ packages:
       deepmerge: 4.2.2
       highlight.js: 11.5.0
       htmlparser2: 7.2.0
-      prismjs: 1.25.0
+      prismjs: 1.29.0
       strip-indent: 3.0.0
     dev: false
 
@@ -1445,10 +1445,6 @@ packages:
 
   /prism-themes@1.9.0:
     resolution: {integrity: sha512-tX2AYsehKDw1EORwBps+WhBFKc2kxfoFpQAjxBndbZKr4fRmMkv47XN0BghC/K1qwodB1otbe4oF23vUTFDokw==}
-    dev: false
-
-  /prismjs@1.25.0:
-    resolution: {integrity: sha512-WCjJHl1KEWbnkQom1+SzftbtXMKQoezOCYs5rECqMN+jP+apI7ftoflyqigqzopSO3hMhTEb0mFClA8lkolgEg==}
     dev: false
 
   /prismjs@1.29.0:
