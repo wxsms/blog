@@ -946,7 +946,7 @@ packages:
       js-yaml-js-types: 1.0.0
       micromatch: 4.0.4
       moize: 6.1.0
-      moment: 2.29.1
+      moment: 2.29.4
       moment-timezone: 0.5.34
       nunjucks: 3.2.3
       picocolors: 1.0.0
@@ -1277,11 +1277,11 @@ packages:
   /moment-timezone@0.5.34:
     resolution: {integrity: sha512-3zAEHh2hKUs3EXLESx/wsgw6IQdusOT8Bxm3D9UrHPQR7zlMmzwybC8zHEM1tQ4LJwP7fcxrWr8tuBg05fFCbg==}
     dependencies:
-      moment: 2.29.1
+      moment: 2.29.4
     dev: false
 
-  /moment@2.29.1:
-    resolution: {integrity: sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==}
+  /moment@2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
     dev: false
 
   /morgan@1.10.0:
