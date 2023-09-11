@@ -103,7 +103,7 @@ func init() {
 * mutex：锁争用情况
 * block：协程阻塞情况
 
-## pprof 工具
+## pprof 命令行工具
 
 程序运行一段时间后，我们就可以通过 `pprof` 命令行来进行数据分析了。打开一个终端环境，输入 `go tool pprof http://localhost:6060/debug/pprof/allocs` 并按下回车，就能看到如下界面：
 
@@ -147,5 +147,8 @@ func init() {
 
 其中，方块越大，线条越粗，则代表资源占用情况（相对来说）越严重。并且在 web 界面上将显示函数的完整调用链路。
 
+## pprof 的另一种使用方式
+
+可以通过 `go tool pprof -http=:8888 http://localhost:6060/debug/pprof/allocs` 命令直接打开一个 web 界面，这个 web 界面将拥有与命令行类似的功能，并且可以显示火焰图。同样，这个命令需要先安装 [Graphviz](https://graphviz.gitlab.io/download/) 工具。
 
 
