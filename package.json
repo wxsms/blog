@@ -30,7 +30,7 @@
     "hexo-renderer-marked": "6.1.1",
     "hexo-renderer-stylus": "3.0.0",
     "hexo-server": "3.0.0",
-    "hexo-theme-next": "8.18.0",
+    "hexo-theme-next": "8.18.1",
     "prism-themes": "1.9.0"
   },
   "devDependencies": {
