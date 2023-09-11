@@ -19,15 +19,15 @@ minify: false
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
 custom_file_path:
-#head: source/_data/head.njk
-#header: source/_data/header.njk
-#sidebar: source/_data/sidebar.njk
-#postMeta: source/_data/post-meta.njk
-#postBodyEnd: source/_data/post-body-end.njk
-#footer: source/_data/footer.njk
-#bodyEnd: source/_data/body-end.njk
-#variable: source/_data/variables.styl
-#mixin: source/_data/mixins.styl
+  #head: source/_data/head.njk
+  #header: source/_data/header.njk
+  #sidebar: source/_data/sidebar.njk
+  #postMeta: source/_data/post-meta.njk
+  #postBodyEnd: source/_data/post-body-end.njk
+  #footer: source/_data/footer.njk
+  #bodyEnd: source/_data/body-end.njk
+  #variable: source/_data/variables.styl
+  #mixin: source/_data/mixins.styl
   style: source/_data/styles.styl
 
 
@@ -159,7 +159,7 @@ links_settings:
   layout: block
 
 links:
-#Title: https://example.com
+  #Title: https://example.com
   Aquariuslt blog: https://zexo.dev
   Lz's blog: https://lz5z.com
   冷石的博客: https://coldstone.fun/
@@ -264,9 +264,9 @@ reward:
 # Subscribe through Telegram Channel, Twitter, etc.
 # Usage: `Key: permalink || icon` (Font Awesome)
 follow_me:
-#Twitter: https://twitter.com/username || fab fa-twitter
-#Telegram: https://t.me/channel_name || fab fa-telegram
-#WeChat: /images/wechat_channel.jpg || fab fa-weixin
+  #Twitter: https://twitter.com/username || fab fa-twitter
+  #Telegram: https://t.me/channel_name || fab fa-telegram
+  #WeChat: /images/wechat_channel.jpg || fab fa-weixin
   RSS: /atom.xml || fa fa-rss
 
 # Related popular posts
@@ -867,11 +867,16 @@ vendors:
   # The CDN provider of NexT internal scripts.
   # Available values: local | jsdelivr | unpkg | cdnjs
   # Warning: If you are using the latest master branch of NexT, please set `internal: local`
-  internal: unpkg
+  internal: custom
   # The default CDN provider of third-party plugins.
-  # Available values: local | jsdelivr | unpkg | cdnjs
+  # Available values: local | jsdelivr | unpkg | cdnjs | custom
   # Dependencies for `plugins: local`: https://github.com/next-theme/plugins
-  plugins: unpkg
+  plugins: custom
+  # Custom CDN URL
+  # For example:
+  # custom_cdn_url: https://cdn.jsdelivr.net/npm/${npm_name}@${version}/${minified}
+  # custom_cdn_url: https://cdnjs.cloudflare.com/ajax/libs/${cdnjs_name}/${version}/${cdnjs_file}
+  custom_cdn_url: https://cdn.bootcdn.net/ajax/libs/${cdnjs_name}/${version}/${cdnjs_file}
   canvas_ribbon: plugins/ribbon.js
 
 # Assets
@@ -894,7 +899,8 @@ waline:
   visitor: false # Article reading statistic
   comment_count: false # If false, comment count will only be displayed in post page, not in home page
   requiredFields: [ ] # Set required fields: [nick] | [nick, mail]
-  libUrl: # Set custom library cdn url
+  libUrl: https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js
+  cssUrl: https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css
   uploadImage: false
   copyright: true
   dark: 'auto'
