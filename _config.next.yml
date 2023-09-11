@@ -355,8 +355,8 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: github
-    dark: github-dark-dimmed
+    light: default
+    dark: tomorrow-night
   prism:
     light: prism-darcula
     dark: prism-darcula
@@ -867,11 +867,11 @@ vendors:
   # The CDN provider of NexT internal scripts.
   # Available values: local | jsdelivr | unpkg | cdnjs
   # Warning: If you are using the latest master branch of NexT, please set `internal: local`
-  internal: local
+  internal: unpkg
   # The default CDN provider of third-party plugins.
   # Available values: local | jsdelivr | unpkg | cdnjs
   # Dependencies for `plugins: local`: https://github.com/next-theme/plugins
-  plugins: local
+  plugins: unpkg
   canvas_ribbon: plugins/ribbon.js
 
 # Assets

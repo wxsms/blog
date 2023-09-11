@@ -9,14 +9,12 @@
     "draft": "hexo new draft",
     "pub": "hexo publish",
     "post": "hexo new post",
-    "lint": "zhlint source/_posts/**/*.md",
-    "postinstall": "patch-package"
+    "lint": "zhlint source/_posts/**/*.md"
   },
   "hexo": {
     "version": "6.3.0"
   },
   "dependencies": {
-    "@next-theme/plugins": "8.18.1",
     "@waline/hexo-next": "3.0.1",
     "hexo": "6.3.0",
     "hexo-filter-flowchart": "^1.0.4",
@@ -36,7 +34,6 @@
     "prism-themes": "1.9.0"
   },
   "devDependencies": {
-    "patch-package": "^8.0.0",
     "recursive-readdir": "2.2.3",
     "yaml-front-matter": "4.1.1"
   }
