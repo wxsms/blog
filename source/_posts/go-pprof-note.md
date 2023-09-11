@@ -1,5 +1,5 @@
 ---
-title: Go 语言性能调试与问题分析工具：pprof 用法简介
+title: Go 语言性能调试与分析工具：pprof 用法简介
 date: 2023-09-11 16:01:04
 tags: [go,pprof]
 ---
