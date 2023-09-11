@@ -1,0 +1,12 @@
+diff --git a/node_modules/@next-theme/plugins/index.js b/node_modules/@next-theme/plugins/index.js
+index 2529162..4d3be5b 100644
+--- a/node_modules/@next-theme/plugins/index.js
++++ b/node_modules/@next-theme/plugins/index.js
+@@ -69,6 +69,7 @@ module.exports = function(hexo, vendors) {
+     file: 'es5/output/chtml/fonts'
+   };
+   for (const value of Object.values(vendors)) {
++    delete value.integrity;
+     const { data, error } = readFile(hexo.plugin_dir, value);
+     if (data) generator = generator.concat(data);
+     if (error) errors.push(error);
