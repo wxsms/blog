@@ -129,13 +129,47 @@ func init() {
 
 默认会按照资源占用率从高到低，显示 10 条数据。
 
-它上面的每项指标（flat/flat%/sum/cum/cum%）通常来说并不需要特别在意其具体含义，只需要知道数值越大则资源占用情况越严重即可。结果默认按照 flat 排序。
+它上面的每项指标（flat/flat%/sum/cum/cum%）大致理解就是数值越大则资源占用情况越严重。结果默认按照 flat 排序。其指标含义的详细解释可以参考 [pprof 文档](https://github.com/google/pprof/blob/main/doc/README.md)：
+
+> flat: the value of the location itself.
+> cum: the value of the location plus all its descendants.
+
+我的理解是：
+
+* flat：函数内所有直接语句的时间或内存消耗；
+* cum：函数内所有直接语句，以及其调用的子函数的时间或内存消耗；
+* sum：没有在文档中找到对应解释，但是通过观察可以发现，它是 flat% 的累加值。
+
+:::tip
+通过一个例子来解释：
+
+```go
+func foo(){
+    a()                               // step1，假设消耗 1s
+    b()                               // step2，假设消耗 2s
+    time.Sleep(3 * time.Second)       // step3，消耗 3s
+    c()                               // step4，假设消耗 4s
+}
+```
+
+这个函数总共将花费 `1 + 2 + 3 + 4 = 10` 秒，其中：
+
+* flat 等于 3，因为该函数的直接操作只有 step3
+* cum 包含所有直接语句以及子函数的消耗，即 step1 + step2 + step3 + step4
+* step 4 的 sum% 为 step1、step2、step3、step4 的 flat% 总和
+:::
 
 ### list：显示详情
 
 当发现某个函数资源占用情况可疑时，可以通过 `list 函数名` 定位到具体的代码位置。举例：
 
 ![](011d3b578be449a796e550d80e9e364f.png)
+
+该案例显示，在第 666 行处，`dw` 占用了 8.81MB 的内存，667 行占用 5.95MB 内存，该函数合计占用 14.76 MB。
+
+:::info
+此处也可以对应到上面提及的 flat/cum 含义：666 行计入 flat，666 + 667 行计入 cum。
+:::
 
 ### web：可视化分析
 
