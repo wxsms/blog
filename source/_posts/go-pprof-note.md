@@ -117,6 +117,28 @@ func init() {
 2. 然后跟随的是一个 `/debug/pprof/` 路径，此为固定值；
 3. 最后是一个 `allocs`，这个代表某一种监控指标。回到刚刚的那个 web 界面，除了 `cmdline` 以外，每一个链接都代表一种指标，可以在此处直接填入，即可更换分析目标。
 
+:::info
+命令行实际上读取的是一个由 pprof web 服务提供的 `.pb.gz` 文件，它是一个通过 gzip 压缩的 protocol buffer 数据。其源码在 `runtime/pprof` 包中。
+
+```go
+type profileBuilder struct {
+  // ...
+  zw        *gzip.Writer
+  pb        protobuf
+  // ...
+}
+
+func newProfileBuilder(w io.Writer) *profileBuilder {
+	zw, _ := gzip.NewWriterLevel(w, gzip.BestSpeed)
+	b := &profileBuilder{
+		// ...
+	}
+	b.readMapping()
+	return b
+}
+```
+:::
+
 如果要退出 pprof，可以输入 `exit` 并回车。
 
 下面介绍几个常用命令。
