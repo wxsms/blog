@@ -1,7 +1,7 @@
 ---
-title: 'Thoughts of ReactNative'
+title: 对 ReactNative 的一些想法
 date: 2018-04-27T08:24:25.520Z
-tags: [javascript,reactnative]
+tags: [javascript,react-native]
 ---
 
 使用 ReactNative 开发半年有余，本文是作为一些简单的感想。

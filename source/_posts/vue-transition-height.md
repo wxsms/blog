@@ -1,7 +1,7 @@
 ---
 title: '使用 Vue Transition 实现高度渐变动画'
 date: 2017-03-16 16:17:00
-tags: [vue,css]
+tags: [vue,css,javascript]
 ---
 
 CSS Transition 中的高度从 0 到 auto 以及从 auto 到 0 是个艰难的任务（相比于其它属性的 transition 而言），原因也很简单：就是浏览器不支持此类 CSS 动画，无论在何种情况下，它都不会成功。

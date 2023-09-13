@@ -1,7 +1,7 @@
 ---
 title: Limit Prerender Plugin Workers By Webpack
 date: 2017-10-29T02:51:17.412Z
-tags: [vue, webpack, devops]
+tags: [vue,webpack,devops,ssr]
 ---
 
 

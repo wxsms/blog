@@ -1,6 +1,6 @@
 ---
 title: Node.js 包管理器发展史
-tags: nodejs
+tags: [nodejs,npm]
 date: 2021-11-08 12:56:13
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: jQuery 写的 2048 小游戏
 date: 2015-12-12T21:58:15+00:00
-tags: [jquery]
+tags: [jquery,javascript]
 ---
 
 ![2048](https://static.wxsm.space/blog/48595779-3bf14f00-e991-11e8-9ec7-da797a7a4bd7.jpg)

@@ -1,7 +1,7 @@
 ---
 title: 'Koa Note'
 date: 2017-07-07 16:11:00
-tags: [koa, note]
+tags: [koa,nodejs]
 ---
 
 > Koa是一个类似于 Express 的 Web 开发框架，创始人也是同一个人。它的主要特点是，使用了 ES6 的 Generator 函数，进行了架构的重新设计。也就是说，Koa的原理和内部结构很像 Express，但是语法和内部结构进行了升级。

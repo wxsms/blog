@@ -1,7 +1,7 @@
 ---
 title: 'Node.js Web Spider Note - 1'
 date: 2016-09-10T23:12:05+00:00
-tags: [note, nodejs]
+tags: [nodejs]
 ---
 
 项目地址：[https://github.com/wxsms/zhihu-spider](https://github.com/wxsms/zhihu-spider)

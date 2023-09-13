@@ -1,7 +1,7 @@
 ---
 title: 静态文件 Docker 镜像问题一则
 date: 2023-03-23 17:41:39
-tags: docker
+tags: [docker,javascript]
 ---
 
 今天想要打包一个 Docker 镜像，里面只包含一些静态的前端文件。为了使体积足够小，想到的方案是把命令全部集中在一个 RUN 上，类似这样：

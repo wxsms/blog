@@ -1,7 +1,7 @@
 ---
 title: MEAN.JS 搭配 forever 使用以防止 app crash
 date: 2016-05-19T15:24:46+00:00
-tags: [meanjs]
+tags: [angularjs,nodejs]
 ---
 
 MEANJS 预设的 Grunt task 中没有提供类似出错自动重启的任务，因此当实际使用它搭建了一个 app 部署到服务器上后发现经常有一些奇怪的问题导致其崩溃挂掉。然而根据 log 来看问题应该不是由于项目代码导致的，可能是 MEANJS 本身的问题，也可能是某些 Lib 的问题。这种情况下，我能想到的暂时性解决方案就是使用 forever 了。

@@ -1,7 +1,7 @@
 ---
 title: Php Note
 date: 2021-10-13 22:05:10
-tags: [php,mysql,note]
+tags: [php,mysql]
 ---
 
 Php 个人速查笔记。

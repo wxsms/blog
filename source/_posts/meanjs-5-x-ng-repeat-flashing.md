@@ -1,7 +1,7 @@
 ---
 title: 'MEAN.JS 在 0.5 版本下发现的 NG-REPEAT 闪动问题'
 date: 2017-02-20 10:14:00
-tags: [angularjs, meanjs]
+tags: [angularjs, nodejs]
 ---
 
 如题，经过长期痛苦的观察以及 debug 过程，以下原因被一一排除：

@@ -1,7 +1,7 @@
 ---
 title: 在 Windows 中使用 Cygwin
 date: 2021-10-25 10:23:24
-tags: windows
+tags: [windows,shell]
 ---
 
 之前在 [WSL on Windows 10](/2020/wsl-on-windows-10-and-node-js/) 中尝试了 WSL，但是几经周折最后发现问题比较多，用得有点难受。最后还是换回了 windows。

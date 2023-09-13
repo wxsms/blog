@@ -1,7 +1,7 @@
 ---
 title: '《芳华》'
 date: 2017-12-27T10:46:46.151Z
-tags: [review]
+tags: [personal]
 ---
 
 我个人非常喜欢冯导的这部电影。

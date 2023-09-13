@@ -1,7 +1,7 @@
 ---
 title: 'golang 学习笔记'
 date: 2021-09-30T09:49:29.406Z
-tags: [golang, note]
+tags: [go]
 ---
 
 我的 golang 学习笔记。好几年前就说要学了，现在终于兑现。

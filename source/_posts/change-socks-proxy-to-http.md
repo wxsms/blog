@@ -1,7 +1,7 @@
 ---
 title: 'Change SOCKS Proxy to HTTP'
 date: 2017-03-10 12:00:00
-tags: [mac,windows,proxy]
+tags: [osx,windows,proxy]
 ---
 
 ## OSX

@@ -1,7 +1,7 @@
 ---
 title: 'Node.js Web Spider Note - 2'
 date: 2016-11-05T14:45:26+00:00
-tags: [note,nodejs]
+tags: [nodejs]
 ---
 
 ## Cookie & Session

@@ -1,7 +1,7 @@
 ---
 title: 'React Note - Basic'
 date: 2017-02-08 11:33:00
-tags: [react,note]
+tags: [react]
 ---
 
 React 学习笔记（基础篇）。

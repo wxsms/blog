@@ -1,7 +1,7 @@
 ---
 title: 'Egret Note'
 date: 2017-02-22 16:17:00
-tags: [egret,note]
+tags: [egret,javascript]
 ---
 
 Egret Engine 的学习笔记。

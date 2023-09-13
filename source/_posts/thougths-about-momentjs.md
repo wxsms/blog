@@ -1,5 +1,5 @@
 ---
-title: '对 Moment.js 的思考'
+title: 对 Moment.js 的一些想法
 date: 2018-01-24T06:40:18.456Z
 tags: [javascript]
 ---

@@ -1,7 +1,7 @@
 ---
 title: 'Common-used Commands'
 date: 2017-11-08T10:41:01.237Z
-tags: [note]
+tags: [shell]
 ---
 
 Personal common-used commands list, including windows, osx, git, etc.

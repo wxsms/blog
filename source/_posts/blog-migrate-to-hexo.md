@@ -1,7 +1,7 @@
 ---
 title: 博客迁移至 Hexo
 date: 2021-10-13 17:23:16
-tags: [blog]
+tags: [personal]
 ---
 
 博客迁移至 Hexo。主要原因是：
