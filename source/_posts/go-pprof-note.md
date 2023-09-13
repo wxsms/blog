@@ -134,6 +134,10 @@ func init() {
 > flat: the value of the location itself.
 > cum: the value of the location plus all its descendants.
 
+:::info
+cum 是 cumulative（累积） 的缩写。
+:::
+
 我的理解是：
 
 * flat：函数内所有直接语句的时间或内存消耗；
@@ -177,7 +181,7 @@ func foo(){
 
 直接在命令行输入 `web`，pprof 将打开一个浏览器，并展示一个可视化的分析界面：
 
-![](3ab1a1946c2949c982d6a645c4cf0f95.png)
+![](ed645cd64588431b8e6c11e29f7c6e46.png)
 
 在 web 界面上将显示函数的完整调用链路，界面可以通过鼠标拖拽、缩放。其图形详细的解释（来自 [pprof 文档](https://github.com/google/pprof/blob/main/doc/README.md#interpreting-the-callgraph)）：
 
@@ -196,9 +200,60 @@ func foo(){
 粗略地来说，每个节点的方块越大、线条越粗、颜色越红，则代表资源占用情况（相对来说）越严重，需要重点关注。
 :::
 
+对应上图的例子来说：
 
-## pprof 的另一种使用方式
+* `(*Rand).Read` 的 flat 值较小（字号较小、灰色）
+* `(*compressor).deflate` 的 flat 值与 cum 值均较大（字号较大、红色）
+* `(*Writer).Flush` 的 flat 值较小（字号较小），但 cum 值较大（红色）
+* `(*Writer).Write` 与 `(*compressor).write` 之前的线条是较粗、红色的虚线，因此它们之间的某些节点被移除了，且使用的资源较多
+* `(*Rand).Read` 与 `read` 之前的线条是较细、灰色的虚线，因此它们之间的某些节点被移除了，且使用的资源较少
+* `read` 与 `(*rngSource).Int63` 之前的线条是较细、灰色的实线，因此它们之间存在直接调用关系，且使用的资源较少
+
+### sample_index：切换采样值
+
+某些监测类型会拥有多种采样值，可以通过 `help sample_index` 查看当前可用的采样值：
+
+```
+(pprof) help sample_index
+Sample value to report (0-based index or name)
+Profiles contain multiple values per sample.
+Use sample_index=i to select the ith value (starting at 0).
+Or use sample_index=name, with name in [alloc_objects alloc_space inuse_objects inuse_space].
+```
+
+通过 `sample_index=i` 可以切换采样方式。切换后再次使用 top 命令，展示的结果将会有些区别。
+
+## pprof 的 Web 界面
 
 可以通过 `go tool pprof -http=:8888 http://localhost:6060/debug/pprof/allocs` 命令直接打开一个 web 界面，这个 web 界面将拥有与命令行类似的功能，并且可以显示火焰图。同样，这个命令需要先安装 [Graphviz](https://graphviz.gitlab.io/download/) 工具。
 
+![](149dcc3708494697bdcd2f4822adb34d.png)
 
+
+* View 菜单展示的几项功能：
+  * Top 与命令行的 top 类似
+  * Graph 与命令行的 web 类似
+  * Peek/Source 与 list 命令类似：在 Top 选中一行，或者 Graph 选中一个节点后，切换到 Peek 或 Source 界面，将展示该行/节点的代码详情
+  * Frame Graph 为火焰图
+  * Disassemble：查看汇编代码
+* Sample 菜单与命令行的 sample_index 类似
+
+### 火焰图
+
+此处以 Frame Graph (new) 举例。
+
+![](b428af1b09094765a67f58bfeb42e24d.png)
+
+解释：
+
+* 节点的颜色是由它的包名决定的，相同包名的节点将拥有相同的颜色
+* 节点的字号可能会有区别，但是与上面的图形不同的是，此处的字号仅为适应其节点大小，并无其它含义
+* 上方的节点为调用者，下方的节点为被调用者
+* 节点的宽度表示资源使用情况，越宽则资源使用越多
+  * 其总宽度代表 cum
+  * 去除其子节点后，剩余的宽度代表 flat
+* 如果上下节点之间没有边框，则表示这两个函数被“内联”了。关于内联的具体含义，可以参考 [Go: Inlining Strategy & Limitation](https://medium.com/a-journey-with-go/go-inlining-strategy-limitation-6b6d7fc3b1be)
+
+:::info
+一个函数可能会被多个不同的函数调用，因此 pprof 对传统的火焰图进行了改良：点击任意函数将显示所有最终导向该函数的调用栈，而非仅当前点击节点的调用栈。
+:::
