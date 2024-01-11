@@ -8,13 +8,14 @@ etcd 是分布式系统中的一个重要基础中间件，为 K8s 等关键基�
 
 > Distributed reliable key-value store for the most critical data of a distributed system.
 
-由于业务需要，我项目中使用了 etcd 官方客户端 clientv3 及其源码仓库中提供的队列实现（当时的版本为 3.5.11），并意外地发现了一系列问题，故事就从这里开始。
+由于业务需要，我项目中使用了 etcd 官方客户端 clientv3 及其源码仓库中提供的队列实现（当时的版本为 3.5.11），并意外地发现了一系列问题，故事从这里开始。
 
 <!-- more -->
 
 
 
 ## 问题背景
+
 
 
 ## 复现方式
@@ -36,61 +37,59 @@ docker run -e ETCD_ROOT_PASSWORD=root -e ETCD_AUTH_TOKEN_TTL=5 -p 2379:2379 --na
 package main
 
 import (
-	"context"
 	"fmt"
 	clientv3 "go.etcd.io/etcd/client/v3"
-	"sync"
+	recipe "go.etcd.io/etcd/client/v3/experimental/recipes"
 	"time"
 )
 
-var wg sync.WaitGroup
-
 func main() {
-	cfg := clientv3.Config{
-		Endpoints: []string{"http://127.0.0.1:2379"},
-		Username:  "root",
-		Password:  "root",
-	}
-
-	cli, err := clientv3.New(cfg)
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{"http://127.0.0.1:2379"},
+		Username:    "root",
+		Password:    "root",
+		DialTimeout: 5 * time.Second,
+	})
 	if err != nil {
 		panic(err)
 	}
+	queue := recipe.NewQueue(cli, "/test")
 
-	watch(cli, 1)
+	go start(queue, 1)
 
 	time.Sleep(6 * time.Second)
-	watch(cli, 2)
-	
-	time.Sleep(1 * time.Second)
-	watch(cli, 3)
+	go start(queue, 2)
 
-	wg.Wait()
+	time.Sleep(10 * time.Second)
 }
 
-func watch(cli *clientv3.Client, num int) {
-	wg.Add(1)
-
-	go func() {
-		defer wg.Done()
-		for wr := range cli.Watch(context.Background(), "") {
-			if wr.Canceled {
-				fmt.Printf("%#v\n", wr.Err())
-			}
-		}
-
-		fmt.Printf("#%v watch existed\n", num)
-	}()
+func start(q *recipe.Queue, idx int) {
+	for {
+		fmt.Printf("#%d start...\n", idx)
+		item, err := q.Dequeue()
+		fmt.Printf("dequeue: %v, err: %v\n", item, err)
+	}
 }
 ```
 
-在程序运行一段时间后，控制台上将输出：
+在程序运行一段时间后将崩溃，控制台输出：
 
 ```
-&errors.errorString{s:"rpc error: code = PermissionDenied desc = etcdserver: permission denied"}
-#2 watch existed
-&errors.errorString{s:"rpc error: code = PermissionDenied desc = etcdserver: permission denied"}
-#3 watch existed
+#1 start...
+#2 start...
+{"level":"warn","ts":"2024-01-10T10:17:39.062521+0800","logger":"etcd-client","caller":"v3@v3.5.11/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"etcd-endpoints://0xc0001f5500/127.0.0.1:2379","attempt":0,"error":"rpc error: code = Unauthenticated desc = etcdserver: invalid auth token"}
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal 0xc0000005 code=0x0 addr=0x8 pc=0x1088656]
+
+goroutine 37 [running]:
+go.etcd.io/etcd/client/v3/experimental/recipes.(*Queue).Dequeue(0xc000380780)
+        C:/Users/G40NTC3/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.11/experimental/recipes/queue.go:70 +0x136
+main.start(0x0?, 0x0?)
+        E:/githome/backend/code-interpreter/sbscheduler/test/watchproblem/main.go:33 +0xcf
+created by main.main
+        E:/githome/backend/code-interpreter/sbscheduler/test/watchproblem/main.go:25 +0x245
+
+Process finished with the exit code 2
 ```
 
 可以看到 2 号和 3 号 watch 出错并且退出了 （Canceled）。出错的原因是 `permission denied`，即授权认证未通过。
