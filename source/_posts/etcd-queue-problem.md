@@ -1,8 +1,10 @@
 ---
 title: etcd 队列引发的问题一则
-tags: [go,etcd]
+tags:
+  - go
+  - etcd
+date: 2024-01-12 15:14:16
 ---
-
 
 etcd 是分布式系统中的一个重要基础中间件，为 K8s 等关键基础设施提供了底层的 KV 储存能力。摘自 Github 描述：
 

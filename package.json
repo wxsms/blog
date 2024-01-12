@@ -6,8 +6,6 @@
     "dev": "hexo server --draft",
     "build": "hexo generate",
     "clean": "hexo clean",
-    "draft": "hexo new draft",
-    "pub": "hexo publish",
     "post": "hexo new post",
     "lint": "zhlint source/_posts/**/*.md"
   },
