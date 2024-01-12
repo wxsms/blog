@@ -241,9 +241,11 @@ Process finished with the exit code 2
 
 ### 方式一：为每次 Watch 创建新的 client
 
-这个做法真的是可行的吗？经过我的实践，答案是：不一定可行，取决于使用场景。
+按照 #14995 的说法（create a new client each time before watching），经过我的实践，答案是：这个做法不一定可行，取决于使用场景。
 
 其主要原因是，在创建一个新的 client 的过程中，client 和 server 需要进行一定的连接建立、授权认证等初始化工作，这些工作的耗时非常惊人，可能会达到几百毫秒。这样一来，如果我需要为进入服务器的每一个请求启动一个 watch 进程，那么每一个请求都可能会被拖慢几百毫秒。同时由于用户名+密码授权的过程耗费大量的 etcd server 计算性能，在请求量较大时，etcd server 可能会被频繁的授权工作拖累，出现耗时增加甚至崩溃的情况。
+
+因此，我觉得这并不是一个“very easy workaround”。
 
 ### 方式二：修改队列源码，只在启动时 Watch
 
