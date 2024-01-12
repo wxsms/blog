@@ -16,9 +16,107 @@ etcd 是分布式系统中的一个重要基础中间件，为 K8s 等关键基�
 
 ## 问题背景
 
+在项目的本地开发过程中，我通过 docker 部署了一个 etcd 服务器，开发过程非常顺畅，没有遇到任何问题。但是将服务部署上测试环境，连接上测试环境的 etcd 后，发现服务运行一段时间后就会报如下错误：
+
+```
+{"level":"warn","ts":"2024-01-10T11:49:21.911042+0800","logger":"etcd-client","caller":"v3@v3.5.11/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"etcd-endpoints://0xc0001ab500/127.0.0.1:2379","attempt":0,"error":"rpc error: code = Unauthenticated desc = etcdserver: invalid auth token"}
+```
+
+以及如下错误：
+
+```
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal 0xc0000005 code=0x0 addr=0x8 pc=0x1088656]
+
+goroutine 37 [running]:
+go.etcd.io/etcd/client/v3/experimental/recipes.(*Queue).Dequeue(0xc000380780)
+        xxx/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.11/experimental/recipes/queue.go:70 +0x136
+```
+
+由于协程内部没有做 recover，所以这个 panic 会导致 pod 崩溃重启，部分接口调用出错或超时。但由于在本地从来没有出现过该问题，所以初见崩溃时感觉有些诡异。
+
+## 错误定位
+
+### Dequeue
+
+通过上述日志可以发现，panic 是从 clientv3 内部的代码发出的。因此我们直接来到 Dequeue 方法中查看：
+
+```go
+// Dequeue returns Enqueue()'d elements in FIFO order. If the
+// queue is empty, Dequeue blocks until elements are available.
+func (q *Queue) Dequeue() (string, error) {
+	// ...
+	ev, err := WaitPrefixEvents(
+		q.client,
+		q.keyPrefix,
+		resp.Header.Revision,
+		[]mvccpb.Event_EventType{mvccpb.PUT})
+	if err != nil {
+		return "", err
+	}
+	// L70
+	ok, err := deleteRevKey(q.client, string(ev.Kv.Key), ev.Kv.ModRevision)
+	if err != nil {
+		return "", err
+	} else if !ok {
+		return q.Dequeue()
+	}
+	return string(ev.Kv.Value), err
+}
+```
+
+可以看到，在产生报错的 L70 处，它尝试将获取到的一个队列元素删除。如果删除成功了，则认为出队成功。如果说这里有可能出现 nil pointer，那么应该只可能是 `ev.Kv`，也就是说 `WaitPrefixEvents` 同时返回了值为 `nil` 的 `ev` 和 `err`。
+
+### WaitPrefixEvents
+
+继续进入 WaitPrefixEvents 查看：
+
+```go
+func WaitPrefixEvents(c *clientv3.Client, prefix string, rev int64, evs []mvccpb.Event_EventType) (*clientv3.Event, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	wc := c.Watch(ctx, prefix, clientv3.WithPrefix(), clientv3.WithRev(rev))
+	if wc == nil {
+		return nil, ErrNoWatcher
+	}
+	return waitEvents(wc, evs), nil
+}
+
+func waitEvents(wc clientv3.WatchChan, evs []mvccpb.Event_EventType) *clientv3.Event {
+	i := 0
+	for wresp := range wc {
+		for _, ev := range wresp.Events {
+			if ev.Type == evs[i] {
+				i++
+				if i == len(evs) {
+					return ev
+				}
+			}
+		}
+	}
+	return nil
+}
+```
+
+可以看到，它通过 etcd 的 Watch 功能来等待一个队列元素的 PUT 事件（在该场景下即添加）。那么它有可能同时返回值为 `nil` 的 `ev` 和 `err` 吗？很显然是有的：在 `waitEvents` 的最后一行，它返回了值为 nil 的 ev。也就是说，如果 `wc` 这个 channel 在被发送方 close 之前没有收到有效的 put event，那么这段代码就会返回 `nil`。
 
 
-## 复现方式
+
+
+## 问题复现
+
+在什么情况下 Watch channel 会被 close 呢？结合上面抛出的另一个错误来看：
+
+```
+{"level":"warn","ts":"2024-01-10T11:49:21.911042+0800","logger":"etcd-client","caller":"v3@v3.5.11/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"etcd-endpoints://0xc0001ab500/127.0.0.1:2379","attempt":0,"error":"rpc error: code = Unauthenticated desc = etcdserver: invalid auth token"}
+```
+
+合理推测：这应该与 etcd 的授权有关。这时候回看一下我本地开发环境与测试环境的区别：
+
+1. 本地环境启动的 etcd 服务**没有密码**；
+2. 测试环境的 etcd 服务使用了**帐号密码认证**。
+
+是否说明如果我在本地部署一个带**帐号密码认证**的服务则可以稳定复现该问题呢？
 
 首先，通过 docker 快速部署一个带有授权认证的 etcd 服务器：
 
@@ -29,9 +127,9 @@ docker run -e ETCD_ROOT_PASSWORD=root -e ETCD_AUTH_TOKEN_TTL=5 -p 2379:2379 --na
 在这个服务器中，我们：
 
 1. 为 root 用户启用了密码，密码为 root。
-2. 设置了 token 的 ttl (time to live，即过期时间) 为 5 秒钟。
+2. 为了快速复现，设置了 token 的 ttl (time to live，即过期时间) 为 5 秒钟。
 
-然后，编写客户端代码：
+然后，编写一段简单的客户端代码：
 
 ```go
 package main
@@ -92,111 +190,69 @@ created by main.main
 Process finished with the exit code 2
 ```
 
-可以看到 2 号和 3 号 watch 出错并且退出了 （Canceled）。出错的原因是 `permission denied`，即授权认证未通过。
+可以看到 2 号协程出现了 panic，并且同时抛出了一个 `etcdserver: invalid auth token` 的 warning。与上述服务在测试环境出现的问题完全一致。
 
-## 错误定位
+## 问题原因
 
-etcd 在 clientv3 内实现了一个队列工具：
+很显然该问题的出现与两个因素有关：
 
-```go
-// go doc go.etcd.io/etcd/client/v3/experimental/recipes.Queue
-package recipe // import "go.etcd.io/etcd/client/v3/experimental/recipes"
+1. etcd 的授权机制
+2. Watch API
 
-type Queue struct {
-        // Has unexported fields.
-}
-    Queue implements a multi-reader, multi-writer distributed queue.
+### etcd 的授权机制
 
-func NewQueue(client *v3.Client, keyPrefix string) *Queue
-func (q *Queue) Dequeue() (string, error)
-func (q *Queue) Enqueue(val string) error
-```
+在 etcdv3 中，client 与 server 的连接方式出现了较大变化：从 v2 的简单 http1 json 调用升级为了基于 http2 的 gRPC 调用。
 
-它的实现非常简单，接口也很干净，支持分布式的多读多写，并且它的 Dequeue 方法正是利用了 Watch 功能实现的，因此重点关注一下 Dequeue 方法，我在代码中补充了一些自己的注释：
+:::info
+这种升级带来了很多好处，其中一个是授权可以基于一个“连接”而非单个“请求”进行。
+:::
 
-```go
-// Dequeue returns Enqueue()'d elements in FIFO order. If the
-// queue is empty, Dequeue blocks until elements are available.
-func (q *Queue) Dequeue() (string, error) {
-	// 先从队列中获取一个元素，从最新的修订号开始获取（FIFO）
-	resp, err := q.client.Get(q.ctx, q.keyPrefix, v3.WithFirstRev()...)
-	if err != nil {
-		return "", err
-	}
+etcdv3 支持 4 种授权机制：
 
-	// 获取到的每一个元素，尝试 "claim" 它，实际上就是尝试删除并返回
-	kv, err := claimFirstKey(q.client, resp.Kvs)
-	if err != nil {
-		return "", err
-	} else if kv != nil {
-		// 拿到了返回，代表删除成功了，这时候出队成功
-		return string(kv.Value), nil
-	} else if resp.More {
-		// 递归调用自己，继续获取剩余内容
-		return q.Dequeue()
-	}
+1. 无授权
+2. simple token
+3. jwt token
+4. TLS
 
-	// 现有数据中没找到任何成功出队的元素，开始等待新元素入队
-	// 这里用的是 Watch!
-	ev, err := WaitPrefixEvents(
-		q.client,
-		q.keyPrefix,
-		resp.Header.Revision,
-		[]mvccpb.Event_EventType{mvccpb.PUT})
-	if err != nil {
-		return "", err
-	}
-	// 尝试删除该元素
-	ok, err := deleteRevKey(q.client, string(ev.Kv.Key), ev.Kv.ModRevision)
-	if err != nil {
-		return "", err
-	} else if !ok {
-		// 删除失败了，继续 Dequeue
-		return q.Dequeue()
-	}
-	// 删除成功了，返回元素的值
-	return string(ev.Kv.Value), err
-}
-```
+其中：
 
-这段代码里面涉及到很多 etcd3 的知识点，出现最多的是“修订号”（Rev）的概念。因为跟本文没有太大关系，这里只简单提一下：etcd 底层使用了一个 MVCC 数据库，它会保存数据的所有历史记录，就像 git 一样，可以通过 rev 来找到一条数据记录在任意时间点的状态。
+1. 无授权，顾名思义，没有授权，不存在 token 过期等问题
+2. simple token 和 jwt token 都是基于用户名、密码下发 token 的策略，token 默认情况下 5 分钟会过期一次，需要向 server 重新授权获取
+3. TLS 基于证书的授权认证，性能显著优于 token 的同时不需要下发 token
 
-这个 Dequeue 方法概括来说就是：它首先尝试在现有元素中出队（删除成功等于出队成功，因为要照顾多客户端读，只有成功删除的那个客户端视作成功出队），如果没有能出队的，则启动一个 Watch 等待新元素，并尝试出队。成功则返回，不成功则如此往复。
+在本次问题过程中，测试环境的 etcd server 采用了用户名+密码的认证策略，因此存在 token 过期问题。但是一个巴掌拍不响：为什么 clientv3 的其它接口都没有因为 token 过期而出现异常，唯独 Watch 不行呢？
 
-这段代码写得很好，很精妙，也很有意思，但它问题出在哪呢？还要继续看一下 `WaitPrefixEvents` 的实现：
 
-```go
-func WaitPrefixEvents(c *clientv3.Client, prefix string, rev int64, evs []mvccpb.Event_EventType) (*clientv3.Event, error) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	wc := c.Watch(ctx, prefix, clientv3.WithPrefix(), clientv3.WithRev(rev))
-	if wc == nil {
-		return nil, ErrNoWatcher
-	}
-	return waitEvents(wc, evs), nil
-}
+### Watch API
 
-func waitEvents(wc clientv3.WatchChan, evs []mvccpb.Event_EventType) *clientv3.Event {
-	i := 0
-	for wresp := range wc {
-		// wresp.Canceled ???
-		for _, ev := range wresp.Events {
-			if ev.Type == evs[i] {
-				i++
-				if i == len(evs) {
-					return ev
-				}
-			}
-		}
-	}
-	return nil
-}
-```
+通过 `etch watch token` 关键词搜索，排名第一的结果已经直接找到答案：[#12385 watch stream return "permission denied" if token expired](https://github.com/etcd-io/etcd/issues/12385)：
 
-可以看到在 `waitEvents` 的循环中，它实际上是漏掉了 `wresp.Canceled` 的判断，没有判断 watch 因为某种原因失败的情况（实际上它可能并不经常失败，除了上面提到的 token 问题）。在 watch 失败的情况下，它会返回一个值为 `nil` 的 `ev`，并且 `err` 也是 `nil`。好巧不巧的是，在 Dequeue 方法中，只判断了 `err != nil`，没有判断 `ev != nil`，因此程序只要触发了某个 watch 的错误，就会因为这行代码：
+简要过程描述：
+1. 在 2020 年 10 月，有人提出了 etcd 的 watch stream 在 token 过期的时候会遇到 permission denied 的问题。这个问题是由于 clientv3 内部没有对 Watch 接口的 Token 过期错误进行处理和重试导致的。
+2. 在 [#14322](https://github.com/etcd-io/etcd/pull/14322/files) 中，有人为这个问题添加了一个重试机制，发布为 v3.5.6
+3. 在 v3.5.7 中，上述 PR 被 [#14995](https://github.com/etcd-io/etcd/pull/14995) 回滚了。理由是它在同时修改了 server 和 client 实现的前提下，改动方式过于脆弱（通过字符串比对的方式来比较错误类型）。
+4. 在 [#15058](https://github.com/etcd-io/etcd/issues/15058) 中，团队成员决定为 WatchResponse 添加一个基于 Code 的 cancel reason，但是这个 issue 还处于 open 状态，按照计划它将于 v3.6.0 的 server+client 中提供。
 
-```go
-ok, err := deleteRevKey(q.client, string(ev.Kv.Key), ev.Kv.ModRevision)
-```
+所以，这个问题的答案是：
+1. 没错，Watch API 目前确实不支持 token 过期的重试
+2. 如果想要 work around，可以为每次 Watch 创建新的 client
+3. 如果要彻底解决，需要等待 v3.6.0
 
-导致 panic。
+## 问题解决
+
+### 为每次 Watch 创建新的 client？
+
+在 [#14995](https://github.com/etcd-io/etcd/pull/14995) 中，回滚者提到：
+
+> It's very easy for client application to workaround the issue.
+> The client just needs to create a new client each time before watching.
+
+即，我们可以为每次 Watch 创建新的 client 来规避这个问题。但是这个做法真的是可行的吗？
+
+经过我的实践，答案是不一定可行。取决于使用场景。其主要原因是，在创建一个新的 client 的过程中，client 和 server 需要进行一定的授权认证等初始化工作，这些工作的耗时非常惊人，可能会达到几百毫秒。这样一来，如果我需要为进入服务器的每一个请求启动一个 watch 进程，那么每一个请求都可能会被拖慢几百毫秒。同时由于用户名+密码授权的过程耗费大量的 etcd server 计算性能，在请求量较大时，etcd server 可能会被频繁的授权工作拖累。
+
+## 参考
+
+* https://etcd.io/docs/v3.2/learning/auth_design/
+* https://github.com/etcd-io/etcd/issues/12385
+* https://github.com/etcd-io/etcd/pull/14322
