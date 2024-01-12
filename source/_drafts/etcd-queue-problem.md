@@ -240,19 +240,176 @@ etcdv3 支持 4 种授权机制：
 
 ## 问题解决
 
-### 为每次 Watch 创建新的 client？
+### 方式一：为每次 Watch 创建新的 client？
 
 在 [#14995](https://github.com/etcd-io/etcd/pull/14995) 中，回滚者提到：
 
 > It's very easy for client application to workaround the issue.
 > The client just needs to create a new client each time before watching.
 
-即，我们可以为每次 Watch 创建新的 client 来规避这个问题。但是这个做法真的是可行的吗？
+即，我们可以为每次 Watch 创建新的 client 来规避这个问题。但是这个做法真的是可行的吗？经过我的实践，答案是：不一定可行，取决于使用场景。
 
-经过我的实践，答案是不一定可行。取决于使用场景。其主要原因是，在创建一个新的 client 的过程中，client 和 server 需要进行一定的授权认证等初始化工作，这些工作的耗时非常惊人，可能会达到几百毫秒。这样一来，如果我需要为进入服务器的每一个请求启动一个 watch 进程，那么每一个请求都可能会被拖慢几百毫秒。同时由于用户名+密码授权的过程耗费大量的 etcd server 计算性能，在请求量较大时，etcd server 可能会被频繁的授权工作拖累。
+其主要原因是，在创建一个新的 client 的过程中，client 和 server 需要进行一定的连接建立、授权认证等初始化工作，这些工作的耗时非常惊人，可能会达到几百毫秒。这样一来，如果我需要为进入服务器的每一个请求启动一个 watch 进程，那么每一个请求都可能会被拖慢几百毫秒。同时由于用户名+密码授权的过程耗费大量的 etcd server 计算性能，在请求量较大时，etcd server 可能会被频繁的授权工作拖累，出现耗时增加甚至崩溃的情况。
+
+### 方式二：修改队列源码，只在启动时 Watch
+
+既然每次都创建新 client 不现实，那么很容易想到另一个办法：既然不能在服务运行的过程中动态 watch，那我在启动时只 watch 一次是不是就好了？答案是：确实可行。
+
+队列代码修改如下，我们使用一个 channel 来作为 Dequeue 时的通信手段，在程序启动时，先通过 get 获取到所有的元素，一个一个消费完后，启动 Watch 来观测后续其它元素的入队：
+
+```go
+package etcd
+
+import (
+	"context"
+	"fmt"
+	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
+	"go.etcd.io/etcd/api/v3/mvccpb"
+	spb "go.etcd.io/etcd/api/v3/mvccpb"
+	clientv3 "go.etcd.io/etcd/client/v3"
+	"time"
+)
+
+var (
+	ErrKeyExists = errors.New("key already exists")
+)
+
+type DequeueResult struct {
+	result string
+	err    error
+}
+
+type Queue struct {
+	ctx      context.Context
+	prefix   string
+	cli      *clientv3.Client
+	dequeueC chan DequeueResult
+}
+
+func NewQueue(cli *clientv3.Client, prefix string) *Queue {
+	q := &Queue{
+		ctx:      context.TODO(),
+		prefix:   prefix,
+		cli:      cli,
+		dequeueC: make(chan DequeueResult, 1),
+	}
+	go func() {
+		// 先清空队列
+		for {
+			resp, err := q.cli.Get(q.ctx, q.prefix, clientv3.WithFirstRev()...)
+			if err != nil {
+				q.dequeueC <- DequeueResult{result: "", err: err}
+				continue
+			}
+			kv, err := q.claimFirstKey(resp.Kvs)
+			if err != nil {
+				q.dequeueC <- DequeueResult{result: "", err: err}
+				continue
+			}
+			if kv != nil {
+				q.dequeueC <- DequeueResult{result: string(kv.Value), err: nil}
+				continue
+			}
+			if resp.More {
+				continue
+			}
+			break
+		}
+		// 开始watch
+		wc := q.cli.Watch(q.ctx, q.prefix, clientv3.WithPrefix())
+		for wresp := range wc {
+			if wresp.Canceled {
+				log.WithField("error", wresp.Err()).Fatal("dequeue watcher exit")
+			}
+			for _, ev := range wresp.Events {
+				switch ev.Type {
+				case mvccpb.PUT:
+					ok, err := q.deleteRevKey(string(ev.Kv.Key), ev.Kv.ModRevision)
+					//log.Debugln("dequeue", ok, err)
+					if err != nil {
+						q.dequeueC <- DequeueResult{
+							result: "",
+							err:    err,
+						}
+					} else if ok {
+						q.dequeueC <- DequeueResult{
+							result: string(ev.Kv.Value),
+							err:    nil,
+						}
+					}
+				}
+			}
+		}
+	}()
+	return q
+}
+
+func (q *Queue) putNewKv(key, val string, leaseID clientv3.LeaseID) (int64, error) {
+	cmp := clientv3.Compare(clientv3.Version(key), "=", 0)
+	req := clientv3.OpPut(key, val, clientv3.WithLease(leaseID))
+	txnresp, err := q.cli.Txn(q.ctx).If(cmp).Then(req).Commit()
+	if err != nil {
+		return 0, err
+	}
+	if !txnresp.Succeeded {
+		return 0, ErrKeyExists
+	}
+	return txnresp.Header.Revision, nil
+}
+
+func (q *Queue) Enqueue(val string) error {
+	for {
+		newKey := fmt.Sprintf("%s/%v", q.prefix, time.Now().UnixNano())
+		_, err := q.putNewKv(newKey, val, clientv3.NoLease)
+		if err == nil {
+			return nil
+		}
+		if !errors.Is(err, ErrKeyExists) {
+			return err
+		}
+	}
+}
+
+func (q *Queue) Dequeue() (string, error) {
+	res := <-q.dequeueC
+	return res.result, res.err
+}
+
+func (q *Queue) claimFirstKey(kvs []*spb.KeyValue) (*spb.KeyValue, error) {
+	for _, k := range kvs {
+		ok, err := q.deleteRevKey(string(k.Key), k.ModRevision)
+		if err != nil {
+			return nil, err
+		} else if ok {
+			return k, nil
+		}
+	}
+	return nil, nil
+}
+
+// deleteRevKey deletes a key by revision, returning false if key is missing
+func (q *Queue) deleteRevKey(key string, rev int64) (bool, error) {
+	cmp := clientv3.Compare(clientv3.ModRevision(key), "=", rev)
+	req := clientv3.OpDelete(key)
+	txnresp, err := q.cli.Txn(context.TODO()).If(cmp).Then(req).Commit()
+	if err != nil {
+		return false, err
+	} else if !txnresp.Succeeded {
+		return false, nil
+	}
+	return true, nil
+}
+```
+
+
+### 方式三：认证方式改为 TLS
+
+上面的授权机制小节有提到，除了“无授权”、“用户名+密码”外，etcd 还提供另一种方式来进行授权，即“TLS”。
 
 ## 参考
 
 * https://etcd.io/docs/v3.2/learning/auth_design/
 * https://github.com/etcd-io/etcd/issues/12385
 * https://github.com/etcd-io/etcd/pull/14322
+* https://etcd.io/docs/v3.2/op-guide/security/
