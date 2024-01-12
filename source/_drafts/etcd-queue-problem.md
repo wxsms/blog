@@ -201,24 +201,18 @@ Process finished with the exit code 2
 
 ### etcd 的授权机制
 
-在 etcdv3 中，client 与 server 的连接方式出现了较大变化：从 v2 的简单 http1 json 调用升级为了基于 http2 的 gRPC 调用。
-
-:::info
-这种升级带来了很多好处，其中一个是授权可以基于一个“连接”而非单个“请求”进行。
-:::
-
-etcdv3 支持 4 种授权机制：
+在 etcdv3 中，client 与 server 的连接方式出现了较大变化：从 v2 的简单 http1 json 调用升级为了基于 http2 的 gRPC 调用。 etcdv3 支持 4 种授权机制：
 
 1. 无授权
 2. simple token
-3. jwt token
+3. JWT (JSON Web Token)
 4. TLS
 
 其中：
 
 1. 无授权，顾名思义，没有授权，不存在 token 过期等问题
-2. simple token 和 jwt token 都是基于用户名、密码下发 token 的策略，token 默认情况下 5 分钟会过期一次，需要向 server 重新授权获取
-3. TLS 基于证书的授权认证，性能显著优于 token 的同时不需要下发 token
+2. simple token 和 JWT 都是基于用户名、密码下发 token 的策略，token 默认情况下 5 分钟会过期一次，过期需要向 server 重新授权获取
+3. TLS 是基于证书的授权认证，性能显著优于 token 的同时，不需要下发 token
 
 在本次问题过程中，测试环境的 etcd server 采用了用户名+密码的认证策略，因此存在 token 过期问题。但是一个巴掌拍不响：为什么 clientv3 的其它接口都没有因为 token 过期而出现异常，唯独 Watch 不行呢？
 
@@ -233,6 +227,11 @@ etcdv3 支持 4 种授权机制：
 3. 在 v3.5.7 中，上述 PR 被 [#14995](https://github.com/etcd-io/etcd/pull/14995) 回滚了。理由是它在同时修改了 server 和 client 实现的前提下，改动方式过于脆弱（通过字符串比对的方式来比较错误类型）。
 4. 在 [#15058](https://github.com/etcd-io/etcd/issues/15058) 中，团队成员决定为 WatchResponse 添加一个基于 Code 的 cancel reason，但是这个 issue 还处于 open 状态，按照计划它将于 v3.6.0 的 server+client 中提供。
 
+在 [#14995](https://github.com/etcd-io/etcd/pull/14995) 中，回滚者提到：
+
+> It's very easy for client application to workaround the issue.
+> The client just needs to create a new client each time before watching.
+
 所以，这个问题的答案是：
 1. 没错，Watch API 目前确实不支持 token 过期的重试
 2. 如果想要 work around，可以为每次 Watch 创建新的 client
@@ -240,14 +239,9 @@ etcdv3 支持 4 种授权机制：
 
 ## 问题解决
 
-### 方式一：为每次 Watch 创建新的 client？
+### 方式一：为每次 Watch 创建新的 client
 
-在 [#14995](https://github.com/etcd-io/etcd/pull/14995) 中，回滚者提到：
-
-> It's very easy for client application to workaround the issue.
-> The client just needs to create a new client each time before watching.
-
-即，我们可以为每次 Watch 创建新的 client 来规避这个问题。但是这个做法真的是可行的吗？经过我的实践，答案是：不一定可行，取决于使用场景。
+这个做法真的是可行的吗？经过我的实践，答案是：不一定可行，取决于使用场景。
 
 其主要原因是，在创建一个新的 client 的过程中，client 和 server 需要进行一定的连接建立、授权认证等初始化工作，这些工作的耗时非常惊人，可能会达到几百毫秒。这样一来，如果我需要为进入服务器的每一个请求启动一个 watch 进程，那么每一个请求都可能会被拖慢几百毫秒。同时由于用户名+密码授权的过程耗费大量的 etcd server 计算性能，在请求量较大时，etcd server 可能会被频繁的授权工作拖累，出现耗时增加甚至崩溃的情况。
 
@@ -405,7 +399,26 @@ func (q *Queue) deleteRevKey(key string, rev int64) (bool, error) {
 
 ### 方式三：认证方式改为 TLS
 
-上面的授权机制小节有提到，除了“无授权”、“用户名+密码”外，etcd 还提供另一种方式来进行授权，即“TLS”。
+上面的授权机制小节有提到，除了“无授权”、“用户名+密码”外，etcd 还提供另一种方式来进行授权，即“TLS 证书认证”。证书认证在稳定性、性能上都优于密码认证，同时因为它不需要下发 token，所以可以避免任何因为 token 失效而触发的问题。
+
+TLS 连接需要三个证书：CA、Client、Client Key，以下是一个使用 TLS 连接服务器的 client 例子：
+
+```go
+tlsInfo := transport.TLSInfo{
+	CertFile:      "client.pem",
+	KeyFile:       "client-key.pem",
+	TrustedCAFile: "ca.pem",
+}
+tlsConf, err := tlsInfo.ClientConfig()
+if err != nil {
+	log.Fatal(err)
+}
+cli, err := clientv3.New(clientv3.Config{
+	Endpoints:   strings.Split(c.Addr, ";"),
+	TLS:         tlsConf,
+	DialTimeout: 5 * time.Second,
+})
+```
 
 ## 参考
 
