@@ -251,26 +251,9 @@ Process finished with the exit code 2
 
 既然每次都创建新 client 不现实，那么很容易想到另一个办法：既然不能在服务运行的过程中动态 watch，那我在启动时只 watch 一次是不是就好了？答案是：确实可行。
 
-队列代码修改如下，我们使用一个 channel 来作为 Dequeue 时的通信手段，在程序启动时，先通过 get 获取到所有的元素，一个一个消费完后，启动 Watch 来观测后续其它元素的入队：
+队列代码修改后，大致思路如下，我们使用一个 channel 来作为 Dequeue 时的通信手段，在程序启动时，先通过 get 获取到所有的元素，一个一个消费完后，启动 Watch 来观测后续其它元素的入队：
 
 ```go
-package etcd
-
-import (
-	"context"
-	"fmt"
-	"github.com/pkg/errors"
-	log "github.com/sirupsen/logrus"
-	"go.etcd.io/etcd/api/v3/mvccpb"
-	spb "go.etcd.io/etcd/api/v3/mvccpb"
-	clientv3 "go.etcd.io/etcd/client/v3"
-	"time"
-)
-
-var (
-	ErrKeyExists = errors.New("key already exists")
-)
-
 type DequeueResult struct {
 	result string
 	err    error
@@ -341,19 +324,6 @@ func NewQueue(cli *clientv3.Client, prefix string) *Queue {
 	return q
 }
 
-func (q *Queue) putNewKv(key, val string, leaseID clientv3.LeaseID) (int64, error) {
-	cmp := clientv3.Compare(clientv3.Version(key), "=", 0)
-	req := clientv3.OpPut(key, val, clientv3.WithLease(leaseID))
-	txnresp, err := q.cli.Txn(q.ctx).If(cmp).Then(req).Commit()
-	if err != nil {
-		return 0, err
-	}
-	if !txnresp.Succeeded {
-		return 0, ErrKeyExists
-	}
-	return txnresp.Header.Revision, nil
-}
-
 func (q *Queue) Enqueue(val string) error {
 	for {
 		newKey := fmt.Sprintf("%s/%v", q.prefix, time.Now().UnixNano())
@@ -371,32 +341,9 @@ func (q *Queue) Dequeue() (string, error) {
 	res := <-q.dequeueC
 	return res.result, res.err
 }
-
-func (q *Queue) claimFirstKey(kvs []*spb.KeyValue) (*spb.KeyValue, error) {
-	for _, k := range kvs {
-		ok, err := q.deleteRevKey(string(k.Key), k.ModRevision)
-		if err != nil {
-			return nil, err
-		} else if ok {
-			return k, nil
-		}
-	}
-	return nil, nil
-}
-
-// deleteRevKey deletes a key by revision, returning false if key is missing
-func (q *Queue) deleteRevKey(key string, rev int64) (bool, error) {
-	cmp := clientv3.Compare(clientv3.ModRevision(key), "=", rev)
-	req := clientv3.OpDelete(key)
-	txnresp, err := q.cli.Txn(context.TODO()).If(cmp).Then(req).Commit()
-	if err != nil {
-		return false, err
-	} else if !txnresp.Succeeded {
-		return false, nil
-	}
-	return true, nil
-}
 ```
+
+虽然自己实现的队列能够解决问题，但是稳定性可能相比 clientv3 内部的实现会有些许欠缺。在可能的情况下还是希望尽量使用 clientv3 的实现。
 
 
 ### 方式三：认证方式改为 TLS
@@ -421,6 +368,8 @@ cli, err := clientv3.New(clientv3.Config{
 	DialTimeout: 5 * time.Second,
 })
 ```
+
+服务端修改为 TLS 认证后，只需要按上述方法同步修改客户端创建的过程即可，其它代码可以一行不动，完美！
 
 ## 参考
 
