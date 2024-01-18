@@ -373,6 +373,102 @@ cli, err := clientv3.New(clientv3.Config{
 
 服务端修改为 TLS 认证后，只需要按上述方法同步修改客户端创建的过程即可，其它代码可以一行不动，完美！
 
+## etcd 队列源码赏析
+
+抛开上面遇到的问题不谈，etcd clientv3 中实现的多读多写分布式队列还是很值得学习的。队列源码文件位于 `client/v3/experimental/recipes/queue.go`，其暴露的接口如下：
+ 
+```go
+package recipe // import "go.etcd.io/etcd/client/v3/experimental/recipes"
+
+type Queue struct {
+        // Has unexported fields.
+}
+    Queue implements a multi-reader, multi-writer distributed queue.
+
+func NewQueue(client *v3.Client, keyPrefix string) *Queue
+func (q *Queue) Dequeue() (string, error)
+func (q *Queue) Enqueue(val string) error
+```
+
+该 package 非常简洁，只暴露了三个函数：创建一个队列，出队和入队。下面一一解读。
+
+### NewQueue
+
+```go
+func NewQueue(client *v3.Client, keyPrefix string) *Queue {
+	return &Queue{client, context.TODO(), keyPrefix}
+}
+```
+
+`NewQueue` 函数接收一个 client 实例指针和一个 `keyPrefix` 字符串（可以认为是队列名），返回一个队列实例指针。队列实例还额外创建了一个 `context` 实例，但是并没有允许使用者自定义该参数。这里貌似是一个值得商榷的点，从 `context.TODO` 也可以看出。正常来说，`context` 实例应该在调用 `Enqueue` 或 `Dequeue` 的时候单独传入，这样才能发挥它的预期作用（配置超时时间等）。
+
+### Enqueue
+
+```go
+func (q *Queue) Enqueue(val string) error {
+	_, err := newUniqueKV(q.client, q.keyPrefix, val)
+	return err
+}
+```
+
+`Enqueue` 函数的实现非常简单：从 `newUniqueKV` 这个函数来看，是根据 `keyPrefix` 和 `value` 来创建了一个唯一的键值对。然而 etcd 要怎么在多读多写的环境下保证键的唯一性呢？深入 `newUniqueKV` 函数：
+
+```go
+func newUniqueKV(kv v3.KV, prefix string, val string) (*RemoteKV, error) {
+	for {
+		newKey := fmt.Sprintf("%s/%v", prefix, time.Now().UnixNano())
+		rev, err := putNewKV(kv, newKey, val, v3.NoLease)
+		if err == nil {
+			return &RemoteKV{kv, newKey, rev, val}, nil
+		}
+		if err != ErrKeyExists {
+			return nil, err
+		}
+	}
+}
+```
+
+原来 `newUniqueKV` 是通过一个循环，不断尝试用 `prefix/时间戳` 为 key 去创建 KV：
+
+1. 如果创建成功了，则返回键值对；
+2. 如果出错了：
+   1. 出现了 `ErrKeyExists` 错误，回到循环开始处，继续尝试创建；
+   2. 出现了其它任意错误，返回错误信息。
+
+这里其实还有一个知识点：etcd 的储存模式是 MVCC (Multi-Version Concurrency Control，即多版本并发控制)。也就是说，如果对同一个键进行多次写，etcd 本身并不会报 `ErrKeyExists` 错，而是会为这个 key 创建一个新的版本号和值。那么这里 `putNewKV` 要如何保证创建该 key 时它必须是不存在的呢？继续深入源码：
+
+```go
+// putNewKV attempts to create the given key, only succeeding if the key did
+// not yet exist.
+func putNewKV(kv v3.KV, key, val string, leaseID v3.LeaseID) (int64, error) {
+	cmp := v3.Compare(v3.Version(key), "=", 0)
+	req := v3.OpPut(key, val, v3.WithLease(leaseID))
+	txnresp, err := kv.Txn(context.TODO()).If(cmp).Then(req).Commit()
+	if err != nil {
+		return 0, err
+	}
+	if !txnresp.Succeeded {
+		return 0, ErrKeyExists
+	}
+	return txnresp.Header.Revision, nil
+}
+```
+
+首先看注释：`putNewKV` 尝试创建一个 key，且只有在这个 key 不存在的情况下才会成功。
+
+这里其实利用了 etcd 提供的事务（`kv.Txn`）功能，etcd 设计了一套非常易读且强大的事务接口：
+
+```go
+kv.Txn(context.TODO()).If(cmp).Then(req).Commit()
+```
+
+字面意义理解：如果 `cmp` 条件成立（`key` 的 `version` 为 `0`，即当前不存在这个 `key`），则执行 `req`（创建这个 `key`），然后提交（`Commit`）。
+
+入队函数到这里就结束了，一个看似简单的函数，里面包含了很多知识点！
+
+### Dequeue
+
+
 ## 参考
 
 * https://etcd.io/docs/v3.2/learning/auth_design/
