@@ -9,8 +9,8 @@ dependencies:
     specifier: 3.0.1
     version: 3.0.1
   hexo:
-    specifier: 6.3.0
-    version: 6.3.0
+    specifier: 7.1.1
+    version: 7.1.1
   hexo-filter-flowchart:
     specifier: ^1.0.4
     version: 1.0.4
@@ -100,6 +100,11 @@ packages:
 
   /abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
+    dev: false
+
+  /abbrev@2.0.0:
+    resolution: {integrity: sha512-6/mh1E2u2YgEsCHdY0Yx5oW+61gZU+1vXaoiHHrpKeuRNNgFvS+/jrwHiQhB5apAf5oB7UB7E19ol2R2LKH8hQ==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dev: false
 
   /accepts@1.3.7:
@@ -256,6 +261,21 @@ packages:
       fsevents: 2.3.2
     dev: false
 
+  /chokidar@3.5.3:
+    resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
+    engines: {node: '>= 8.10.0'}
+    dependencies:
+      anymatch: 3.1.2
+      braces: 3.0.2
+      glob-parent: 5.1.2
+      is-binary-path: 2.1.0
+      is-glob: 4.0.3
+      normalize-path: 3.0.0
+      readdirp: 3.6.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: false
+
   /color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
     engines: {node: '>=7.0.0'}
@@ -351,6 +371,7 @@ packages:
 
   /cuid@2.1.8:
     resolution: {integrity: sha512-xiEMER6E7TlTPnDxrM4eRiC6TRgjNX9xzEZ5U/Se2YJKr7Mq4pJn/2XEHjl3STcSh96GmkHPcBXLES8M29wyyg==}
+    deprecated: Cuid and other k-sortable and non-cryptographic ids (Ulid, ObjectId, KSUID, all UUIDs) are all insecure. Use @paralleldrive/cuid2 instead.
     dev: false
 
   /data-urls@3.0.2:
@@ -559,8 +580,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /fast-equals@2.0.4:
-    resolution: {integrity: sha512-caj/ZmjHljPrZtbzJ3kfH5ia/k4mTJe/qSiXAGzxZWRZgsgDV0cvNaQULqUX8t0/JVlzzEdYOwCN5DmzTxoD4w==}
+  /fast-equals@3.0.3:
+    resolution: {integrity: sha512-NCe8qxnZFARSHGztGMZOO/PC1qa5MIFB5Hp66WdzbCRAz8U8US3bx1UTgLS49efBQPcUtO9gf5oVEY8o7y/7Kg==}
     dev: false
 
   /fast-levenshtein@2.0.6:
@@ -643,6 +664,10 @@ packages:
       path-is-absolute: 1.0.1
     dev: false
 
+  /graceful-fs@4.2.11:
+    resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+    dev: false
+
   /graceful-fs@4.2.8:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}
     dev: false
@@ -682,9 +707,9 @@ packages:
       deep-assign: 2.0.0
     dev: false
 
-  /hexo-front-matter@3.0.0:
-    resolution: {integrity: sha512-hSQTPUmB/BCe1BFYmXRkPyLk8rqbBqHCQq+rjwwOJuEfOADrFaVK2VPZb90tJzPyXE1xSxpgCxE/AZq0CyTVwg==}
-    engines: {node: '>=12.13.0'}
+  /hexo-front-matter@4.2.1:
+    resolution: {integrity: sha512-sJJI0GNmejYiwBvgnGRKn5V3sbODB4dNPr8jyw2Qp0PRHr4Uuyv8iyxw6WfK3+T7yvzYvJOh+tZ7jnwr2BYARA==}
+    engines: {node: '>=14'}
     dependencies:
       js-yaml: 4.1.0
     dev: false
@@ -696,6 +721,16 @@ packages:
       bluebird: 3.7.2
       chokidar: 3.5.2
       graceful-fs: 4.2.8
+      hexo-util: 2.7.0
+    dev: false
+
+  /hexo-fs@4.1.1:
+    resolution: {integrity: sha512-aDysNTyv8ElcerbFVbPLRXnYt+QDY6gAOZZ5DLbCxudY0Ywppqd+uZ03gZ2BDypIBvmNB27WYWYz76M+Yv/YXw==}
+    engines: {node: '>=14'}
+    dependencies:
+      bluebird: 3.7.2
+      chokidar: 3.5.3
+      graceful-fs: 4.2.11
       hexo-util: 2.7.0
     dev: false
 
@@ -761,9 +796,9 @@ packages:
       hexo-pagination: 3.0.0
     dev: false
 
-  /hexo-i18n@1.0.0:
-    resolution: {integrity: sha512-yw90JHr7ybUHN/QOkpHmlWJj1luVk5/v8CUU5NRA0n4TFp6av8NT7ujZ10GDawgnQEdMHnN5PUfAbNIVGR6axg==}
-    engines: {node: '>=8.6.0'}
+  /hexo-i18n@2.0.0:
+    resolution: {integrity: sha512-dkUXecEtChaQMdTHN4WR13c8GwKqjbSOZPJS9qDqV6Ebnb77Wa/nQzWFckhP0dCps3a9lUQBd8hYGOMbOosiQQ==}
+    engines: {node: '>=14'}
     dependencies:
       sprintf-js: 1.1.2
     dev: false
@@ -775,9 +810,9 @@ packages:
       chalk: 4.1.2
     dev: false
 
-  /hexo-log@3.2.0:
-    resolution: {integrity: sha512-fk7jOW3hvKiAv4Q/d8UxaQlARwcv+5KjGcnxexUrqBqyWbMCLmw7jhMHTSRLNNQpaoTlF5ff+kQkPi4yhp9iag==}
-    engines: {node: '>=12.4.0'}
+  /hexo-log@4.1.0:
+    resolution: {integrity: sha512-i2Sgxk8Cgx5viSjq5qW5N/rBFfwoCKQcH8qnnW1fawCapcdEAhIsq+Y3vbrs9bssyDlyU6Vqm4oQmosREaNI7Q==}
+    engines: {node: '>=14'}
     dependencies:
       picocolors: 1.0.0
     dev: false
@@ -895,24 +930,24 @@ packages:
       strip-indent: 3.0.0
     dev: false
 
-  /hexo@6.3.0:
-    resolution: {integrity: sha512-4Jq+rWd8sYvR1YdIQyndN/9WboQ/Mqm6eax8CjrjO+ePFm2oMVafSOx9WEyJ42wcLOHjfyMfnlQhnUuNmJIpPg==}
-    engines: {node: '>=12.13.0'}
+  /hexo@7.1.1:
+    resolution: {integrity: sha512-u6aJXG1npYkZJLl7QEOeTdm9hOwxfsLmFp4qAQVF0OAuNaikrKORjgNsjPmrWwI/tIObwjVJnEUJnV7S+NnUlw==}
+    engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      abbrev: 1.1.1
+      abbrev: 2.0.0
       archy: 1.0.0
       bluebird: 3.7.2
       hexo-cli: 4.3.0
-      hexo-front-matter: 3.0.0
-      hexo-fs: 3.1.0
-      hexo-i18n: 1.0.0
-      hexo-log: 3.2.0
-      hexo-util: 2.7.0
+      hexo-front-matter: 4.2.1
+      hexo-fs: 4.1.1
+      hexo-i18n: 2.0.0
+      hexo-log: 4.1.0
+      hexo-util: 3.1.0
       js-yaml: 4.1.0
       js-yaml-js-types: 1.0.0
       micromatch: 4.0.4
-      moize: 6.1.0
+      moize: 6.1.6
       moment: 2.29.4
       moment-timezone: 0.5.43
       nunjucks: 3.2.4
@@ -923,7 +958,7 @@ packages:
       text-table: 0.2.0
       tildify: 2.0.0
       titlecase: 1.1.3
-      warehouse: 4.0.2
+      warehouse: 5.0.1
     transitivePeerDependencies:
       - chokidar
     dev: false
@@ -1180,8 +1215,8 @@ packages:
     hasBin: true
     dev: false
 
-  /micro-memoize@4.0.9:
-    resolution: {integrity: sha512-Z2uZi/IUMGQDCXASdujXRqrXXEwSY0XffUrAOllhqzQI3wpUyZbiZTiE2JuYC0HSG2G7DbCS5jZmsEKEGZuemg==}
+  /micro-memoize@4.1.2:
+    resolution: {integrity: sha512-+HzcV2H+rbSJzApgkj0NdTakkC+bnyeiUxgT6/m7mjcz1CmM22KYFKp+EVj1sWe4UYcnriJr5uqHQD/gMHLD+g==}
     dev: false
 
   /micromatch@4.0.4:
@@ -1237,11 +1272,11 @@ packages:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: false
 
-  /moize@6.1.0:
-    resolution: {integrity: sha512-WrMcM+C2Jy+qyOC/UMhA3BCHGowxV34dhDZnDNfxsREW/8N+33SFjmc23Q61Xv1WUthUA1vYopTitP1sZ5jkeg==}
+  /moize@6.1.6:
+    resolution: {integrity: sha512-vSKdIUO61iCmTqhdoIDrqyrtp87nWZUmBPniNjO0fX49wEYmyDO4lvlnFXiGcaH1JLE/s/9HbiK4LSHsbiUY6Q==}
     dependencies:
-      fast-equals: 2.0.4
-      micro-memoize: 4.0.9
+      fast-equals: 3.0.3
+      micro-memoize: 4.1.2
     dev: false
 
   /moment-timezone@0.5.43:
@@ -1724,14 +1759,14 @@ packages:
       xml-name-validator: 4.0.0
     dev: false
 
-  /warehouse@4.0.2:
-    resolution: {integrity: sha512-GixS7SolBGu81rnxYM6bScxdElLM97Jx/kr0a6B6PGBWFqvHeuWFj7QbgEX1YWZSxiJt/aR6dBVQKC/PvvihdQ==}
-    engines: {node: '>=10.13.0'}
+  /warehouse@5.0.1:
+    resolution: {integrity: sha512-5BQEQP56bPY+cqocTho4syazuGgSoyKd0y3PsS2j8tGN10HH+CEfJSIY+KUw9D0k4jaVEFMXLz0KqCiUzTYb8A==}
+    engines: {node: '>=14'}
     dependencies:
       bluebird: 3.7.2
       cuid: 2.1.8
-      graceful-fs: 4.2.8
-      hexo-log: 3.2.0
+      graceful-fs: 4.2.11
+      hexo-log: 4.1.0
       is-plain-object: 5.0.0
       jsonparse: 1.3.1
       rfdc: 1.3.0
