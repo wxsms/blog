@@ -51,8 +51,8 @@ dependencies:
     specifier: 3.0.0
     version: 3.0.0
   hexo-theme-next:
-    specifier: 8.19.1
-    version: 8.19.1
+    specifier: 8.19.2
+    version: 8.19.2
   prism-themes:
     specifier: 1.9.0
     version: 1.9.0
@@ -835,8 +835,8 @@ packages:
       - supports-color
     dev: false
 
-  /hexo-theme-next@8.19.1:
-    resolution: {integrity: sha512-qtILs1j0FpWi4hk+WcdjoOfztvMZZsqe6lg6SAEPJdPMsalLyoo7Jaf2AoDneMadE4hyF0n6daPhHLa3A+5m5A==}
+  /hexo-theme-next@8.19.2:
+    resolution: {integrity: sha512-FyDbKvVRJKT+3yYxkfsXBVXHHPGxNULYfdd+pavcSclonehNwlpq7oPMsTPfO5jaYFuSmNH68TFTqRuXNZ2bHw==}
     dev: false
 
   /hexo-util@2.5.0:
