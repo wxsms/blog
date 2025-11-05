@@ -54,8 +54,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       hexo-theme-next:
-        specifier: 8.25.0
-        version: 8.25.0
+        specifier: 8.26.0
+        version: 8.26.0
       prism-themes:
         specifier: 1.9.0
         version: 1.9.0
@@ -500,8 +500,8 @@ packages:
     resolution: {integrity: sha512-u4s0ty9Aew6jV+a9oMrXBwhrRpUQ0U8PWM/88a5aHgDru58VY81mVrxOFxs788NAsWQ8OvsJtF5m7mnXoRnSIA==}
     engines: {node: '>=12.13.0'}
 
-  hexo-theme-next@8.25.0:
-    resolution: {integrity: sha512-ZboBoswarJAjGKnQxtepD3ZaOYJAQFj+SaIL8l7w/FcDZpqFPeBerVd861YMujQW4XRHiREh+dEjdJQeArhvkg==}
+  hexo-theme-next@8.26.0:
+    resolution: {integrity: sha512-AJZKqaBM4W+Dhnf7imD4F26q+OKk7ArmrrKvYcf35Lw55CHzxhGQewxJXNL0y78So1FV825/O9DDPCb3yJCPfw==}
 
   hexo-util@2.5.0:
     resolution: {integrity: sha512-l0zkqcg2524KPO84HQe0JROpPlCM/dEnCJaJrZ1qsq+3+/YxhDa0zxiGtUVY1dtrWzOK/V11Zj+UEklhGP8Jeg==}
@@ -1487,7 +1487,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  hexo-theme-next@8.25.0: {}
+  hexo-theme-next@8.26.0: {}
 
   hexo-util@2.5.0:
     dependencies:
