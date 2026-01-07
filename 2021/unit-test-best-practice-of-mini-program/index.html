@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="微信小程序单元测试的可查资料少得可怜，由于微信官方开发的自动化测试驱动器 miniprogram-automator 不开源，唯一靠谱的地方只有这 一份简单的文档。然而实际使用下来发现文档介绍的方式有不少问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序单元测试最佳实践">
+<meta property="og:url" content="https://wxsm.space/2021/unit-test-best-practice-of-mini-program/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="微信小程序单元测试的可查资料少得可怜，由于微信官方开发的自动化测试驱动器 miniprogram-automator 不开源，唯一靠谱的地方只有这 一份简单的文档。然而实际使用下来发现文档介绍的方式有不少问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-14T20:26:49.652Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.176Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="miniprogram">
+<meta property="article:tag" content="test">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2021/unit-test-best-practice-of-mini-program/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2021/unit-test-best-practice-of-mini-program/","path":"2021/unit-test-best-practice-of-mini-program/","title":"小程序单元测试最佳实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>小程序单元测试最佳实践 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">关于单元测试如何启动的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">官方推荐的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jest-%E5%85%A8%E5%B1%80%E5%85%B1%E4%BA%AB%E8%BF%9E%E6%8E%A5%E5%AE%9E%E4%BE%8B%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">Jest 全局共享连接实例？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#globalSetup-globalTeardown"><span class="nav-number">1.2.1.</span> <span class="nav-text">globalSetup &#x2F; globalTeardown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setupFiles"><span class="nav-number">1.2.2.</span> <span class="nav-text">setupFiles</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#testEnvironment"><span class="nav-number">1.2.3.</span> <span class="nav-text">testEnvironment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%8C%AA%E5%88%B0%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E4%B8%8B%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">将单元测试挪到一个文件下？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Launch-or-Connect"><span class="nav-number">1.4.</span> <span class="nav-text">Launch or Connect?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E9%A1%B5%E9%9D%A2%E5%AF%BC%E8%88%AA%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">关于如何进行页面导航的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%AF%BC%E8%88%AA"><span class="nav-number">2.1.</span> <span class="nav-text">通过实例方法导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%E5%AF%BC%E8%88%AA"><span class="nav-number">2.2.</span> <span class="nav-text">通过页面元素导航</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E4%B8%8E%E5%8E%9F%E7%94%9F%E5%85%83%E7%B4%A0%E4%BA%A4%E4%BA%92%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">关于如何与原生元素交互问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2021/unit-test-best-practice-of-mini-program/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="小程序单元测试最佳实践 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          小程序单元测试最佳实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-15 04:26:49" itemprop="dateCreated datePublished" datetime="2021-03-15T04:26:49+08:00">2021-03-15</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/unit-test-best-practice-of-mini-program/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2021/unit-test-best-practice-of-mini-program/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>微信小程序单元测试的可查资料少得可怜，由于微信官方开发的自动化测试驱动器 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/miniprogram-automator">miniprogram-automator</a> 不开源，唯一靠谱的地方只有这 <a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/auto/">一份简单的文档</a>。然而实际使用下来发现文档介绍的方式有不少问题。</p>
+<span id="more"></span>
+
+<h2 id="关于单元测试如何启动的问题"><a href="#关于单元测试如何启动的问题" class="headerlink" title="关于单元测试如何启动的问题"></a>关于单元测试如何启动的问题</h2><h3 id="官方推荐的方式"><a href="#官方推荐的方式" class="headerlink" title="官方推荐的方式"></a>官方推荐的方式</h3><p>官方推荐通过 <a target="_blank" rel="noopener" href="https://jestjs.io/">Jest</a> 来组织单元测试，这点我是认可的。文档上面标注的步骤是：</p>
+<ol>
+<li>启动并连接工具</li>
+<li>重新启动小程序到首页</li>
+<li>断开连接并关闭工具</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> automator = <span class="built_in">require</span>(<span class="string">&#x27;miniprogram-automator&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;index&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> miniProgram</span><br><span class="line">  <span class="keyword">let</span> page</span><br><span class="line"></span><br><span class="line">  <span class="title function_">beforeAll</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    miniProgram = <span class="keyword">await</span> automator.<span class="title function_">launch</span>(&#123;</span><br><span class="line">      <span class="attr">projectPath</span>: <span class="string">&#x27;path/to/miniprogram-demo&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">    page = <span class="keyword">await</span> miniProgram.<span class="title function_">reLaunch</span>(<span class="string">&#x27;/page/component/index&#x27;</span>)</span><br><span class="line">    <span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">500</span>)</span><br><span class="line">  &#125;, <span class="number">30000</span>)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">afterAll</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> miniProgram.<span class="title function_">close</span>()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>乍一看没什么特别的问题，然而实际上跑了几次以后发现，它存在一个巨大的缺陷：<strong>就是 <code>automator.launch</code> 这一操作相当耗时，启动一次至少要 30 秒</strong>。</p>
+<p>举例：</p>
+<ol>
+<li>项目定义了 10 套单元测试，每套测试都得重新走 <code>launch</code> 与 <code>close</code> 流程；</li>
+<li>使用 <code>watch</code> 方式启动 Jest，每次触发执行都要重新走 <code>launch</code> 与 <code>close</code> 流程；</li>
+<li>等等……</li>
+</ol>
+<p>以上场景都将带来巨大的时间损耗，完全无法容忍。</p>
+<p>因此，如何缩短这里的耗时将是重中之重。</p>
+<h3 id="Jest-全局共享连接实例？"><a href="#Jest-全局共享连接实例？" class="headerlink" title="Jest 全局共享连接实例？"></a>Jest 全局共享连接实例？</h3><p>既然每个单元测试都要用到连接实例 <code>miniProgram</code>，那么大家共享同一个实例自然是我能想到的第一个办法。</p>
+<h4 id="globalSetup-globalTeardown"><a href="#globalSetup-globalTeardown" class="headerlink" title="globalSetup &#x2F; globalTeardown"></a>globalSetup &#x2F; globalTeardown</h4><p>第一个办法是通过 <a target="_blank" rel="noopener" href="https://jestjs.io/docs/configuration#globalsetup-string">globalSetup</a> 与 <a target="_blank" rel="noopener" href="https://jestjs.io/docs/configuration#globalteardown-string">globalTeardown</a> 参数，为单元测试提供一个全局 setup 函数，并且它支持 async，看起来非常完美。</p>
+<p>但是，在尝试过后发现并不起作用，在 setup 过程中挂载到 global 的属性无法从单元测试中读取，后来查阅文档才发现这个 setup 函数有一个致命的缺陷：</p>
+<blockquote>
+<p>Note: Any global variables that are defined through globalSetup can only be read in globalTeardown. You cannot retrieve globals defined here in your test suites.</p>
+</blockquote>
+<p>原来，单元测试是运行在「沙盒」环境下的，彼此隔离，因此它们无法读取到来自外部的 global 变量。</p>
+<p>在 <a target="_blank" rel="noopener" href="https://github.com/facebook/jest/issues/7184">facebook&#x2F;jest&#x2F;issues&#x2F;7184</a> 中，有人提到可以在 setup 函数中用 <code>process.env.FOO = &#39;bar&#39;</code> 这种方式来达成目的。经测试确实可以，但是问题在于：</p>
+<ol>
+<li>process 下面只能挂载基础类型，不能挂载对象实例；</li>
+<li>实际上「它能工作」本身是一个 Bug，在 issue 内有人提到，它可能会在任意时间被修复。</li>
+</ol>
+<p>因此，这个方案不可行。</p>
+<h4 id="setupFiles"><a href="#setupFiles" class="headerlink" title="setupFiles"></a>setupFiles</h4><p>第二个办法是使用 <a target="_blank" rel="noopener" href="https://jestjs.io/docs/configuration#setupfiles-array">setupFiles</a> 参数。</p>
+<p>该方式支持 global 挂载，但是很遗憾，我不用尝试也知道，<code>setupFiles</code> 目前仅支持同步执行，无法满足需求。</p>
+<p>见：<a target="_blank" rel="noopener" href="https://github.com/facebook/jest/issues/11038">facebook&#x2F;jest&#x2F;issues&#x2F;11038</a></p>
+<h4 id="testEnvironment"><a href="#testEnvironment" class="headerlink" title="testEnvironment"></a>testEnvironment</h4><p>找到的第三个办法是使用 <a target="_blank" rel="noopener" href="https://jestjs.io/docs/configuration#testenvironment-string">testEnvironment</a> 参数。</p>
+<p>该方式支持：</p>
+<ol>
+<li>global 挂载</li>
+<li>异步执行</li>
+</ol>
+<p>但是，依旧很遗憾，经过查阅文档发现，<code>testEnvironment</code> 并不是作用全局的，也就是说，它在每个单元测试执行时都会走一遍创建、销毁流程，跟最初的方式并没有本质区别。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>由于 Jest 本身的设计问题，全局共享连接实例这个方案基本（至少目前）不可行。</p>
+<h3 id="将单元测试挪到一个文件下？"><a href="#将单元测试挪到一个文件下？" class="headerlink" title="将单元测试挪到一个文件下？"></a>将单元测试挪到一个文件下？</h3><p>既然跨单元测试的变量共享不可行，那么第二个方向就是：将所有单元测试集合起来，共享一套环境。这样一来，大家自然就可以共享一个连接了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// package.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    // 注：指定了只执行 ./tests 下的测试</span><br><span class="line">    &quot;test&quot;: &quot;node node_modules/jest-cli/bin/jest.js ./tests --runInBand --verbose&quot;,</span><br><span class="line">    &quot;test:watch&quot;: &quot;npm run test -- --watchAll=true&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.spec.js</span></span><br><span class="line"><span class="keyword">const</span> automator = <span class="built_in">require</span>(<span class="string">&#x27;miniprogram-automator&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mp</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> launchOptions = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">beforeAll</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  mp = <span class="keyword">await</span> automator.<span class="title function_">launch</span>(&#123; ...launchOptions &#125;)</span><br><span class="line">  <span class="variable language_">global</span>.<span class="property">mp</span> = mp</span><br><span class="line">&#125;, <span class="number">60000</span>)</span><br><span class="line"></span><br><span class="line"><span class="title function_">afterAll</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> mp.<span class="title function_">disconnect</span>()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;path/to/test1&#x27;</span>)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;path/to/test2&#x27;</span>)</span><br><span class="line"><span class="comment">// more...</span></span><br></pre></td></tr></table></figure>
+
+<p>这样一来，各单元测试可以通过 <code>global.mp</code> 得到连接实例。实测也确实可行，仅需要启动一次就可以跑完所有单元测试。</p>
+<p>但是，这种实现方式存在一些问题：</p>
+<ol>
+<li>所有单元测试被归总到了一个 test suit 内，测试结果的打印慢了许多，需要等到所有测试跑完才能看到结果；</li>
+<li>同理，无法利用好 Jest 的 watch 功能，无法做到开发时仅执行某个 test suit</li>
+<li>添加或删除了测试，需要手动更改 require 列表，相当麻烦</li>
+<li>该方式并未解决 watch 触发需要重启连接实例的问题，依旧相当耗时</li>
+</ol>
+<h3 id="Launch-or-Connect"><a href="#Launch-or-Connect" class="headerlink" title="Launch or Connect?"></a>Launch or Connect?</h3><p>由于官方文档给出的例子是使用 Launch 实现的，所以自然而然会从这方面入手寻找解决方案，但是走了这么多弯路以后还是不行，我开始考虑：是否可以绕过 Launch？</p>
+<p>查看 <a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/auto/automator.html">文档</a> 以后发现，除了 <code>launch</code> 以外，<code>automator</code> 还提供了一个 <code>connect</code> 方法。</p>
+<blockquote>
+<p><strong>automator.connect</strong></p>
+<p>连接开发者工具。</p>
+<p><code>automator.connect(options: Object): Promise&lt;MiniProgram&gt;</code></p>
+</blockquote>
+<p>因此，我想到了一个办法：如果不通过 <code>launch</code>，直接 <code>connect</code> 至现有窗口，应该会快很多吧。</p>
+<p>但是尝试后发现，即使在开发者工具中打开了服务端口，<code>connect</code> 也无法连接上，始终报错「端口未打开」。 后来通过搜索才发现，此「端口」非彼「端口」，如果要用过 websocket 连接，开发者工具就必须以 cli 方式加 <code>--auto</code> 参数启动才行。</p>
+<p>因此，我也想到了最终解决方案：</p>
+<ol>
+<li>先尝试 <code>connect</code>，如果成功则进入测试</li>
+<li>如果失败，则执行 <code>launch</code>（该方式启动默认开启自动化）</li>
+<li>测试结束时，不调用 <code>close</code>，而是调用 <code>disconnect</code></li>
+</ol>
+<p>这样一来，第一次单元测试启动时会启动开发者工具，测试完成以后，连接会断开，但是开发者工具不会关闭。等到第二次启动时，automator 就能直接连上，无需再次启动。</p>
+<p>编写 setup 文件（该文件不以 spec 结尾，只作为 mixin 使用）：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// setup.js</span></span><br><span class="line"><span class="keyword">const</span> automator = <span class="built_in">require</span>(<span class="string">&#x27;miniprogram-automator&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mp</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> launchOptions = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">beforeAll</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    mp = <span class="keyword">await</span> automator.<span class="title function_">connect</span>(&#123;</span><br><span class="line">      <span class="attr">wsEndpoint</span>: <span class="string">&#x27;ws://localhost:9420&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(err)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      mp = <span class="keyword">await</span> automator.<span class="title function_">launch</span>(&#123; ...launchOptions &#125;)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">global</span>.<span class="property">mp</span> = mp</span><br><span class="line">&#125;, <span class="number">60000</span>)</span><br><span class="line"></span><br><span class="line"><span class="title function_">afterAll</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> mp.<span class="title function_">disconnect</span>()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在每个单元测试中引用 setup：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// some-test.spec.js</span></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&#x27;some-test&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">&#x27;path/to/setup&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> page = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如此一来，以上发现的所有问题都能很好地解决：</p>
+<ol>
+<li>单元测试极大地提速</li>
+<li>test suit 按照正常方式组织，无需额外操作</li>
+<li><code>watch</code> 模式也能正常使用，速度极快</li>
+</ol>
+<p>但是，该方式同样带来了一个问题：即 test suit 不再拥有独立运行环境，每个 suit 要注意清理自己带来的影响。</p>
+<p>不过，权衡利弊来说，肯定是好处远远大于坏处。</p>
+<h2 id="关于如何进行页面导航的问题"><a href="#关于如何进行页面导航的问题" class="headerlink" title="关于如何进行页面导航的问题"></a>关于如何进行页面导航的问题</h2><h3 id="通过实例方法导航"><a href="#通过实例方法导航" class="headerlink" title="通过实例方法导航"></a>通过实例方法导航</h3><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/auto/miniprogram.html">miniProgram</a> 实例提供了一系列的导航方法，如 <code>navigateTo</code>，<code>navigateBack</code> 等，经实践，能够正常使用。但是，它们有一个通病：<strong>耗时明显</strong>（又来了）。</p>
+<p>经测试，在导航开始前记录时间，<code>await</code> 至导航结束，打印时间差，<strong>每次导航耗时大概在 3000 毫秒以上</strong>。具体表现为，页面虽然已跳转到位，但方法就是没有返回。由于驱动框架不开源，也并不知道在这段时间内它究竟做了什么。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 耗时在 3000ms 以上</span></span><br><span class="line">page = <span class="keyword">await</span> <span class="variable language_">global</span>.<span class="property">mp</span>.<span class="title function_">navigateTo</span>(<span class="string">&#x27;/pages/index/index&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>单元测试少的话可以容忍，但是一旦多起来了，也是非常浪费生命的。</p>
+<h3 id="通过页面元素导航"><a href="#通过页面元素导航" class="headerlink" title="通过页面元素导航"></a>通过页面元素导航</h3><p>通过模拟页面内的导航元素点击来达到效果，这种方式耗时极短，500 毫秒内即可完成。虽然相比实例方法来说较为繁琐，但胜在量大的时候节省时间效果非常明显。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 耗时在 500ms 左右</span></span><br><span class="line"><span class="keyword">const</span> btn = <span class="keyword">await</span> page.$(<span class="string">&#x27;#some-nav-btn&#x27;</span>)</span><br><span class="line"><span class="keyword">await</span> btn.<span class="title function_">tap</span>()</span><br><span class="line"><span class="comment">// 实际上所有耗时几乎都发生在这里，等待导航动画结束</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">500</span>)</span><br><span class="line">page = <span class="keyword">await</span> <span class="variable language_">global</span>.<span class="property">mp</span>.<span class="title function_">currentPage</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="关于如何与原生元素交互问题"><a href="#关于如何与原生元素交互问题" class="headerlink" title="关于如何与原生元素交互问题"></a>关于如何与原生元素交互问题</h2><p>由于驱动不支持选择原生元素，也不支持对其进行交互，因此唯一的办法是通过 mock 修改其定义。</p>
+<p>举例，要模拟 <code>wx.showModal</code> 的 <code>确定</code> 点击：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">await</span> <span class="variable language_">global</span>.<span class="property">mp</span>.<span class="title function_">mockWxMethod</span>(<span class="string">&#x27;showModal&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">confirm</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">cancel</span>: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如此一来，当 <code>showModal</code> 被调用时，会直接进入 <code>confirm</code> 流程。</p>
+<p>当然，测试结束后要记得 restore:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">await</span> <span class="variable language_">global</span>.<span class="property">mp</span>.<span class="title function_">restoreWxMethod</span>(<span class="string">&#x27;showModal&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2021/unit-test-best-practice-of-mini-program/" title="小程序单元测试最佳实践">https://wxsm.space/2021/unit-test-best-practice-of-mini-program/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/miniprogram/" rel="tag"># miniprogram</a>
+              <a href="/tags/test/" rel="tag"># test</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/2021-spring-festival/" rel="prev" title="2021 春节">
+                  <i class="fa fa-angle-left"></i> 2021 春节
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/regex-assertions/" rel="next" title="正则断言">
+                  正则断言 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2021/unit-test-best-practice-of-mini-program/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

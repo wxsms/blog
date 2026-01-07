@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="Egret Engine 的学习笔记。 Egret Engine 是一款基于 JavaScript 的游戏制作引擎，支持 2D 与 3D 模式，支持 Canvas 与 WebGL 渲染，目前使用 TypeScript 编写。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Egret Note">
+<meta property="og:url" content="https://wxsm.space/2017/egret-note/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="Egret Engine 的学习笔记。 Egret Engine 是一款基于 JavaScript 的游戏制作引擎，支持 2D 与 3D 模式，支持 Canvas 与 WebGL 渲染，目前使用 TypeScript 编写。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-02-22T08:17:00.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.151Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="egret">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2017/egret-note/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2017/egret-note/","path":"2017/egret-note/","title":"Egret Note"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Egret Note | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">显示对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E6%A0%91"><span class="nav-number">1.1.</span> <span class="nav-text">对象树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">对象类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%9A%E7%82%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">锚点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D"><span class="nav-number">1.3.2.</span> <span class="nav-text">定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%BA%E5%AF%B8"><span class="nav-number">1.3.3.</span> <span class="nav-text">尺寸</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%9C%E5%88%87"><span class="nav-number">1.3.4.</span> <span class="nav-text">斜切</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">对象容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%AE%A1%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">深度管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%AF%B9%E8%B1%A1%E9%80%89%E6%8B%A9"><span class="nav-number">2.2.</span> <span class="nav-text">子对象选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A2%E9%87%8F%E7%BB%98%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">矢量绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2"><span class="nav-number">3.1.</span> <span class="nav-text">基本图形</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9F%A9%E5%BD%A2"><span class="nav-number">3.1.1.</span> <span class="nav-text">矩形</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%86%E5%BD%A2"><span class="nav-number">3.1.2.</span> <span class="nav-text">圆形</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E7%BA%BF"><span class="nav-number">3.1.3.</span> <span class="nav-text">直线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B2%E7%BA%BF"><span class="nav-number">3.1.4.</span> <span class="nav-text">曲线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%86%E5%BC%A7"><span class="nav-number">3.1.5.</span> <span class="nav-text">圆弧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%AE%E7%BD%A9"><span class="nav-number">4.</span> <span class="nav-text">遮罩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B"><span class="nav-number">5.</span> <span class="nav-text">碰撞检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC"><span class="nav-number">6.</span> <span class="nav-text">文本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F"><span class="nav-number">6.1.</span> <span class="nav-text">样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%B8%8E%E9%93%BE%E6%8E%A5"><span class="nav-number">6.2.</span> <span class="nav-text">事件与链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5"><span class="nav-number">6.3.</span> <span class="nav-text">文本输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">7.1.</span> <span class="nav-text">执行流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B1%BB"><span class="nav-number">7.2.</span> <span class="nav-text">事件类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E5%99%A8"><span class="nav-number">7.3.</span> <span class="nav-text">监听器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E5%99%A8%E5%87%BD%E6%95%B0"><span class="nav-number">7.3.1.</span> <span class="nav-text">监听器函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%8E%E7%A7%BB%E9%99%A4%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC"><span class="nav-number">7.3.2.</span> <span class="nav-text">注册与移除事件监听</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">7.3.3.</span> <span class="nav-text">优先级</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2017/egret-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Egret Note | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Egret Note
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-22 16:17:00" itemprop="dateCreated datePublished" datetime="2017-02-22T16:17:00+08:00">2017-02-22</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2017/egret-note/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2017/egret-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Egret Engine 的学习笔记。</p>
+<p>Egret Engine 是一款基于 JavaScript 的游戏制作引擎，支持 2D 与 3D 模式，支持 Canvas 与 WebGL 渲染，目前使用 TypeScript 编写。</p>
+<span id="more"></span>
+
+<h2 id="显示对象"><a href="#显示对象" class="headerlink" title="显示对象"></a>显示对象</h2><p>“显示对象”，准确的含义是可以在舞台上显示的对象。可以显示的对象，既包括可以直接看见的图形、文字、视频、图片等，也包括不能看见但真实存在的显示对象容器。</p>
+<p>在Egret中，视觉图形都是由显示对象和显示对象容器组成的。</p>
+<h3 id="对象树"><a href="#对象树" class="headerlink" title="对象树"></a>对象树</h3><ul>
+<li>根：舞台 <code>DisplayObjectContainer:Stage</code></li>
+<li>茎：主容器（文档类） <code>DisplayObjectContainer</code></li>
+<li>树枝：容器 <code>DisplayObjectContainer</code></li>
+<li>树叶：显示对象 <code>DisplayObject</code></li>
+</ul>
+<h3 id="对象类型"><a href="#对象类型" class="headerlink" title="对象类型"></a>对象类型</h3><ul>
+<li><code>DisplayObject</code>	显示对象基类，所有显示对象均继承自此类</li>
+<li><code>Bitmap</code>	位图，用来显示图片</li>
+<li><code>Shape</code>	用来显示矢量图，可以使用其中的方法绘制矢量图形</li>
+<li><code>TextField</code>	文本类</li>
+<li><code>BitmapText</code>	位图文本类</li>
+<li><code>DisplayObjectContainer</code>	显示对象容器接口，所有显示对象容器均实现此接口</li>
+<li><code>Sprite</code>	带有矢量绘制功能的显示容器</li>
+<li><code>Stage</code>	舞台类</li>
+</ul>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>二维坐标系。原点位于<strong>左上角</strong>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="attr">shape</span>:egret.<span class="property">Shape</span> = <span class="keyword">new</span> egret.<span class="title class_">Shape</span>();</span><br><span class="line">shape.<span class="property">x</span> = <span class="number">100</span>;</span><br><span class="line">shape.<span class="property">y</span> = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<p>支持的操作：</p>
+<ul>
+<li>alpha：透明度</li>
+<li>width：宽度</li>
+<li>height：高度</li>
+<li>rotation：旋转角度</li>
+<li>scaleX：横向缩放</li>
+<li>scaleY：纵向缩放</li>
+<li>skewX：横向斜切</li>
+<li>skewY：纵向斜切</li>
+<li>visible：是否可见</li>
+<li>x：X 轴坐标值</li>
+<li>y：Y 轴坐标值</li>
+<li>anchorOffsetX：对象绝对锚点 X</li>
+<li>anchorOffsetY：对象绝对锚点 Y</li>
+</ul>
+<h4 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h4><p>Display Object 显示在舞台上的的位置需要通过 Anchor 来计算（初始值位于 Display Object 的左上角），可以通过 <code>anchorOffsetX</code> 和 <code>anchorOffsetY</code> 方法来改变对象的锚点（比如移至中点）。</p>
+<h4 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h4><p>Display Object 的初始坐标为 <strong>(0, 0)<strong>，即位于</strong>容器的左上角</strong>（而非舞台）。</p>
+<ul>
+<li>相对于容器的位置可以类比作 <code>position: relative</code></li>
+<li>相对于舞台的位置可以类比作 <code>position: absolute</code></li>
+</ul>
+<p>如果要获取绝对位置，需要调用 <code>container.globalToLocal(x, y)</code> 方法，参数代表舞台坐标，返回值为容器坐标。</p>
+<p>至于 <code>z-index</code> 则跟 svg 的处理类似。</p>
+<h4 id="尺寸"><a href="#尺寸" class="headerlink" title="尺寸"></a>尺寸</h4><p>两种方法更改尺寸：</p>
+<ul>
+<li>height &#x2F; width</li>
+<li>scaleX &#x2F; scaleY</li>
+</ul>
+<h4 id="斜切"><a href="#斜切" class="headerlink" title="斜切"></a>斜切</h4><p>斜切可以造成类似矩形变形为平行四边形的效果。</p>
+<ul>
+<li>skewX：横向斜切</li>
+<li>skewY：纵向斜切</li>
+</ul>
+<h2 id="对象容器"><a href="#对象容器" class="headerlink" title="对象容器"></a>对象容器</h2><p><code>DisplayObjectContainer</code> 是 <code>DisplayObject</code> 的子类。</p>
+<p>向 Container 中添加 DisplayObject：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">container.<span class="title function_">addChild</span>(displayObject);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>同一个显示对象无论被代码加入显示列表多少次，在屏幕上只绘制一次。如果一个显示对象 A 被添加到了 B 这个容器中，然后 A 又被添加到了 C 容器中。那么在第二次执行 C.addChild(A) 的时候，A 自动的从 B 容器中被删除，然后添加到 C 容器中。</p>
+</blockquote>
+<p>移除：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">container.<span class="title function_">removeChild</span>(displayObject);</span><br></pre></td></tr></table></figure>
+
+<h3 id="深度管理"><a href="#深度管理" class="headerlink" title="深度管理"></a>深度管理</h3><p>DisplayObject 的 <code>z-index</code> 由其插入到容器中的顺序决定。后插入的显示在上层。</p>
+<p>插入到指定位置使用 <code>container.addChildAt(object, index)</code> 方法。</p>
+<p>同时也有 <code>container.removeChileAt(index)</code> 方法。</p>
+<p>删除全部对象使用 <code>container.removeChildren()</code> 方法。</p>
+<p>交换 DisplayObject 的位置有两个方法：</p>
+<ul>
+<li><code>container.swapChildren(object, object)</code></li>
+<li><code>container.swapChildrenAt(index, index)</code></li>
+</ul>
+<p>手动设置 z-index 使用 <code>container.setChildIndex( object, index )</code> 方法。</p>
+<h3 id="子对象选择"><a href="#子对象选择" class="headerlink" title="子对象选择"></a>子对象选择</h3><p>通过 z-index 获取：<code>container.getChildAt(index)</code></p>
+<p>通过 name 获取（需要预先给 DisplayObject 设置 name 属性）：<code>container.getChildByName(name)</code></p>
+<blockquote>
+<p>通过 z-index 获取子对象性能更佳。</p>
+</blockquote>
+<h2 id="矢量绘图"><a href="#矢量绘图" class="headerlink" title="矢量绘图"></a>矢量绘图</h2><blockquote>
+<p>Egret中可以直接使用程序来绘制一些简单的图形，这些图形在运行时都会进行实时绘图。要进行绘图操作，我们需要使用 Graphics 这个类。但并非直接使用。 一些显示对象中已经包含了绘图方法，我们可以直接调用这些方法来进行绘图。 Graphics 中提供多种绘图方法。</p>
+</blockquote>
+<p>已有的绘图方法包括：矩形、圆形、直线、曲线、圆弧。</p>
+<p>以下的 <code>shp</code> 代表 shape，即一个 Shape 对象的实例。</p>
+<p><code>shp.graphics.clear()</code> 是通用的清楚绘图方法。</p>
+<h3 id="基本图形"><a href="#基本图形" class="headerlink" title="基本图形"></a>基本图形</h3><h4 id="矩形"><a href="#矩形" class="headerlink" title="矩形"></a>矩形</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="attr">shp</span>:egret.<span class="property">Shape</span> = <span class="keyword">new</span> egret.<span class="title class_">Shape</span>();</span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">beginFill</span>( <span class="number">0xff0000</span>, <span class="number">1</span>); <span class="comment">//color and alpha</span></span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">drawRect</span>( <span class="number">0</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="number">200</span> ); <span class="comment">// x y width height</span></span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">lineStyle</span>( <span class="number">10</span>, <span class="number">0x00ff00</span> ); <span class="comment">// border-width and border-color</span></span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">endFill</span>();</span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">addChild</span>( shp );</span><br></pre></td></tr></table></figure>
+
+<h4 id="圆形"><a href="#圆形" class="headerlink" title="圆形"></a>圆形</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">lineStyle</span>( <span class="number">10</span>, <span class="number">0x00ff00</span> );</span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">beginFill</span>( <span class="number">0xff0000</span>, <span class="number">1</span>);</span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">drawCircle</span>( <span class="number">0</span>, <span class="number">0</span>, <span class="number">50</span> ); <span class="comment">// x y r</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>此处需要注意的是，圆形的X轴和Y轴位置是相对于Shape对象的锚点计算的。</p>
+</blockquote>
+<h4 id="直线"><a href="#直线" class="headerlink" title="直线"></a>直线</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">lineStyle</span>( <span class="number">2</span>, <span class="number">0x00ff00</span> );</span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">moveTo</span>( <span class="number">10</span>,<span class="number">10</span> ); <span class="comment">// 起点</span></span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">lineTo</span>( <span class="number">100</span>, <span class="number">20</span> ); <span class="comment">// 终点（可以多次执行 lineTo）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a>曲线</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">lineStyle</span>( <span class="number">2</span>, <span class="number">0x00ff00</span> );</span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">moveTo</span>( <span class="number">50</span>, <span class="number">50</span>);</span><br><span class="line">shp.<span class="property">graphics</span>.<span class="title function_">curveTo</span>( <span class="number">100</span>,<span class="number">100</span>, <span class="number">200</span>,<span class="number">50</span>); <span class="comment">// 控制点 x y ，终点 x y</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="圆弧"><a href="#圆弧" class="headerlink" title="圆弧"></a>圆弧</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">drawArc</span>( <span class="attr">x</span>:number, <span class="attr">y</span>:number, <span class="attr">radius</span>:number, <span class="attr">startAngle</span>:number, <span class="attr">endAngle</span>:number, <span class="attr">anticlockwise</span>:boolean ):<span class="keyword">void</span></span><br></pre></td></tr></table></figure>
+
+<p>前面的参数跟前面绘制圆形的一样，圆弧路径的圆心在 (x, y) 位置，半径为 radius 。后面的参数表示根据 anticlockwise ： 如果为 true，逆时针绘制圆弧，反之，顺时针绘制。</p>
+<blockquote>
+<p>需要注意是传入的 startAngle 和 endAngle 均为弧度而不是角度。</p>
+</blockquote>
+<h2 id="遮罩"><a href="#遮罩" class="headerlink" title="遮罩"></a>遮罩</h2><p>DisplayObject 有一个 <code>mask</code> 属性，简单来说，就是类似蒙版上面的一个洞。但这个 <code>mask</code> 是洞而不是蒙版。如果添加了 <code>mask</code> 属性，则 Object 只能显示这个“洞中”的内容。</p>
+<p>用作遮罩的显示对象可设置动画、动态调整大小。遮罩显示对象不一定需要添加到显示列表中。<strong>但是，如果希望在缩放舞台时也缩放遮罩对象，或者如果希望支持用户与遮罩对象的交互（如调整大小），则必须将遮罩对象添加到显示列表中</strong>。</p>
+<blockquote>
+<p>不能使用一个遮罩对象来遮罩另一个遮罩对象。</p>
+</blockquote>
+<p>通过将 mask 属性设置为 null 可以删除遮罩。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mySprite.<span class="property">mask</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="碰撞检测"><a href="#碰撞检测" class="headerlink" title="碰撞检测"></a>碰撞检测</h2><ul>
+<li>非精确：<code>var isHit:boolean = shp.hitTestPoint( 10, 10 );</code></li>
+<li>精确：<code>shp.hitTestPoint( 10, 10，ture);</code></li>
+</ul>
+<p>非精确大概可以看做面积相交，精确则是边缘相交。</p>
+<blockquote>
+<p>大量使用精确碰撞检测，会消耗更多的性能。</p>
+</blockquote>
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><p>Egret 提供三种不同的文本类型，不同类型具有以下特点：</p>
+<ul>
+<li>普通文本：用于显示标准文本内容的文本类型</li>
+<li>输入文本：允许用户输入的文本类型</li>
+<li>位图文本：借助位图字体渲染的文本类型</li>
+</ul>
+<h3 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="attr">label</span>:egret.<span class="property">TextField</span> = <span class="keyword">new</span> egret.<span class="title class_">TextField</span>(); </span><br><span class="line">label.<span class="property">text</span> = <span class="string">&quot;这是一个文本&quot;</span>;</span><br><span class="line">label.<span class="property">size</span> = <span class="number">20</span>; <span class="comment">// 全局默认值 egret.TextField.default_size，下同</span></span><br><span class="line">label.<span class="property">width</span> = <span class="number">70</span>;</span><br><span class="line">label.<span class="property">height</span> = <span class="number">70</span>;</span><br><span class="line">label.<span class="property">textAlign</span> = egret.<span class="property">HorizontalAlign</span>.<span class="property">RIGHT</span>; <span class="comment">// CENTER LEFT</span></span><br><span class="line">label.<span class="property">verticalAlign</span> = egret.<span class="property">VerticalAlign</span>.<span class="property">BOTTOM</span>; <span class="comment">// MIDDLE TOP</span></span><br><span class="line">label.<span class="property">fontFamily</span> = <span class="string">&quot;KaiTi&quot;</span>; <span class="comment">// default_fontFamily</span></span><br><span class="line">label.<span class="property">textColor</span> = <span class="number">0xff0000</span>; <span class="comment">// default_textColor</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//设置粗体与斜体</span></span><br><span class="line">label.<span class="property">bold</span> = <span class="literal">true</span>;</span><br><span class="line">label.<span class="property">italic</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置描边属性</span></span><br><span class="line">label.<span class="property">strokeColor</span> = <span class="number">0x0000ff</span>;</span><br><span class="line">label.<span class="property">stroke</span> = <span class="number">2</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">addChild</span>( label );</span><br></pre></td></tr></table></figure>
+
+<p>支持格式混排：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// JSON 模式</span></span><br><span class="line">label.<span class="property">textFlow</span> = &lt;<span class="title class_">Array</span>&lt;egret.<span class="property">ITextElement</span>&gt;&gt;[</span><br><span class="line">    &#123;<span class="attr">text</span>: <span class="string">&quot;妈妈再也不用担心我在&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;size&quot;</span>: <span class="number">12</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;Egret&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;textColor&quot;</span>: <span class="number">0x336699</span>, <span class="string">&quot;size&quot;</span>: <span class="number">60</span>, <span class="string">&quot;strokeColor&quot;</span>: <span class="number">0x6699cc</span>, <span class="string">&quot;stroke&quot;</span>: <span class="number">2</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;里说一句话不能包含各种&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;fontFamily&quot;</span>: <span class="string">&quot;楷体&quot;</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;五&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;textColor&quot;</span>: <span class="number">0xff0000</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;彩&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;textColor&quot;</span>: <span class="number">0x00ff00</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;缤&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;textColor&quot;</span>: <span class="number">0xf000f0</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;纷&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;textColor&quot;</span>: <span class="number">0x00ffff</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;、\n&quot;</span>&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;大&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;size&quot;</span>: <span class="number">36</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;小&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;size&quot;</span>: <span class="number">6</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;不&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;size&quot;</span>: <span class="number">16</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;一&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;size&quot;</span>: <span class="number">24</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;、&quot;</span>&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;格&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;italic&quot;</span>: <span class="literal">true</span>, <span class="string">&quot;textColor&quot;</span>: <span class="number">0x00ff00</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;式&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;size&quot;</span>: <span class="number">16</span>, <span class="string">&quot;textColor&quot;</span>: <span class="number">0xf000f0</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;各&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;italic&quot;</span>: <span class="literal">true</span>, <span class="string">&quot;textColor&quot;</span>: <span class="number">0xf06f00</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;样&quot;</span>, <span class="attr">style</span>: &#123;<span class="string">&quot;fontFamily&quot;</span>: <span class="string">&quot;楷体&quot;</span>&#125;&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">    , &#123;<span class="attr">text</span>: <span class="string">&quot;的文字了！&quot;</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// HTML 模式 （标签与属性部分支持）</span></span><br><span class="line">label.<span class="property">textFlow</span> = (<span class="keyword">new</span> egret.<span class="property">HtmlTextParser</span>).<span class="title function_">parser</span>(</span><br><span class="line">    <span class="string">&#x27;没有任何格式初始文本，&#x27;</span> +</span><br><span class="line">    <span class="string">&#x27;&lt;font color=&quot;#0000ff&quot; size=&quot;30&quot; fontFamily=&quot;Verdana&quot;&gt;Verdana blue large&lt;/font&gt;&#x27;</span> +</span><br><span class="line">    <span class="string">&#x27;&lt;font color=&quot;#ff7f50&quot; size=&quot;10&quot;&gt;珊瑚色&lt;b&gt;局部加粗&lt;/b&gt;小字体&lt;/font&gt;&#x27;</span> +</span><br><span class="line">    <span class="string">&#x27;&lt;i&gt;斜体&lt;/i&gt;&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件与链接"><a href="#事件与链接" class="headerlink" title="事件与链接"></a>事件与链接</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">tx.<span class="property">textFlow</span> = <span class="keyword">new</span> <span class="title class_">Array</span>&lt;egret.<span class="property">ITextElement</span>&gt;(</span><br><span class="line">    &#123; <span class="attr">text</span>:<span class="string">&quot;这段文字有链接&quot;</span>, <span class="attr">style</span>: &#123; <span class="string">&quot;href&quot;</span> : <span class="string">&quot;event:text event triggered&quot;</span> &#125; &#125;</span><br><span class="line">    ,&#123; <span class="attr">text</span>:<span class="string">&quot;\n这段文字没链接&quot;</span>, <span class="attr">style</span>: &#123;&#125; &#125;</span><br><span class="line">);</span><br><span class="line">tx.<span class="property">touchEnabled</span> = <span class="literal">true</span>;</span><br><span class="line">tx.<span class="title function_">addEventListener</span>( egret.<span class="property">TextEvent</span>.<span class="property">LINK</span>, <span class="keyword">function</span>(<span class="params"> evt:egret.TextEvent </span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>( evt.<span class="property">text</span> );</span><br><span class="line">&#125;, <span class="variable language_">this</span> );</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接将 <code>href</code> 设置为 url，这样不需要事件监听，将直接打开链接。但<strong>只适用 Web 端</strong>。</p>
+<h3 id="文本输入"><a href="#文本输入" class="headerlink" title="文本输入"></a>文本输入</h3><p>关键代码是设置其类型为 INPUT。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="attr">txInput</span>:egret.<span class="property">TextField</span> = <span class="keyword">new</span> egret.<span class="property">TextField</span>;</span><br><span class="line">txInput.<span class="property">type</span> = egret.<span class="property">TextFieldType</span>.<span class="property">INPUT</span>;</span><br></pre></td></tr></table></figure>
+
+<p>绘制输入背景可以用其它 DisplayObject，目前没有内置实现。</p>
+<p>获取焦点使用 <code>textIput.setFocus();</code> 方法。</p>
+<p>除此以外，还有 <code>inputType</code> 属性表示输入内容的区别，这个主要用于移动端弹出相应的键盘。</p>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>事件类：<code>egret.Event</code></p>
+<h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><blockquote>
+<p>事件机制包含4个步骤：注册侦听器，发送事件，侦听事件，移除侦听器。这四个步骤是按照顺序来执行的。</p>
+</blockquote>
+<h3 id="事件类"><a href="#事件类" class="headerlink" title="事件类"></a>事件类</h3><p>其构建器可以传 3 个参数：事件类型、是否冒泡、是否可取消（什么是取消？）。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DateEvent</span> <span class="keyword">extends</span> <span class="title class_ inherited__">egret.Event</span></span><br><span class="line">&#123;</span><br><span class="line">    public <span class="keyword">static</span> <span class="attr">DATE</span>:string = <span class="string">&quot;约会&quot;</span>;</span><br><span class="line">    public <span class="attr">_year</span>:number = <span class="number">0</span>;</span><br><span class="line">    public <span class="attr">_month</span>:number = <span class="number">0</span>;</span><br><span class="line">    public <span class="attr">_date</span>:number = <span class="number">0</span>;</span><br><span class="line">    public <span class="attr">_where</span>:string = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    public <span class="attr">_todo</span>:string = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    public <span class="title function_">constructor</span>(<span class="params">type:string, bubbles:boolean=<span class="literal">false</span>, cancelable:boolean=<span class="literal">false</span></span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable language_">super</span>(type,bubbles,cancelable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听器"><a href="#监听器" class="headerlink" title="监听器"></a>监听器</h3><p>跟常见的情况不太一样，Egret 的事件<strong>绑定在发送者上</strong>（而不是接收者）。</p>
+<h4 id="监听器函数"><a href="#监听器函数" class="headerlink" title="监听器函数"></a>监听器函数</h4><blockquote>
+<p>一个侦听器必须是函数，它可以是一个独立函数，也可以是一个实例的方法。侦听器必须有一个参数，并且这个参数必须是 Event 类实例或其子类的实例， 同时，侦听器的返回值必须为空（void）。</p>
+</blockquote>
+<h4 id="注册与移除事件监听"><a href="#注册与移除事件监听" class="headerlink" title="注册与移除事件监听"></a>注册与移除事件监听</h4><p>注册侦听器</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">eventDispatcher.<span class="title function_">addEventListener</span>(eventType, listenerFunction, <span class="variable language_">this</span>);</span><br></pre></td></tr></table></figure>
+
+<p>移除侦听器</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">eventDispatcher.<span class="title function_">removeEventListener</span>(eventType, listenerFunction, <span class="variable language_">this</span>);</span><br></pre></td></tr></table></figure>
+
+<p>检测侦听器</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">eventDispatcher.<span class="title function_">hasEventListener</span>(eventType);</span><br></pre></td></tr></table></figure>
+
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">public <span class="title function_">addEventListener</span>(<span class="attr">type</span>:string, <span class="attr">listener</span>:<span class="title class_">Function</span>, <span class="attr">thisObject</span>:any, <span class="attr">useCapture</span>:boolean = <span class="literal">false</span>, <span class="attr">priority</span>:number = <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>该属性为一个number类型，当数字越大，则优先级越大。在触发事件的时候优先级越高。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2017/egret-note/" title="Egret Note">https://wxsm.space/2017/egret-note/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/egret/" rel="tag"># egret</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/meanjs-5-x-ng-repeat-flashing/" rel="prev" title="MEAN.JS 在 0.5 版本下发现的 NG-REPEAT 闪动问题">
+                  <i class="fa fa-angle-left"></i> MEAN.JS 在 0.5 版本下发现的 NG-REPEAT 闪动问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/change-socks-proxy-to-http/" rel="next" title="Change SOCKS Proxy to HTTP">
+                  Change SOCKS Proxy to HTTP <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2017/egret-note/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

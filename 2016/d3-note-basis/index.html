@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="D3 (Data-Driven Documents) 是一个 JavaScript Library，用来做 Web 端的数据可视化实现以及各种绘图。  D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3 Note - Basis">
+<meta property="og:url" content="https://wxsm.space/2016/d3-note-basis/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="D3 (Data-Driven Documents) 是一个 JavaScript Library，用来做 Web 端的数据可视化实现以及各种绘图。  D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static.wxsm.space/blog/48595801-401d6c80-e991-11e8-97c6-580489b7aeab.gif">
+<meta property="article:published_time" content="2016-10-25T02:40:44.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.150Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="d3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.wxsm.space/blog/48595801-401d6c80-e991-11e8-97c6-580489b7aeab.gif">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/d3-note-basis/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/d3-note-basis/","path":"2016/d3-note-basis/","title":"D3 Note - Basis"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>D3 Note - Basis | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-SVG"><span class="nav-number">1.</span> <span class="nav-text">关于 SVG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%85%83%E7%B4%A0"><span class="nav-number">2.1.</span> <span class="nav-text">选择元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E9%80%89%E6%8B%A9"><span class="nav-number">2.2.</span> <span class="nav-text">操作选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#datum"><span class="nav-number">3.1.</span> <span class="nav-text">datum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data"><span class="nav-number">3.2.</span> <span class="nav-text">data</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5%EF%BC%9A%E7%AE%80%E5%8D%95%E6%9F%B1%E7%8A%B6%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">实践：简单柱状图</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/d3-note-basis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="D3 Note - Basis | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          D3 Note - Basis
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-10-25 10:40:44" itemprop="dateCreated datePublished" datetime="2016-10-25T10:40:44+08:00">2016-10-25</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/d3-note-basis/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/d3-note-basis/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>D3 (Data-Driven Documents) 是一个 JavaScript Library，用来做 Web 端的数据可视化实现以及各种绘图。</p>
+<blockquote>
+<p><strong>D3.js</strong> is a JavaScript library for manipulating documents based on data. <strong>D3</strong> helps you bring data to life using HTML, SVG, and CSS.</p>
+</blockquote>
+<p>学习 D3 需要很多预备知识：</p>
+<ol>
+<li>HTML &#x2F; DOM</li>
+<li>CSS</li>
+<li>JavaScript (better with jQuery)</li>
+<li>SVG</li>
+</ol>
+<p>HTML &#x2F; CSS 不必多说，因为 D3 含有大量链式操作函数以及选择器等，因此如果有 jQuery 基础将轻松很多。此外，由于一般采用 SVG 方式进行绘图，所以 SVG 基础知识也需要掌握。</p>
+<p>虽然必须的预备知识如此之多，但 D3 的定位其实是 Web 前端绘图的底层工具，所谓底层，即是操作复杂而功能强大者。</p>
+<span id="more"></span>
+
+<h2 id="关于-SVG"><a href="#关于-SVG" class="headerlink" title="关于 SVG"></a>关于 SVG</h2><p>SVG (Scalable Vector Graphics) 是一种绘图标准，已经被绝大多数的现代浏览器所支持。SVG 采用 XML 语法定义图像，可直接嵌入 HTML 中使用。</p>
+<p>SVG 的特点是矢量绘图（与 Canvas 不同），除了预设样式以外同时也支持 CSS 样式。</p>
+<p>比如，画一个园圈，坐标为 (100, 50)，半径为 40px，拥有 2px 的黑色 border，以及红色填充：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;100&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;50&quot;</span> <span class="attr">r</span>=<span class="string">&quot;40&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;red&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>SVG 有一些预定义的形状元素，可被开发者使用和操作：</p>
+<ul>
+<li>矩形 <code>&lt;rect&gt;</code></li>
+<li>圆形 <code>&lt;circle&gt;</code></li>
+<li>椭圆 <code>&lt;ellipse&gt;</code></li>
+<li>线 <code>&lt;line&gt;</code></li>
+<li>折线 <code>&lt;polyline&gt;</code></li>
+<li>多边形 <code>&lt;polygon&gt;</code></li>
+<li>路径 <code>&lt;path&gt;</code></li>
+</ul>
+<p>其中，<code>path</code> 是功能最强大者，使用 <code>path</code> 可以构成所有图形。</p>
+<h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><h3 id="选择元素"><a href="#选择元素" class="headerlink" title="选择元素"></a>选择元素</h3><p>D3 使用与 jQuery 类似的选择器来获取 HTML 元素。常用的方法有：</p>
+<ul>
+<li><code>d3.select(selector)</code></li>
+<li><code>d3.selectAll(selector)</code></li>
+</ul>
+<p>（参数既可以传 selector 也可以直接传 HTML Element ）</p>
+<p>顾名思义，<code>selectAll</code> 就是选择所有符合条件的元素了，那么 <code>select</code> 选择的是符合条件的第一个元素。如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">d3.<span class="title function_">select</span>(<span class="string">&#x27;body&#x27;</span>) <span class="comment">//选择 body 元素</span></span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">selectAll</span>(<span class="string">&#x27;p&#x27;</span>) <span class="comment">//选择所有 p 元素</span></span><br><span class="line"></span><br><span class="line">d3.<span class="title function_">selectAll</span>(<span class="string">&#x27;.className&#x27;</span>) <span class="comment">//选择所有 class 包含 className 的元素</span></span><br></pre></td></tr></table></figure>
+
+<p>更多就不说了。</p>
+<h3 id="操作选择"><a href="#操作选择" class="headerlink" title="操作选择"></a>操作选择</h3><p>选择器返回的是一组<strong>选择</strong>（selection），这组<strong>选择</strong>可以进行一些操作，如：</p>
+<ul>
+<li>在此选择的基础上继续选择；</li>
+<li>改变属性；</li>
+<li>改变样式；</li>
+<li>绑定事件；</li>
+<li>插入、删除；</li>
+<li>绑定数据。</li>
+</ul>
+<p>大多数操作都与 jQuery 十分类似，同时也支持链式操作，不再赘述。只是这个“绑定数据”操作稍有特别。</p>
+<h2 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h2><p>通过 D3 可以把数据“绑定”到 HTML 元素上，绑定的目的主要是为了方便一些需要相应数据才能进行的元素操作（如：更改元素大小、位置等）。</p>
+<p>绑定数据有两个方法：</p>
+<ul>
+<li><code>datum</code>: 将一个数据绑定到选择上；</li>
+<li><code>data</code>: 将一个数组绑定到选择上，数组的各项分别与选择的各项一一对应。</li>
+</ul>
+<p>下面引用一个例子来说明这二者的不同。假设有如下三个节点：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Apple<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Pear<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Banana<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="datum"><a href="#datum" class="headerlink" title="datum"></a>datum</h3><p>执行以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;datum&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> p = d3.<span class="title function_">selectAll</span>(<span class="string">&#x27;p&#x27;</span>);</span><br><span class="line"></span><br><span class="line">p.<span class="title function_">datum</span>(str);</span><br><span class="line">p.<span class="title function_">text</span>(<span class="function">(<span class="params">d, i</span>) =&gt;</span> <span class="string">`Element <span class="subst">$&#123;i&#125;</span> bind with <span class="subst">$&#123;d&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>将得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Element 0 bind with datum</span><br><span class="line">Element 1 bind with datum</span><br><span class="line">Element 2 bind with datum</span><br></pre></td></tr></table></figure>
+
+<p>在对选择进行操作时，传入的<strong>值</strong>可以是<strong>值</strong>，也可以是函数。当传入函数时，D3 会向函数注入两个参数，分别是 d (data) 与 i (index)，代表当前元素绑定的数据与其索引。</p>
+<h3 id="data"><a href="#data" class="headerlink" title="data"></a>data</h3><p>执行以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> strArr = [<span class="string">&#x27;data0&#x27;</span>, <span class="string">&#x27;data1&#x27;</span>, <span class="string">&#x27;data2&#x27;</span>];</span><br><span class="line"><span class="keyword">let</span> p = d3.<span class="title function_">selectAll</span>(<span class="string">&#x27;p&#x27;</span>);</span><br><span class="line"></span><br><span class="line">p.<span class="title function_">data</span>(strArr);</span><br><span class="line">p.<span class="title function_">text</span>(<span class="function">(<span class="params">d, i</span>) =&gt;</span> <span class="string">`Element <span class="subst">$&#123;i&#125;</span> bind with <span class="subst">$&#123;d&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>将得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Element 0 bind with data0</span><br><span class="line">Element 1 bind with data1</span><br><span class="line">Element 2 bind with data2</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，数组中的 3 个项分别与 3 个 p 元素绑定到了一起。因此，可以将 <code>datum</code> 看作是 <code>data</code> 函数的一个特例，实际开发中使用更多的是 <code>data</code> 函数。</p>
+<h2 id="实践：简单柱状图"><a href="#实践：简单柱状图" class="headerlink" title="实践：简单柱状图"></a>实践：简单柱状图</h2><p>先定义一个 SVG 画布，并将它插入到 HTML 的 body 中去：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> width = <span class="number">300</span>,</span><br><span class="line">  height = <span class="number">300</span>；</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> svg = d3.<span class="title function_">select</span>(<span class="string">&#x27;body&#x27;</span>)</span><br><span class="line">  .<span class="title function_">append</span>(<span class="string">&#x27;svg&#x27;</span>)</span><br><span class="line">  .<span class="title function_">attr</span>(<span class="string">&#x27;width&#x27;</span>, width)</span><br><span class="line">  .<span class="title function_">attr</span>(<span class="string">&#x27;height&#x27;</span>, height);</span><br></pre></td></tr></table></figure>
+
+<p>在这里，画布的宽高都为 300 像素。</p>
+<p>然后，定义一组数据：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = [<span class="number">250</span>, <span class="number">210</span>, <span class="number">170</span>, <span class="number">100</span>, <span class="number">190</span>];</span><br></pre></td></tr></table></figure>
+
+<p>最后使用以上数据画出柱状图，柱子使用 SVG 预定义的 <code>rect</code> 元素：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> rectWidth = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">selectAll</span>(<span class="string">&#x27;rect&#x27;</span>)</span><br><span class="line"> .<span class="title function_">data</span>(data)</span><br><span class="line"> .<span class="title function_">enter</span>()</span><br><span class="line"> .<span class="title function_">append</span>(<span class="string">&#x27;rect&#x27;</span>)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;y&#x27;</span>, <span class="function">(<span class="params">d, i</span>) =&gt;</span> height - d)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;x&#x27;</span>, <span class="function">(<span class="params">d, i</span>) =&gt;</span> i * rectWidth)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;height&#x27;</span>, <span class="function"><span class="params">d</span> =&gt;</span> d)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;width&#x27;</span>, rectWidth - <span class="number">2</span>)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;fill&#x27;</span>, <span class="string">&#x27;steelblue&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>rectWidth</code> 表示柱子的宽度，至于坐标、宽高则分别通过 x &#x2F; y 以及 height &#x2F; width 属性来控制，效果如下：</p>
+<p><img src="https://static.wxsm.space/blog/48595801-401d6c80-e991-11e8-97c6-580489b7aeab.gif"></p>
+<p>可以发现，这里并没有指定需要插入的 <code>rect</code> 个数，但 D3 却根据数据量自动地把图画出来了，这个工作是通过 <code>enter</code> 语句完成的。关于其工作原理，下回分解。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/d3-note-basis/" title="D3 Note - Basis">https://wxsm.space/2016/d3-note-basis/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/d3/" rel="tag"># d3</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/wordpress-hole-record/" rel="prev" title="WordPress 掉坑记录">
+                  <i class="fa fa-angle-left"></i> WordPress 掉坑记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/node-js-web-spider-note-2/" rel="next" title="Node.js Web Spider Note - 2">
+                  Node.js Web Spider Note - 2 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/d3-note-basis/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

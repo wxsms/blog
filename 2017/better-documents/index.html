@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="这篇文章记录了我是如何一步步地把 https:&#x2F;&#x2F;github.com&#x2F;wxsms&#x2F;uiv 这个项目的用户文档变得更优雅的。实际上，如何以一种高效又优雅的方式编写实例文档一直是我的一个疑惑，比如主要的问题体现在：  如何使文档更易读？ 如何使文档更易于维护？ 如何减少编写文档的工作量？ 实例代码无可避免地需要手工维护吗？  最后一点是让我最头疼的地方。举个例子，我想要给用户展示一个组件的使用方式，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Better Documents">
+<meta property="og:url" content="https://wxsm.space/2017/better-documents/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="这篇文章记录了我是如何一步步地把 https:&#x2F;&#x2F;github.com&#x2F;wxsms&#x2F;uiv 这个项目的用户文档变得更优雅的。实际上，如何以一种高效又优雅的方式编写实例文档一直是我的一个疑惑，比如主要的问题体现在：  如何使文档更易读？ 如何使文档更易于维护？ 如何减少编写文档的工作量？ 实例代码无可避免地需要手工维护吗？  最后一点是让我最头疼的地方。举个例子，我想要给用户展示一个组件的使用方式，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-26T22:43:01.255Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.146Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="markdown">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2017/better-documents/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2017/better-documents/","path":"2017/better-documents/","title":"Better Documents"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Better Documents | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-1"><span class="nav-number">1.</span> <span class="nav-text">Stage-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-2"><span class="nav-number">2.</span> <span class="nav-text">Stage-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-3"><span class="nav-number">3.</span> <span class="nav-text">Stage-3</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2017/better-documents/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Better Documents | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Better Documents
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-10-27 06:43:01" itemprop="dateCreated datePublished" datetime="2017-10-27T06:43:01+08:00">2017-10-27</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2017/better-documents/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2017/better-documents/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这篇文章记录了我是如何一步步地把 <a target="_blank" rel="noopener" href="https://github.com/wxsms/uiv">https://github.com/wxsms/uiv</a> 这个项目的用户文档变得更优雅的。实际上，如何以一种<strong>高效又优雅</strong>的方式编写<strong>实例文档</strong>一直是我的一个疑惑，比如主要的问题体现在：</p>
+<ul>
+<li>如何使文档更易读？</li>
+<li>如何使文档更易于维护？</li>
+<li>如何减少编写文档的工作量？</li>
+<li>实例代码无可避免地需要手工维护吗？</li>
+</ul>
+<p>最后一点是让我最头疼的地方。举个例子，我想要给用户展示一个组件的使用方式，以下代码可以在页面上创建一个 Alert：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">alert</span> <span class="attr">type</span>=<span class="string">&quot;success&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>Well done!<span class="tag">&lt;/<span class="name">b</span>&gt;</span> You successfully read this important alert message.<span class="tag">&lt;/<span class="name">alert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么，我总要给用户一个相对应的<strong>实例</strong>吧。我要在我的文档上面就创建一个这样的 Alert，同时告诉用户说你可以这么用。这是一个很普遍的展示方式，那么问题就在这里了，我是否要将<strong>同样的代码写两次</strong>呢？</p>
+<p>一开始我确实就是这么做的，虽然我知道这不科学，不高效，更不优雅。但我实在是想不到更好的办法了。</p>
+<p>但是，现在，我已经（几乎）把以上的问题都解决了。</p>
+<span id="more"></span>
+
+<h2 id="Stage-1"><a href="#Stage-1" class="headerlink" title="Stage-1"></a>Stage-1</h2><p>写文档这件事，实际上跟写文章差不多，写作体验很重要。</p>
+<p>在最开始的时候，项目文档是直接用 Vue 文件编写的，没有经过任何处理，没有经验的我甚至还作死地加入了 i18n，可以说是非常有趣了。以至于到最近，在没有发生这次重构之前，我根本不想动它们。</p>
+<p>可以想象，我给关键字句加个粗要手写 <code>&lt;b&gt;...&lt;/b&gt;</code>，标记一点代码要用 <code>&lt;code&gt;...&lt;/code&gt;</code>，每写一段话都要注意标签标签标签，文档里充斥这些东西，烦不胜烦。</p>
+<p>这阶段的文档，存在的问题主要有：</p>
+<ul>
+<li>难以编写</li>
+<li>无法在网站以外的地方阅读（因为是 Vue 源码）</li>
+<li>给项目增加了许多额外代码</li>
+<li>手工维护的实例代码</li>
+</ul>
+<h2 id="Stage-2"><a href="#Stage-2" class="headerlink" title="Stage-2"></a>Stage-2</h2><p>以上提到的写作体验令人作呕，经过了漫长的时间后，在这一阶段得到了解决。某次机缘巧合，我发现了这样一个工具，它可以通过 webpack 将 Markdown 格式的文本直接转换成为 Vue 组件：<a target="_blank" rel="noopener" href="https://github.com/QingWei-Li/vue-markdown-loader">vue-markdown-loader</a></p>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.md$/</span>,</span><br><span class="line">        <span class="attr">loader</span>: <span class="string">&#x27;vue-markdown-loader&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这样一来，就可以通过 <code>import [*].md</code> 的方式，得到一个内含 Markdown 内容（已转 HTML）的 Vue 组件。可以直接在页面上用了！</p>
+<p>如果不考虑<strong>实例</strong>部分的话，这就已经完美了。准确地说，如果一开始就不需要实例这种东西，那么我肯定会直接用 Gitbook 了。也不需要这个 markdown to vue 来做什么。</p>
+<hr>
+<p>经过了长时间的折磨的我身心疲惫，最终还是决定尝试一下。</p>
+<p>然而，就在这个尝试的过程中惊喜地发现：<strong>它居然还可以执行 Markdown 中的 Code block 中的代码！</strong></p>
+<p>这是什么鬼。一开始发现这个的时候我还是很惊讶的。仿佛打开了新世界的大门。</p>
+<p><strong>在后来的不断尝试 - 失败 - 尝试的过程中，我发现了它更多的 Feature：</strong></p>
+<ul>
+<li>可以执行 Code blocks 中的代码（<code>&lt;script&gt;</code>）</li>
+<li>可以执行 Code blocks 中的样式（<code>&lt;style&gt;</code>）</li>
+<li>可以通过插件给文档 header 加锚点</li>
+</ul>
+<p><strong>但是，也发现了以下问题：</strong></p>
+<ul>
+<li>多个 Code blocks 中的 <code>&lt;style&gt;</code> 可以合并，但 <code>&lt;script&gt;</code> 不行，<strong>它始终只会执行所找到的第一段 <code>&lt;script&gt;</code></strong></li>
+</ul>
+<p>通过查阅 <code>vue-loader</code> 的文档发现，这是 <code>.vue</code> 文件本身的限制：支持多个 <code>&lt;template&gt;</code>，多个 <code>&lt;style&gt;</code>，<strong>一个 <code>&lt;script&gt;</code></strong></p>
+<p>也就是说，如果页面上有多个实例需要展示的话，给给。</p>
+<p>如果这个问题能够解决的话，再结合我本身的需求，以下内容也需要实现：</p>
+<ul>
+<li>将实例代码中的 <code>&lt;template&gt;</code> 模板插入到其代码块之前，让其成为 Markdown 文件的一部分，然后 Vue 就会自动将它们统统实例化</li>
+</ul>
+<hr>
+<p><strong>其实到了这里，也就是这两个问题需要解决了。</strong></p>
+<p>首先是<strong>模板插入</strong>的问题。这个其实不难，在 Markdown 完成渲染前，通过一些手段找到这些需要渲染的模板，然后手动插入。幸而 loader 提供了 <code>preprocess</code> 钩子，让我能直接完成这件事情。</p>
+<p>然后，关于 <code>&lt;script&gt;</code> 这块，我尝试了好久好久，实在是没办法。但是又真的舍不得因为这仅仅一个问题丢弃以上的那么多的好处。于是就想到了一个折中的办法：禁用 loader 的自动执行代码功能，并手动组装代码块。然而一个悲催的问题又出现了：禁用自动代码执行后，<code>&lt;style&gt;</code> 也无法自动执行了。</p>
+<p>解决方案：我需要在 <code>preprocess</code> 中将 Code blocks 里面的 <code>&lt;style&gt;</code> 块全部切出来，贴到 code blocks 的外面（比如文件结尾处）去。一开始我还尝试了将它们的内容合并成为一个 <code>&lt;style&gt;</code>，后来发现其实不需要，因为 <code>vue-loader</code> 本身就支持一个文件多个 <code>&lt;style&gt;</code> 节点。</p>
+<p>最后的最后，轮到了 <code>&lt;script&gt;</code> 的组装。我尝试了很久的自动合并，比如将它们的 export 内容转为 object 再 merge 啦，function 转为 object 再 merge 啦，toString 再 merge 啦，等等等等，然而各种方式都以失败告终。结论是：我无法将数个字符串代码块直接合并，也无法转为 object 再合并再转回字符串。实在的实在是没办法了，hard code 吧。</p>
+<hr>
+<p>至此，一个新的解决方案就出现了。简单来说，编写一篇文档，我需要做以下的事情：</p>
+<ul>
+<li>用 Markdown 写文档以及实例代码</li>
+<li>实例代码块中加入约定的标志</li>
+<li>注意同一个 Markdown 中的实例代码块的 <code>&lt;script&gt;</code> 不能相互冲突</li>
+<li>做完所有事情以后，用我自己的智商和爱将所有的实例代码合并成一份</li>
+</ul>
+<p>大功告成。</p>
+<p>虽然依然有些麻烦，但相比与 Stage-1，我至少解决了以下的大事：</p>
+<ul>
+<li>文档编写体验大幅度提升！</li>
+<li>文档可以在网站以外的地方被阅读（如 Github）</li>
+<li>实例的 <code>&lt;template&gt;</code> 与 <code>&lt;style&gt;</code> 代码无需再有特殊照顾</li>
+<li>维护工作量大大减少</li>
+</ul>
+<p>依然存在的问题是：</p>
+<ul>
+<li>实例的 <code>&lt;script&gt;</code> 代码需要维护两份，而且不能彼此冲突</li>
+</ul>
+<h2 id="Stage-3"><a href="#Stage-3" class="headerlink" title="Stage-3"></a>Stage-3</h2><p>虽然解决了 80% 的问题，但 Stage-2 依然不完美。我始终想要解决最后一个问题：<strong>无需特殊照顾的实例 <code>&lt;script&gt;</code></strong></p>
+<p>想要达到这个目标，有一个完美的办法就是：<strong>将实例也作为子组件来插入到 Markdown 父组件中去</strong>。这样一来，同一页面的实例代码无法冲突的问题也就一并解决了。</p>
+<p>显然，通过目前的 loader 无法达到我想要的效果，它只能够简单地将代码插入 Markdown，并不能构建子组件。因此，要解决这个问题，<strong>我需要自己造轮子</strong>。</p>
+<p>……</p>
+<hr>
+<p>于是就有了：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/wxsms/vue-md-loader">https://github.com/wxsms/vue-md-loader</a></p>
+<p>关于这个轮子，它是原有 markdown-loader 的一个替代品，<strong>并且能够解决以上提出的所有问题</strong>。</p>
+<p>除了完善的原有 Markdown 转换功能以外，它还可以将 Markdown 中的实例代码，比如：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;cls&quot;</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    data () &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">msg</span>: <span class="string">&#x27;Hello world!&#x27;</span></span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-class">.cls</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">color</span>: red;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">background</span>: green;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- some-live-demo.vue --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>变成类似这样的结构：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">some-live-demo</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">pre</span>&gt;</span><span class="tag">&lt;<span class="name">code</span>&gt;</span>...<span class="tag">&lt;/<span class="name">code</span>&gt;</span><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>A <strong>Vue component</strong> with all it’s <code>&lt;template&gt;</code>, <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> settled will be <strong>inserted before it’s source code block</strong>.</p>
+</blockquote>
+<p>毫无疑问，它<strong>支持同一文件中的多个代码块</strong>。</p>
+<p>关于这个插件，其实就是一个典型的、简单的 webpack loader，将一个 markdown 文件转换成了可以被 <code>vue-loader</code> 识别并加载的 vue 文件。</p>
+<p>它的实现思路主要有：</p>
+<ul>
+<li>将实例代码块中的 <code>&lt;style&gt;</code> 直接截取，并放到 Markdown 组件下</li>
+<li>将实例代码块中的 <code>&lt;script&gt;</code> 中 <code>export default</code> 的内容截取，并作为各自的 Component options</li>
+<li>加上相应代码块中的 <code>&lt;template&gt;</code> 中的内容，稍微组装一下，它就成为了一个 Vue component</li>
+<li>在 Markdown 组件中局部注册该 component，并将它插入到代码块的前面去</li>
+<li>对于 <code>export default</code> 外部的内容，把它们抽取出来，集中放到 Markdown 组件下</li>
+</ul>
+<p>以上这些操作，全部通过字符串与正则操作就足以完成了。</p>
+<p>然而可以发现，这里面仍有一些有待解决的问题：</p>
+<ul>
+<li><code>&lt;style&gt;</code> 有可能冲突</li>
+<li><code>export default</code> 之外的内容有可能冲突</li>
+</ul>
+<p>这两个问题目前也还没有想到有效的解决办法。但是，就目前来说，满足我的需求已经完全足够了。遗留问题通过后续的开发来逐步解决吧。</p>
+<hr>
+<p>至此，优雅地编写项目文档的全部要素就齐备了：</p>
+<ul>
+<li>纯文档编写体验（Markdown）</li>
+<li>文档可以在网站以外的地方被阅读（如 Github）</li>
+<li>实例代码均无需特殊照顾，所有过程自动完成</li>
+<li>没有维护压力</li>
+</ul>
+<p><strong>Enjoy!</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2017/better-documents/" title="Better Documents">https://wxsm.space/2017/better-documents/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+              <a href="/tags/webpack/" rel="tag"># webpack</a>
+              <a href="/tags/markdown/" rel="tag"># markdown</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/cors-headers-note/" rel="prev" title="CORS Headers Note">
+                  <i class="fa fa-angle-left"></i> CORS Headers Note
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/limit-prerender-plugin-workers-by-webpack/" rel="next" title="Limit Prerender Plugin Workers By Webpack">
+                  Limit Prerender Plugin Workers By Webpack <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2017/better-documents/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

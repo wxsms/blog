@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="由于 Gitlab CE 做代码评审时缺少了关键的评审员功能（详情参考此 issue），因此在使用 CE 的同时又想要做代码评审的话，就必须要自己想办法了。 网上能找到的最多的解决方案就是在 Gitlab 前面再部署一套 Gerrit，通过拦截推送的代码以及同步两个库来实现。但是这种方案有诸多弊端。比如：  割裂的用户体验。原本习惯了使用 Gitlab 系统的人，要开始学习晦涩难懂的 Gerrit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gitlab CE Code-Review Bot">
+<meta property="og:url" content="https://wxsm.space/2020/gitlab-ce-code-review-bot/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="由于 Gitlab CE 做代码评审时缺少了关键的评审员功能（详情参考此 issue），因此在使用 CE 的同时又想要做代码评审的话，就必须要自己想办法了。 网上能找到的最多的解决方案就是在 Gitlab 前面再部署一套 Gerrit，通过拦截推送的代码以及同步两个库来实现。但是这种方案有诸多弊端。比如：  割裂的用户体验。原本习惯了使用 Gitlab 系统的人，要开始学习晦涩难懂的 Gerrit">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wxsm.space/2020/gitlab-ce-code-review-bot/93973898-8e7ace00-fda7-11ea-9735-8ee3de0e663d.png">
+<meta property="article:published_time" content="2020-09-22T21:00:24.748Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.152Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="gitlab">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxsm.space/2020/gitlab-ce-code-review-bot/93973898-8e7ace00-fda7-11ea-9735-8ee3de0e663d.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2020/gitlab-ce-code-review-bot/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2020/gitlab-ce-code-review-bot/","path":"2020/gitlab-ce-code-review-bot/","title":"Gitlab CE Code-Review Bot"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Gitlab CE Code-Review Bot | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-number">2.</span> <span class="nav-text">实现细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MR-%E5%88%9B%E5%BB%BA%E6%97%B6%E9%80%9A%E7%9F%A5%E5%88%B0%E8%AF%84%E5%AE%A1%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.1.</span> <span class="nav-text">MR 创建时通知到评审系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E6%89%8B%E5%8A%A8%E5%90%88%E5%B9%B6"><span class="nav-number">2.1.1.</span> <span class="nav-text">如何防止手动合并</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%85%BC%E5%AE%B9%E4%B8%8D%E9%9C%80%E8%A6%81%E8%AF%84%E5%AE%A1%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-number">2.1.2.</span> <span class="nav-text">如何兼容不需要评审的场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%AF%84%E8%AE%BA%E5%AE%9E%E7%8E%B0%E8%AF%84%E5%AE%A1%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">通过评论实现评审流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/gitlab-ce-code-review-bot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Gitlab CE Code-Review Bot | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gitlab CE Code-Review Bot
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-23 05:00:24" itemprop="dateCreated datePublished" datetime="2020-09-23T05:00:24+08:00">2020-09-23</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/gitlab-ce-code-review-bot/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/gitlab-ce-code-review-bot/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>由于 Gitlab CE 做代码评审时缺少了关键的评审员功能（详情参考此 <a target="_blank" rel="noopener" href="https://gitlab.com/gitlab-org/gitlab-foss/-/issues/42096">issue</a>），因此在使用 CE 的同时又想要做代码评审的话，就必须要自己想办法了。</p>
+<p>网上能找到的最多的解决方案就是在 Gitlab 前面再部署一套 Gerrit，通过拦截推送的代码以及同步两个库来实现。但是这种方案有诸多弊端。比如：</p>
+<ol>
+<li>割裂的用户体验。原本习惯了使用 Gitlab 系统的人，要开始学习晦涩难懂的 Gerrit；</li>
+<li>代码同步的不稳定性和不确定性。系统每增加一层逻辑，可靠性就降低一些；</li>
+<li>复杂的使用方式：代码必须要从 Gerrit clone，同时 push 时分支名必须加上 refs 前缀，否则无法进入评审</li>
+<li>…</li>
+</ol>
+<p>总体来说，以上的种种原因让我觉得 Gerrit 并不是最好的解决方案。对于凡事追求完美的处女座的我来说，我想要的东西大概应该具备以下几点：</p>
+<ol>
+<li>最好是能直接在 Gitlab 上面进行评审。因为 CE 可以说是万万事俱备，只差流程；</li>
+<li>最好是对原 Git 和 Gitlab 使用流程、习惯没有任何更改和侵入，仅增加评审流程；</li>
+<li>最好是可以可以自动化整个流程（评审人自动分配、评审完自动合并，等等）。</li>
+</ol>
+<p>好在，Gitlab 有一套完备的 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/user/project/integrations/webhooks.html">Web hook</a> 以及 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/api/">API</a> 系统，可以支撑起我的想法。</p>
+<span id="more"></span>
+
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>首先，所有评审流程要基于一些分支使用原则：</p>
+<ol>
+<li>分支分为主干分支与特性分支，另外还有一些额外的分支（如发布分支）；</li>
+<li>除业务分支外，其它分支均为保护分支，不允许直接推送，只能通过 Merge Request 添加代码；</li>
+<li>特性分支可以任意使用、推送</li>
+</ol>
+<p>因此，代码评审的环节就设计在 Merge Request （以下简称 MR）中，这是一个合理的时机。</p>
+<p>整个评审流程如下所示：</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<p>可以看到，除了最后的「合并」操作外，评审系统只是作为一个「旁观者」的角色，帮助我们完成了整个评审流程，并没有任何侵入性的操作。</p>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>评审系统的实现，我选择的是一个用 Node.js 和 Koa2 搭建的普通 web 服务器。它会做两件事情：</p>
+<ol>
+<li>监听从 web hook 进入到系统的请求，分析请求参数，实现具体逻辑；</li>
+<li>调用 Gitlab API，完成诸如评论、合并等操作。</li>
+</ol>
+<p>因为 Gitlab web hook 访问时仅存在参数区别，因此服务器入口只需要一个路径监听就够了：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gitlab.route.js</span></span><br><span class="line"><span class="keyword">const</span> gitlab = <span class="built_in">require</span>(<span class="string">&#x27;./gitlab.controller&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="function">(<span class="params">router</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 所有请求都进入到 gitlab controller</span></span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&#x27;(.*)&#x27;</span>, gitlab)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gitlab.controller.js</span></span><br><span class="line"><span class="keyword">const</span> mr = <span class="built_in">require</span>(<span class="string">&#x27;./merge-request.handler&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> mrc = <span class="built_in">require</span>(<span class="string">&#x27;./merge-request-comment.handler&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; object_kind, object_attributes &#125; = ctx.<span class="property">request</span>.<span class="property">body</span></span><br><span class="line">    <span class="keyword">if</span> (object_kind === <span class="string">&#x27;merge_request&#x27;</span> &amp;&amp; object_attributes.<span class="property">action</span> === <span class="string">&#x27;open&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// 新的 merge request</span></span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">mr</span>(ctx)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (object_kind === <span class="string">&#x27;note&#x27;</span> &amp;&amp; object_attributes.<span class="property">noteable_type</span> === <span class="string">&#x27;MergeRequest&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// merge request 收到评论</span></span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">mrc</span>(ctx)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 这里的返回并不重要</span></span><br><span class="line">  ctx.<span class="property">body</span> = <span class="string">&#x27;gitlab-bot&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MR-创建时通知到评审系统"><a href="#MR-创建时通知到评审系统" class="headerlink" title="MR 创建时通知到评审系统"></a>MR 创建时通知到评审系统</h3><p>在上面的 <code>mr(ctx)</code> 中，可以实现新 MR 创建时的逻辑：</p>
+<ol>
+<li>从预先配置好的小组名单（可以是写死在代码中的，也可以是储存在 db 中的）中，随机抽取 N 位成员（假设为 B&#x2F;C）；</li>
+<li>通过 Gitlab API 向 MR 添加评论，说明意图，并且 @B @C。</li>
+</ol>
+<p>至于如何向 API 发出请求，开源世界有许多现成的解决方案，也可以直接参考 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/api/">API 文档</a>，这里不再赘述。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// pid 为 projectId，mid 为 mergeRequestId，webhook 调用内均会携带。下同</span></span><br><span class="line"><span class="keyword">await</span> service.<span class="title function_">addMergeRequestComment</span>(pid, mid, <span class="string">`请 [@<span class="subst">$&#123;ra&#125;</span>] 与 [@<span class="subst">$&#123;rb&#125;</span>] 评审`</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里面有几个问题：</p>
+<ol>
+<li>如何防止小组成员略过评审系统，主动合并？</li>
+<li>不是所有分支合并都需要评审（如主干分支到发布分支），如何避免？</li>
+</ol>
+<h4 id="如何防止手动合并"><a href="#如何防止手动合并" class="headerlink" title="如何防止手动合并"></a>如何防止手动合并</h4><p>Gitlab 提供了一种方式：WIP (work in progress)，只要标记了 WIP 的 MR 就无法直接点击合并。使用方式也很简单，只需要在原 MR 的标题前面加上 <code>WIP:</code> 字符串即可：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">await</span> service.<span class="title function_">updateMergeRequest</span>(pid, mid, &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">`WIP:<span class="subst">$&#123;object_attributes.title&#125;</span>`</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>效果如下图所示：</p>
+<p><img src="/2020/gitlab-ce-code-review-bot/93973898-8e7ace00-fda7-11ea-9735-8ee3de0e663d.png" alt="wip"></p>
+<p>可以看到，WIP 并不是一个强制状态。在 Web UI 上点击 <code>Resolve WIP status</code> 或手动去除标题中的 <code>WIP:</code> 都可以解除 WIP 状态，从而允许手动合并。也就是说，这是一个「防君子不防小人」的状态。如果是在一个团队内的成员中使用，我觉得这样已经足够了。</p>
+<h4 id="如何兼容不需要评审的场景"><a href="#如何兼容不需要评审的场景" class="headerlink" title="如何兼容不需要评审的场景"></a>如何兼容不需要评审的场景</h4><p>这里其实可以利用保护分支的规则，作出一个共识：凡是已合并到保护分支上的代码，都是已经过评审的「安全」代码，无需再次评审。</p>
+<p>因此可以得出结论：只有从非保护分支（特性分支）往保护分支合并的场景需要评审，其它场景均无需评审。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> targetBranch = <span class="keyword">await</span> service.<span class="title function_">getBranchInfo</span>(pid, object_attributes.<span class="property">target_branch</span>)</span><br><span class="line"><span class="keyword">const</span> sourceBranch = <span class="keyword">await</span> service.<span class="title function_">getBranchInfo</span>(pid, object_attributes.<span class="property">source_branch</span>)</span><br><span class="line"><span class="keyword">if</span> (sourceBranch.<span class="property">protected</span> || !targetBranch.<span class="property">protected</span>) &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过评论实现评审流程"><a href="#通过评论实现评审流程" class="headerlink" title="通过评论实现评审流程"></a>通过评论实现评审流程</h3><p>在 <code>mrc(ctx)</code> 中，可以实现 MR 收到新评论时的逻辑，如下图所示：</p>
+<div id="flowchart-1" class="flow-chart"></div>
+
+<p>部分关键代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 mr 下的所有评论</span></span><br><span class="line"><span class="keyword">const</span> notes = <span class="keyword">await</span> service.<span class="title function_">listCommentsOfMergeRequest</span>(pid, mid)</span><br><span class="line"><span class="comment">// 找出邀请评论</span></span><br><span class="line"><span class="keyword">const</span> inviteNote = _.<span class="title function_">find</span>(notes, <span class="function"><span class="params">v</span> =&gt;</span> v.<span class="property">author</span>.<span class="property">username</span> === <span class="string">&#x27;bot&#x27;</span> &amp;&amp; <span class="regexp">/请.+?@.+?评审/</span>.<span class="title function_">test</span>(v.<span class="property">body</span>))</span><br><span class="line"><span class="comment">// 找出邀请了的人</span></span><br><span class="line"><span class="keyword">const</span> inviters = inviteNote.<span class="property">body</span>.<span class="title function_">match</span>(<span class="regexp">/\[@.+?]/g</span>).<span class="title function_">map</span>(<span class="function"><span class="params">v</span> =&gt;</span> v.<span class="title function_">replace</span>(<span class="string">&#x27;[@&#x27;</span>, <span class="string">&#x27;&#x27;</span>).<span class="title function_">replace</span>(<span class="string">&#x27;]&#x27;</span>, <span class="string">&#x27;&#x27;</span>))</span><br><span class="line"><span class="comment">// 找出没有 lgtm 的人</span></span><br><span class="line"><span class="keyword">const</span> notReviewPeople = []</span><br><span class="line">inviters.<span class="title function_">forEach</span>(<span class="function">(<span class="params">uid, index</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> regex = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;lgtm&#x27;</span>)</span><br><span class="line">  <span class="keyword">if</span> (!_.<span class="title function_">find</span>(notes, <span class="function"><span class="params">v</span> =&gt;</span> v.<span class="property">author</span>.<span class="property">username</span> === uid &amp;&amp; regex.<span class="title function_">test</span>(v.<span class="property">body</span>))) &#123;</span><br><span class="line">    notReviewPeople.<span class="title function_">push</span>(uid)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>以上评审流程，基本就是来自现在 Github 各大仓库流行的 bot 系统。可以发现，这套系统对比 Gerrit 等实现方案，除了对现有 Gitlab 用户十分友好之外，其最大的好处之一，就是控制权完全在自己手里。除了以上说到的逻辑以外，还可以自己实现任意想要的东西。如：</p>
+<ol>
+<li>为 MR 打标签。如评审人标签、评审状态标签、MR Change Size 标签，等等；</li>
+<li>检查 MR 内的 Commit Msg 是否合法；</li>
+<li>检查 MR 的 CI 是否通过；</li>
+<li>实现管理员用户，拥有更高的权限，通过特殊评论可以略过其它评审员直接合并，或完成其他功能</li>
+<li>…</li>
+</ol>
+<p>限制你的只有想象力。</p>
+<p>在实现了以上的一些逻辑后，目前我司评审系统的代码量加起来也没有超过 300 行。可以说相比于购买 Gitlab EE 来说，性价比还是相当高的。</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.17.1/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 开始
+e=>end: 结束
+s1=>operation: 同事 A 往业务分支 feat/a 推送代码
+s2=>operation: 同事 A 请求将 feat/a 合并到主干分支 dev，
+创建了 MR
+s3=>operation: Gitlab 通过 Web hook 通知到评审系统
+s4=>operation: 评审系统从预定义的评审员从随机抽取 N 位，
+假设为 2 位：同事 B 和同事 C
+并通过 @ 的方式通知
+s5=>operation: 评审员 B/C 在 Gitlab 上进行评审
+c1=>condition: 评审通过？
+s6=>operation: 同事 B/C 评论 lgtm
+s7=>operation: 同事 B/C 指出问题，
+在 Gitlab 上的代码中，
+具体到某一行进行评论
+s8=>operation: 同事 A 修改代码，再次提交
+s9=>operation: 评审系统执行合并
+
+st->s1->s2->s3->s4->s5->c1
+c1(yes,right)->s6->s9->e
+c1(no,bottom)->s7(left)->s8(top)->s5</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">st=>start: 开始
+e=>end: 结束
+s1=>operation: MR 收到新评论
+c1=>condition: 检查评论是否包含 lgtm
+c2=>condition: 检查评论者是否为受邀评审员
+s2=>operation: 忽略该评论
+c3=>condition: 通过 API 获取到该 MR 下的所有评论，
+检查是否还存在其它评审员未评审
+s4=>operation: 去除 MR 的 WIP 标记
+s5=>operation: 执行合并
+
+st->s1->c1
+c1(yes,bottom)->c2
+c1(no,right)->s2(bottom)->e
+c2(yes,bottom)->c3
+c2(no,right)->s2(bottom)->e
+c3(yes,right)->e
+c3(no,bottom)->s4(bottom)->s5(right)->e</textarea><textarea id="flowchart-1-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2020/gitlab-ce-code-review-bot/" title="Gitlab CE Code-Review Bot">https://wxsm.space/2020/gitlab-ce-code-review-bot/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/gitlab/" rel="tag"># gitlab</a>
+              <a href="/tags/devops/" rel="tag"># devops</a>
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/wsl-on-windows-10-and-node-js/" rel="prev" title="WSL on Windows 10 and Node.js">
+                  <i class="fa fa-angle-left"></i> WSL on Windows 10 and Node.js
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/upgrade-webpack-of-vue-cli-projects-from-3-to-4/" rel="next" title="Upgrade Webpack of Vue-Cli Projects from 3 to 4">
+                  Upgrade Webpack of Vue-Cli Projects from 3 to 4 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2020/gitlab-ce-code-review-bot/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

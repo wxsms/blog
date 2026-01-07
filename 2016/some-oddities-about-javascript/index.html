@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="大概一年前在看一本介绍JavaScript与jQuery的书籍之时看到了这么一个有趣的章节，当时印象挺深刻的。现在突然回想起来了这回事，于是就重新翻出来做了个笔记。作者将这些材料归结为两类：神奇的知识点以及WTF。这里去除了与浏览器有关的部分，因为那些和JavaScript本身并没有关联。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 的一些古怪之处">
+<meta property="og:url" content="https://wxsm.space/2016/some-oddities-about-javascript/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="大概一年前在看一本介绍JavaScript与jQuery的书籍之时看到了这么一个有趣的章节，当时印象挺深刻的。现在突然回想起来了这回事，于是就重新翻出来做了个笔记。作者将这些材料归结为两类：神奇的知识点以及WTF。这里去除了与浏览器有关的部分，因为那些和JavaScript本身并没有关联。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-02-15T08:47:27.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.175Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/some-oddities-about-javascript/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/some-oddities-about-javascript/","path":"2016/some-oddities-about-javascript/","title":"JavaScript 的一些古怪之处"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript 的一些古怪之处 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">数据类型与定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NULL%E6%98%AF%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">NULL是一个对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAN%E6%98%AF%E4%B8%80%E4%B8%AA%E6%95%B0%E5%AD%97"><span class="nav-number">1.2.</span> <span class="nav-text">NAN是一个数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%95%B0%E7%BB%84-FALSE"><span class="nav-number">1.3.</span> <span class="nav-text">空数组&#x3D;&#x3D;FALSE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#REPLACE-%E5%8F%AF%E4%BB%A5%E6%8E%A5%E5%8F%97%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">REPLACE()可以接受回调函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%AF%94%E8%BE%83%E5%92%8C%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.2.</span> <span class="nav-text">不仅仅是比较和替换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">3.</span> <span class="nav-text">函数与作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E5%8F%AF%E4%BB%A5%E4%BC%AA%E9%80%A0%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">3.1.</span> <span class="nav-text">你可以伪造作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%8F%AF%E4%BB%A5%E8%87%AA%E6%89%A7%E8%A1%8C"><span class="nav-number">3.2.</span> <span class="nav-text">函数可以自执行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">4.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-0-2-0-3"><span class="nav-number">4.1.</span> <span class="nav-text">0.1 + 0.2 !&#x3D;&#x3D; 0.3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNDEFINED%E5%8F%AF%E4%BB%A5%E8%A2%ABDEFINED"><span class="nav-number">4.2.</span> <span class="nav-text">UNDEFINED可以被DEFINED</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/some-oddities-about-javascript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript 的一些古怪之处 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript 的一些古怪之处
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-15 16:47:27" itemprop="dateCreated datePublished" datetime="2016-02-15T16:47:27+08:00">2016-02-15</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/some-oddities-about-javascript/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/some-oddities-about-javascript/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>大概一年前在看一本介绍JavaScript与jQuery的书籍之时看到了这么一个有趣的章节，当时印象挺深刻的。现在突然回想起来了这回事，于是就重新翻出来做了个笔记。作者将这些材料归结为两类：神奇的知识点以及WTF。这里去除了与浏览器有关的部分，因为那些和JavaScript本身并没有关联。</p>
+<span id="more"></span>
+
+<h2 id="数据类型与定义"><a href="#数据类型与定义" class="headerlink" title="数据类型与定义"></a>数据类型与定义</h2><h3 id="NULL是一个对象"><a href="#NULL是一个对象" class="headerlink" title="NULL是一个对象"></a>NULL是一个对象</h3><p>不同于C或者Java之类的语言，JavaScript的 <code>null</code> 值是一个对象。也许你会说“<code>null</code> 应该定义为一个完全没有意义的值”，也许你是对的，然并卵，事实是：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(<span class="keyword">typeof</span> <span class="literal">null</span>); <span class="comment">//object</span></span><br></pre></td></tr></table></figure>
+
+<p>尽管如此，<code>null</code> 并不是任何对象的一个实例（补充：JavaScript中的所有“值”都是基本对象的实例，比如说数字是 <code>Number</code> 对象的实例，字符串是 <code>String</code> 对象的实例，所有对象都是 <code>Object</code> 对象的实例，等等）。于是我们可以理智地认为：如果 <code>null</code> 代表的是没有值，那么它就不能是任何对象的实例。因此下面的表达式应该返回 <code>false</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(<span class="literal">null</span> <span class="keyword">instanceof</span> <span class="title class_">Object</span>); <span class="comment">//evaluates false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="NAN是一个数字"><a href="#NAN是一个数字" class="headerlink" title="NAN是一个数字"></a>NAN是一个数字</h3><p>你以为 <code>null</code> 是一个对象已经够离谱了吗，too young too simple！<code>NaN</code>→ Not a Number → 它是一个数字。还有更过分的呢，它甚至不等于它自身。我受到了伤害。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(<span class="keyword">typeof</span> <span class="title class_">NaN</span>); <span class="comment">//alerts &#x27;Number&#x27;</span></span><br><span class="line"><span class="title function_">alert</span>(<span class="title class_">NaN</span> === <span class="title class_">NaN</span>); <span class="comment">//evaluates false</span></span><br></pre></td></tr></table></figure>
+
+<p>事实上，<code>NaN</code> 不与任何值相等。如果想要判断一个值是不是 <code>NaN</code>，唯一的办法是通过调用 <code>isNaN()</code> 函数。</p>
+<h3 id="空数组-FALSE"><a href="#空数组-FALSE" class="headerlink" title="空数组&#x3D;&#x3D;FALSE"></a>空数组&#x3D;&#x3D;FALSE</h3><p>这个特性其实很受欢迎的呢：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(<span class="keyword">new</span> <span class="title class_">Array</span>() == <span class="literal">false</span>); <span class="comment">//evaluates true</span></span><br></pre></td></tr></table></figure>
+
+<p>要弄明白这里面到底发生了什么事，首先要知道在JavaScript世界中<strong>真假相</strong>的概念。它在逻辑上有一些简化。</p>
+<p>作者认为最简单的理解方式是：在JavaScript的世界中，<strong>所有非布尔类型的值，它们都存在有一个内置的布尔类型标志位</strong>，当该非布尔值在要求做出布尔类型的比较时，实际上调用的是它的标志位。</p>
+<p>（我觉得理解为JavaScript有内置的比较逻辑表也是可以的吧）</p>
+<p>因为苹果没办法和梨比较，猫不能和狗比较，因此当JavaScript需要比较两种不同类型的数值时，它要做的第一件事必然是将其<strong>强转</strong>为通用的可比较的类型。<code>False</code>，<code>null</code>，<code>undefined</code>，<code>NaN</code>,空字符串以及零到最后全都会变成 <code>false</code>。不过这当然不是永久的，这种转换只在特定的表达式（布尔表达式）中生效。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> someVar = <span class="number">0</span>;</span><br><span class="line"><span class="title function_">alert</span>(someVar == <span class="literal">false</span>); <span class="comment">//evaluates true</span></span><br></pre></td></tr></table></figure>
+
+<p>以上就是一个<strong>强转</strong>的例子。</p>
+<p>至此还没有开始讨论数组的行为呢。空数组是一件非常奇特的事物，它们实际上是表示真，但如果你拿它来做布尔运算，它又是假的。我总觉得这里面隐藏着什么不可告人的秘密 (¬_¬)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> someVar = []; <span class="comment">//empty array</span></span><br><span class="line"><span class="title function_">alert</span>(someVar == <span class="literal">false</span>); <span class="comment">//evaluates true</span></span><br><span class="line"><span class="keyword">if</span> (someVar) <span class="title function_">alert</span>(<span class="string">&#x27;hello&#x27;</span>); <span class="comment">//alert runs, so someVar evaluates to true</span></span><br></pre></td></tr></table></figure>
+
+<p>为了避免类似的困扰，我们可以使用<strong>全等操作符</strong>（三个等号，同时比较类型与值）：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> someVar = <span class="number">0</span>;</span><br><span class="line"><span class="title function_">alert</span>(someVar == <span class="literal">false</span>); <span class="comment">//evaluates true – zero is a falsy</span></span><br><span class="line"><span class="title function_">alert</span>(someVar === <span class="literal">false</span>); <span class="comment">//evaluates false – zero is a number, not a boolean</span></span><br></pre></td></tr></table></figure>
+
+<p>这个问题十分广泛，这里也就不过多介绍了。如果想要深入了解其内部原理，可以阅读<a target="_blank" rel="noopener" href="http://www.mozilla.org/js/language/E262-3.pdf">ECMA-262标准之11.9.3章节</a>文档。</p>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><h3 id="REPLACE-可以接受回调函数"><a href="#REPLACE-可以接受回调函数" class="headerlink" title="REPLACE()可以接受回调函数"></a>REPLACE()可以接受回调函数</h3><p>这绝对是JavaScript最为隐秘的特性之一，从1.3版本之后加入。绝大多数人都是这么用它的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(<span class="string">&#x27;10 13 21 48 52&#x27;</span>.<span class="title function_">replace</span>(<span class="regexp">/\d+/g</span>, <span class="string">&#x27;*&#x27;</span>)); <span class="comment">//replace all numbers with *</span></span><br></pre></td></tr></table></figure>
+
+<p>（原文中有一些疏忽，比如使用了 <code>d+</code> 而非 <code>\d+</code>，这里均做出了修正）</p>
+<p>简单的替换，字符串，星号。但如果我们想要更进一步的控制呢？比如我们只想替换30以下的数字？这个逻辑通过正则来实现会较为困难，毕竟它不是数学运算，我们可以这样：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(<span class="string">&#x27;10 13 21 48 52&#x27;</span>.<span class="title function_">replace</span>(<span class="regexp">/\d+/g</span>, <span class="keyword">function</span>(<span class="params">match</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">parseInt</span>(match) &lt; <span class="number">30</span> ? <span class="string">&#x27;*&#x27;</span> : match;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<p>这段代码的意思是，如果匹配到的字符串转换为整型数值后小于30，则替换为星号，否则原样返回。</p>
+<h3 id="不仅仅是比较和替换"><a href="#不仅仅是比较和替换" class="headerlink" title="不仅仅是比较和替换"></a>不仅仅是比较和替换</h3><p>通常情况下我们都只用到了正则表达式的比较和替换功能，但其实JavaScript提供的方法远远不止两个。</p>
+<p>比如说 <code>test()</code> 函数，它和比较十分类似，但它不反回比较值，只确认字符串是否匹配。这样代码可以更轻一些。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(<span class="regexp">/\w&#123;3,&#125;/</span>.<span class="title function_">test</span>(<span class="string">&#x27;Hello&#x27;</span>)); <span class="comment">//alerts &#x27;true&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上表达式判断了字符串是否有3个或以上的字符。</p>
+<p>还有就是 <code>RegExp</code> 对象，通过它我们可以构建动态的正则表达式。一般情况下正则表达式都是通过短格式声明的（封闭在斜杠中，就像上面所用到的）。这么做的话，我们不能在其中插入变量。当然，我们还有 <code>RegExp</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">findWord</span>(<span class="params">word, string</span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> instancesOfWord = string.<span class="title function_">match</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;\\b&#x27;</span>+word+<span class="string">&#x27;\\b&#x27;</span>, <span class="string">&#x27;ig&#x27;</span>));</span><br><span class="line">	<span class="title function_">alert</span>(instancesOfWord);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">findWord</span>(<span class="string">&#x27;car&#x27;</span>, <span class="string">&#x27;Carl went to buy a car but had forgotten his credit card.&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里我们基于 <code>word</code> 参数构建了一个动态的正则表达式。这个函数会返回car作为独立单词在字符串中出现的次数。本例只有一次。</p>
+<p>由于 <code>RegExp</code> 使用字符串来表示正则表达式，而非斜杠，因此我们可以在里面插入变量。但是，与此同时，需要注意的是，表达式中特殊符号前的反斜杠我们也要写两次（转义处理）。</p>
+<h2 id="函数与作用域"><a href="#函数与作用域" class="headerlink" title="函数与作用域"></a>函数与作用域</h2><h3 id="你可以伪造作用域"><a href="#你可以伪造作用域" class="headerlink" title="你可以伪造作用域"></a>你可以伪造作用域</h3><p>作用域决定了变量可以在哪些地方被访问。独立（即不在函数内部）的JavaScript可以在全局作用域（对浏览器来说是 <code>window</code> 对象）下访问，函数内部定义的变量则只能在内部访问，其对外部不可见。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> animal = <span class="string">&#x27;dog&#x27;</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getAnimal</span>(<span class="params">adjective</span>) &#123; <span class="title function_">alert</span>(adjective+<span class="string">&#x27; &#x27;</span>+<span class="variable language_">this</span>.<span class="property">animal</span>); &#125;</span><br><span class="line"><span class="title function_">getAnimal</span>(<span class="string">&#x27;lovely&#x27;</span>); <span class="comment">//alerts &#x27;lovely dog&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里，我们的变量和函数都是在全局作用域下定义的（比如 <code>window</code>）。因为 <code>this</code> 总是指向当前作用域，因此在本例中它指向了 <code>window.animal</code>，于是就找到了。一切看起来都没问题。但是，我们可以骗过函数本身，让它认为自己执行在另一个作用域下，并无视其原本的作用域。我们通过调用内置的 <code>call()</code> 函数来达到目的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> animal = <span class="string">&#x27;dog&#x27;</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getAnimal</span>(<span class="params">adjective</span>) &#123; <span class="title function_">alert</span>(adjective+<span class="string">&#x27; &#x27;</span>+<span class="variable language_">this</span>.<span class="property">animal</span>); &#125;;</span><br><span class="line"><span class="keyword">var</span> myObj = &#123;<span class="attr">animal</span>: <span class="string">&#x27;camel&#x27;</span>&#125;;</span><br><span class="line">getAnimal.<span class="title function_">call</span>(myObj, <span class="string">&#x27;lovely&#x27;</span>); <span class="comment">//alerts &#x27;lovely camel&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里，函数不在 <code>window</code> 而在 <code>myObj</code> 中运行 — 作 为 <code>call</code> 方法的第一个参 数。本质上说 <code>call</code> 方法将函数 <code>getAnimal</code> 看成 <code>myObj</code> 的一个方法（如果没看懂这是什么意思， 你可能需要去看一下 JavaScrip t的原型继承系统相关内容）。注意，我们传递给 <code>call</code> 的第一个参数后面的参数都会被传递给我们的函数 — 因此我们将 lovely 作为相关参数传递进来。尽管好的代码设计不需要采用这种伪造手段，这依然是非常有趣的知识。<code>apply</code> 函数与 <code>call</code> 函数作用相似，它的参数应该被指定为数组。所以，上面的例子如果用 <code>apply</code> 函数的话如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">getAnimal.<span class="title function_">apply</span>(myObj, [<span class="string">&#x27;lovely&#x27;</span>]); <span class="comment">//func args sent as array</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="函数可以自执行"><a href="#函数可以自执行" class="headerlink" title="函数可以自执行"></a>函数可以自执行</h3><p>显然：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="title function_">alert</span>(<span class="string">&#x27;hello&#x27;</span>); &#125;)(); <span class="comment">//alerts &#x27;hello&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个语法非常简单：我们定义了一个函数，然后立刻就调用了它，就像调用其它函数一样。也许你会觉得这有些奇怪，函数包含的代码一般都是在之后执行的，比如我们想在某个时刻调用它，既然它需要立即执行，那为什么要把代码放在函数体内呢？</p>
+<p>自执行函数的一大用处就是将<strong>变量的当前值</strong>绑定到将来要被执行的函数中去。就比如说回调，延迟或者持续运行：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> someVar = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="title function_">alert</span>(someVar); &#125;, <span class="number">1000</span>);</span><br><span class="line"><span class="keyword">var</span> someVar = <span class="string">&#x27;goodbye&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码有一个问题，它的输出永远都是goodbye而不是hello，这是因为timeout中的函数在真正执行之前永远不会去关心里面的变量发生了什么变化，到那时候，<code>someVar</code> 早就被goodbye覆盖了。</p>
+<p>（JavaScript新手经常会犯的一个错误就是在循环中定义事件，并且将index作为参数传入，到最后发现真正绑上了事件的只有最后的那个元素，这也是同理）</p>
+<p>解决办法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> someVar = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"><span class="built_in">setTimeout</span>((<span class="keyword">function</span>(<span class="params">someVar</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>)  &#123; <span class="title function_">alert</span>(someVar); &#125;</span><br><span class="line">&#125;)(someVar), <span class="number">1000</span>);</span><br><span class="line"><span class="keyword">var</span> someVar = <span class="string">&#x27;goodbye&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，被传入函数中的相当于是一个快照，而不是真正的变量本身。</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><h3 id="0-1-0-2-0-3"><a href="#0-1-0-2-0-3" class="headerlink" title="0.1 + 0.2 !&#x3D;&#x3D; 0.3"></a>0.1 + 0.2 !&#x3D;&#x3D; 0.3</h3><p>其实这是计算机科学中的一个普遍问题，我已经在很多编程语言中都发现了它的影子，它是由浮点数不能做到完全精确导致的。实际的计算结果是0.30000000000000004</p>
+<p>如何解决，归根到底取决于计算需求：</p>
+<ul>
+<li>转换成整型计算，而后再转回浮点</li>
+<li>允许某个范围内的误差</li>
+</ul>
+<p>因此，与其：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num1 = <span class="number">0.1</span>, num2 = <span class="number">0.2</span>, shouldEqual = <span class="number">0.3</span>;</span><br><span class="line"><span class="title function_">alert</span>(num1 + num2 == shouldEqual); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<p>不如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">alert</span>(num1 + num2 &gt; shouldEqual - <span class="number">0.001</span> &amp;&amp; num1 + num2 &lt; shouldEqual + <span class="number">0.001</span>); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p>这就是一个简单的允许误差的办法。</p>
+<h3 id="UNDEFINED可以被DEFINED"><a href="#UNDEFINED可以被DEFINED" class="headerlink" title="UNDEFINED可以被DEFINED"></a>UNDEFINED可以被DEFINED</h3><p>这个看起来有点蠢了。undefined在JavaScript中其实不是一个关键字，尽管它一般是用来表示一个变量是否未被定义。就像这样：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> someVar;</span><br><span class="line"><span class="title function_">alert</span>(someVar == <span class="literal">undefined</span>); <span class="comment">//evaluates true</span></span><br></pre></td></tr></table></figure>
+
+<p>然而也可以这样：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="literal">undefined</span> = <span class="string">&quot;I&#x27;m not undefined!&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> someVar;</span><br><span class="line"><span class="title function_">alert</span>(someVar == <span class="literal">undefined</span>); <span class="comment">//evaluates false!</span></span><br></pre></td></tr></table></figure>
+
+<p>看起来很有趣的样子……</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/some-oddities-about-javascript/" title="JavaScript 的一些古怪之处">https://wxsm.space/2016/some-oddities-about-javascript/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/css-triangle/" rel="prev" title="CSS 绘制三角形">
+                  <i class="fa fa-angle-left"></i> CSS 绘制三角形
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/idea-scrolling-issue/" rel="next" title="IDEA 滚动条问题">
+                  IDEA 滚动条问题 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/some-oddities-about-javascript/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

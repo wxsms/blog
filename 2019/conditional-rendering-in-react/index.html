@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="如何进行条件渲染是一个 MVx 框架最基础的问题之一，但是它在 React 中总是会给人提出各种各样的问题。要么「不够优雅」，要么「不够可靠」，要么「不够好用」，现有的各种各样的方法之中，总是逃不过这三种问题的其中之一。至于 React-Native，虽然它与 React 「原则上一致」，但它存在的问题实际上就是要比 React 更多一些。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Conditional Rendering in React">
+<meta property="og:url" content="https://wxsm.space/2019/conditional-rendering-in-react/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="如何进行条件渲染是一个 MVx 框架最基础的问题之一，但是它在 React 中总是会给人提出各种各样的问题。要么「不够优雅」，要么「不够可靠」，要么「不够好用」，现有的各种各样的方法之中，总是逃不过这三种问题的其中之一。至于 React-Native，虽然它与 React 「原则上一致」，但它存在的问题实际上就是要比 React 更多一些。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-14T18:20:42.155Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.150Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="react-native">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2019/conditional-rendering-in-react/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2019/conditional-rendering-in-react/","path":"2019/conditional-rendering-in-react/","title":"Conditional Rendering in React"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Conditional Rendering in React | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#if-%E8%AF%AD%E5%8F%A5%E4%B8%8E%E4%B8%89%E5%85%83%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">if 语句与三元表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">使用变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">行内表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">封装的方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2019/conditional-rendering-in-react/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Conditional Rendering in React | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Conditional Rendering in React
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-15 02:20:42" itemprop="dateCreated datePublished" datetime="2019-11-15T02:20:42+08:00">2019-11-15</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2019/conditional-rendering-in-react/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2019/conditional-rendering-in-react/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>如何进行条件渲染是一个 MVx 框架最基础的问题之一，但是它在 React 中总是会给人提出各种各样的问题。要么「<strong>不够优雅</strong>」，要么「<strong>不够可靠</strong>」，要么「<strong>不够好用</strong>」，现有的各种各样的方法之中，总是逃不过这三种问题的其中之一。至于 React-Native，虽然它与 React 「原则上一致」，但它存在的问题实际上就是要比 React 更多一些。</p>
+<span id="more"></span>
+
+<h2 id="if-语句与三元表达式"><a href="#if-语句与三元表达式" class="headerlink" title="if 语句与三元表达式"></a>if 语句与三元表达式</h2><p>在 JSX 世界中，用 if 语句以及三元表达式去完成条件渲染是最直观的方式。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Greeting</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> isLoggedIn = props.<span class="property">isLoggedIn</span>;</span><br><span class="line">  <span class="comment">// the &#x27;if&#x27; way</span></span><br><span class="line">  <span class="keyword">if</span> (isLoggedIn) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">UserGreeting</span> /&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">GuestGreeting</span> /&gt;</span></span>;</span><br><span class="line">  <span class="comment">// or the &#x27;conditional operator&#x27; way</span></span><br><span class="line">  <span class="comment">// return isLoggedIn ? &lt;UserGreeting /&gt; : &lt;GuestGreeting /&gt;;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式确实足够优雅，也足够可靠：毕竟它完美地沿用了语言本身的逻辑和语法，没有创造其它累赘的东西。但是它真的好用吗？我相信许多重度 React 使用者都会对此表示无奈：现实工程中诸如此类需要做条件渲染的地方多如牛毛，如果每一处我们都得给它写 if-else（三元表达式虽然相对来说更好用一些，但是它的应用场景毕竟更有限）并且将条件渲染体抽离主体作为子组件来做，那我真的好绝望，这感觉就好像是在现代社会躬行刀耕火种一样。况且不是所有的项目都需要「完美地优雅」，更多时候我们这种开发者只想尽快把工作完成，仅此而已。</p>
+<p>实际上这种方案已经足以应付 100% 场景的需求了，并且你可能已经意识到，本质上来说<strong>这就是唯一的方案</strong>。但其存在的问题实在过于让人沮丧，因此才有了下面的一些「拓展」方案。</p>
+<h2 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h2><p>React 官方文档提出的第二种方式是使用变量，通过将元素暂存在变量中，可以让开发者控制组件中的一部分而不影响其它内容。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LoginControl</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> isLoggedIn = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">isLoggedIn</span>;</span><br><span class="line">    <span class="keyword">let</span> button;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isLoggedIn) &#123;</span><br><span class="line">      button = <span class="language-xml"><span class="tag">&lt;<span class="name">LogoutButton</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleLogoutClick&#125;</span> /&gt;</span></span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      button = <span class="language-xml"><span class="tag">&lt;<span class="name">LoginButton</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleLoginClick&#125;</span> /&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Greeting</span> <span class="attr">isLoggedIn</span>=<span class="string">&#123;isLoggedIn&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;button&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样做的好处是能够更灵活地控制组件内部的渲染，而不必去创建更多的子组件。但是其问题非常明显：创建了一个「多余」的变量，非常地不「优雅」。所谓「如无必要，勿增实体」，放在代码世界同样适用。它所做的事情也仅仅是将原本在 JSX 内部的条件判断挪到了外面，仅此而已。</p>
+<p>想象一下这种场景：一个导航栏组件，其中的每个菜单、每个按钮都要根据某种条件去决定是否渲染，一个多余的变量就会变成几十个，最终导致代码中充斥着这样重复的、没有实际意义的垃圾，这是一个有追求的码农绝对无法忍受的。</p>
+<p>这种方式有一个变体，就是通过创建一个类的 getter 来代替创建一个变量：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LoginControl</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  get _button () &#123;</span><br><span class="line">    <span class="keyword">const</span> isLoggedIn = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">isLoggedIn</span>;</span><br><span class="line">    <span class="keyword">if</span> (isLoggedIn) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">LogoutButton</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleLogoutClick&#125;</span> /&gt;</span></span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">LoginButton</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleLoginClick&#125;</span> /&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Greeting</span> <span class="attr">isLoggedIn</span>=<span class="string">&#123;isLoggedIn&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;this._button&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个小变通，好处是可以让 render 函数在条件渲染的数量上来以后不那么臃肿，易于维护。它与使用变量的方式并没有本质区别，同样是创建了一个无必要的 getter，但是确实是看起来更「优雅」了一些。但它只能在类组件中使用，无法在函数式组件中使用。</p>
+<h2 id="行内表达式"><a href="#行内表达式" class="headerlink" title="行内表达式"></a>行内表达式</h2><p>行内三元表达式可以用来解决一些小的 case，但由于其本身存在着巨大的限制，不可能被广泛使用。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> isLoggedIn = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">isLoggedIn</span>;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      The user is <span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;isLoggedIn ? &#x27;currently&#x27; : &#x27;not&#x27;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span> logged in.</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它的自身限制，一是只能做是非判断，如果要在是非的结果中继续判断就要再套一层三元表达式，那将会相当臃肿；二是它本身的语法就只适用于「小」的东西，像这种案例：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> isLoggedIn = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">isLoggedIn</span>;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;isLoggedIn ? (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">LogoutButton</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleLogoutClick&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      ) : (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">LoginButton</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleLoginClick&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      )&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我是绝对写不出来的。实在是太不优雅、太难以阅读了。想象一下充斥着 <code>&amp;&amp;</code> &#x2F; <code>||</code> &#x2F; <code>?</code> &#x2F; <code>:</code> 的 JSX 代码。:smile:</p>
+<p>至于行内的 if-else，虽然不能直接写 if-else，但有一个利用了语言本身特性的方案，即利用逻辑操作符：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Mailbox</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> unreadMessages = props.<span class="property">unreadMessages</span>;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;unreadMessages.length &gt; 0 &amp;&amp;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          You have &#123;unreadMessages.length&#125; unread messages.</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式适合用来做单方面的条件渲染，即条件成立则渲染，否则不渲染，或者反之。使用场景依然有限，同样可读性较差，只适合用来渲染较小的代码块。</p>
+<p>而且，很多人也许不知道，这种写法在 React-Native 中是一个陷阱。由于 JavaScript 本身的特性允许（或者说鼓励）<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Truthy">truthy</a> 和 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy">falsy</a> 形式的条件判断，很多情况下我们不会去刻意将它显式转换为一个 Boolean 值。当然在大多数情况下这都没有问题，除非它是一个空字符串：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> isLoggedIn = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">isLoggedIn</span>;</span><br><span class="line">  <span class="comment">// when it is &#x27;&#x27;</span></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">View</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;isLoggedIn &amp;&amp; <span class="tag">&lt;<span class="name">LogoutButton</span>/&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种代码在运行的时候会抛出一个 Error，导致应用崩溃：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error: Text strings must be rendered within a &lt;Text&gt; component.</span><br></pre></td></tr></table></figure>
+
+<p>比如说，当你用某个 API 返回的数据中的某个值去进行条件渲染的时候，正常来说没有问题，但某一天服务突然出错了，这个字段返回了一个空字符串，那么应用就会突然面临大规模的崩溃。数据来源不可靠且没有进行显式 Boolean 转换的条件判断就像一个地雷，随时随地都可能会爆炸。</p>
+<h2 id="封装的方法"><a href="#封装的方法" class="headerlink" title="封装的方法"></a>封装的方法</h2><p>以上的几种形式其实都与刀耕火种无异，因此我们还有更高级的方案，比如封装一个方法：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">renderIf</span> (flag) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">_renderIf</span> (componentA, componentB = <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> flag ? componentA : componentB;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样一来代码就可以简洁多了：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LoginControl</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> isLoggedIn = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">isLoggedIn</span>;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Greeting</span> <span class="attr">isLoggedIn</span>=<span class="string">&#123;isLoggedIn&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;renderIf(isLoggedIn)(<span class="tag">&lt;<span class="name">LogoutButton</span>/&gt;</span>, <span class="tag">&lt;<span class="name">LoginButton</span>/&gt;</span>)&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似的方案还有封装组件：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">RenderIf</span> (&#123;flag, children&#125;&#125;) &#123;</span><br><span class="line">  <span class="keyword">return</span> flag ? children : <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LoginControl</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> isLoggedIn = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">isLoggedIn</span>;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Greeting</span> <span class="attr">isLoggedIn</span>=<span class="string">&#123;isLoggedIn&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">RenderIf</span> <span class="attr">flag</span>=<span class="string">&#123;isLoggedIn&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">LogoutButton</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">RenderIf</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">RenderIf</span> <span class="attr">flag</span>=<span class="string">&#123;!isLoggedIn&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">LoginButton</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">RenderIf</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方案避免了在渲染函数体内出现大量的逻辑控制语句，取而代之的是可读性更强，也更易于使用的方法或组件，可以认为是在 React 世界中比较好的条件渲染解决方案了，「优雅」与「好用」都得到了较好的兼顾。但是，问题就出在，它不够「可靠」。</p>
+<p>比如说以下的代码：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NavBar</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">user</span>;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;renderIf(user)(<span class="tag">&lt;<span class="name">Welcome</span> <span class="attr">name</span>=<span class="string">&#123;user.name&#125;/</span>&gt;</span>)&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟以上提及过的所有方案都不一样的是，当 <code>user</code> 为 <code>null</code> 或 <code>undefined</code>，或者其它任何在执行 <code>user.name</code> 会报错的 value 时，这一段代码就会报错。如果是 React-Native 应用，很不幸它就崩溃了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TypeError: Cannot read property &#x27;name&#x27; of null</span><br></pre></td></tr></table></figure>
+
+<p>导致这个区别的原因是，JavaScript 函数在执行之前会先对它的参数进行解析，而非等到真正运行时才解析。所以当 <code>user</code> 为以上 value 之一的时候，虽然按照函数的流程来说应该会对第一个参数直接忽略，但是实际上它还是被解析了。而 if-else 等内置条件判断语句则不同，假值条件之后的代码块会被完全忽略。</p>
+<p>说到这里我已经开始怀念 <code>ng-if</code> 和 <code>v-if</code> 了：我只是一个普普通通的开发者，为什么我需要在如此基础的事情上考虑这么多？大家都是前端 MVx 框架，为什么 Vue.js 和 Angular.js 从来没有提出过这种问题？</p>
+<p>大概这就是 React，这就是 Facebook 吧！</p>
+<p>其实在这个方案出现问题之后，我已经找不出别的更好的方案了，除非某一天 EcmaScript 有了新的提案，新的语法，否则都将无解。因为无论怎么做，最终都无法绕过传参必然会被事先解释这一障碍。也就是说，在目前的大环境下，我无法得到一个在各种场景下都同时兼具「优雅」、「可靠」、「好用」的条件渲染解决方案，只能通过以上各种方案在不同场景下的混用来达到一个（有追求的码农的内心的）平衡。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2019/conditional-rendering-in-react/" title="Conditional Rendering in React">https://wxsm.space/2019/conditional-rendering-in-react/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/react-native/" rel="tag"># react-native</a>
+              <a href="/tags/react/" rel="tag"># react</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/centos7-firewall-commands/" rel="prev" title="CentOS7 Firewalld">
+                  <i class="fa fa-angle-left"></i> CentOS7 Firewalld
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/use-lodash-in-wechat-mini-programs/" rel="next" title="在微信小程序中使用 lodash">
+                  在微信小程序中使用 lodash <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2019/conditional-rendering-in-react/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

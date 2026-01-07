@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="本文是本站的建站历程记录。每个人都可以使用极少的代价（甚至免费）拥有一个域名独立且完全自主的个人网站或博客，在于怎么选择而已。此类网站的搭建很多情况下并不要求其操作者是一个程序狗，所以个人感觉可玩性还是挺强的。整个过程一共需要准备三种事物：域名，托管与程序（特殊情况，如果选择国内主机则需要准备第四种，即备案）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WordPress 博客搭建">
+<meta property="og:url" content="https://wxsm.space/2016/how-to-build-a-wordpress-blog/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="本文是本站的建站历程记录。每个人都可以使用极少的代价（甚至免费）拥有一个域名独立且完全自主的个人网站或博客，在于怎么选择而已。此类网站的搭建很多情况下并不要求其操作者是一个程序狗，所以个人感觉可玩性还是挺强的。整个过程一共需要准备三种事物：域名，托管与程序（特殊情况，如果选择国内主机则需要准备第四种，即备案）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-02-22T01:12:03.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.156Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="wordpress">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/how-to-build-a-wordpress-blog/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/how-to-build-a-wordpress-blog/","path":"2016/how-to-build-a-wordpress-blog/","title":"WordPress 博客搭建"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>WordPress 博客搭建 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D"><span class="nav-number">1.</span> <span class="nav-text">域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%98%E7%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">托管</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BD%E5%86%85-%E9%A6%99%E6%B8%AF-%E5%9B%BD%E5%A4%96"><span class="nav-number">2.1.</span> <span class="nav-text">国内&#x2F;香港&#x2F;国外</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%9C%BA-VPS-%E5%85%B6%E5%AE%83"><span class="nav-number">2.2.</span> <span class="nav-text">虚机&#x2F;VPS&#x2F;其它</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text">备案</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/how-to-build-a-wordpress-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="WordPress 博客搭建 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WordPress 博客搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-22 09:12:03" itemprop="dateCreated datePublished" datetime="2016-02-22T09:12:03+08:00">2016-02-22</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/how-to-build-a-wordpress-blog/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/how-to-build-a-wordpress-blog/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文是本站的建站历程记录。每个人都可以使用极少的代价（甚至免费）拥有一个域名独立且完全自主的个人网站或博客，在于怎么选择而已。此类网站的搭建很多情况下并不要求其操作者是一个程序狗，所以个人感觉可玩性还是挺强的。整个过程一共需要准备三种事物：<strong>域名</strong>，<strong>托管</strong>与<strong>程序</strong>（特殊情况，如果选择国内主机则需要准备第四种，即<strong>备案</strong>）。</p>
+<span id="more"></span>
+
+<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p>搭建一个网站首先必不可少的就是自己的域名，比如本站的域名是<a href="http://wxsm.space/">wxsm.space</a>，域名可以在任意服务商处购买，不需要与托管的服务商一致。根据域名后缀的不同，价格在几十元至百元每年之间不等，大多数服务商都会提供首年优惠，少部分首年的价格甚至可以达到个位数（比如万网的 <code>.top</code> 域名购买首年只需4软妹币）。</p>
+<p>域名的选择没什么技术含量，主要就是自己喜欢。本站的域名是在<a target="_blank" rel="noopener" href="http://wanwang.aliyun.com/">万网</a>购买。域名购买以后可以解析到托管的IP地址。</p>
+<p>需要注意的地方：</p>
+<ol>
+<li>如果打算购买国内（特指大陆）主机，就一定要确定自己购买的域名后缀是可以备案的类型。具体可以在工信部网站（公共查询 ⇒ 域名类型）查询，能查到的则是可备案后缀。切记切记。</li>
+<li>为自己的安全着想，最好不要使用 <code>.cn</code> 类型的域名。</li>
+</ol>
+<h2 id="托管"><a href="#托管" class="headerlink" title="托管"></a>托管</h2><p>托管有很多种选择，首先从大的方向说，尽量选择靠谱的供应商。淘宝小商家之类的虽然便宜，但是很多时候我们需要的更多是稳定，毕竟是把代码和数据都放在别人家，还是很要命的一件事。当然如果免费的话又另当别论。至于配置就纯看个人需求了。如果是玩玩个人小网站，一般选最低的那些都没问题。</p>
+<h3 id="国内-香港-国外"><a href="#国内-香港-国外" class="headerlink" title="国内&#x2F;香港&#x2F;国外"></a>国内&#x2F;香港&#x2F;国外</h3><p>国内主机理论上来说从国内访问速度最快，其最大的特点是需要备案，其二是会被GFW限制，主机上的程序将会无法访问到Google等公司提供的服务。</p>
+<p>香港主机速度可媲美国内主机，是主攻国内但是又不想备案的不二之选。</p>
+<p>国外主机在国内的访问速度可能会非常之慢，尤其是欧美地区，稍快一些的可以选择新加坡。其特点是很多都相对国内以及香港主机较为便宜，以及有部分免费（比如AppHarbor，免费空间，免费SQL Server，无限流量，同步Github仓库，自动部署，简直不要太良心，可惜只能跑.Net）。</p>
+<p>本站目前使用的是万网提供的国内主机。</p>
+<h3 id="虚机-VPS-其它"><a href="#虚机-VPS-其它" class="headerlink" title="虚机&#x2F;VPS&#x2F;其它"></a>虚机&#x2F;VPS&#x2F;其它</h3><p>虚机即虚拟主机。该类型主机一般都是共享系统资源，如CPU，内存，带宽，IP等。虚机好像只有ASP.Net和PHP两种类型（反正我是没见过其它的），并且所有功能都是由外部配置好的，用户只能使用服务商所提供的功能，超出范围则无能为力，因此它的限制会比较大。操作方式就是通过FTP访问其储存空间，然后将写好的程序上传，马上就能在浏览器看到结果，不需要考虑部署、环境等。如果使用CMS（如Wordpress）的话，这种主机已经足够用了。</p>
+<p>VPS相当于一台属于自己的计算机，用户可以通过各种方式登录并且对它操作，安装环境，部署网站等。Java，Node.js等类型的程序好像只能跑在VPS上。因为没有用过所以不太了解。其价格要普遍比虚机贵一些。</p>
+<p>还有一些是类似Github Pages的静态服务器，它们只能够作为静态网页的托管。这些可能会很便宜，但是需要一定的技巧才能玩出花样来。</p>
+<p>本站目前使用的是万网提供的虚机，免费版。每个人都可以申请，使用期限为两年。运行Wordpress完全没有问题。传送门：<a target="_blank" rel="noopener" href="http://wanwang.aliyun.com/hosting/free/">http://wanwang.aliyun.com/hosting/free/</a></p>
+<h2 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h2><p>有了域名和托管，我们需要的最后一件事物就是程序。程序才是真正运行着的东西。</p>
+<p>程序可以自己写，也可以用开源软件。自己写的好处就是完全控制，以及比较有意思，但如果更多的是想要做内容的话还是用开源软件比较好，这样就可以更好地关注于网站的内容本身而不是实现。</p>
+<p>本站使用的是开源Wordpress CMS，我们要做的事情很简单，在中文官网<a target="_blank" rel="noopener" href="https://cn.wordpress.org/">https://cn.wordpress.org/</a>首页把Wordpress程序下载回来，解压，然后将文件夹上传到服务器根目录，通过访问其任意页面来配置站点的基本信息，如名字，描述，数据库连接等，就可以非常方便地搭建好整个网站。数据库表等其它事物都会由程序自动生成。关于这个软件的安装和使用方法网络上有非常多的详细教程，遇到问题多用搜索就好啦。</p>
+<p>WordPress的主题和插件简直数不过来，我觉得满足98%个人网站用户的需求完全是没问题的。加之它有强大的缓存插件，可以自动将所有的动态页面都缓存成HTML然后301之，所以访问性能也不在话下。当然如果想要实现某些特别的自定义功能的话，还是要懂一点点编程技巧才行。</p>
+<h2 id="备案"><a href="#备案" class="headerlink" title="备案"></a>备案</h2><p>如果使用的是国内的托管，则需要进行最麻烦的一步：备案。</p>
+<p>备案一般是由代理商完成，不需要我们自己直接与工信部沟通。</p>
+<p>整个流程有两个地方稍微麻烦，一是初审填表，需要下载、打印、填表、扫描、上传这么多的步骤。其次是“当面核验”，其实就是拍个照上传，但是需要它专用的背景幕布，可以到指定的拍照地点免费拍摄，或者代理商以免费或者到付的形式快递幕布给申请人，然后自行拍照上传。</p>
+<p>管局审核需要的时间从从两个小时到三十天不等，主要看运气。反正我是这个时间段内的都遇到过（广东）。</p>
+<p>备案通过以后，需要把备案号以链接的形式加到网站的底部，然后就可以该干嘛干嘛了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/how-to-build-a-wordpress-blog/" title="WordPress 博客搭建">https://wxsm.space/2016/how-to-build-a-wordpress-blog/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/wordpress/" rel="tag"># wordpress</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/idea-scrolling-issue/" rel="prev" title="IDEA 滚动条问题">
+                  <i class="fa fa-angle-left"></i> IDEA 滚动条问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/wordpress-unable-to-send-email-under-aliyun-virtual-host/" rel="next" title="WordPress 在阿里云虚拟主机下无法发送邮件">
+                  WordPress 在阿里云虚拟主机下无法发送邮件 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/how-to-build-a-wordpress-blog/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

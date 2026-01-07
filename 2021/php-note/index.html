@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="Php 个人速查笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Php Note">
+<meta property="og:url" content="https://wxsm.space/2021/php-note/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="Php 个人速查笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-13T14:05:10.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.170Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2021/php-note/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2021/php-note/","path":"2021/php-note/","title":"Php Note"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Php Note | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6"><span class="nav-number">1.1.</span> <span class="nav-text">字符串长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E9%95%BF%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">数组长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F"><span class="nav-number">1.3.</span> <span class="nav-text">日期</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4"><span class="nav-number">1.3.1.</span> <span class="nav-text">获取当前时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%8C%87%E5%AE%9A%E6%97%B6%E9%97%B4"><span class="nav-number">1.3.2.</span> <span class="nav-text">获取指定时间</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D"><span class="nav-number">1.4.</span> <span class="nav-text">正则匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%97%B6%E9%97%B4%E5%B7%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">获取时间差</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.5.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EOT"><span class="nav-number">1.6.</span> <span class="nav-text">EOT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="nav-number">1.7.</span> <span class="nav-text">获取请求方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4"><span class="nav-number">1.8.</span> <span class="nav-text">输入过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E6%9D%A1"><span class="nav-number">1.8.1.</span> <span class="nav-text">单条</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E6%80%A7"><span class="nav-number">1.8.2.</span> <span class="nav-text">一次性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E8%AF%B7%E6%B1%82"><span class="nav-number">1.9.</span> <span class="nav-text">发请求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON"><span class="nav-number">2.</span> <span class="nav-text">JSON</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQLi"><span class="nav-number">3.</span> <span class="nav-text">MySQLi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.1.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">3.3.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">3.4.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2-%E5%8D%95%E6%9D%A1"><span class="nav-number">3.5.</span> <span class="nav-text">查询 (单条)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2-%E5%A4%9A%E6%9D%A1"><span class="nav-number">3.6.</span> <span class="nav-text">查询 (多条)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">3.7.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PDO"><span class="nav-number">4.</span> <span class="nav-text">PDO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5-1"><span class="nav-number">4.1.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5-1"><span class="nav-number">4.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-1"><span class="nav-number">4.3.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.4.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4-1"><span class="nav-number">4.5.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%88%E6%9D%83"><span class="nav-number">5.</span> <span class="nav-text">授权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95"><span class="nav-number">5.1.</span> <span class="nav-text">登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E9%94%80"><span class="nav-number">5.2.</span> <span class="nav-text">注销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%8E%88%E6%9D%83"><span class="nav-number">5.3.</span> <span class="nav-text">检查授权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="nav-number">5.4.</span> <span class="nav-text">密码加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Auth"><span class="nav-number">5.5.</span> <span class="nav-text">Basic Auth</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memcached"><span class="nav-number">6.</span> <span class="nav-text">Memcached</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF"><span class="nav-number">7.</span> <span class="nav-text">业务场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%AF%BC%E8%88%AA%E8%AE%BE%E7%BD%AE%E6%BF%80%E6%B4%BB%E7%8A%B6%E6%80%81"><span class="nav-number">7.1.</span> <span class="nav-text">为导航设置激活状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-number">7.2.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E8%87%B3%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">7.2.1.</span> <span class="nav-text">保存至文件系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E8%87%B3%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">7.2.2.</span> <span class="nav-text">保存至数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQLi-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">7.3.</span> <span class="nav-text">MySQLi 初始化数据库</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2021/php-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Php Note | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Php Note
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-13 22:05:10" itemprop="dateCreated datePublished" datetime="2021-10-13T22:05:10+08:00">2021-10-13</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/php-note/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2021/php-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Php 个人速查笔记。</p>
+<span id="more"></span>
+
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="字符串长度"><a href="#字符串长度" class="headerlink" title="字符串长度"></a>字符串长度</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">strlen</span>(<span class="variable">$string</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组长度"><a href="#数组长度" class="headerlink" title="数组长度"></a>数组长度</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">count</span>(<span class="variable">$arr</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h3><h4 id="获取当前时间"><a href="#获取当前时间" class="headerlink" title="获取当前时间"></a>获取当前时间</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$d1</span> = <span class="keyword">new</span> <span class="title class_">DateTime</span>();</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取指定时间"><a href="#获取指定时间" class="headerlink" title="获取指定时间"></a>获取指定时间</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$d2</span> = <span class="keyword">new</span> <span class="title class_">DateTime</span>(<span class="string">&#x27;2021-01-01&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/^[A-Za-z]+$/&quot;</span>, <span class="variable">$Lastname</span>)</span><br><span class="line"><span class="comment">// boolean</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="获取时间差"><a href="#获取时间差" class="headerlink" title="获取时间差"></a>获取时间差</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$diff</span> = <span class="variable">$d2</span>-&gt;<span class="title function_ invoke__">diff</span>(<span class="variable">$d1</span>);</span><br><span class="line"><span class="comment">// 年份差</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$diff</span>-&gt;y;</span><br></pre></td></tr></table></figure>
+
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">foreach</span> (<span class="variable">$posts</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$value</span>) &#123;</span><br><span class="line">    <span class="comment">// todo</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="EOT"><a href="#EOT" class="headerlink" title="EOT"></a>EOT</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">foreach</span> (<span class="variable">$csv</span> <span class="keyword">as</span> <span class="variable">$i</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">    <span class="variable">$dateToDisplay</span> = <span class="title function_ invoke__">date</span>(<span class="string">&#x27;F d, Y&#x27;</span>, <span class="variable">$value</span>[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&lt;&lt;&lt;EOT</span></span><br><span class="line"><span class="string">  &lt;div class=&quot;post-preview&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;a href=&quot;post.php?author=<span class="subst">$value</span>[2]&amp;date=<span class="subst">$value</span>[0]&amp;image=<span class="subst">$value</span>[1]&amp;content=<span class="subst">$value</span>[3]&amp;comment=<span class="subst">$value</span>[4]&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;h2 class=&quot;post-title&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;img class=&quot;Post1&quot; src=&quot;./files/<span class="subst">$value</span>[1]&quot; alt=&quot;farm&quot; height=&quot;380px&quot; width=&quot;720px&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;/h2&gt;</span></span><br><span class="line"><span class="string">      &lt;h3 class=&quot;post-subtitle&quot;&gt;<span class="subst">$value</span>[5]&lt;/h3&gt;</span></span><br><span class="line"><span class="string">    &lt;/a&gt;</span></span><br><span class="line"><span class="string">    &lt;p class=&quot;post-meta&quot;&gt;Posted by</span></span><br><span class="line"><span class="string">      &lt;a href=&quot;about.php&quot;&gt;<span class="subst">$value</span>[2]&lt;/a&gt;</span></span><br><span class="line"><span class="string">      on <span class="subst">$dateToDisplay</span></span></span><br><span class="line"><span class="string">    &lt;/p&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;hr&gt;</span></span><br><span class="line"><span class="string">EOT</span>;</span><br><span class="line">&#125; <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="获取请求方法"><a href="#获取请求方法" class="headerlink" title="获取请求方法"></a>获取请求方法</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$request</span> = <span class="variable">$_SERVER</span>[<span class="string">&#x27;REQUEST_METHOD&#x27;</span>];</span><br><span class="line"><span class="comment">// POST or GET or anything else</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="输入过滤"><a href="#输入过滤" class="headerlink" title="输入过滤"></a>输入过滤</h3><h4 id="单条"><a href="#单条" class="headerlink" title="单条"></a>单条</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$id</span>  = <span class="title function_ invoke__">filter_input</span>(INPUT_POST, <span class="string">&#x27;id&#x27;</span>, FILTER_SANITIZE_FULL_SPECIAL_CHARS);</span><br></pre></td></tr></table></figure>
+
+<h4 id="一次性"><a href="#一次性" class="headerlink" title="一次性"></a>一次性</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$_POST</span> = <span class="title function_ invoke__">filter_input_array</span>(INPUT_POST, FILTER_SANITIZE_STRING);</span><br></pre></td></tr></table></figure>
+
+<h3 id="发请求"><a href="#发请求" class="headerlink" title="发请求"></a>发请求</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$json_url</span> = <span class="string">&#x27;https://data.winnipeg.ca/resource/tx3d-pfxq.json&#x27;</span>;</span><br><span class="line"><span class="variable">$json</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$json_url</span>);</span><br><span class="line"><span class="variable">$list</span> = <span class="title function_ invoke__">json_decode</span>(<span class="variable">$json</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><h3 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$json</span> = <span class="title function_ invoke__">json_decode</span>(<span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;./member.json&quot;</span>), <span class="literal">true</span>);</span><br><span class="line"><span class="variable">$points</span> = <span class="variable">$json</span>[<span class="string">&#x27;points&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$json</span> = <span class="title function_ invoke__">json_encode</span>(<span class="variable">$array</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$json</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MySQLi"><a href="#MySQLi" class="headerlink" title="MySQLi"></a>MySQLi</h2><h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$host</span> = <span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"><span class="variable">$user</span> = <span class="string">&#x27;root&#x27;</span>;</span><br><span class="line"><span class="variable">$password</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="variable">$db</span> = <span class="string">&#x27;database&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// connect to mysql database</span></span><br><span class="line"><span class="variable">$conn</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="variable">$host</span>, <span class="variable">$user</span>, <span class="variable">$password</span>, <span class="variable">$db</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">    <span class="comment">// connection error</span></span><br><span class="line">    <span class="keyword">die</span>(<span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;CREATE TABLE IF NOT EXISTS tablename (</span></span><br><span class="line"><span class="string">ID INT AUTO_INCREMENT PRIMARY KEY,</span></span><br><span class="line"><span class="string">Name varchar(100) NOT NULL,</span></span><br><span class="line"><span class="string">RefID int,</span></span><br><span class="line"><span class="string">FOREIGN KEY (RefID) REFERENCES Ref (ID)</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>) !== <span class="literal">TRUE</span>) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;Error creating table: &quot;</span> . <span class="variable">$conn</span>-&gt;error);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$stmt</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;insert into table (email, date) VALUE (?,?)&quot;</span>);</span><br><span class="line"><span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;ss&quot;</span>, <span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>], <span class="variable">$_POST</span>[<span class="string">&#x27;date&#x27;</span>]);</span><br><span class="line"><span class="keyword">if</span> (!<span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>()) &#123;</span><br><span class="line">  <span class="keyword">die</span>(<span class="variable">$conn</span>-&gt;error);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;inserted, id is &quot;</span> . <span class="variable">$stmt</span>-&gt;insert_id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;update User set profile = ?, photo = ? where id = ?&quot;</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&#x27;ssi&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;profile&#x27;</span>], <span class="variable">$photo</span>, <span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>][<span class="number">0</span>]);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询-单条"><a href="#查询-单条" class="headerlink" title="查询 (单条)"></a>查询 (单条)</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT * FROM user where email=? and password=?&quot;</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&#x27;ss&#x27;</span>, <span class="variable">$email</span>, <span class="variable">$password</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$query</span>-&gt;<span class="title function_ invoke__">get_result</span>();</span><br><span class="line"><span class="variable">$user</span> = <span class="variable">$result</span>-&gt;<span class="title function_ invoke__">fetch_array</span>(MYSQLI_NUM);</span><br><span class="line"><span class="comment">// user 是数组，</span></span><br><span class="line"><span class="comment">// 字段从 0 开始排列，没有 named key</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查询-多条"><a href="#查询-多条" class="headerlink" title="查询 (多条)"></a>查询 (多条)</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT * from meal where email=?&quot;</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&#x27;s&#x27;</span>, <span class="variable">$_SESSION</span>[<span class="string">&quot;email&quot;</span>]);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$query</span>-&gt;<span class="title function_ invoke__">get_result</span>()-&gt;<span class="title function_ invoke__">fetch_all</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// result 是数组，每个元素也是数组。</span></span><br><span class="line"><span class="comment">// 字段从 0 开始排列，没有 named key</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;delete from Likes where photoId = ? and userId = ?&quot;</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&#x27;ii&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>], <span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>][<span class="number">0</span>]);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br></pre></td></tr></table></figure>
+
+<h2 id="PDO"><a href="#PDO" class="headerlink" title="PDO"></a>PDO</h2><h3 id="连接-1"><a href="#连接-1" class="headerlink" title="连接"></a>连接</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DB_DSN&#x27;</span>,<span class="string">&#x27;mysql:host=localhost;dbname=blog&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DB_USER&#x27;</span>,<span class="string">&#x27;root&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;DB_PASS&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="variable">$db</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="variable">$db</span> = <span class="keyword">new</span> <span class="title function_ invoke__">PDO</span>(DB_DSN, DB_USER, DB_PASS);</span><br><span class="line">&#125; <span class="keyword">catch</span> (PDOException <span class="variable">$e</span>) &#123;</span><br><span class="line">  <span class="keyword">print</span> <span class="string">&quot;Error: &quot;</span> . <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>();</span><br><span class="line">  <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入-1"><a href="#插入-1" class="headerlink" title="插入"></a>插入</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="string">&quot;INSERT INTO post (title, content) values (:title, :content)&quot;</span>;</span><br><span class="line"><span class="variable">$statement</span> = <span class="variable">$db</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="variable">$query</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">bindValue</span>(<span class="string">&#x27;:title&#x27;</span>, <span class="variable">$title</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">bindValue</span>(<span class="string">&#x27;:content&#x27;</span>, <span class="variable">$content</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"><span class="variable">$insert_id</span> = <span class="variable">$db</span>-&gt;<span class="title function_ invoke__">lastInsertId</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新-1"><a href="#更新-1" class="headerlink" title="更新"></a>更新</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="string">&quot;UPDATE post SET title = :title, content = :content WHERE id = :id&quot;</span>;</span><br><span class="line"><span class="variable">$statement</span> = <span class="variable">$db</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="variable">$query</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">bindValue</span>(<span class="string">&#x27;:title&#x27;</span>, <span class="variable">$title</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">bindValue</span>(<span class="string">&#x27;:content&#x27;</span>, <span class="variable">$content</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">bindValue</span>(<span class="string">&#x27;:id&#x27;</span>, <span class="variable">$id</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"><span class="variable">$insert_id</span> = <span class="variable">$db</span>-&gt;<span class="title function_ invoke__">lastInsertId</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="string">&quot;SELECT * FROM post ORDER BY creation_time DESC LIMIT 5&quot;</span>;</span><br><span class="line"><span class="variable">$statement</span> = <span class="variable">$db</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="variable">$query</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"><span class="variable">$posts</span>= <span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">fetchAll</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="string">&quot;DELETE FROM post WHERE id = :id&quot;</span>;</span><br><span class="line"><span class="variable">$statement</span> = <span class="variable">$db</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="variable">$query</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">bindValue</span>(<span class="string">&#x27;:id&#x27;</span>, <span class="variable">$id</span>, PDO::<span class="variable constant_">PARAM_STR</span>);</span><br><span class="line"><span class="variable">$statement</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br></pre></td></tr></table></figure>
+
+<h2 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// select user from db first</span></span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>] = <span class="variable">$user</span>;</span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: index.php&quot;</span>);</span><br><span class="line"><span class="keyword">die</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="注销"><a href="#注销" class="headerlink" title="注销"></a>注销</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">unset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>]);</span><br><span class="line"><span class="title function_ invoke__">session_destroy</span>();</span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&#x27;Location: login.php&#x27;</span>);</span><br><span class="line"><span class="keyword">die</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="检查授权"><a href="#检查授权" class="headerlink" title="检查授权"></a>检查授权</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: login.php&quot;</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="密码加密"><a href="#密码加密" class="headerlink" title="密码加密"></a>密码加密</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$hashed_password</span> = <span class="title function_ invoke__">hash</span>(<span class="string">&#x27;ripemd128&#x27;</span>, <span class="variable">$psw</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Basic-Auth"><a href="#Basic-Auth" class="headerlink" title="Basic Auth"></a>Basic Auth</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;ADMIN_LOGIN&#x27;</span>,<span class="string">&#x27;wally&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;ADMIN_PASSWORD&#x27;</span>,<span class="string">&#x27;mypass&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SERVER</span>[<span class="string">&#x27;PHP_AUTH_USER&#x27;</span>]) || </span><br><span class="line">!<span class="keyword">isset</span>(<span class="variable">$_SERVER</span>[<span class="string">&#x27;PHP_AUTH_PW&#x27;</span>]) || </span><br><span class="line">(<span class="variable">$_SERVER</span>[<span class="string">&#x27;PHP_AUTH_USER&#x27;</span>] != ADMIN_LOGIN) || </span><br><span class="line">(<span class="variable">$_SERVER</span>[<span class="string">&#x27;PHP_AUTH_PW&#x27;</span>] != ADMIN_PASSWORD)) &#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&#x27;HTTP/1.1 401 Unauthorized&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&#x27;WWW-Authenticate: Basic realm=&quot;Our Blog&quot;&#x27;</span>);</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">&quot;Access Denied: Username and password required.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Memcached"><a href="#Memcached" class="headerlink" title="Memcached"></a>Memcached</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$memcached</span> = <span class="keyword">new</span> <span class="title class_">Memcached</span>();</span><br><span class="line"><span class="variable">$memcached</span>-&gt;<span class="title function_ invoke__">addServer</span>(<span class="string">&#x27;localhost&#x27;</span>, <span class="number">11211</span>);</span><br><span class="line"><span class="variable">$memcached</span>-&gt;<span class="title function_ invoke__">set</span>(<span class="string">&#x27;test&#x27;</span>, <span class="string">&#x27;testcache&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$memcached</span>-&gt;<span class="title function_ invoke__">get</span>(<span class="string">&#x27;test&#x27;</span>));</span><br><span class="line"><span class="variable">$memcached</span>-&gt;<span class="title function_ invoke__">set</span>(<span class="string">&#x27;test2&#x27;</span>, <span class="string">&#x27;123&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$memcached</span>-&gt;<span class="title function_ invoke__">get</span>(<span class="string">&#x27;test2&#x27;</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$memcached</span>-&gt;<span class="title function_ invoke__">get</span>(<span class="string">&#x27;test3&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h2><h3 id="为导航设置激活状态"><a href="#为导航设置激活状态" class="headerlink" title="为导航设置激活状态"></a>为导航设置激活状态</h3><p>在 page include header 之前：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$page</span> = <span class="string">&#x27;home&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在 header：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;li&gt;&lt;a <span class="class"><span class="keyword">class</span>=&quot;&lt;?= ($<span class="title">page</span> == &#x27;<span class="title">home</span>&#x27;) ? &quot;<span class="title">current</span>&quot; : &quot;&quot;; ?&gt;&quot; <span class="title">href</span>=&quot;<span class="title">index</span>.<span class="title">php</span>&quot;&gt;<span class="title">Home</span>&lt;/<span class="title">a</span>&gt;&lt;/<span class="title">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><h4 id="保存至文件系统"><a href="#保存至文件系统" class="headerlink" title="保存至文件系统"></a>保存至文件系统</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// upload photo to images/photos</span></span><br><span class="line"><span class="variable">$photo</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="variable">$photoExt</span> = <span class="title function_ invoke__">pathinfo</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;photo&#x27;</span>][<span class="string">&#x27;name&#x27;</span>], PATHINFO_EXTENSION);</span><br><span class="line"><span class="variable">$photo</span> = <span class="title function_ invoke__">time</span>() . <span class="string">&quot;.&quot;</span> . <span class="variable">$photoExt</span>;</span><br><span class="line"><span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;photo&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>], <span class="string">&quot;images/photos/&quot;</span> . <span class="variable">$photo</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert photo to database</span></span><br><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;insert into Photo (photo, description, type, userId) value (?,?,?,?)&quot;</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&#x27;sssi&#x27;</span>, <span class="variable">$photo</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;description&#x27;</span>], <span class="variable">$_POST</span>[<span class="string">&#x27;type&#x27;</span>], <span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>][<span class="number">0</span>]);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"><span class="variable">$id</span> = <span class="variable">$query</span>-&gt;insert_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">// go homepage</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&#x27;Location: index.php&#x27;</span>);</span><br><span class="line"><span class="keyword">die</span>();</span><br></pre></td></tr></table></figure>
+
+<h4 id="保存至数据库"><a href="#保存至数据库" class="headerlink" title="保存至数据库"></a>保存至数据库</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$fileContent</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;fileContent&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>]);</span><br><span class="line"><span class="variable">$contentName</span> = <span class="title function_ invoke__">mysql_fix_string</span>(<span class="variable">$conn</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;contentName&#x27;</span>]);</span><br><span class="line"><span class="variable">$query</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;INSERT INTO files (contentName, fileContent, userId) values (?,?,?)&quot;</span>);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&#x27;ssi&#x27;</span>, <span class="variable">$contentName</span>, <span class="variable">$fileContent</span>, <span class="variable">$user</span>[<span class="number">0</span>]);</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"><span class="variable">$query</span>-&gt;<span class="title function_ invoke__">close</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="MySQLi-初始化数据库"><a href="#MySQLi-初始化数据库" class="headerlink" title="MySQLi 初始化数据库"></a>MySQLi 初始化数据库</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$conn</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="variable">$host</span>, <span class="variable">$user</span>, <span class="variable">$password</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// create database</span></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;CREATE DATABASE if not exists <span class="subst">$db</span>&quot;</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>) === <span class="literal">TRUE</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Database <span class="subst">$db</span> created.&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Error creating database: &quot;</span> . <span class="variable">$conn</span>-&gt;error;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// connect to database</span></span><br><span class="line"><span class="variable">$conn</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="variable">$host</span>, <span class="variable">$user</span>, <span class="variable">$password</span>, <span class="variable">$db</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">    <span class="comment">// connection error</span></span><br><span class="line">    <span class="keyword">die</span>(<span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;</span></span><br><span class="line"><span class="string">create table if not exists faculty</span></span><br><span class="line"><span class="string">(</span></span><br><span class="line"><span class="string">    id   int  not null auto_increment primary key,</span></span><br><span class="line"><span class="string">    name text not null</span></span><br><span class="line"><span class="string">);</span></span><br><span class="line"><span class="string">&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>) === <span class="literal">TRUE</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br/&gt; faculty table created successfully&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br/&gt; faculty table create error:&quot;</span> . <span class="variable">$conn</span>-&gt;error;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2021/php-note/" title="Php Note">https://wxsm.space/2021/php-note/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/blog-migrate-to-hexo/" rel="prev" title="博客迁移至 Hexo">
+                  <i class="fa fa-angle-left"></i> 博客迁移至 Hexo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/windows-idea-cygwin/" rel="next" title="在 Windows 中使用 Cygwin">
+                  在 Windows 中使用 Cygwin <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2021/php-note/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

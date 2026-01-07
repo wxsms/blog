@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="高效 CSS如何编写高效 CSS 其实是一个过时的话题。 这方面曾经存在许多真知灼见，比如说 CSS 选择器的解析方向是从子到父，比如说 ID 选择器是最快的，不应该给 Class 选择器加上 Tag 限制，尽量避免使用后代选择器等。但是，随着浏览器解析引擎的发展，这些都已经变得不再那么重要了。MDN 上阐述高效 CSS 的文章也已经被标记为过时。 Antti Koivisto 是 Webkit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高效 CSS 与 Reflow &amp; Repaint">
+<meta property="og:url" content="https://wxsm.space/2016/efficient-css-and-reflow-repaint/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="高效 CSS如何编写高效 CSS 其实是一个过时的话题。 这方面曾经存在许多真知灼见，比如说 CSS 选择器的解析方向是从子到父，比如说 ID 选择器是最快的，不应该给 Class 选择器加上 Tag 限制，尽量避免使用后代选择器等。但是，随着浏览器解析引擎的发展，这些都已经变得不再那么重要了。MDN 上阐述高效 CSS 的文章也已经被标记为过时。 Antti Koivisto 是 Webkit">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-03-30T06:16:25.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.151Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/efficient-css-and-reflow-repaint/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/efficient-css-and-reflow-repaint/","path":"2016/efficient-css-and-reflow-repaint/","title":"高效 CSS 与 Reflow & Repaint"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>高效 CSS 与 Reflow & Repaint | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%95%88-CSS"><span class="nav-number">1.</span> <span class="nav-text">高效 CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reflow-Repaint"><span class="nav-number">2.</span> <span class="nav-text">Reflow &amp; Repaint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">2.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reflow-%E7%9A%84%E8%A7%A6%E5%8F%91%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">Reflow 的触发点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">2.3.</span> <span class="nav-text">如何优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%BD%E9%87%8F%E9%80%89%E6%8B%A9-DOM-%E6%A0%91%E5%BA%95%E5%B1%82%E7%9A%84%E5%85%83%E7%B4%A0%E5%8E%BB%E4%BF%AE%E6%94%B9-Class"><span class="nav-number">2.3.1.</span> <span class="nav-text">尽量选择 DOM 树底层的元素去修改 Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E8%AE%BE%E7%BD%AE%E5%A4%9A%E4%B8%AA%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">避免设置多个内联样式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E8%A6%81%E4%BD%BF%E7%94%A8%E5%8A%A8%E7%94%BB%E5%B0%BD%E9%87%8F%E9%80%89%E6%8B%A9-Position-%E4%B8%BA-Fixed-%E6%88%96-Absolute-%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">2.3.3.</span> <span class="nav-text">如果要使用动画尽量选择 Position 为 Fixed 或 Absolute 的元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E9%80%89%E7%94%A8-Table-%E5%B8%83%E5%B1%80"><span class="nav-number">2.3.4.</span> <span class="nav-text">不要选用 Table 布局</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/efficient-css-and-reflow-repaint/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="高效 CSS 与 Reflow &amp; Repaint | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          高效 CSS 与 Reflow & Repaint
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-03-30 14:16:25" itemprop="dateCreated datePublished" datetime="2016-03-30T14:16:25+08:00">2016-03-30</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/efficient-css-and-reflow-repaint/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/efficient-css-and-reflow-repaint/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="高效-CSS"><a href="#高效-CSS" class="headerlink" title="高效 CSS"></a>高效 CSS</h2><p>如何编写高效 CSS 其实是一个过时的话题。</p>
+<p>这方面曾经存在许多真知灼见，比如说 CSS 选择器的解析方向是从子到父，比如说 ID 选择器是最快的，不应该给 Class 选择器加上 Tag 限制，尽量避免使用后代选择器等。但是，随着浏览器解析引擎的发展，这些都已经变得不再那么重要了。MDN 上阐述高效 CSS 的文章也已经被标记为过时。</p>
+<p>Antti Koivisto 是 Webkit 核心的贡献者之一，他曾说：</p>
+<blockquote>
+<p>My view is that authors should not need to worry about optimizing selectors (and from what I see, they generally don’t), that should be the job of the engine.</p>
+</blockquote>
+<p>因此，如果把“高效 CSS”的含义限制为“高效 CSS 选择器”的话，那么实际上现在它已经不是开发者需要关心的问题了。我们需要做的事情变得更“政治正确”：保证功能与结构的良好可维护性即可。</p>
+<p>那么 CSS 的性能还能通过什么方式提升呢？这就是下面的内容。</p>
+<span id="more"></span>
+
+<h2 id="Reflow-Repaint"><a href="#Reflow-Repaint" class="headerlink" title="Reflow &amp; Repaint"></a>Reflow &amp; Repaint</h2><h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><p>Reflow （回流）和 Repaint（重绘）是浏览器的两种动作。</p>
+<ul>
+<li>Repaint 会在某个元素的外观发生变化，但没有影响布局时触发。比如说 <code>visibility</code>  &#x2F; <code>outline</code>  &#x2F; <code>background-color</code>  等 CSS 属性的变化将会触发 Repaint</li>
+<li>Reflow 在元素变化影响到布局时触发</li>
+</ul>
+<p>显然，Reflow 的代价要比 Repaint 高昂得多，它影响到了页面部分（或者所有）的布局。一个 元素的 Reflow 动作同时也会触发它的所有后代 &#x2F; 祖先 &#x2F; 跟随它的 DOM 节点产生 Reflow</p>
+<p>比如说：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h4</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>Welcome: <span class="tag">&lt;/<span class="name">strong</span>&gt;</span>......<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h5</span>&gt;</span>......<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">li</span>&gt;</span>......<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">li</span>&gt;</span>......<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>对这一小段 HTML 来说，如果 <code>&lt;p&gt;</code> 元素上产生了 Reflow，那么 <code>&lt;strong&gt;</code> 将会受到影响（因为它属于前者的后代元素），当然也跑不了 <code>&lt;div&gt;</code> 和 <code>&lt;body&gt;</code> （祖先元素），<code>&lt;h5&gt;</code> 和 <code>&lt;ol&gt;</code> 则躺枪：没事跟在别人后面干啥呢。</p>
+<p>因此，大多数的 Reflow，其实都导致了整个页面重新渲染。这对于计算能力稍低的设备（如手机）来说是非常困难的。我经常发现桌面计算机上运行良好的动画效果到了手机上就看起来很痛苦。</p>
+<h3 id="Reflow-的触发点"><a href="#Reflow-的触发点" class="headerlink" title="Reflow 的触发点"></a>Reflow 的触发点</h3><ul>
+<li>Window resizing</li>
+<li>改变字体</li>
+<li>增删样式表</li>
+<li>内容改变，比如用户在输入框中输入</li>
+<li>触发 CSS 伪类，比如 <code>:hover</code>  等</li>
+<li>更改 class 属性</li>
+<li>脚本操作 DOM</li>
+<li>计算 <code>offsetWidth</code> 与 <code>offsetHeight</code></li>
+<li>更改 style 属性</li>
+<li>……</li>
+</ul>
+<h3 id="如何优化"><a href="#如何优化" class="headerlink" title="如何优化"></a>如何优化</h3><p>恩。。。看了这么多发现，要完全避免 Reflow 还是比较困难的。那么我们至少可以有一些办法去减少它们的影响吧。</p>
+<p>以下的方法都是收集于一些国外作者的博客。</p>
+<h4 id="尽量选择-DOM-树底层的元素去修改-Class"><a href="#尽量选择-DOM-树底层的元素去修改-Class" class="headerlink" title="尽量选择 DOM 树底层的元素去修改 Class"></a>尽量选择 DOM 树底层的元素去修改 Class</h4><p>比如说，不要选择类似 Wrapper 这样的元素去修改 Class，而尽量找更加底层的元素。因为 Reflow 会影响所有后代祖先以及后邻，这么干可以尽量地减少 Reflow 的影响，从而提高 CSS 渲染性能。</p>
+<h4 id="避免设置多个内联样式"><a href="#避免设置多个内联样式" class="headerlink" title="避免设置多个内联样式"></a>避免设置多个内联样式</h4><p>这里的意思其实是说不要使用 JS 来给元素按部就班地设置样式 —— 因为每一次样式变化都会引起一次 Reflow，最好把样式整合为一个 Class 然后一次性加到元素上面去。</p>
+<p>还有另外一种解决办法是在设置样式前先将其脱离正常文档流，比如 <code>display</code> 属性设为 <code>none</code>，然后所有设置都完成后再变回来。这样也是可以接受的。</p>
+<h4 id="如果要使用动画尽量选择-Position-为-Fixed-或-Absolute-的元素"><a href="#如果要使用动画尽量选择-Position-为-Fixed-或-Absolute-的元素" class="headerlink" title="如果要使用动画尽量选择 Position 为 Fixed 或 Absolute 的元素"></a>如果要使用动画尽量选择 Position 为 Fixed 或 Absolute 的元素</h4><p>动画的每一帧都会引起 Repaint 或者 Reflow，最好是可以让它脱离正常文档流，这样就绝对不会引起大规模持续的 Reflow</p>
+<h4 id="不要选用-Table-布局"><a href="#不要选用-Table-布局" class="headerlink" title="不要选用 Table 布局"></a>不要选用 Table 布局</h4><p>虽然我们已经有很多理由不去使用 table 布局了，但这又是另外一个 —— 任意一个单元格的小改动都很有可能触发整个布局所有节点的变化，带来巨大的性能开销。</p>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/efficient-css-and-reflow-repaint/" title="高效 CSS 与 Reflow &amp; Repaint">https://wxsm.space/2016/efficient-css-and-reflow-repaint/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/css/" rel="tag"># css</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/bfc-theory-and-applications/" rel="prev" title="BFC 原理及应用">
+                  <i class="fa fa-angle-left"></i> BFC 原理及应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/javascript-event-delegation/" rel="next" title="JavaScript 事件代理">
+                  JavaScript 事件代理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/efficient-css-and-reflow-repaint/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

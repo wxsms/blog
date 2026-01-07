@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="企业项目群中往往会有部分代码逻辑需要公用，将其抽离作为公共包发布到私有源的做法是比较优雅的解决方式。但是这么做的话后期需要面临一个问题：当一个公共依赖包的使用者数量逐渐庞大的时候，如何保证当此包发布新版本时，所有使用者都能尽可能快地得到更新？ 传统的解决方案：  手工对所有项目逐个升级。这种办法相当繁琐，且容易产生遗漏，当项目数量足够庞大的时候，发布一次将会是相当痛苦的体验； 在依赖安装时指定版本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Integrate Renovate with GitLab">
+<meta property="og:url" content="https://wxsm.space/2020/integrate-renovate-with-gitlab/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="企业项目群中往往会有部分代码逻辑需要公用，将其抽离作为公共包发布到私有源的做法是比较优雅的解决方式。但是这么做的话后期需要面临一个问题：当一个公共依赖包的使用者数量逐渐庞大的时候，如何保证当此包发布新版本时，所有使用者都能尽可能快地得到更新？ 传统的解决方案：  手工对所有项目逐个升级。这种办法相当繁琐，且容易产生遗漏，当项目数量足够庞大的时候，发布一次将会是相当痛苦的体验； 在依赖安装时指定版本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wxsm.space/2020/integrate-renovate-with-gitlab/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png">
+<meta property="og:image" content="https://wxsm.space/2020/integrate-renovate-with-gitlab/20210217165423.png">
+<meta property="article:published_time" content="2020-11-09T04:49:56.979Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.157Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="gitlab">
+<meta property="article:tag" content="devops">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxsm.space/2020/integrate-renovate-with-gitlab/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2020/integrate-renovate-with-gitlab/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2020/integrate-renovate-with-gitlab/","path":"2020/integrate-renovate-with-gitlab/","title":"Integrate Renovate with GitLab"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Integrate Renovate with GitLab | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-Renovate"><span class="nav-number">1.</span> <span class="nav-text">关于 Renovate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">如何工作？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">如何使用？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-1%EF%BC%9Anpm-install-g-renovate"><span class="nav-number">3.1.</span> <span class="nav-text">方式 1：npm install -g renovate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F2%EF%BC%9A%E4%BD%BF%E7%94%A8-Docker-%E9%95%9C%E5%83%8F"><span class="nav-number">3.2.</span> <span class="nav-text">方式2：使用 Docker 镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F3%EF%BC%9A%E4%BD%BF%E7%94%A8-Kubernetes"><span class="nav-number">3.3.</span> <span class="nav-text">方式3：使用 Kubernetes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%88%90-GitLab"><span class="nav-number">4.</span> <span class="nav-text">集成 GitLab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3-Changelog-%E9%97%AE%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text">解决 Changelog 问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/integrate-renovate-with-gitlab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Integrate Renovate with GitLab | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Integrate Renovate with GitLab
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-09 12:49:56" itemprop="dateCreated datePublished" datetime="2020-11-09T12:49:56+08:00">2020-11-09</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/integrate-renovate-with-gitlab/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/integrate-renovate-with-gitlab/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>企业项目群中往往会有部分代码逻辑需要公用，将其抽离作为公共包发布到私有源的做法是比较优雅的解决方式。但是这么做的话后期需要面临一个问题：<strong>当一个公共依赖包的使用者数量逐渐庞大的时候，如何保证当此包发布新版本时，所有使用者都能尽可能快地得到更新？</strong></p>
+<p>传统的解决方案：</p>
+<ol>
+<li>手工对所有项目逐个升级。这种办法相当繁琐，且容易产生遗漏，当项目数量足够庞大的时候，发布一次将会是相当痛苦的体验；</li>
+<li>在依赖安装时指定版本为 <code>latest</code>。这种办法虽然能保证每次安装时都能得到最新版本，但是却有诸多弊端，如：<ol>
+<li>无法保证依赖的安全性，有可能一次更新不慎造成大面积的瘫痪；</li>
+<li>对「依赖锁」不友好，如 <code>yarn.lock</code> 等。</li>
+</ol>
+</li>
+</ol>
+<p>因此，如何使这个过程变得优雅，是一个亟待解决的问题。</p>
+<span id="more"></span>
+
+<h2 id="关于-Renovate"><a href="#关于-Renovate" class="headerlink" title="关于 Renovate"></a>关于 Renovate</h2><p><a target="_blank" rel="noopener" href="https://github.com/renovatebot/renovate">Renovate</a> 是一个专注于解决依赖问题的库，使用 Node.js 编写，因此它也许会更适合于使用 NPM 或 Yarn 作为依赖管理的项目。我最早从 <a target="_blank" rel="noopener" href="https://zexo.dev/posts/2020/03/01/keep-your-repo-dependencies-up-to-date-with-renovate">zexo.dev&#x2F;使用 renovate 监控第三方依赖更新</a> 这篇博文中得知了这个工具，在 GitHub 上托管的个人项目上尝试了一段时间后发现它非常好用。</p>
+<h2 id="如何工作？"><a href="#如何工作？" class="headerlink" title="如何工作？"></a>如何工作？</h2><p>复杂的流程就不讲了。总的来说，它会对启用了它的项目做以下几件事情：</p>
+<ol>
+<li>发起一个 Onboard PR（<a target="_blank" rel="noopener" href="https://github.com/uiv-lib/uiv/pull/348">示例</a>），将它的配置文件以 PR 的形式合并到项目中。在这个 PR 被合并前，不会有任何后续操作。</li>
+<li>在 Onboard 被合并后，发起一个 Pin PR（<a target="_blank" rel="noopener" href="https://github.com/uiv-lib/uiv/pull/349">示例</a>），将项目中用到的依赖的版本锁定，对于 <code>package.json</code> 来说，即去除任何模糊的通配符，如 <code>^</code> &#x2F; <code>~</code> 等，改用精确的版本号。在这个 PR 被合并前，不会有任何后续操作。</li>
+<li>Pin PR 被合并后，开始周期性地检索依赖。当发现有更新时，为每个依赖（或依赖群）更新发起一个 PR（<a target="_blank" rel="noopener" href="https://github.com/uiv-lib/uiv/pull/677">示例</a>），内容包含依赖定义文件（如 <code>package.json</code>） 与依赖锁文件（如 <code>yarn.lock</code>）。</li>
+<li>如果用户想要做本次升级，将其合并即可。将来如果该依赖再次有更新可用，会再次生成新的 PR；</li>
+<li>如果用户不想做本次升级，不理会或将其关闭即可：<ol>
+<li>若不理会，在将来该依赖再次升级时，Renovate 会更新该 PR 至新版本；</li>
+<li>若关闭，Renovate 将忽略该版本，不再发起 PR。</li>
+</ol>
+</li>
+</ol>
+<p>以上只是大致流程，实际上 Renovate 还有非常多的配置项可以发掘，可以提供高度定制化的使用体验。</p>
+<h2 id="如何使用？"><a href="#如何使用？" class="headerlink" title="如何使用？"></a>如何使用？</h2><p>如果是在 GitHub 上使用，只需到应用市场安装 Renovate 并为它提供想要开启服务的项目的访问权限即可，过几分钟就能在项目内收到 Onboard PR。但这部分不是本文的重点。</p>
+<p>本文重点是如何在私有环境中使用它，即 Self-hosted 环节，与我司的自建 GitLab 进行集成。</p>
+<p>根据 <a target="_blank" rel="noopener" href="https://github.com/renovatebot/renovate/blob/master/docs/usage/self-hosting.md">官方文档</a>，自建 Renovate 服务有以下几种方式：</p>
+<h3 id="方式-1：npm-install-g-renovate"><a href="#方式-1：npm-install-g-renovate" class="headerlink" title="方式 1：npm install -g renovate"></a>方式 1：<code>npm install -g renovate</code></h3><p>该方式最简便，只需要安装了 Node.js 环境以后，通过以上 cli 工具即可实现所有功能。但是官方文档对他的描述十分简略，几乎没有，勉强通过 <code>--help</code> 才试出了用法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GITHUB_COM_TOKEN=your-github-token renovate \</span><br><span class="line">    --platform=gitlab \</span><br><span class="line">    --endpoint=https://gitlab.cpmpany.com/api/v4/ \</span><br><span class="line">    --token=your-gitlab-token \</span><br><span class="line">    --onboarding=<span class="literal">true</span> \</span><br><span class="line">    --onboarding-config=<span class="string">&quot;&#123;\&quot;extends\&quot;: [\&quot;config:base\&quot;]&#125;&quot;</span> \</span><br><span class="line">    --log-level=debug \</span><br><span class="line">    --yarnrc=<span class="string">&quot;registry \&quot;http://npm-registry.cpmpany.com\&quot;&quot;</span> \</span><br><span class="line">    --npmrc=<span class="string">&quot;registry=\&quot;http://npm-registry.cpmpany.com\&quot;&quot;</span> \</span><br><span class="line">    path/to/project</span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
+<ol>
+<li><code>GITHUB_COM_TOKEN</code> 是用来从 GitHub 上获取 Changelog 时要用到的。如果没有提供这个 token，则 Renovate 不会尝试去获取 Changelog；</li>
+<li><code>platform</code> &#x2F; <code>endpoint</code> &#x2F; <code>token</code> 分别对应目标平台的参数；</li>
+<li><code>onboarding</code> 表示项目必须先接受 Onboard PR 才会执行后续操作；</li>
+<li><code>onboarding-config</code> 为 Onboard PR 所提供的默认配置文件；</li>
+<li><code>log-level</code> 为 <code>debug</code> 时才能得到详细的日志，方便调试；</li>
+<li>项目内一般自带了 yarnrc 与 npmrc，如果项目内自带的已经覆盖了私有源则无需配置，否则需要配置。需要注意的是，如果使用 npm 则只需要提供 <code>npmrc</code>，但如果使用 yarn 则需要同时提供 <code>yarnrc</code> 与 <code>npmrc</code>，缺一不可。</li>
+</ol>
+<p>命令行可以作为本地调试工具，最终部署的话还是直接使用打包好的镜像更好用一些。</p>
+<h3 id="方式2：使用-Docker-镜像"><a href="#方式2：使用-Docker-镜像" class="headerlink" title="方式2：使用 Docker 镜像"></a>方式2：使用 Docker 镜像</h3><p>Renovate 提供了构建好的 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/renovate/renovate/">renovate&#x2F;renovate</a> 镜像，可以直接使用。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> -v <span class="string">&quot;/path/to/your/config.js:/usr/src/app/config.js&quot;</span> renovate/renovate</span><br></pre></td></tr></table></figure>
+
+<p>这个镜像有多个版本，其中大体区分为 slim 版与完整版。它们之间的区别是：</p>
+<ol>
+<li>完整版包含了所有可能要用到的构件工具，如 Python 等，约 1.3GB；</li>
+<li>slim 版仅包含 Renovate 自身，约 130MB。</li>
+</ol>
+<p>可以使用 GitLab CI 与该镜像直接集成，image 指定 <code>renovate/renovate</code> 即可。但是，最终我选择了使用 k8s 集成。</p>
+<h3 id="方式3：使用-Kubernetes"><a href="#方式3：使用-Kubernetes" class="headerlink" title="方式3：使用 Kubernetes"></a>方式3：使用 Kubernetes</h3><p><a target="_blank" rel="noopener" href="https://github.com/renovatebot/renovate/blob/master/docs/usage/self-hosting.md">官方文档</a> 贴心地提供了 k8s 的配置样例，基本上复制粘贴就能完成配置了：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">renovate-env</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br><span class="line"><span class="attr">stringData:</span></span><br><span class="line">  <span class="attr">GITHUB_COM_TOKEN:</span> <span class="string">&#x27;any-personal-user-token-for-github-com-for-fetching-changelogs&#x27;</span></span><br><span class="line">  <span class="comment"># set to true to run on all repos you have push access to</span></span><br><span class="line">  <span class="attr">RENOVATE_AUTODISCOVER:</span> <span class="string">&#x27;false&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_ENDPOINT:</span> <span class="string">&#x27;https://github.company.com/api/v3&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_GIT_AUTHOR:</span> <span class="string">&#x27;Renovate Bot &lt;bot@renovateapp.com&gt;&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_PLATFORM:</span> <span class="string">&#x27;github&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_TOKEN:</span> <span class="string">&#x27;your-github-enterprise-renovate-user-token&#x27;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">batch/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CronJob</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">renovate</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">schedule:</span> <span class="string">&#x27;@hourly&#x27;</span></span><br><span class="line">  <span class="attr">concurrencyPolicy:</span> <span class="string">Forbid</span></span><br><span class="line">  <span class="attr">jobTemplate:</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">template:</span></span><br><span class="line">        <span class="attr">spec:</span></span><br><span class="line">          <span class="attr">containers:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">renovate</span></span><br><span class="line">              <span class="comment"># Update this to the latest available and then enable Renovate on</span></span><br><span class="line">              <span class="comment"># the manifest</span></span><br><span class="line">              <span class="attr">image:</span> <span class="string">renovate/renovate:23.19.2</span></span><br><span class="line">              <span class="attr">args:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="string">user/repo</span></span><br><span class="line">              <span class="comment"># Environment Variables</span></span><br><span class="line">              <span class="attr">envFrom:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="attr">secretRef:</span></span><br><span class="line">                    <span class="attr">name:</span> <span class="string">renovate-env</span></span><br><span class="line">          <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
+
+<p>但是，这里有一个地方比较坑的是，像 <code>RENOVATE_AUTODISCOVER</code> 这种环境变量的命名，官方并没有提供一个文档明确说明到底是以何种规则得到的（或者是我没有找到）。不过经过一番搜索，我找到了它的具体实现：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/renovatebot/renovate/blob/53ca91301f6a36c0c87e7d6b06b1bd8c9ec1b283/lib/config/env.ts">lib&#x2F;config&#x2F;env.ts</a>:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getEnvName</span>(<span class="params">option: Partial&lt;RenovateOptions&gt;</span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (option.<span class="property">env</span> === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (option.<span class="property">env</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> option.<span class="property">env</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> nameWithUnderscores = option.<span class="property">name</span>.<span class="title function_">replace</span>(<span class="regexp">/([A-Z])/g</span>, <span class="string">&#x27;_$1&#x27;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`RENOVATE_<span class="subst">$&#123;nameWithUnderscores.toUpperCase()&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是，将普通配置名（驼峰命名）：</p>
+<ol>
+<li>全部转为大写字母；</li>
+<li>单词首字母前加上 <code>_</code>；</li>
+<li>前面加上 <code>RENOVATE_</code></li>
+</ol>
+<p>就得到了环境变量的命名。</p>
+<p>但是，经过实践发现这里有一个特例：<code>logLevel</code> 这个配置并不是转换为 <code>RENOVATE_LOG_LEVEL</code>，而仅仅是 <code>LOG_LEVEL</code> 而已。 </p>
+<p>另外，官方提供的样例对于所有 secrets 都使用了 <code>stringData</code> 来储存，不提倡这种做法。我建议将 <code>token</code> 类密钥信息做 base64 编码储存在 <code>data</code> 中：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">renovate-secret</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">GITHUB_COM_TOKEN:</span> <span class="string">...</span></span><br><span class="line">  <span class="attr">RENOVATE_TOKEN:</span> <span class="string">...</span></span><br><span class="line"><span class="attr">stringData:</span></span><br><span class="line">  <span class="attr">RENOVATE_AUTODISCOVER:</span> <span class="string">&#x27;false&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_ENDPOINT:</span> <span class="string">&#x27;https://gitlab.company.com/api/v4/&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_PLATFORM:</span> <span class="string">&#x27;gitlab&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_ONBOARDING:</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_ONBOARDING_CONFIG:</span> <span class="string">&#x27;&#123;...&#125;&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_SEMANTIC_COMMITS:</span> <span class="string">&#x27;enabled&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_YARNRC:</span> <span class="string">&#x27;registry &quot;http://npm-registry.company.com&quot;&#x27;</span></span><br><span class="line">  <span class="attr">RENOVATE_NPMRC:</span> <span class="string">&#x27;registry=&quot;http://npm-registry.company.com&quot;&#x27;</span></span><br><span class="line">  <span class="attr">LOG_LEVEL:</span> <span class="string">&#x27;debug&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="集成-GitLab"><a href="#集成-GitLab" class="headerlink" title="集成 GitLab"></a>集成 GitLab</h2><p>在之前的博文 <a href="/posts/2020-09-23-gitlab-ce-code-review-bot.html">Gitlab CE Code-Review Bot</a> 中，我介绍了 GitLab CE 评审机器人的实现。由于 Renovate 也是基于 Merge Request 实现的，因此它们能够很好地相处：</p>
+<ol>
+<li>Renovate 发起 MR</li>
+<li>评审机器人随机分派评审人</li>
+<li>评审通过，合并</li>
+</ol>
+<p>但是有几点需要注意：</p>
+<ol>
+<li>由于评审机器人使用了 WIP 来阻止 MR 被手动合并，因此 Renovate 的配置中也需要将 MR 设置为 draft 状态，这样才能维持 MR 的 WIP 标记。否则，Renovate 会在发起 MR 后的第二次扫描中尝试去除 MR 的 WIP 标记；</li>
+<li>最好给 Renovate 开设一个独立的账号。如果与其他用户或程序共用账号，Renovate 可能会在 force-push 的过程中使某些由其它用户做出的改动丢失；</li>
+<li>因为 Renovate 的设计中存在一些高危操作（分支删除，强制推送等），因此最好只赋予 Developer 权限。实际上如果不启用自动合并，它也只需要 Developer 权限。</li>
+</ol>
+<p>符合我需求的最终配置 <code>renovate.json</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;extends&quot;: [</span><br><span class="line">    &quot;config:base&quot;,</span><br><span class="line">    // 除了 peerDependencies 以外所有依赖都 pin，</span><br><span class="line">    // 注意仅适用于业务项目，在 library 中不要这样做</span><br><span class="line">    &quot;:pinAllExceptPeerDependencies&quot;</span><br><span class="line">  ],</span><br><span class="line">  // 仅启用 npm 依赖管理，项目里有其它依赖项不想被 Renovate 管理的，</span><br><span class="line">  // 如：Docker / Gradle / Cocoa Pod 等</span><br><span class="line">  &quot;enabledManagers&quot;: [</span><br><span class="line">    &quot;npm&quot;</span><br><span class="line">  ],</span><br><span class="line">  // 仅对 @company/ 开头的私有包启用依赖管理，其它外部依赖一律禁用</span><br><span class="line">  &quot;packageRules&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;packagePatterns&quot;: [</span><br><span class="line">        &quot;*&quot;</span><br><span class="line">      ],</span><br><span class="line">      &quot;excludePackagePatterns&quot;: [</span><br><span class="line">        &quot;^@company/&quot;</span><br><span class="line">      ],</span><br><span class="line">      &quot;enabled&quot;: false</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  // 将 MR 标记为 draft，即 WIP</span><br><span class="line">  &quot;draftPR&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ol>
+<li>将 Renovate 部署上 Kubernetes 的时候，要注意能够分配的节点是否都有私有源的访问权限。如果 CronJob 被分配到了无权访问的节点会导致私有包 Lookup Failed，从而更新失败。如果只有部分节点拥有访问权限，可以用 <code>nodeSelector</code> 或 <code>nodeName</code> 指定节点；</li>
+<li>Changelog 在 GitLab (10.3.2) 上面会丢失，并且格式错乱，如图所示：<img src="/2020/integrate-renovate-with-gitlab/98614561-a5fc1f00-2333-11eb-8c9e-3d33107cd7ec.png" alt="screenshot"><br>这个问题猜测是由于我司的 GitLab 版本过低导致的。因为 <a target="_blank" rel="noopener" href="http://gitlab.com/">gitlab.com</a> (13.x) 上不存在这个问题。但是因为 GitLab 不在我的管辖范围内，因此目前没有找到很好的解决方案，后续如果解决了会更新。</li>
+</ol>
+<h3 id="解决-Changelog-问题"><a href="#解决-Changelog-问题" class="headerlink" title="解决 Changelog 问题"></a>解决 Changelog 问题</h3><p>我在 GitHub 上提了一个 <a target="_blank" rel="noopener" href="https://github.com/renovatebot/renovate/issues/7689">issue</a>，但是作者表示这是老版本 GitLab 出现的问题，建议升级 GitLab，不会为其做出改动及修复。不过他建议可以修改源码内的某些文件并自己构建一个 Docker 镜像来达到目的：</p>
+<blockquote>
+<p>You could perhaps try building your own image with a modified version of that file, or even just sed replace parts of it at runtime. You can find it at dist&#x2F;workers&#x2F;pr&#x2F;changelog&#x2F;hbs-template.js in the built&#x2F;distributed version.</p>
+</blockquote>
+<p>但是我不是很喜欢这种做法，这样的话会更新镜像会比较麻烦。不过如他所说，也可以选择在运行时进行替换。由于之前开发过一款 <a href="/posts/2020-09-23-gitlab-ce-code-review-bot.html">评审机器人</a>，机器人的执行逻辑刚好适合用来做这一块的热修复。只需要在 MR 创建逻辑内加多一个判断，如果是来自 renovate 的 MR 则执行修复操作；</p>
+<ol>
+<li>解决格式错乱问题：读取 MR 的 description 字段，并将 <code>&lt;details&gt;</code> 节点去除；</li>
+<li>解决 changelog 丢失问题：调用 GitLab API 获取 Changelog，并粘贴到 description 中；</li>
+<li>Renovate 更新 MR 时会丢失 description 中的更改，为了保险起见，再将 Changelog 作为输出到评论中去。</li>
+</ol>
+<p>大致代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (isRenovateMR &amp;&amp; enableRenovateFix) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// renovate 在旧版 gitlab 上有问题，此处为修复逻辑</span></span><br><span class="line">    <span class="keyword">const</span> &#123; description &#125; = object_attributes</span><br><span class="line">    <span class="comment">// 根据 mr 内容获取项目名与 tag 名</span></span><br><span class="line">    <span class="comment">// getStringBetween 函数：截取头尾字符串中间的内容</span></span><br><span class="line">    <span class="keyword">const</span> projectName = <span class="title function_">getStringBetween</span>(description, <span class="string">&#x27;&lt;summary&gt;&#x27;</span>, <span class="string">&#x27;&lt;/summary&gt;&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> tagName = <span class="title function_">getStringBetween</span>(description, <span class="string">&#x27;[Compare Source]&#x27;</span>, <span class="string">&#x27;)&#x27;</span>).<span class="title function_">split</span>(<span class="string">&#x27;...&#x27;</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="comment">// 获取 release note</span></span><br><span class="line">    <span class="keyword">const</span> tag = <span class="keyword">await</span> service.<span class="title function_">getTagInfo</span>(projectName, tagName)</span><br><span class="line">    <span class="keyword">const</span> releaseNote = _.<span class="title function_">get</span>(tag, <span class="string">&#x27;release.description&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="comment">// 移除 details 标签，并添加 release note</span></span><br><span class="line">    <span class="keyword">const</span> _desc = description.<span class="title function_">replace</span>(<span class="string">&#x27;&lt;details&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>).<span class="title function_">replace</span>(<span class="string">&#x27;&lt;/details&gt;&#x27;</span>, releaseNote)</span><br><span class="line">    <span class="comment">// 更新 mr 内容</span></span><br><span class="line">    <span class="keyword">await</span> service.<span class="title function_">updateMergeRequest</span>(pid, mid, &#123;</span><br><span class="line">      <span class="attr">description</span>: _desc</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 添加评论</span></span><br><span class="line">    <span class="keyword">if</span> (!!releaseNote) &#123;</span><br><span class="line">      <span class="keyword">await</span> service.<span class="title function_">addMergeRequestComment</span>(pid, mid, <span class="string">`</span></span><br><span class="line"><span class="string">更新日志：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"><span class="subst">$&#123;releaseNote&#125;</span></span></span><br><span class="line"><span class="string">`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果如图所示：</p>
+<p><img src="/2020/integrate-renovate-with-gitlab/20210217165423.png" alt="screenshot"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2020/integrate-renovate-with-gitlab/" title="Integrate Renovate with GitLab">https://wxsm.space/2020/integrate-renovate-with-gitlab/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/gitlab/" rel="tag"># gitlab</a>
+              <a href="/tags/devops/" rel="tag"># devops</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/publish-using-github-action/" rel="prev" title="Publish using GitHub Action">
+                  <i class="fa fa-angle-left"></i> Publish using GitHub Action
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/auto-changelog-with-gitlab/" rel="next" title="Auto Changelog with GitLab">
+                  Auto Changelog with GitLab <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2020/integrate-renovate-with-gitlab/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

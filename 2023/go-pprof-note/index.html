@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="pprof 是 Google 开发的一款用于数据分析和可视化的工具。 最近我编写的 go 程序遇到了一次线上 OOM，于是趁机学习了一下 Go 程序的性能问题排查相关知识。其基本路线是：先通过内置的 net&#x2F;http&#x2F;pprof 模块生成采集数据，然后在使用 pprof 命令行读取并分析。Go 语言目前已经内置了该工具。 本文不会介绍 pprof 的太多细节，只关注主要流程（主要的是太细的我现在也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 语言性能调试与分析工具：pprof 用法简介">
+<meta property="og:url" content="https://wxsm.space/2023/go-pprof-note/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="pprof 是 Google 开发的一款用于数据分析和可视化的工具。 最近我编写的 go 程序遇到了一次线上 OOM，于是趁机学习了一下 Go 程序的性能问题排查相关知识。其基本路线是：先通过内置的 net&#x2F;http&#x2F;pprof 模块生成采集数据，然后在使用 pprof 命令行读取并分析。Go 语言目前已经内置了该工具。 本文不会介绍 pprof 的太多细节，只关注主要流程（主要的是太细的我现在也">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wxsm.space/2023/go-pprof-note/f03c5ccb2076423c9ae6ba75aa6f4747.png">
+<meta property="og:image" content="https://wxsm.space/2023/go-pprof-note/ab39c95412bb488f8878c13a72a2ae84.png">
+<meta property="og:image" content="https://wxsm.space/2023/go-pprof-note/b3732fa081ba444c815af0f4d7992ce8.png">
+<meta property="og:image" content="https://wxsm.space/2023/go-pprof-note/011d3b578be449a796e550d80e9e364f.png">
+<meta property="og:image" content="https://wxsm.space/2023/go-pprof-note/ed645cd64588431b8e6c11e29f7c6e46.png">
+<meta property="og:image" content="https://wxsm.space/2023/go-pprof-note/149dcc3708494697bdcd2f4822adb34d.png">
+<meta property="og:image" content="https://wxsm.space/2023/go-pprof-note/b428af1b09094765a67f58bfeb42e24d.png">
+<meta property="article:published_time" content="2023-09-11T08:01:04.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.152Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="go">
+<meta property="article:tag" content="pprof">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxsm.space/2023/go-pprof-note/f03c5ccb2076423c9ae6ba75aa6f4747.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2023/go-pprof-note/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2023/go-pprof-note/","path":"2023/go-pprof-note/","title":"Go 语言性能调试与分析工具：pprof 用法简介"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Go 语言性能调试与分析工具：pprof 用法简介 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86"><span class="nav-number">1.</span> <span class="nav-text">数据采集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A"><span class="nav-number">2.</span> <span class="nav-text">指标解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pprof-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">pprof 命令行工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#top%EF%BC%9A%E5%88%97%E5%87%BA%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.</span> <span class="nav-text">top：列出数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list%EF%BC%9A%E6%98%BE%E7%A4%BA%E8%AF%A6%E6%83%85"><span class="nav-number">3.2.</span> <span class="nav-text">list：显示详情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web%EF%BC%9A%E5%8F%AF%E8%A7%86%E5%8C%96%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">web：可视化分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sample-index%EF%BC%9A%E5%88%87%E6%8D%A2%E9%87%87%E6%A0%B7%E5%80%BC"><span class="nav-number">3.4.</span> <span class="nav-text">sample_index：切换采样值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pprof-%E7%9A%84-Web-%E7%95%8C%E9%9D%A2"><span class="nav-number">4.</span> <span class="nav-text">pprof 的 Web 界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%AB%E7%84%B0%E5%9B%BE"><span class="nav-number">4.1.</span> <span class="nav-text">火焰图</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2023/go-pprof-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Go 语言性能调试与分析工具：pprof 用法简介 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go 语言性能调试与分析工具：pprof 用法简介
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-11 16:01:04" itemprop="dateCreated datePublished" datetime="2023-09-11T16:01:04+08:00">2023-09-11</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2023/go-pprof-note/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2023/go-pprof-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://github.com/google/pprof">pprof</a> 是 Google 开发的一款用于数据分析和可视化的工具。</p>
+<p>最近我编写的 go 程序遇到了一次线上 OOM，于是趁机学习了一下 Go 程序的性能问题排查相关知识。其基本路线是：先通过内置的 <code>net/http/pprof</code> 模块生成采集数据，然后在使用 pprof 命令行读取并分析。Go 语言目前已经内置了该工具。</p>
+<p>本文不会介绍 pprof 的太多细节，只关注主要流程（主要的是太细的我现在也不会）。</p>
+<span id="more"></span>
+
+<h2 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h2><p>由于 Go 语言内置了对 pprof 的支持，因此无需额外安装其它依赖，只需要在程序入口处引入相关包，并且启动一个服务即可：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">    _ <span class="string">&quot;net/http/pprof&quot;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// pprof 服务器，将暴露在 6060 端口</span></span><br><span class="line">        <span class="keyword">if</span> err := http.ListenAndServe(<span class="string">&quot;:6060&quot;</span>, <span class="literal">nil</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="built_in">panic</span>(err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是 pprof 服务需要使用独立的协程运行，否则会阻塞代码运行。添加这段代码后，程序除了运行原本的逻辑外，还将额外监听一个端口（此处为 6060），在本地运行程序，打开 <a target="_blank" rel="noopener" href="http://localhost:6060/debug/pprof/">http://localhost:6060/debug/pprof/</a>，将看到如下界面：</p>
+<p><img src="/2023/go-pprof-note/f03c5ccb2076423c9ae6ba75aa6f4747.png"></p>
+<p>数据采集服务即启动成功。</p>
+<div class="note info"><p>我刚开始看到这段代码的时候有点好奇：为什么它的 <code>handler</code> 传了 <code>nil</code>，但是却能够启动一个 debug 服务呢？</p>
+<p>后来仔细看了一下源码后就发现，handler 如果传 nil 的话，即默认为 <code>DefaultServeMux</code>：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// net/http/server.go</span></span><br><span class="line"><span class="keyword">type</span> Server <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    Handler Handler <span class="comment">// handler to invoke, http.DefaultServeMux if nil</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(sh serverHandler)</span></span> ServeHTTP(rw ResponseWriter, req *Request) &#123;</span><br><span class="line">    handler := sh.srv.Handler</span><br><span class="line">    <span class="keyword">if</span> handler == <span class="literal">nil</span> &#123;</span><br><span class="line">        handler = DefaultServeMux</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// HandleFunc registers the handler function for the given pattern</span></span><br><span class="line"><span class="comment">// in the DefaultServeMux.</span></span><br><span class="line"><span class="comment">// The documentation for ServeMux explains how patterns are matched.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HandleFunc</span><span class="params">(pattern <span class="type">string</span>, handler <span class="keyword">func</span>(ResponseWriter, *Request)</span></span>) &#123;</span><br><span class="line">    DefaultServeMux.HandleFunc(pattern, handler)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而 <code>net/http/pprof/pprof.go</code> 在 init 函数中，向 <code>DefaultServeMux</code> 注册了几个路径：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// net/http/pprof/pprof.go</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/debug/pprof/&quot;</span>, Index)</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/debug/pprof/cmdline&quot;</span>, Cmdline)</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/debug/pprof/profile&quot;</span>, Profile)</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/debug/pprof/symbol&quot;</span>, Symbol)</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/debug/pprof/trace&quot;</span>, Trace)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因此，如果启动一个 handler 为 nil 的 http 服务，即默认会添加上 pprof 的一系列路由。</p>
+</div>
+
+
+<p>这个 web 界面上面有一些链接，每个链接代表一个监控项目，页面下方也对它们做了一些解释。直接点进去的话，会展示一些数据，但是目前这些数据比较原始，可读性不佳。但好消息是，后面可以通过 pprof 命令行对它们进行进一步的分析。</p>
+<h2 id="指标解释"><a href="#指标解释" class="headerlink" title="指标解释"></a>指标解释</h2><p>除了 <code>cmdline</code> 和 <code>trace</code> 以外，上面的每一个链接都代表一种指标。常用指标如下：</p>
+<ul>
+<li>profile：CPU 占用率</li>
+<li>heap：当前时刻的内存使用情况</li>
+<li>allocs：所有时刻的内存使用情况，包括正在使用的及已经回收的</li>
+<li>goroutine：目前的 goroutine 数量及运行情况</li>
+<li>mutex：锁争用情况</li>
+<li>block：协程阻塞情况</li>
+</ul>
+<h2 id="pprof-命令行工具"><a href="#pprof-命令行工具" class="headerlink" title="pprof 命令行工具"></a>pprof 命令行工具</h2><p>程序运行一段时间后，我们就可以通过 <code>pprof</code> 命令行来进行数据分析了。打开一个终端环境，输入 <code>go tool pprof http://localhost:6060/debug/pprof/allocs</code> 并按下回车，就能看到如下界面：</p>
+<p><img src="/2023/go-pprof-note/ab39c95412bb488f8878c13a72a2ae84.png"></p>
+<p>此时即连接成功。接下来在终端中操作，将展示命令行启动时刻的监控数据。输入 <code>help</code> 可以展示所有的命令，输入 <code>help [command]</code> 可以展示具体命令的帮助界面。</p>
+<p>现在回到上面那个链接 <code>http://localhost:6060/debug/pprof/allocs</code>，观察一下它的构成：</p>
+<ol>
+<li>首先，是一个常规的 host+port 组合，由于我们在本地启动服务且指定监听 6060 端口，因此这里填写 <code>localhost:6060</code>。但是它同样也支持远程连接。即对部署在服务器上的程序进行分析。只要遵循同样的格式，以及保证路径可访问即可；</li>
+<li>然后跟随的是一个 <code>/debug/pprof/</code> 路径，此为固定值；</li>
+<li>最后是一个 <code>allocs</code>，这个代表某一种监控指标。回到刚刚的那个 web 界面，除了 <code>cmdline</code> 以外，每一个链接都代表一种指标，可以在此处直接填入，即可更换分析目标。</li>
+</ol>
+<div class="note info"><p>命令行实际上读取的是一个由 pprof web 服务提供的 <code>.pb.gz</code> 文件，它是一个通过 gzip 压缩的 protocol buffer 数据。其源码在 <code>runtime/pprof</code> 包中。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> profileBuilder <span class="keyword">struct</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  zw        *gzip.Writer</span><br><span class="line">  pb        protobuf</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProfileBuilder</span><span class="params">(w io.Writer)</span></span> *profileBuilder &#123;</span><br><span class="line">	zw, _ := gzip.NewWriterLevel(w, gzip.BestSpeed)</span><br><span class="line">	b := &amp;profileBuilder&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br><span class="line">	b.readMapping()</span><br><span class="line">	<span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>如果要退出 pprof，可以输入 <code>exit</code> 并回车。</p>
+<p>下面介绍几个常用命令。</p>
+<h3 id="top：列出数据"><a href="#top：列出数据" class="headerlink" title="top：列出数据"></a>top：列出数据</h3><p>要列出当前资源的占用情况，可以在 pprof 中使用 top 命令：</p>
+<p><img src="/2023/go-pprof-note/b3732fa081ba444c815af0f4d7992ce8.png"></p>
+<p>默认会按照资源占用率从高到低，显示 10 条数据。</p>
+<p>它上面的每项指标（flat&#x2F;flat%&#x2F;sum&#x2F;cum&#x2F;cum%）大致理解就是数值越大则资源占用情况越严重。结果默认按照 flat 排序。其指标含义的详细解释可以参考 <a target="_blank" rel="noopener" href="https://github.com/google/pprof/blob/main/doc/README.md">pprof 文档</a>：</p>
+<blockquote>
+<p>flat: the value of the location itself.<br>cum: the value of the location plus all its descendants.</p>
+</blockquote>
+<div class="note info"><p>cum 是 cumulative（累积） 的缩写。</p>
+</div>
+
+<p>我的理解是：</p>
+<ul>
+<li>flat：函数内所有直接语句的时间或内存消耗；</li>
+<li>cum：函数内所有直接语句，以及其调用的子函数的时间或内存消耗；</li>
+<li>sum：没有在文档中找到对应解释，但是通过观察可以发现，它是 flat% 的累加值。</li>
+</ul>
+<div class="note info"><p>通过一个例子来解释：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</span><br><span class="line">    a()                               <span class="comment">// step1，假设消耗 1s</span></span><br><span class="line">    b()                               <span class="comment">// step2，假设消耗 2s</span></span><br><span class="line">    time.Sleep(<span class="number">3</span> * time.Second)       <span class="comment">// step3，消耗 3s</span></span><br><span class="line">    c()                               <span class="comment">// step4，假设消耗 4s</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数总共将花费 <code>1 + 2 + 3 + 4 = 10</code> 秒，其中：</p>
+<ul>
+<li>flat 等于 3，因为该函数的直接操作只有 step3</li>
+<li>cum 包含所有直接语句以及子函数的消耗，即 step1 + step2 + step3 + step4</li>
+<li>step 4 的 sum% 为 step1、step2、step3、step4 的 flat% 总和</li>
+</ul>
+</div>
+
+<h3 id="list：显示详情"><a href="#list：显示详情" class="headerlink" title="list：显示详情"></a>list：显示详情</h3><p>当发现某个函数资源占用情况可疑时，可以通过 <code>list 函数名</code> 定位到具体的代码位置。举例：</p>
+<p><img src="/2023/go-pprof-note/011d3b578be449a796e550d80e9e364f.png"></p>
+<p>该案例显示，在第 666 行处，<code>dw</code> 占用了 8.81MB 的内存，667 行占用 5.95MB 内存，该函数合计占用 14.76 MB。</p>
+<div class="note info"><p>此处也可以对应到上面提及的 flat&#x2F;cum 含义：666 行计入 flat，666 + 667 行计入 cum。</p>
+</div>
+
+<h3 id="web：可视化分析"><a href="#web：可视化分析" class="headerlink" title="web：可视化分析"></a>web：可视化分析</h3><p>在使用 web 命令之前需要做一个准备工作：安装 <a target="_blank" rel="noopener" href="https://graphviz.gitlab.io/download/">Graphviz</a> 工具，并将它添加到系统 path 中。</p>
+<p>直接在命令行输入 <code>web</code>，pprof 将打开一个浏览器，并展示一个可视化的分析界面：</p>
+<p><img src="/2023/go-pprof-note/ed645cd64588431b8e6c11e29f7c6e46.png"></p>
+<p>在 web 界面上将显示函数的完整调用链路，界面可以通过鼠标拖拽、缩放。其图形详细的解释（来自 <a target="_blank" rel="noopener" href="https://github.com/google/pprof/blob/main/doc/README.md#interpreting-the-callgraph">pprof 文档</a>）：</p>
+<ul>
+<li>节点颜色与 cum 值有关：<ul>
+<li>正值大的为红色</li>
+<li>负值大的为绿色（负值通常在 profile 对比时出现）</li>
+<li>值接近 0 的为灰色</li>
+</ul>
+</li>
+<li>节点的字号与 flat 的绝对值有关：值越大则字号越大</li>
+<li>边的粗细与该路径下的资源使用有关：资源使用越多则线条越粗</li>
+<li>边的颜色与节点颜色类似</li>
+<li>边的形状：<ul>
+<li>虚线：两个节点之间的部分节点被移除了（间接调用）</li>
+<li>实现：两个节点之间存在直接调用关系</li>
+</ul>
+</li>
+</ul>
+<div class="note info"><p>粗略地来说，每个节点的方块越大、线条越粗、颜色越红，则代表资源占用情况（相对来说）越严重，需要重点关注。</p>
+</div>
+
+<p>对应上图的例子来说：</p>
+<ul>
+<li><code>(*Rand).Read</code> 的 flat 值较小（字号较小、灰色）</li>
+<li><code>(*compressor).deflate</code> 的 flat 值与 cum 值均较大（字号较大、红色）</li>
+<li><code>(*Writer).Flush</code> 的 flat 值较小（字号较小），但 cum 值较大（红色）</li>
+<li><code>(*Writer).Write</code> 与 <code>(*compressor).write</code> 之前的线条是较粗、红色的虚线，因此它们之间的某些节点被移除了，且使用的资源较多</li>
+<li><code>(*Rand).Read</code> 与 <code>read</code> 之前的线条是较细、灰色的虚线，因此它们之间的某些节点被移除了，且使用的资源较少</li>
+<li><code>read</code> 与 <code>(*rngSource).Int63</code> 之前的线条是较细、灰色的实线，因此它们之间存在直接调用关系，且使用的资源较少</li>
+</ul>
+<h3 id="sample-index：切换采样值"><a href="#sample-index：切换采样值" class="headerlink" title="sample_index：切换采样值"></a>sample_index：切换采样值</h3><p>某些监测类型会拥有多种采样值，可以通过 <code>help sample_index</code> 查看当前可用的采样值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(pprof) help sample_index</span><br><span class="line">Sample value to report (0-based index or name)</span><br><span class="line">Profiles contain multiple values per sample.</span><br><span class="line">Use sample_index=i to select the ith value (starting at 0).</span><br><span class="line">Or use sample_index=name, with name in [alloc_objects alloc_space inuse_objects inuse_space].</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>sample_index=i</code> 可以切换采样方式。切换后再次使用 top 命令，展示的结果将会有些区别。</p>
+<h2 id="pprof-的-Web-界面"><a href="#pprof-的-Web-界面" class="headerlink" title="pprof 的 Web 界面"></a>pprof 的 Web 界面</h2><p>可以通过 <code>go tool pprof -http=:8888 http://localhost:6060/debug/pprof/allocs</code> 命令直接打开一个 web 界面，这个 web 界面将拥有与命令行类似的功能，并且可以显示火焰图。同样，这个命令需要先安装 <a target="_blank" rel="noopener" href="https://graphviz.gitlab.io/download/">Graphviz</a> 工具。</p>
+<p><img src="/2023/go-pprof-note/149dcc3708494697bdcd2f4822adb34d.png"></p>
+<ul>
+<li>View 菜单展示的几项功能：<ul>
+<li>Top 与命令行的 top 类似</li>
+<li>Graph 与命令行的 web 类似</li>
+<li>Peek&#x2F;Source 与 list 命令类似：在 Top 选中一行，或者 Graph 选中一个节点后，切换到 Peek 或 Source 界面，将展示该行&#x2F;节点的代码详情</li>
+<li>Frame Graph 为火焰图</li>
+<li>Disassemble：查看汇编代码</li>
+</ul>
+</li>
+<li>Sample 菜单与命令行的 sample_index 类似</li>
+</ul>
+<h3 id="火焰图"><a href="#火焰图" class="headerlink" title="火焰图"></a>火焰图</h3><p>此处以 Frame Graph (new) 举例。</p>
+<p><img src="/2023/go-pprof-note/b428af1b09094765a67f58bfeb42e24d.png"></p>
+<p>解释：</p>
+<ul>
+<li>节点的颜色是由它的包名决定的，相同包名的节点将拥有相同的颜色</li>
+<li>节点的字号可能会有区别，但是与上面的图形不同的是，此处的字号仅为适应其节点大小，并无其它含义</li>
+<li>上方的节点为调用者，下方的节点为被调用者</li>
+<li>节点的宽度表示资源使用情况，越宽则资源使用越多<ul>
+<li>其总宽度代表 cum</li>
+<li>去除其子节点后，剩余的宽度代表 flat</li>
+</ul>
+</li>
+<li>如果上下节点之间没有边框，则表示这两个函数被“内联”了。关于内联的具体含义，可以参考 <a target="_blank" rel="noopener" href="https://medium.com/a-journey-with-go/go-inlining-strategy-limitation-6b6d7fc3b1be">Go: Inlining Strategy &amp; Limitation</a></li>
+</ul>
+<div class="note info"><p>一个函数可能会被多个不同的函数调用，因此 pprof 对传统的火焰图进行了改良：点击任意函数将显示所有最终导向该函数的调用栈，而非仅当前点击节点的调用栈。</p>
+</div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2023/go-pprof-note/" title="Go 语言性能调试与分析工具：pprof 用法简介">https://wxsm.space/2023/go-pprof-note/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/go/" rel="tag"># go</a>
+              <a href="/tags/pprof/" rel="tag"># pprof</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/1-month-of-backend-dev/" rel="prev" title="服务端开发一月记">
+                  <i class="fa fa-angle-left"></i> 服务端开发一月记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/etcd-queue-problem/" rel="next" title="etcd 队列引发的问题一则及源码解析">
+                  etcd 队列引发的问题一则及源码解析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2023/go-pprof-note/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

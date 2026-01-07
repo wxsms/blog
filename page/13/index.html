@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="wxsm&#39;s pace">
+<meta property="og:url" content="https://wxsm.space/page/13/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="blog,javascript,nodejs,vue,react,php,python,golang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/page/13/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/13/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wxsm's pace</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/2048-game-base-on-jquery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/2048-game-base-on-jquery/" class="post-title-link" itemprop="url">jQuery 写的 2048 小游戏</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-12-12 21:58:15" itemprop="dateCreated datePublished" datetime="2015-12-12T21:58:15+08:00">2015-12-12</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/2048-game-base-on-jquery/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/2048-game-base-on-jquery/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://static.wxsm.space/blog/48595779-3bf14f00-e991-11e8-9ec7-da797a7a4bd7.jpg" alt="2048"></p>
+<p>Game: <a target="_blank" rel="noopener" href="http://wxsms.github.io/jquery-2048/">http://wxsms.github.io/jquery-2048/</a></p>
+<p>Code：<a target="_blank" rel="noopener" href="https://github.com/wxsms/jquery-2048">https://github.com/wxsms/jquery-2048</a></p>
+<p>几年前还在学校的时候刚学 JS&#x2F;jQuery，为了找点事情练练手寻思着做点什么，当时又特别沉迷于一个叫 2048 的小游戏，于是就有了这么个东西。刚做出来的时候开心了好一阵子，现在回头看代码觉得简直惨不忍睹，根本不像是一个学过算法的人写出来的，字里行间充斥的都是简单与暴力。那时候主要是为了学一门新语言就没有在意这些东西。以后有时间再来优化一下。 在开始的时候是有记分，重启，排行榜一票功能的，现在为了纯粹一点就把垃圾都去掉了。代码过于恶臭就不说了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/mean-js-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/mean-js-note/" class="post-title-link" itemprop="url">MEAN.js 学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-12-10 16:35:33" itemprop="dateCreated datePublished" datetime="2015-12-10T16:35:33+08:00">2015-12-10</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/mean-js-note/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/mean-js-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://static.wxsm.space/blog/48595806-414e9980-e991-11e8-8e9c-1922fa56a501.png"></p>
+<p>之前一直以为 MEAN 只是一个概念上的东西，表示以 <a target="_blank" rel="noopener" href="http://mongodb.org/">Mongodb</a> <a target="_blank" rel="noopener" href="http://expressjs.com/">Express</a> <a target="_blank" rel="noopener" href="http://angularjs.org/">AngularJs</a> <a target="_blank" rel="noopener" href="http://nodejs.org/">NodeJs</a> 为基础的全栈应用开发模式。这几天在公司接手相应项目的时候发现已经有人做出来并且维护着一些这样的 App 结构体，用过以后觉得还不错。<a target="_blank" rel="noopener" href="https://github.com/meanjs/mean">MEANJS</a> 是一个开源的 JavaScript 全栈应用解决方案，主要用到的技术自然就是以上提到的那些。使用成熟的解决方案可以使自己的项目更加易于开发以及维护，等等好处就不再赘述。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/mean-js-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/git-ssh-key-gen-and-gitextension-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/git-ssh-key-gen-and-gitextension-configuration/" class="post-title-link" itemprop="url">Git SSH key 生成与 GitExtension 配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-12-08 16:26:07" itemprop="dateCreated datePublished" datetime="2015-12-08T16:26:07+08:00">2015-12-08</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/git-ssh-key-gen-and-gitextension-configuration/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/git-ssh-key-gen-and-gitextension-configuration/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用ssh key配置git可以省去每次操作时输入ID&#x2F;Password的麻烦，操作一旦频繁起来还是很有必要的。实际操作需要添加一些环境变量，或者到git&#x2F;bin目录下执行。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/git-ssh-key-gen-and-gitextension-configuration/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/first-mid-autumn-after-graduation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/first-mid-autumn-after-graduation/" class="post-title-link" itemprop="url">毕业后的第一个中秋</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-09-23 21:29:36" itemprop="dateCreated datePublished" datetime="2015-09-23T21:29:36+08:00">2015-09-23</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/first-mid-autumn-after-graduation/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/first-mid-autumn-after-graduation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>学生渐渐开学，才意识到毕业以来已经过了一个暑假的时间。公司为期三个月的培训终于快结束了，我也终于有空回家休息一段时间。培训结束后，感觉自己的变化除了学到的知识以外，就是多了一些自信，对很多东西的理解不再是处于未知或一知半解的状态。学习使人进步。</p>
+<p>挺久没有回过家，上一次应该是在五一的时候，所以比较想念家人。不知道家里现在是怎样的了，应该没有什么变化。前段时间出租屋的椅子坏了，往后靠就会摔倒，想买一把才发现椅子挺贵的，房东不给换，郁闷的时候想到在家里从来没有操心过类似的问题，只要跟爸爸或者妈妈说一句就会有替代品，虽然可能不合己意但却不需要付出任何代价。这些事情可能只有在独立生活后才能发现，饭要自己做，碗要自己洗，衣要自己晾，门要自己锁，下班回来累了一躺就是到半夜，醒来发现灯还亮着，门禁卡还戴着，一看手机早上四点多，这时候就能体会到一些孤独。体会到在家是多么的幸福。感谢爸妈给我的回忆里充满的都是快乐。</p>
+<p>马上过完今年的生日，我也要24岁了，人生走到了一个过渡期，从学生到打工者，从学校到到职场，时间过得这么快，觉得有一些不适。生活还没有转变过来，以后的路还那么长，对未知的未来充满了恐惧。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/ext-usage-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/ext-usage-summary/" class="post-title-link" itemprop="url">Ext 使用总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-09-19 15:36:18" itemprop="dateCreated datePublished" datetime="2015-09-19T15:36:18+08:00">2015-09-19</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/ext-usage-summary/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/ext-usage-summary/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>公司要求会用Ext Js，没办法必须学，下面总结了一些学习与使用过程中的经验。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/ext-usage-summary/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/blog-migration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/blog-migration/" class="post-title-link" itemprop="url">博客迁移</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-09-18 21:20:51" itemprop="dateCreated datePublished" datetime="2015-09-18T21:20:51+08:00">2015-09-18</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/blog-migration/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/blog-migration/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>原来的博客太简陋了（虽然现在依然很简陋），一直想改都没有时间，最近在公司培训了三个月的Java也发现自己差不多忘了怎么写C#代码，曾经觉得很顺手的IDE用起来也不习惯了，反正就是改不下去了。鉴于工作以后空闲时间变得捉襟见肘，最终还是放弃了自己动手的想法，直接用了模板博客。虽然没有了一切如己所愿的快感，但毕竟是开源软件，想怎么玩都可以，感觉还是不错的选择。</p>
+<p>7&#x2F;25&#x2F;2019 注：当时是迁移到了 WordPress</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/graduation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/graduation/" class="post-title-link" itemprop="url">毕业</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-06-09 01:09:40" itemprop="dateCreated datePublished" datetime="2015-06-09T01:09:40+08:00">2015-06-09</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/graduation/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/graduation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在家上中学的时候并不知道每天可以有家可归是一种怎样的幸福，直到后来再也没有这样的机会。如今人生已走过三分之一，想到以后都不会有机会在自己熟悉的地方长住，心里很不是滋味。有时候会想，如果目前还是自己一个人在生活的话，我就可以回到家这边来找一份不痛不痒的工作，先做个一两年。然而，看到以往的玩伴也渐渐走上正轨，供车供房，同学纷纷开始工作，读研留学，自己也会有些迷惘。尤其羡慕留学的朋友，从此以往告别这片神奇的土地。后悔大学没有好好学习，不然可以争取一些保研的机会，就不用这么早和自己的学生生涯说再（可以再打两年dota）。</p>
+<p>三分之一已经过去了，学生时代的一些人和一些事也都应该告一段落了，该奋斗的奋斗，该拼爹的拼爹，都要上路了，也没什么闲暇来和老同学扯淡。一些当年觉得很好的朋友，如今看来也不过如此，以后估计也难再有交集。虽然不知道自己以后还能走多远，但是想到人生过了这么长，没有留下多少美好的记忆，也没有交到很多很好的朋友，满房间的物件，却并没有承载很多过去，觉得自己虚度了很多光阴，却也无法弥补，就总是会觉得很伤感。小学时候的课本笔记等早已不知所踪，只留下一两张泛黄的照片，初中的记忆本该满满却没有珍惜，高中不谈，大学更差，就是dota的一千个日与夜。我以后再也不想通宵玩游戏了，每次看到天亮都十分不安。如果我以后有了小孩，一定会帮她（他）把成长过程中的物件都收拾整理好，待到长大，将会是珍贵的回忆。</p>
+<p>说到小孩，如今父母也会开始谈及小孩了，真是措手不及，我不还是个孩子吗，怎么就说到我的孩子了。你们一定是在逗我。</p>
+<p>感谢毕业照那天来看我的同学朋友们，当日一别，更不知道何时再见。</p>
+<p>大四最后一个学期都是在外居住，并不知道学校里的冷暖。周末回校，也只是洗洗衣服，打打游戏，完全感受不到自己还是一个在校学生。有一次在工作日请假回了学校，中午过了饭点仍自信下楼，才猛然想起原来大家还是要上课的，这会刚下课呢。这几年来我也算是有惊无险的体验了，挂了不少课，还好重修能过，马哲顺利，不然极有可能自信心受到打击从而陷入无尽轮回（需要感谢一下窦庆萍老师）。在知道自己大四上没有挂科，毋须延迟毕业后，心里面真的是很轻松，那么我也算是走过来了。</p>
+<p>大学的同学里，我并没有与很多人熟识，也没有交到许多朋友，有几位可能甚至四年来都没有说过一句话，不过也不能完全怪我，我们的专业选得好，完全不用与人交流。谢师宴过后，很多人我仍然是只知道名字，其它一无所知，可能再也不会有机会相见了，然而我并不在乎，因为本来就跟不认识一样。对事不对人，自己的大学生活失败，与同学无关。</p>
+<p>工作的地方在唐家湾的软件园，近期也可能会一直住在这一片，在珠海的同学朋友没事可以来找我玩，有活动也可以带上我，有麻烦如果能帮上忙也请找我。从学校到工作地点的一路上都是海岸，大概有二十多公里，每次经过都觉得很舒服，然而不知道台风会不会封路。</p>
+<p>有一个正经的女朋友会给自己带来压力与动力，同时也会非常大程度地限制自己的自由，不能想去哪里就去哪里，不能想做什么就做什么，这点让我非常不自在。也许现在到了一个我需要照顾别人的时候，但是我还没有完全准备好。并没有想到大学最后一年能找到女朋友，我也没有准备好。要出外工作，住两三年出租屋，同样没有准备好。 我本来只是一个呆在宿舍每天打dota的大学生，现在生活需要做出这么大的转变，有点不知所措。独生儿习惯了被照顾，现在要开始学会自己打理一切，总有些转不过来。说到底，我就是想呆在家里睡觉。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2014/2014-11-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/2014-11-11/" class="post-title-link" itemprop="url">2014-11-11</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2014-11-11 20:44:32" itemprop="dateCreated datePublished" datetime="2014-11-11T20:44:32+08:00">2014-11-11</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2014/2014-11-11/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2014/2014-11-11/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>之前写过一篇很长的关于异形的东西，不知道为什么发不出来。可能有关键字被和谐了，但我又找不到，后来草稿不知道为什么也没有了，明明保存了的。没有了我也不想再重新写一遍了。 说一下最近看过的一些有点意思的电影。</p>
+<p>先说印象比较深的，Atonement（中文名《赎罪》），其实这电影发展过程一般吧，主要的亮点是在结局，当然我也不能说太多，否则剧透了就很没意思了。当时我是很惊讶的，一部电影成功真的很靠原著小说以及剧本。这是一个悲剧，西方，二战时期，题材为爱情。另外一个亮点在于打字机的使用，作为配音是很独特的存在，当时也刚好ios有一个打字机应用（好像是靠汤姆汉克斯宣传的），所以印象比较深刻。</p>
+<p>然后是李安的《色戒》，这部电影出了那么久一直没有看， 可能主要是被大多数人对它的关注点误导了，觉得看这种电影还不如去看爱情动作片。后来发现其实色戒是一部非常优秀的电影吧，只能说非常优秀。也是悲剧，中国，抗战时期，题材为爱情，谍战。其实我推荐家里人看这部电影的，比如爸妈，因为好像大家都比较喜欢看谍战剧，然而关于谍战的电影很少，也少有优秀的作品。色戒的背景内容庞大，但整部电影的视角一直限制得很小，剧情紧凑，毫不拖沓，主题突出，以小窥大，得益于李安深厚的功力。</p>
+<p>后来有一段时间比较无聊，看完了《异形》系列。由于刚才说的原因，我都没兴趣多写了。反正我感触还是很深的，但电影其实拍的一般般，可能是年代的原因现在看来没什么触动。它的题材很好，期待普罗米修斯的续集。</p>
+<p>说到科幻片，最近也看过一些科幻片，主要是因为之前看了阿汤哥的《明日边缘》，对科幻片的热情又高涨了。明日边缘真的是一部非常，非常，非常优秀的科幻片，我甚至觉得是我看过的最优秀的科幻片，可能有些夸张了，但就像当年看完盗梦空间以后难以抑制自己激动的心情，一定要给这部电影打满分的感觉，明日边缘也是这样的一部电影。相比于其它的外星人入侵地球的电影，明日边缘对于外星人的设想非常有意思，以至于电影也陷入了一种很特别的节奏。如果仔细想想的话，它的看似狗血的结局也是非常值得推敲的。这部电影的题材是科幻，外星人，四维空间，拯救地球。美国，未来。</p>
+<p>然后还看了邓肯琼斯导演的《月球》，这部电影相比明日边缘就比较文艺了，但同样有比较特别的剧情，看似科幻片，我觉得其实是一个关于人类道德的电影。另外比较特别的一点是，这是一部独角戏（参考《我是传奇》），一般来说这种电影逼格都比较高，这部电影也是如此啦。然后它除了剧情设定以外并没有其它的比较大的亮点，所以总体感觉一般吧。美国，未来，题材为科幻，克隆。</p>
+<p>另外看了《机器纪元》 以后，觉得最近的科幻片都比较探讨人性啊，都不是在往科幻片应有的路子在走。这部片子说的东西还是挺有意思的，不过剧本感觉缺少冲击力，就是没什么能让人感到眼前一亮的东西，比较平淡的电影。之前上人工智能课的时候听周密说，“人类需要完成的最后一个发明就是智能机器人”，这部电影说的就是这个啦！为了让智能机器人不成为人类的最后一个发明，人类为其设定了两个原则，一是机器人不能伤害任何生物，二是机器人不能维修自己。但是智能机器人明明比人类要智能得多，又有什么技术制定的原则能限制得了智能机器人呢。美国，未来，题材为科幻，机器人。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2014/nearing-the-duan-wu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/nearing-the-duan-wu/" class="post-title-link" itemprop="url">临近端午</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2014-05-29 20:46:52" itemprop="dateCreated datePublished" datetime="2014-05-29T20:46:52+08:00">2014-05-29</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2014/nearing-the-duan-wu/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2014/nearing-the-duan-wu/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>很久没有回过家，也没有关心过家里的情况了。今天和妈妈说了几句话，得知最近有发烧生病，虽然说已经好了，但还是觉得不知道怎么的。五十多岁了，一个人在广州上班，没亲没戚的，生了病也没哪个照顾，也不跟我说。婆婆去世以后我就应该要照顾我妈了，去年在赣州大姨也跟我说过，可惜还没有毕业，分身乏术。唉，真是忧伤。真希望你退休了吧，别干了。</p>
+<p>天气变得很热很闷，情绪也变得特别容易坏，很可能因为一些琐碎事情发脾气，像今天早上，本来不应该发生这样的事的，我应该更关心你一些，而不是独自生闷气。现在想来确实后悔，不过微信是真的没有必要了。</p>
+<p>这学期过的很快，感觉是大学这么久以来最快的了吧，已经快十四周了，又要结束了。过得快的原因大概有几方面，一直很忙，基本没停过，到现在也是很多事情在做，都接近尾声但又没有结束，所以有时候会觉得很多事情要做但又不知道要做什么。遗憾的是还没有找到实习，暑假仍没有着落。这学期和web有关的东西做的比较多，不过我不太希望这是最终的方向。</p>
+<p>找了一个女朋友，很喜欢，希望可以有多远走多远。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2014/2014-01-29/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/2014-01-29/" class="post-title-link" itemprop="url">2014-01-29</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2014-01-29 00:56:24" itemprop="dateCreated datePublished" datetime="2014-01-29T00:56:24+08:00">2014-01-29</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2014/2014-01-29/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2014/2014-01-29/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>很快就过年了。</p>
+<p>回了一次赣州，小姑的生意越做越大了，店面越来越多，小时候第一次去广州好像还是在一个住房里做事，应该十多年了吧，跟着老妈参加了他们的年会，很多比我小的男孩都参加工作了，家里的两个弟弟也都在工作，唯独我还在读书，有种说不出的感觉。郭慧姐应该快生小孩了吧，罗云哥嫂子的小孩也快了，不知道会叫什么名字呢。奶奶身体好像还不错，挺好的。</p>
+<p>在大姨家住了几天，大姨做的菜还是很好吃，比婆婆做的都要好吃，但是有些东西还是婆婆做的更熟悉。谢金宏读五年级了，看起来还是小时候那个样子，不过这次没有看到他哭，大概也算长大了一点。后来感冒了，很不舒服。去水东走了一次，姑奶家养了很多狗，有小狗也有老狗，婆婆家的房子还有人住，不过是租给的别人，记忆已模糊得不可辨识。</p>
+<p>前天回家，昨天宅掉，今天出去走了一圈，没什么变化。最近发现自己变得犹豫了很多，不喜欢这样，一直觉得自己做起事来都是干净利落的，但这次不知道为什么。真的很抱歉，让你看到一个这么寡断的我。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/14/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/page/13/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

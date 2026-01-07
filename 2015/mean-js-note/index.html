@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="之前一直以为 MEAN 只是一个概念上的东西，表示以 Mongodb Express AngularJs NodeJs 为基础的全栈应用开发模式。这几天在公司接手相应项目的时候发现已经有人做出来并且维护着一些这样的 App 结构体，用过以后觉得还不错。MEANJS 是一个开源的 JavaScript 全栈应用解决方案，主要用到的技术自然就是以上提到的那些。使用成熟的解决方案可以使自己的项目更加易">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MEAN.js 学习笔记">
+<meta property="og:url" content="https://wxsm.space/2015/mean-js-note/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="之前一直以为 MEAN 只是一个概念上的东西，表示以 Mongodb Express AngularJs NodeJs 为基础的全栈应用开发模式。这几天在公司接手相应项目的时候发现已经有人做出来并且维护着一些这样的 App 结构体，用过以后觉得还不错。MEANJS 是一个开源的 JavaScript 全栈应用解决方案，主要用到的技术自然就是以上提到的那些。使用成熟的解决方案可以使自己的项目更加易">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static.wxsm.space/blog/48595806-414e9980-e991-11e8-8e9c-1922fa56a501.png">
+<meta property="article:published_time" content="2015-12-10T08:35:33.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.166Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="mongodb">
+<meta property="article:tag" content="angularjs">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="express">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.wxsm.space/blog/48595806-414e9980-e991-11e8-8e9c-1922fa56a501.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2015/mean-js-note/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2015/mean-js-note/","path":"2015/mean-js-note/","title":"MEAN.js 学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MEAN.js 学习笔记 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EMEAN"><span class="nav-number">1.</span> <span class="nav-text">关于MEAN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">2.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-MEANJS-APP"><span class="nav-number">3.</span> <span class="nav-text">启动 MEANJS APP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">安装依赖模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-Mongodb"><span class="nav-number">3.2.</span> <span class="nav-text">启动 Mongodb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">3.3.</span> <span class="nav-text">启动服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EGrunt"><span class="nav-number">3.4.</span> <span class="nav-text">关于Grunt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">3.4.1.</span> <span class="nav-text">插件配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.4.2.</span> <span class="nav-text">注册任务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">项目结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">根目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.</span> <span class="nav-text">模块结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2015/mean-js-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MEAN.js 学习笔记 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MEAN.js 学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-12-10 16:35:33" itemprop="dateCreated datePublished" datetime="2015-12-10T16:35:33+08:00">2015-12-10</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2015/mean-js-note/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2015/mean-js-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://static.wxsm.space/blog/48595806-414e9980-e991-11e8-8e9c-1922fa56a501.png"></p>
+<p>之前一直以为 MEAN 只是一个概念上的东西，表示以 <a target="_blank" rel="noopener" href="http://mongodb.org/">Mongodb</a> <a target="_blank" rel="noopener" href="http://expressjs.com/">Express</a> <a target="_blank" rel="noopener" href="http://angularjs.org/">AngularJs</a> <a target="_blank" rel="noopener" href="http://nodejs.org/">NodeJs</a> 为基础的全栈应用开发模式。这几天在公司接手相应项目的时候发现已经有人做出来并且维护着一些这样的 App 结构体，用过以后觉得还不错。<a target="_blank" rel="noopener" href="https://github.com/meanjs/mean">MEANJS</a> 是一个开源的 JavaScript 全栈应用解决方案，主要用到的技术自然就是以上提到的那些。使用成熟的解决方案可以使自己的项目更加易于开发以及维护，等等好处就不再赘述。</p>
+<span id="more"></span>
+
+<h2 id="关于MEAN"><a href="#关于MEAN" class="headerlink" title="关于MEAN"></a>关于MEAN</h2><p>本文主要关注 MEANJS本 身，对于MEAN之中的种种技术就不再多做介绍。下面贴MEANJS给出的一些链接。</p>
+<ul>
+<li>MongoDB - Go through <a target="_blank" rel="noopener" href="http://mongodb.org/">MongoDB Official Website</a> and proceed to their <a target="_blank" rel="noopener" href="http://docs.mongodb.org/manual/">Official Manual</a>, which should help you understand NoSQL and MongoDB better.</li>
+<li>Express - The best way to understand express is through its <a target="_blank" rel="noopener" href="http://expressjs.com/">Official Website</a>, which has a <a target="_blank" rel="noopener" href="http://expressjs.com/starter/installing.html">Getting Started</a> guide, as well as an <a target="_blank" rel="noopener" href="http://expressjs.com/guide/error-handling.html">ExpressJS Guide</a> guide for general express topics. You can also go through this <a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/8144214/learning-express-for-node-js">StackOverflow Thread</a> for more resources.</li>
+<li>AngularJS - Angular’s <a target="_blank" rel="noopener" href="http://angularjs.org/">Official Website</a> is a great starting point. You can also use <a target="_blank" rel="noopener" href="http://www.thinkster.io/">Thinkster Popular Guide</a>, and the<a target="_blank" rel="noopener" href="https://egghead.io/">Egghead Videos</a>.</li>
+<li>Node.js - Start by going through <a target="_blank" rel="noopener" href="http://nodejs.org/">Node.js Official Website</a> and this <a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js">StackOverflow Thread</a>, which should get you going with the Node.js platform in no time.</li>
+</ul>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><p>作为一个集大成者，MEANJS 需要的运行环境还是挺多的，但是相对 Java 项目来说简直不值一提。</p>
+<ul>
+<li><strong>NodeJs</strong> - 没有 Node 谈何 MEAN，注意的是目前的 MEANJS 版本（0.3.x）还不支持最新的 5.x NodeJs，我就中了这招</li>
+<li><strong>MongoDB</strong> - 和 NodeJs 的集成比较好，下载安装包一路 next 即可</li>
+<li><strong>Ruby&#x2F;Python&#x2F;.Net 2+</strong> - 一些 Node 的模块需要用到这些东西，毕竟 Node 只是一个 runtime，在服务器端一些稍微底层的操作还是要用到其他东西（12-14-2015更新：Python必须是 2.x 版本）</li>
+<li><strong>Bower</strong> - 前端包管理器，和 npm 组成一前一后的完整管理体系，相当于 Java 的 Maven</li>
+<li><strong>Grunt&#x2F;Grunt CLI</strong> - JavaScript 世界的自动化工具，重复工作全靠它。CLI 是 Grunt 的命令行工具。</li>
+<li><strong>Sass&#x2F;Less</strong> - MEANJS 用到了 Sass 去编译 CSS，所以也要添加它的支持。其实我个人感觉这个有点多余了。</li>
+</ul>
+<h2 id="启动-MEANJS-APP"><a href="#启动-MEANJS-APP" class="headerlink" title="启动 MEANJS APP"></a>启动 MEANJS APP</h2><h3 id="安装依赖模块"><a href="#安装依赖模块" class="headerlink" title="安装依赖模块"></a>安装依赖模块</h3><p>完成以上安装以及相应环境变量的配置以后，就可以准备启动 MEANJS 服务器了。首先需要在文件夹根目录运行 <code>$ npm install</code> 指令，根据 Readme 中的说法，这条指令做了以下的事情：</p>
+<ol>
+<li>安装运行所需的 Node 模块</li>
+<li>如果是测试环境则安装开发测试所需的 Node 模块</li>
+<li>最后执行 bower 安装前端模块</li>
+</ol>
+<p>不过我在最后一步有时候会遇到问题，需要手动再进行一次 <code>$ bower install</code>，另外，npm 的官方源在大陆访问并不稳定，可以使用 <a target="_blank" rel="noopener" href="http://npm.taobao.org/">淘宝镜像</a> 替代，Ruby 也是同理：<a target="_blank" rel="noopener" href="https://ruby.taobao.org/">Ruby镜像</a> 。</p>
+<p>12-14-2015 更新：这一步容易出现问题，一般仔细看 Log 都能找到问题所在，无非是哪个依赖没有配置环境变量&#x2F;版本不对等，重新配置好以后删除 <code>Node_modules</code> 文件夹再重新运行命令。</p>
+<h3 id="启动-Mongodb"><a href="#启动-Mongodb" class="headerlink" title="启动 Mongodb"></a>启动 Mongodb</h3><p>因为 MEANJS 默认为我们做了一个简单的用户注册登录模块，里面有一些数据库的增删查改，所以在启动服务器之前需要先启动数据库。随便找一个地方打开控制台输入 <code>$ mongod --dbpath ***</code>，<code>\***</code> 处填写一个路径，<code>mongod</code> 就能够在指定位置创建一个文件型数据库并连接之，如果该位置已存在数据库文件则会直接打开连接。</p>
+<h3 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a>启动服务器</h3><p>在以上都准备完成以后，我们就可以在项目根目录通过一条简单的指令 <code>$ grunt</code> 来启动服务器了，启动成功后可以在 <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000</a> 看到项目主页。</p>
+<h3 id="关于Grunt"><a href="#关于Grunt" class="headerlink" title="关于Grunt"></a>关于Grunt</h3><p><code>$ grunt</code> 这条指令会读取项目目录下的 <code>gruntfile.js</code>** **文件，并执行文件中定义的 task。MEANJS 的文档中并没有对其功能进行说明，以下是我的解读：</p>
+<h4 id="插件配置"><a href="#插件配置" class="headerlink" title="插件配置"></a>插件配置</h4><p>以下都是 grunt task 中用到的插件的相关配置，具体插件以及相关文档都可以在 <a target="_blank" rel="noopener" href="http://www.gruntjs.net/plugins">Grunt插件页面</a> 找到。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="attr">env</span>: &#123;</span><br><span class="line">  <span class="attr">test</span>: &#123;</span><br><span class="line">    <span class="attr">NODE_ENV</span>: <span class="string">&#x27;test&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">dev</span>: &#123;</span><br><span class="line">    <span class="attr">NODE_ENV</span>: <span class="string">&#x27;development&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">prod</span>: &#123;</span><br><span class="line">    <span class="attr">NODE_ENV</span>: <span class="string">&#x27;production&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>env</strong> 定义了三个服务器的运行环境：测试，开发，以及产品，在文件的最后会用到。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//......</span></span><br><span class="line">defaultAssets = <span class="built_in">require</span>(<span class="string">&#x27;./config/assets/default&#x27;</span>),</span><br><span class="line">testAssets = <span class="built_in">require</span>(<span class="string">&#x27;./config/assets/test&#x27;</span>),</span><br><span class="line"><span class="comment">//......</span></span><br><span class="line"><span class="attr">watch</span>: &#123;</span><br><span class="line">  <span class="attr">serverViews</span>: &#123;</span><br><span class="line">    <span class="attr">files</span>: defaultAssets.<span class="property">server</span>.<span class="property">views</span>,</span><br><span class="line">    <span class="attr">options</span>: &#123;</span><br><span class="line">      <span class="attr">livereload</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//......</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>watch</strong> 指定了动态监听的目录&#x2F;文件，可以看到在每一个 View&#x2F;Js&#x2F;Css 监听列表中都加入了 <code>livereload</code> 选项，这个选项的作用是当被监听的文件发生变化时，浏览器会自动刷新。不过 watch 会再创建一个监听端口（默认为 35729），打开 <a target="_blank" rel="noopener" href="http://localhost:35729/">http://localhost:35729/</a> 可以发现。被加载的首先是配置文件 <code>./config/assets/default.js</code> 与相应的 <code>test.js</code> 等，然后再配置文件内可以找到文件列表，其中已经包括已经用到的以及将来会加入的文件（通过通配符实现），只要我们在开发时把文件放在相应结构位置上，grunt 就会自动监听。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="attr">nodemon</span>: &#123;</span><br><span class="line">  <span class="attr">dev</span>: &#123;</span><br><span class="line">    <span class="attr">script</span>: <span class="string">&#x27;server.js&#x27;</span>,</span><br><span class="line">    <span class="attr">options</span>: &#123;</span><br><span class="line">      <span class="attr">nodeArgs</span>: [<span class="string">&#x27;--debug&#x27;</span>],</span><br><span class="line">      <span class="attr">ext</span>: <span class="string">&#x27;js,html&#x27;</span>,</span><br><span class="line">      <span class="attr">watch</span>: _.<span class="title function_">union</span>(defaultAssets.<span class="property">server</span>.<span class="property">gruntConfig</span>, defaultAssets.<span class="property">server</span>.<span class="property">views</span>, defaultAssets.<span class="property">server</span>.<span class="property">allJS</span>, defaultAssets.<span class="property">server</span>.<span class="property">config</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>nodemon</code> 配置了服务器自动重启。当 server 端的 config&#x2F;views&#x2F;js 文件发生变化时，<code>server.js</code> 脚本就会自动执行。由于只是服务器的重启而不是重新执行 grunt，所以几乎是秒速。以前用过一些类似的 node module 叫 supervisor 和 forever，不过这个集成到了 grunt task 中。写过 JavaEE project 的人再用这个才能体会到时间的宝贵。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="attr">concurrent</span>: &#123;</span><br><span class="line">  <span class="attr">default</span>: [<span class="string">&#x27;nodemon&#x27;</span>, <span class="string">&#x27;watch&#x27;</span>],</span><br><span class="line">  <span class="attr">debug</span>: [<span class="string">&#x27;nodemon&#x27;</span>, <span class="string">&#x27;watch&#x27;</span>, <span class="string">&#x27;node-inspector&#x27;</span>],</span><br><span class="line">  <span class="attr">options</span>: &#123;</span><br><span class="line">    <span class="attr">logConcurrentOutput</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>concurrent</code> 插件可以使任务并发执行，让前端与服务器端监听同时在一个终端窗口中执行&#x2F; Log</p>
+<p><code>cshint/csslint</code> 这两个插件主要是为了在 build 的时候顺便检查一下 js&#x2F;css 文件中有没有常见的 warning &#x2F; error，存在 error 时会停止 build task 并给出提示，不过控制台输出用户体验不是很好，开发过程中作用不大，我们都有 IDE，需要作为产品上线时跑一遍可能会更有参考价值。</p>
+<p>后面的 <code>ngAnnotae</code> 插件可以在build的过程中对 angular js 的 annotation 进行简化以减少代码量，提高效率，属于锦上添花型。<code>uglify/cssmin</code> 则相应地执行 js&#x2F;css 代码压缩任务。至于 <code>sass/less</code> 很明显就是 css 编译器了。再之后的多是 debug &#x2F; test 插件。</p>
+<h4 id="注册任务"><a href="#注册任务" class="headerlink" title="注册任务"></a>注册任务</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">grunt.<span class="title function_">registerTask</span>(<span class="string">&#x27;taskName&#x27;</span>, [<span class="string">&#x27;***&#x27;</span>, <span class="string">&#x27;***&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>类似像这样的代码就是向grunt注册一个任务，第二个数组参数则是注册任务的内容，里面可以填另一个任务的名字或者是插件的名字，或者直接填写 function 取代该数组。通过在控制台输入 <code>$ grunt taskName</code> 执行任务，而不输入 taskName 的话则是执行 default 任务，当前 <code>gruntfile.js</code> 中的 default task 如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Run the project in development mode</span></span><br><span class="line">grunt.<span class="title function_">registerTask</span>(<span class="string">&#x27;default&#x27;</span>, [<span class="string">&#x27;env:dev&#x27;</span>, <span class="string">&#x27;lint&#x27;</span>, <span class="string">&#x27;mkdir:upload&#x27;</span>, <span class="string">&#x27;copy:localConfig&#x27;</span>, <span class="string">&#x27;concurrent:default&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>这个任务里面包含了一些子任务，就不一一说明了，有兴趣的可以自行查看，到这里终于可以说说 <code>$ grunt</code> 指令到底做了什么：</p>
+<ol>
+<li>设置运行环境为 dev，即开发</li>
+<li>执行 js&#x2F;css 等文件的语法检查</li>
+<li>确保上传路径存在（MEANJS 默认带了一个用户上传头像的功能）</li>
+<li>加载一个自定义配置文件（里面可以填写 db 以及一些 api key 等信息）</li>
+<li>default 模式启动 concurrent 前后端热部署</li>
+</ol>
+<p>可以看到这里面并没有启动服务器的指令，其实在nodemon中已经配置了服务器入口即 <code>server.js</code>。于是在所有准备工作完成后，开发环境的服务器就启动起来了。</p>
+<p>当然 gruntfile 中也包含了 dev 以及 tes t环境的 task，需要切换运行环境的时候只需要在 grunt 命令中加入相应参数即可，还是比较方便的。</p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><h3 id="根目录结构"><a href="#根目录结构" class="headerlink" title="根目录结构"></a>根目录结构</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├── bower.json</span><br><span class="line">├── config</span><br><span class="line">├── gruntfile.js</span><br><span class="line">├── modules</span><br><span class="line">├── package.json</span><br><span class="line">└── server.js</span><br></pre></td></tr></table></figure>
+
+<p>以上是精简过后的根目录组成，不包括node_modules和public文件夹，以及一些optional和test相关的文件。</p>
+<ul>
+<li><strong>bower.json&#x2F;package.json</strong> - 前端&#x2F;后端依赖说明文件，需要添加依赖时在文件里指定 ID &#x2F;版本，再运行 <code>$ bower install</code> 或者 <code>$ npm install</code> 就会将指定包下载到 <code>node_modules/public</code> 文件夹中</li>
+<li><strong>gruntfile.js</strong> - grunt 任务配置文件</li>
+<li><strong>server.js</strong> - 服务器启动文件</li>
+<li><strong>config</strong> - 配置文件</li>
+<li><strong>modules</strong> - App 模块，也就是需要我们大量写代码的地方了，可以看到 MEANJS 项目已经包含了若干模块，我们可以在这基础之上添加自己的业务逻辑，或者推到重来</li>
+</ul>
+<p>由于 MEANJS 的目录原则是模块优先，所以前后端的 MVC 会在相应模块目录内得到体现，这点与使用 express js 创建的目录结构有所区别。不过之前公司一位 STE share ExtJs 的时候提到其实都是大同小异，反正到最后目录结构都会变得臃肿。</p>
+<h3 id="模块结构"><a href="#模块结构" class="headerlink" title="模块结构"></a>模块结构</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">modules</span><br><span class="line">│   └── moduleName</span><br><span class="line">│       ├── client</span><br><span class="line">│       │   ├── config</span><br><span class="line">│       │   ├── controllers</span><br><span class="line">│       │   ├── css</span><br><span class="line">│       │   ├── img</span><br><span class="line">│       │   ├── services</span><br><span class="line">│       │   └── views</span><br><span class="line">│       └── server</span><br><span class="line">│           ├── config</span><br><span class="line">│           ├── controllers</span><br><span class="line">│           ├── models</span><br><span class="line">│           ├── policies</span><br><span class="line">│           ├── routes</span><br><span class="line">│           └── templates</span><br></pre></td></tr></table></figure>
+
+<p>一个模块一般包含以上目录，首先从前端&#x2F;后端分开，然后是各自的配置&#x2F; MVC，非常科学。值得一提的是每个模块各自用到的独立 css &#x2F; image 等资源也是分开存放的，grunt 会在 build 的时候把它们全部读取并且载入，如果是 production 环境更会将同类压缩到一个文件中去，所以我们并不需要写很多的 include 之流。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>相对于手动使用 MEAN 各项技术结合写程序来说，使用 MEANJS 解决方案可以让我们更方便且快速地搭建项目，并且使我们不用太过于关注业务逻辑以外的问题，开发效率在全栈统一的保证下又提高了不少，不得不说确实是值得中小型项目去研究并且尝试使用一下。至于企业级大型项目，不知道有没有研究或者什么公司尝试过，不太清楚是否适合。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2015/mean-js-note/" title="MEAN.js 学习笔记">https://wxsm.space/2015/mean-js-note/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/mongodb/" rel="tag"># mongodb</a>
+              <a href="/tags/angularjs/" rel="tag"># angularjs</a>
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+              <a href="/tags/express/" rel="tag"># express</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/git-ssh-key-gen-and-gitextension-configuration/" rel="prev" title="Git SSH key 生成与 GitExtension 配置">
+                  <i class="fa fa-angle-left"></i> Git SSH key 生成与 GitExtension 配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/2048-game-base-on-jquery/" rel="next" title="jQuery 写的 2048 小游戏">
+                  jQuery 写的 2048 小游戏 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2015/mean-js-note/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

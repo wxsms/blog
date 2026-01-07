@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="在没有包管理器之前正确来说 Node.js 是不存在没有包管理器的时期的。从 A brief history of Node.js 里面可以看到，当 2009 年 Node.js 问世的时候 NPM 的雏形也发布了。当然因为 Node.js 跟前端绑得很死，这里主要谈一谈前端在没有包管理器的时期是怎样的。 那时候做得最多的事情就是：  网上寻找各软件的官网，比如 jQuery； 找到下载地址，下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js 包管理器发展史">
+<meta property="og:url" content="https://wxsm.space/2021/npm-history/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="在没有包管理器之前正确来说 Node.js 是不存在没有包管理器的时期的。从 A brief history of Node.js 里面可以看到，当 2009 年 Node.js 问世的时候 NPM 的雏形也发布了。当然因为 Node.js 跟前端绑得很死，这里主要谈一谈前端在没有包管理器的时期是怎样的。 那时候做得最多的事情就是：  网上寻找各软件的官网，比如 jQuery； 找到下载地址，下载">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/789e830b6b4247a9807fa4639815b53c.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/6cb8e2d058f24013bb676be47b50d8a0.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/bd96f102244c4a498c544bf759266e81.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/77ed4d7193bb4cf8b1125915e1b532ad.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/c28854e4264a401e8a1e33d53e3d8397.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/53b38bd1375e42f5b66151d782598f7b.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/1d2e4d8068d34d24aadb23a5b27e07d3.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/281c08a568254878bd9c2c04e12a199c.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/032ed620f28b4399ac6ac0c126b0c90c.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/d51b29d640de4f6fa97858e68db9144a.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/17d47edd486b4a67ad6462bacd1a4c94.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/9eb92971cb044cb3a05c62a43dd23142.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/79bed46a30504448bb38f03bf47084fa.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/2d30a4d64bd54a1db200eb317798da85.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/91ba2aeacbb640fe931c2b3f9e762b2b.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/bdb7f88e64b8463387c78f563e709ce4.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/a167fbb7eb1a4e068bdfd9b2aa3c1f4e.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/8f1ef8b7ea174596bdc8b6ebf0601dc0.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/5d35909dba0c443cbc67ece57750fb92.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/8909e5d0c4b747f787b3787314f7e8d8.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/88b24d6586164844971a21531cb4fe40.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/7601019bdc044ca786896c2d54de955a.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/92c7961c84ae4c64a15588cfad9b4294.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/672ca3805fb342a988899ee8fc0bcc31.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/27ade74c8a634c0890e78052594d3321.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/74e9d763d51b4d02a39c8b8628be2f35.png">
+<meta property="og:image" content="https://wxsm.space/2021/npm-history/4c43709b3dbd431a95fc6cfb42ca828c.png">
+<meta property="article:published_time" content="2021-11-08T04:56:13.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.167Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="npm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxsm.space/2021/npm-history/789e830b6b4247a9807fa4639815b53c.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2021/npm-history/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2021/npm-history/","path":"2021/npm-history/","title":"Node.js 包管理器发展史"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Node.js 包管理器发展史 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%B2%A1%E6%9C%89%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E4%B9%8B%E5%89%8D"><span class="nav-number">1.</span> <span class="nav-text">在没有包管理器之前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-v1-v2"><span class="nav-number">2.</span> <span class="nav-text">npm v1-v2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#node-modules-%E4%BD%93%E7%A7%AF%E8%BF%87%E5%A4%A7"><span class="nav-number">2.1.</span> <span class="nav-text">node_modules 体积过大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node-modules-%E5%B5%8C%E5%A5%97%E5%B1%82%E7%BA%A7%E8%BF%87%E6%B7%B1"><span class="nav-number">2.2.</span> <span class="nav-text">node_modules 嵌套层级过深</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Yarn-npm-v3"><span class="nav-number">3.</span> <span class="nav-text">Yarn &amp; npm v3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E9%94%81"><span class="nav-number">3.1.</span> <span class="nav-text">依赖锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9C%E5%8F%8C%E8%83%9E%E8%83%8E%E9%99%8C%E7%94%9F%E4%BA%BA%E2%80%9D%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">“双胞胎陌生人”问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9C%E5%B9%BD%E7%81%B5%E4%BE%9D%E8%B5%96%E2%80%9D%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">“幽灵依赖”问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Workspace"><span class="nav-number">3.4.</span> <span class="nav-text">Workspace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lerna"><span class="nav-number">3.5.</span> <span class="nav-text">Lerna</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pnpm"><span class="nav-number">4.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%96%84%E7%94%A8%E9%93%BE%E6%8E%A5"><span class="nav-number">4.1.</span> <span class="nav-text">善用链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">4.1.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E9%97%B4%E6%8E%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">4.1.2.</span> <span class="nav-text">处理间接依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E7%9B%B4%E6%8E%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">4.1.3.</span> <span class="nav-text">处理直接依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E6%9B%B4%E6%B7%B1%E5%B1%82%E6%AC%A1%E7%9A%84%E9%97%B4%E6%8E%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">4.1.4.</span> <span class="nav-text">处理更深层次的间接依赖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-number">4.2.</span> <span class="nav-text">性能对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%A7%A3%E5%86%B3%E9%94%81%E5%86%B2%E7%AA%81"><span class="nav-number">4.3.</span> <span class="nav-text">自动解决锁冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.4.</span> <span class="nav-text">存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rush"><span class="nav-number">4.5.</span> <span class="nav-text">Rush</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2021/npm-history/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Node.js 包管理器发展史 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node.js 包管理器发展史
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-08 12:56:13" itemprop="dateCreated datePublished" datetime="2021-11-08T12:56:13+08:00">2021-11-08</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/npm-history/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2021/npm-history/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="在没有包管理器之前"><a href="#在没有包管理器之前" class="headerlink" title="在没有包管理器之前"></a>在没有包管理器之前</h2><p>正确来说 Node.js 是不存在没有包管理器的时期的。从 <a target="_blank" rel="noopener" href="https://nodejs.dev/learn/a-brief-history-of-nodejs">A brief history of Node.js</a> 里面可以看到，当 2009 年 Node.js 问世的时候 NPM 的雏形也发布了。当然因为 Node.js 跟前端绑得很死，这里主要谈一谈前端在没有包管理器的时期是怎样的。</p>
+<p>那时候做得最多的事情就是：</p>
+<ol>
+<li>网上寻找各软件的官网，比如 jQuery；</li>
+<li>找到下载地址，下载 zip 包；</li>
+<li>解压，放到项目中一个叫 libs 的目录中；</li>
+<li>想更方便的话，直接将 CDN 链接粘贴到 HTML 中。</li>
+</ol>
+<p>四个字总结：刀耕火种。 模块化管理？版本号管理？依赖升级？不存在的。当然，那时候前端也没有那么复杂，这种模式勉强来说也不是不能用。</p>
+<span id="more"></span>
+
+
+<h2 id="npm-v1-v2"><a href="#npm-v1-v2" class="headerlink" title="npm v1-v2"></a>npm v1-v2</h2><p><img src="/2021/npm-history/789e830b6b4247a9807fa4639815b53c.png" alt="Npm-logo.svg_.png"></p>
+<p><img src="/2021/npm-history/6cb8e2d058f24013bb676be47b50d8a0.png"></p>
+<p>2009 年，Node.js 诞生，npm（Node.js Package Manager）的雏形也正在酝酿。</p>
+<p>2011 年，npm 发布了 1.0 版本。</p>
+<p>初版 npm 带来的文件结构，是嵌套结构：</p>
+<p><img src="/2021/npm-history/bd96f102244c4a498c544bf759266e81.png" alt="npm-history-0.png"></p>
+<p>一切都很美好，除了…</p>
+<p><img src="/2021/npm-history/77ed4d7193bb4cf8b1125915e1b532ad.png"></p>
+<p>node_modules 堪比黑洞，图来自 <a target="_blank" rel="noopener" href="https://github.com/tj/node-prune">https://github.com/tj/node-prune</a> 。</p>
+<h3 id="node-modules-体积过大"><a href="#node-modules-体积过大" class="headerlink" title="node_modules 体积过大"></a>node_modules 体积过大</h3><p>显而易见的问题，如果一个库，比如 lodash，被不同的包依赖了，那么它就会被安装两次。这种形式的结构很快就能把磁盘占满。<code>rm -rf node_modules</code> 成为了前端程序员最常用的命令之一。</p>
+<h3 id="node-modules-嵌套层级过深"><a href="#node-modules-嵌套层级过深" class="headerlink" title="node_modules 嵌套层级过深"></a>node_modules 嵌套层级过深</h3><p>只有当找到一片不依赖任何第三方包的叶子时，这棵树才能走到尽头。因此 node_modules 的嵌套深度十分可怕。</p>
+<p>具体到实际的问题，相信早期 npm 的 windows 用户都见过这个弹窗：</p>
+<p><img src="/2021/npm-history/c28854e4264a401e8a1e33d53e3d8397.png"></p>
+<p>（node_modules 文件夹无法删除，因为超过了 windows 能处理的最大路径长度）</p>
+<p>详情见 <a target="_blank" rel="noopener" href="https://github.com/nodejs/node-v0.x-archive/issues/6960">这个 issue</a> 。</p>
+<h2 id="Yarn-npm-v3"><a href="#Yarn-npm-v3" class="headerlink" title="Yarn &amp; npm v3"></a>Yarn &amp; npm v3</h2><p><img src="/2021/npm-history/53b38bd1375e42f5b66151d782598f7b.png" alt="yarn-logo-F5E7A65FA2-seeklogo.com.png"></p>
+<p><img src="/2021/npm-history/1d2e4d8068d34d24aadb23a5b27e07d3.png"></p>
+<p>2016 年，yarn 诞生了。yarn 解决了 npm 几个最为迫在眉睫的问题：</p>
+<ol>
+<li>安装太慢（加缓存、多线程）</li>
+<li>嵌套结构（扁平化）</li>
+<li>无依赖锁（yarn.lock）</li>
+</ol>
+<p>yarn 带来对的扁平化结构：</p>
+<p><img src="/2021/npm-history/281c08a568254878bd9c2c04e12a199c.png" alt="npm-history-yarn.png"></p>
+<p>扁平化后，实际需要安装的包数量大大减少，再加上 Yarn 首发的缓存机制，因此依赖的安装速度也得到了<strong>史诗级</strong>提升。</p>
+<h3 id="依赖锁"><a href="#依赖锁" class="headerlink" title="依赖锁"></a>依赖锁</h3><p>相比于扁平化结构，可以说 yarn 更大的贡献是发明了 yarn.lock。而 npm 在一年后的 v5 才跟上了脚步，发布了 package-lock.json。</p>
+<p>在没有依赖锁的年代，即使没有改动任何一行代码，一次 <code>npm install</code> 带来的实际代码量变更很可能是非常巨大的。 因为 npm 采用 <a target="_blank" rel="noopener" href="https://semver.org/lang/zh-CN/">语义化版本</a> 约定，简单来说，<code>a.b.c</code> 代表着：</p>
+<ol>
+<li><code>a</code> 主版本号：当你做了不兼容的 API 修改</li>
+<li><code>b</code> 次版本号：当你做了向下兼容的功能性新增</li>
+<li><code>c</code> 修订号：当你做了向下兼容的问题修正</li>
+</ol>
+<p>问题在于，这只是一个理想化的“约定”，具体到每个包有没有遵守，遵守得好不好，不是为我们所控的。 而默认情况下安装依赖时，得到的版本号是类似 <code>^1.0.0</code> 这样的。这个语法代表着将安装主版本号为 <code>1</code> 的最新版本。</p>
+<p>虽然可以通过去掉一级依赖的 <code>^</code> 指定精确版本，但是无法指定二级、三级依赖的精确版本号，因此安装依然存在非常大的不确定性。</p>
+<p><img src="/2021/npm-history/032ed620f28b4399ac6ac0c126b0c90c.png" alt="npm-history-semver.png"></p>
+<p>因此，为了解决这个问题，Yarn 提出了“锁”的解决方案：精确地将版本号锁定在一个值，并且在安装时通过计算哈希值校验文件一致性，从而保证每次构建使用的依赖都是完全一致的。</p>
+<p>一个 yarn.lock 文件示例片段：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># THIS IS AN AUTOGENERATED FILE. DO NOT EDIT THIS FILE DIRECTLY.</span><br><span class="line"># yarn lockfile v1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;@babel/code-frame@7.12.11&quot;:</span><br><span class="line">  version &quot;7.12.11&quot;</span><br><span class="line">  resolved &quot;https://registry.npmmirror.com/@babel/code-frame/download/@babel/code-frame-7.12.11.tgz?cache=0&amp;sync_timestamp=1633553739126&amp;other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40babel%2Fcode-frame%2Fdownload%2F%40babel%2Fcode-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f&quot;</span><br><span class="line">  integrity sha1-9K1DWqJj25NbjxDyxVLSP7cWpj8=</span><br><span class="line">  dependencies:</span><br><span class="line">    &quot;@babel/highlight&quot; &quot;^7.10.4&quot;</span><br><span class="line"></span><br><span class="line">&quot;@babel/code-frame@^7.0.0&quot;, &quot;@babel/code-frame@^7.14.5&quot;, &quot;@babel/code-frame@^7.15.8&quot;:</span><br><span class="line">  version &quot;7.15.8&quot;</span><br><span class="line">  resolved &quot;https://registry.npmmirror.com/@babel/code-frame/download/@babel/code-frame-7.15.8.tgz?cache=0&amp;sync_timestamp=1633553739126&amp;other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40babel%2Fcode-frame%2Fdownload%2F%40babel%2Fcode-frame-7.15.8.tgz#45990c47adadb00c03677baa89221f7cc23d2503&quot;</span><br><span class="line">  integrity sha1-RZkMR62tsAwDZ3uqiSIffMI9JQM=</span><br><span class="line">  dependencies:</span><br><span class="line">    &quot;@babel/highlight&quot; &quot;^7.14.5&quot;</span><br><span class="line">    </span><br><span class="line">// more...</span><br></pre></td></tr></table></figure>
+
+<h3 id="“双胞胎陌生人”问题"><a href="#“双胞胎陌生人”问题" class="headerlink" title="“双胞胎陌生人”问题"></a>“双胞胎陌生人”问题</h3><p>这个词在英文中是 doppelgangers，意思是它们长得很像，但是除此以外又完全没有其它的关联。</p>
+<p><img src="/2021/npm-history/d51b29d640de4f6fa97858e68db9144a.png"></p>
+<p>想象一下有一个 library-a，它同时依赖了 library-b、c、d、e：</p>
+<p><img src="/2021/npm-history/17d47edd486b4a67ad6462bacd1a4c94.png" alt="npm-history (1).png"></p>
+<p>而 b 和 c 依赖了 <a href="mailto:&#102;&#x40;&#49;&#x2e;&#48;&#46;&#x30;">&#102;&#x40;&#49;&#x2e;&#48;&#46;&#x30;</a>，d 和 e 依赖了 <a href="mailto:&#x66;&#x40;&#50;&#x2e;&#48;&#46;&#48;">&#x66;&#x40;&#50;&#x2e;&#48;&#46;&#48;</a>：</p>
+<p><img src="/2021/npm-history/9eb92971cb044cb3a05c62a43dd23142.png" alt="npm-history.png"></p>
+<p>这时候，node_modules 树需要做出选择了，到底是将 <a href="mailto:&#x66;&#x40;&#x31;&#46;&#x30;&#x2e;&#x30;">&#x66;&#x40;&#x31;&#46;&#x30;&#x2e;&#x30;</a> 还是 <a href="mailto:&#102;&#64;&#x32;&#46;&#48;&#x2e;&#x30;">&#102;&#64;&#x32;&#46;&#48;&#x2e;&#x30;</a> 扁平化，然后将另一个放到嵌套的 node_modules 中？</p>
+<p>答案是：具体做那种选择将是<strong>不确定的</strong>，取决于哪一个 f 出现得更靠前，靠前的那个将被扁平化。</p>
+<p>举例，将 <a href="mailto:&#102;&#64;&#x31;&#x2e;&#48;&#x2e;&#48;">&#102;&#64;&#x31;&#x2e;&#48;&#x2e;&#48;</a> 扁平化的结果：</p>
+<p><img src="/2021/npm-history/79bed46a30504448bb38f03bf47084fa.png" alt="npm-history-3.png"></p>
+<p>将 <a href="mailto:&#x66;&#64;&#50;&#x2e;&#x30;&#x2e;&#48;">&#x66;&#64;&#50;&#x2e;&#x30;&#x2e;&#48;</a> 扁平化的结果：</p>
+<p><img src="/2021/npm-history/2d30a4d64bd54a1db200eb317798da85.png" alt="npm-history-4.png"></p>
+<p>无论如何，这个选择必须做，我们必然会在 node_modules 中拥有多份的 library-f，窘境将是无法避免的。因此它们也就成为了“双胞胎陌生人”。</p>
+<p>其它编程语言没有这种问题，这是 Node.js &amp; npm 独有的。 这种问题会造成：</p>
+<ol>
+<li>安装更慢</li>
+<li>耗费的磁盘空间更大</li>
+<li>某些只能存在单例的库（比如 React 或 Vue）如果被同时安装了两份则会出现问题</li>
+<li>当使用依赖 f 使用了 TypeScript 时会造成 .d.ts 文件混乱，导致编译器报错</li>
+<li>假设 f 有一个依赖 g，项目里也存在 g 的“双胞胎陌生人”，那么根据 Node.js 的依赖查找原则（从当前目录逐级向上查找），两个 f 有可能会检索到不同版本的 g，这可能导致高度混乱的编译器错误。</li>
+</ol>
+<h3 id="“幽灵依赖”问题"><a href="#“幽灵依赖”问题" class="headerlink" title="“幽灵依赖”问题"></a>“幽灵依赖”问题</h3><p><img src="/2021/npm-history/91ba2aeacbb640fe931c2b3f9e762b2b.png"></p>
+<p>假设我们有以下依赖：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my-library&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lib/index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;minimatch&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^3.0.4&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;rimraf&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^2.6.2&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>理论上来说，我们项目的代码中可以使用的依赖只有 minimatch。但是实际上，以下代码也能运行：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> minimatch = <span class="built_in">require</span>(<span class="string">&quot;minimatch&quot;</span>)</span><br><span class="line"><span class="keyword">var</span> expand = <span class="built_in">require</span>(<span class="string">&quot;brace-expansion&quot;</span>);  <span class="comment">// ???</span></span><br><span class="line"><span class="keyword">var</span> glob = <span class="built_in">require</span>(<span class="string">&quot;glob&quot;</span>)  <span class="comment">// ???</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ???</span></span><br></pre></td></tr></table></figure>
+
+<p>这是因为扁平化结构将一些没有直接依赖的包也提升到了 node_modules 的一级目录，但是 Node.js 并没有对其校验。所以引用它们也不会报错。</p>
+<p><img src="/2021/npm-history/bdb7f88e64b8463387c78f563e709ce4.png" alt="npm-history-ghost-deps.png"></p>
+<p>这种情况带来的问题：</p>
+<ol>
+<li>在没有显式指定“间接依赖”的版本号的时候，如果它被依赖到它的包做了大版本升级，存在不兼容的 API 变更，那么应用代码很可能就会跑不起来</li>
+<li>没有显式指定依赖带来的额外管理成本</li>
+</ol>
+<h3 id="Workspace"><a href="#Workspace" class="headerlink" title="Workspace"></a>Workspace</h3><p>Yarn 1.0 带来的另一个特性是 workspace，也是 monorepo 能够发展起来的一个重要原因。</p>
+<p>假设我们有一个 workspace-a，它依赖了 cross-env：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;package-a&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;cross-env&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5.0.5&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>还有一个 package-b，它依赖了 cross-env 和 package-a：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;package-b&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;cross-env&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5.0.5&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;workspace-a&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么这时候在使用 workspace 模式安装的话，将得到以下结构：</p>
+<p><img src="/2021/npm-history/a167fbb7eb1a4e068bdfd9b2aa3c1f4e.png" alt="npm-history-workspace.png"></p>
+<p>其中，node_modules 中的 package-a 只是实际文件的链接。也就是说，Yarn workspace 模式可以将项目底下的子项目的依赖提升到根目录来进行扁平化安装，这样可以节省更多的磁盘空间，带来更快的安装效率，也可以使得项目管理更方便。</p>
+<p><strong>但是</strong>，结合上面所提到的两个问题，workspace 带来的问题只会更多，不会更少。这里就不详细展开了，<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040291971">应用级 Monorepo 优化方案</a>  这篇文章总结得很好。</p>
+<h3 id="Lerna"><a href="#Lerna" class="headerlink" title="Lerna"></a>Lerna</h3><p><img src="/2021/npm-history/8f1ef8b7ea174596bdc8b6ebf0601dc0.png" alt="lerna.png"></p>
+<p>由于 Workspace 的特性实在是太过好用，monorepo（multi-package repositories, multi-project repositories）开始迅速发展。许多知名的开源库开始转向 monorepo，还有更激进者将 monorepo 使用在业务项目中。Lerna 顺势而生。</p>
+<p>但是，Lerna 并不是 Node.js 包管理器的一部分，也没有解决任何已存在的包管理器问题。它所做的只是将 monorepo 的使用体验变得更舒服了，比如：</p>
+<ol>
+<li>可以更方便地创建 monorepo</li>
+<li>可以更方便地管理 packages 中的依赖项</li>
+<li>可以一键发布 packages、自动根据 git commit log 更新每个 package 的 changelog</li>
+<li>等等</li>
+</ol>
+<p>仅此而已。按照官网的说法，Lerna 所做的事情是“优化了这个流程（optimizes the workflow）”。</p>
+<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a>pnpm</h2><p><img src="/2021/npm-history/5d35909dba0c443cbc67ece57750fb92.png"></p>
+<p><img src="/2021/npm-history/8909e5d0c4b747f787b3787314f7e8d8.png"></p>
+<p>P for Performance —— 性能更强的 npm。</p>
+<p>pnpm 复刻了 npm 的所有命令，同时在安装目录结构上做了大幅改进。 </p>
+<h3 id="善用链接"><a href="#善用链接" class="headerlink" title="善用链接"></a>善用链接</h3><p>这里通过一个例子来看 pnpm 的安装结构特点。</p>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><p>假设我们要安装一个 foo 包，它依赖了 bar。首先，pnpm 会先将所有直接和间接依赖安装进来，并“摊平”（注意，这里没有扁平化算法，是字面意义上的摊平）：</p>
+<p><img src="/2021/npm-history/88b24d6586164844971a21531cb4fe40.png" alt="npm-history-pnpm1.png"></p>
+<p>你可能注意到，在 <code>xxx@1.0.0</code> 的目录下面，首先是一个 <code>node_modules</code> 目录，然后才是 <code>xxx</code>，这么做的目的是：</p>
+<ol>
+<li>允许包引用自己</li>
+<li>将包自身和其依赖打平，避免循环结构。在 Node.js 中，这么做其实跟原本的样子并没有太大区别。</li>
+</ol>
+<h4 id="处理间接依赖"><a href="#处理间接依赖" class="headerlink" title="处理间接依赖"></a>处理间接依赖</h4><p>然后，在 <code>foo</code> 的平级创建一个 <code>bar</code> 文件夹，链接至 <code>bar@1.0.0</code> 下面的 <code>bar</code>：</p>
+<p><img src="/2021/npm-history/7601019bdc044ca786896c2d54de955a.png" alt="npm-history-pnpm2.png"></p>
+<h4 id="处理直接依赖"><a href="#处理直接依赖" class="headerlink" title="处理直接依赖"></a>处理直接依赖</h4><p>在顶层 <code>node_modules</code> 创建一个 <code>foo</code> 硬链接，连接至 <code>foo@1.0.0</code> 中的 <code>foo</code>，以供应用访问：</p>
+<p><img src="/2021/npm-history/92c7961c84ae4c64a15588cfad9b4294.png" alt="npm-history-pnpm3.png"></p>
+<h4 id="处理更深层次的间接依赖"><a href="#处理更深层次的间接依赖" class="headerlink" title="处理更深层次的间接依赖"></a>处理更深层次的间接依赖</h4><p>假设 <code>foo</code> 和 <code>bar</code> 都依赖了 <code>qar@2.0.0</code>：</p>
+<p><img src="/2021/npm-history/672ca3805fb342a988899ee8fc0bcc31.png" alt="npm-history-pnpm4.png"></p>
+<p>可以看到，虽然依赖层级变深了，但是文件树并没有变深。这就是 pnpm 的特色结构：通过硬链接创造的依赖“树”。</p>
+<h3 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h3><p>由于硬链接的巨大优势加成，在绝大多数情况下，pnpm 的安装速度都要比 yarn 和 npm 更快：</p>
+<p><img src="/2021/npm-history/27ade74c8a634c0890e78052594d3321.png"></p>
+<h3 id="自动解决锁冲突"><a href="#自动解决锁冲突" class="headerlink" title="自动解决锁冲突"></a>自动解决锁冲突</h3><p>pnpm 能够自动解决锁文件的冲突。当冲突发生时，只需要运行一次 <code>pnpm install</code>，冲突就能自动由 pnpm 解决。很人性化。不过，据说 Yarn 从 1.0 版本开始也提供了类似的功能。</p>
+<h3 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h3><ol>
+<li>并不是所有项目都能“无痛”迁移至 pnpm。由于历史原因（扁平化），我们的应用或者应用的某些依赖并没有很好地遵循“使用到的包必须在 package.json 中声明”这一原则，或者把它当作一项 feature 享受其中。这样的话迁移至 pnpm 会导致原本会被提升到顶层的扁平化依赖重新回到正确的位置，从而无法被找到。如果问题出在应用上，那么只需要将依赖写入 package.json 即可。但是如果出在依赖就比较棘手了。不过官方也提供了<a target="_blank" rel="noopener" href="https://pnpm.io/faq#pnpm-does-not-work-with-your-project-here">解决方案</a>。</li>
+<li>由于特殊的安装结构，以往一个很有用的打补丁工具 patch-package 用起来就不是那么顺手了。</li>
+</ol>
+<h3 id="Rush"><a href="#Rush" class="headerlink" title="Rush"></a>Rush</h3><p><img src="/2021/npm-history/74e9d763d51b4d02a39c8b8628be2f35.png" alt="rush.png"></p>
+<p><a target="_blank" rel="noopener" href="https://rushjs.io/">Rush</a> 是微软出品的一款 monorepo 管理工具。与 Lerna 不同的是：Rush 不仅做了许多“优化流程”的工作，还提供了一套与 pnpm 十分类似的<strong>硬链接目录结构方案</strong>来解决超大型项目中的依赖管理问题。</p>
+<p>虽然它声称支持全部的三种包管理工具，但是：</p>
+<ol>
+<li>配合高版本 npm 使用时有 bug，只能使用 4.x 版本</li>
+<li>配合 Yarn 使用时无法启用 workspace，因为这会跟硬链接方案冲突</li>
+<li>只有在配合 pnpm 使用时才能解决“双胞胎陌生人”问题</li>
+</ol>
+<p>很显然，如果想要正常使用，pnpm 几乎是唯一选择。</p>
+<p>这里简单列出一些 Rush 提供的特色功能：</p>
+<ol>
+<li>顺序构建：自动检测包的依赖关系，按照从下至上有序构建</li>
+<li>多进程构建：对于可以同时构建的包，开启多个 Node.js 进程同时构建</li>
+<li>增量构建：只对发生了变化的包，以及所有受影响的上游或下游包启动构建，支持缓存构建产物</li>
+<li>增量发布：自动检测需要发布的包并执行发布，甚至可以将发布任务设置为定时执行</li>
+<li>等等……</li>
+</ol>
+<p><img src="/2021/npm-history/4c43709b3dbd431a95fc6cfb42ca828c.png"></p>
+<p>总的来说，微软的一套理论是：企业的项目（不管是业务还是基础）都应该尽可能地放在一个超大型仓库中来管理。并且微软声称自己确实是这么做的（见 <a target="_blank" rel="noopener" href="https://rushjs.io/pages/intro/why_mono/">Rush: Why one big repo⁈</a> ）。Rush 的目的也是为了解决这套方法论的后顾之忧，比如:</p>
+<ol>
+<li>npm 扁平化结构的各种问题</li>
+<li>项目逐渐庞大以后的构建速度问题</li>
+<li>项目如何发布的问题</li>
+</ol>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://pnpm.io/symlinked-node-modules-structure">Symlinked <code>node_modules</code> structure</a></li>
+<li><a target="_blank" rel="noopener" href="https://pnpm.io/faq">Frequently Asked Questions</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tj/node-prune">tj&#x2F;node-prune: Remove unnecessary files from node_modules</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nodejs/node-v0.x-archive/issues/6960">Node’s nested node_modules approach is basically incompatible with Windows #6960</a></li>
+<li><a target="_blank" rel="noopener" href="https://rushjs.io/pages/intro/why_mono/">Rush: Why one big repo⁈</a></li>
+<li><a target="_blank" rel="noopener" href="https://rushjs.io/pages/advanced/phantom_deps/">Rush: Phantom dependencies</a></li>
+<li><a target="_blank" rel="noopener" href="https://rushjs.io/pages/advanced/npm_doppelgangers/">Rush: NPM doppelgangers</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2021/npm-history/" title="Node.js 包管理器发展史">https://wxsm.space/2021/npm-history/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+              <a href="/tags/npm/" rel="tag"># npm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/windows-idea-cygwin/" rel="prev" title="在 Windows 中使用 Cygwin">
+                  <i class="fa fa-angle-left"></i> 在 Windows 中使用 Cygwin
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/a-memorable-moment/" rel="next" title="值得纪念的时刻">
+                  值得纪念的时刻 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2021/npm-history/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

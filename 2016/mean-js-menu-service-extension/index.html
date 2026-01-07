@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="MEAN.js解决方案只提供了1级&#x2F;2级菜单栏的service支持，最近项目中需要用到第3级菜单，所以需要进行一个小的功能扩展。一开始我以为可以很容易地做到无限级，真正做起来以后发现并没有那么简单，所以目前通过这个办法只能达到第3级。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MEAN.js Menu Service Extension">
+<meta property="og:url" content="https://wxsm.space/2016/mean-js-menu-service-extension/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="MEAN.js解决方案只提供了1级&#x2F;2级菜单栏的service支持，最近项目中需要用到第3级菜单，所以需要进行一个小的功能扩展。一开始我以为可以很容易地做到无限级，真正做起来以后发现并没有那么简单，所以目前通过这个办法只能达到第3级。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-01-05T09:34:47.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.166Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="angularjs">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/mean-js-menu-service-extension/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/mean-js-menu-service-extension/","path":"2016/mean-js-menu-service-extension/","title":"MEAN.js Menu Service Extension"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MEAN.js Menu Service Extension | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Menu%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">修改Menu服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Header%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.</span> <span class="nav-text">修改Header模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9CSS"><span class="nav-number">3.</span> <span class="nav-text">修改CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%97%A0%E9%99%90%E7%BA%A7"><span class="nav-number">5.</span> <span class="nav-text">实现无限级</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/mean-js-menu-service-extension/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MEAN.js Menu Service Extension | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MEAN.js Menu Service Extension
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-01-05 17:34:47" itemprop="dateCreated datePublished" datetime="2016-01-05T17:34:47+08:00">2016-01-05</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/mean-js-menu-service-extension/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/mean-js-menu-service-extension/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>MEAN.js解决方案只提供了1级&#x2F;2级菜单栏的service支持，最近项目中需要用到第3级菜单，所以需要进行一个小的功能扩展。一开始我以为可以很容易地做到无限级，真正做起来以后发现并没有那么简单，所以目前通过这个办法只能达到第3级。</p>
+<span id="more"></span>
+
+<h2 id="修改Menu服务"><a href="#修改Menu服务" class="headerlink" title="修改Menu服务"></a>修改Menu服务</h2><p>初始的Menu Service中为使用者写了两个添加菜单项的方法：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Add menu item object</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">addMenuItem</span> = <span class="keyword">function</span> (<span class="params">menuId, options</span>)</span><br></pre></td></tr></table></figure>
+
+<p>以及</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Add submenu item object</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">addSubMenuItem</span> = <span class="keyword">function</span> (<span class="params">menuId, parentItemState, options</span>)</span><br></pre></td></tr></table></figure>
+
+<p>第一个方法很显然就是用来添加顶级菜单了，第二个在没有看代码以前我曾经天真地以为它可以无限嵌套，然而并没有，它做的事情仅限于添加第2级菜单。所以现在我需要自己写第三个方法来完成添加第三级菜单。考虑到三级循环的效率问题，虽然一般来说菜单项不会有太多，但看起来就是非常不爽，所以我给每个Menu项都添加了一个哈希表来储存其下面所有菜单项的引用，这样多花费一点点内存就可以不用写循环嵌套了。由于使用了哈希表，对原2级菜单做了一些修改：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Add submenu item object</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">addSubMenuItem</span> = <span class="keyword">function</span> (<span class="params">menuId, parentItemState, options</span>) &#123;</span><br><span class="line">        options = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Validate that the menu exists</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">validateMenuExistance</span>(menuId);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Search for menu item</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> itemIndex <span class="keyword">in</span> <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">items</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">items</span>[itemIndex].<span class="property">state</span> === parentItemState) &#123;</span><br><span class="line">                <span class="comment">// Push new submenu item</span></span><br><span class="line">                <span class="keyword">var</span> newSubmenuItem = &#123;</span><br><span class="line">                    <span class="attr">title</span>: options.<span class="property">title</span> || <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="attr">state</span>: options.<span class="property">state</span> || <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="attr">disabled</span>: options.<span class="property">disabled</span> || <span class="literal">false</span>,</span><br><span class="line">                    <span class="attr">roles</span>: ((options.<span class="property">roles</span> === <span class="literal">null</span> || <span class="keyword">typeof</span> options.<span class="property">roles</span> === <span class="string">&#x27;undefined&#x27;</span>) ? <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">items</span>[itemIndex].<span class="property">roles</span> : options.<span class="property">roles</span>),</span><br><span class="line">                    <span class="attr">position</span>: options.<span class="property">position</span> || <span class="number">0</span>,</span><br><span class="line">                    <span class="attr">shouldRender</span>: shouldRender,</span><br><span class="line">                    <span class="attr">items</span>: []</span><br><span class="line">                &#125;;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">items</span>[itemIndex].<span class="property">items</span>.<span class="title function_">push</span>(newSubmenuItem);</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">menuHash</span>[newSubmenuItem.<span class="property">state</span>] = newSubmenuItem;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (options.<span class="property">items</span>) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> options.<span class="property">items</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="title function_">addSubMenuItemToSubMenu</span>(menuId, options.<span class="property">state</span>, options.<span class="property">items</span>[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Return the menu object</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">menus</span>[menuId];</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后是新的添加3级菜单的方法：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//For level 3 menu items</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">addSubMenuItemToSubMenu</span> = <span class="keyword">function</span> (<span class="params">menuId, parentItemState, options</span>) &#123;</span><br><span class="line">        options = options || &#123;&#125;;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">validateMenuExistance</span>(menuId);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> itemIndex <span class="keyword">in</span> <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">menuHash</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">menuHash</span>[itemIndex].<span class="property">state</span> === parentItemState) &#123;</span><br><span class="line">                <span class="comment">// Push new submenu item</span></span><br><span class="line">                <span class="keyword">var</span> newSubMenuItem = &#123;</span><br><span class="line">                    <span class="attr">title</span>: options.<span class="property">title</span> || <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="attr">state</span>: options.<span class="property">state</span> || <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="attr">disabled</span>: options.<span class="property">disabled</span> || <span class="literal">false</span>,</span><br><span class="line">                    <span class="attr">roles</span>: ((options.<span class="property">roles</span> === <span class="literal">null</span> || <span class="keyword">typeof</span> options.<span class="property">roles</span> === <span class="string">&#x27;undefined&#x27;</span>) ? <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">menuHash</span>[itemIndex].<span class="property">roles</span> : options.<span class="property">roles</span>),</span><br><span class="line">                    <span class="attr">position</span>: options.<span class="property">position</span> || <span class="number">0</span>,</span><br><span class="line">                    <span class="attr">shouldRender</span>: shouldRender,</span><br><span class="line">                    <span class="attr">items</span>: []</span><br><span class="line">                &#125;;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">menuHash</span>[itemIndex].<span class="property">items</span>.<span class="title function_">push</span>(newSubMenuItem);</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">menus</span>[menuId].<span class="property">menuHash</span>[newSubMenuItem.<span class="property">state</span>] = newSubMenuItem;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">menus</span>[menuId];</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改Header模板"><a href="#修改Header模板" class="headerlink" title="修改Header模板"></a>修改Header模板</h2><p>原Header模板中嵌套了两层Angular循环来遍历菜单项，我们给它加一层就好了，改完以后就像这样：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;collapse navbar-collapse&quot;</span> <span class="attr">uib-collapse</span>=<span class="string">&quot;!isCollapsed&quot;</span> <span class="attr">role</span>=<span class="string">&quot;navigation&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav navbar-nav&quot;</span> <span class="attr">ng-if</span>=<span class="string">&quot;menu.shouldRender(authentication.user);&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">&quot;item in menu.items | orderBy: &#x27;position&#x27;&quot;</span> <span class="attr">ng-if</span>=<span class="string">&quot;item.shouldRender(authentication.user);&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">ng-switch</span>=<span class="string">&quot;item.type&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">ng-class</span>=<span class="string">&quot;&#123; active: $state.includes(item.state), dropdown: item.type === &#x27;dropdown&#x27;,disabled:item.disabled &#125;&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;&#123;&#123;item.class&#125;&#125;&quot;</span> <span class="attr">uib-dropdown</span>=<span class="string">&quot;item.type === &#x27;dropdown&#x27;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">ng-switch-when</span>=<span class="string">&quot;dropdown&quot;</span> <span class="attr">class</span>=<span class="string">&quot;dropdown-toggle&quot;</span> <span class="attr">uib-dropdown-toggle</span> <span class="attr">role</span>=<span class="string">&quot;button&quot;</span>&gt;</span>&#123;&#123;::item.title&#125;&#125;<span class="symbol">&amp;nbsp;</span><span class="tag">&lt;<span class="name">span</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;caret&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">ng-switch-when</span>=<span class="string">&quot;dropdown&quot;</span> <span class="attr">class</span>=<span class="string">&quot;dropdown-menu&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">&quot;subitem in item.items | orderBy: &#x27;position&#x27;&quot;</span> <span class="attr">ng-if</span>=<span class="string">&quot;subitem.shouldRender(authentication.user);&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">ui-sref-active</span>=<span class="string">&quot;active&quot;</span> <span class="attr">ng-class</span>=<span class="string">&quot;&#123;&#x27;dropdown-submenu&#x27;:subitem.items.length&gt;0,disabled:subitem.disabled&#125;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">ui-sref</span>=<span class="string">&quot;&#123;&#123;subitem.state&#125;&#125;&quot;</span> <span class="attr">ng-bind</span>=<span class="string">&quot;subitem.title&quot;</span> <span class="attr">ng-if</span>=<span class="string">&quot;subitem.items.length===0&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span> <span class="attr">ng-bind</span>=<span class="string">&quot;subitem.title&quot;</span> <span class="attr">ng-if</span>=<span class="string">&quot;subitem.items.length&gt;0&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;dropdown-menu&quot;</span> <span class="attr">ng-if</span>=<span class="string">&quot;subitem.items.length&gt;0&quot;</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">&quot;i in subitem.items | orderBy: &#x27;position&#x27;&quot;</span> <span class="attr">ng-if</span>=<span class="string">&quot;i.shouldRender(authentication.user);&quot;</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">ui-sref-active</span>=<span class="string">&quot;active&quot;</span> <span class="attr">ng-class</span>=<span class="string">&quot;&#123;disabled:i.disabled&#125;&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">ui-sref</span>=<span class="string">&quot;&#123;&#123;i.state&#125;&#125;&quot;</span> <span class="attr">ng-bind</span>=<span class="string">&quot;i.title&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">ng-switch-default</span> <span class="attr">ui-sref</span>=<span class="string">&quot;&#123;&#123;item.state&#125;&#125;&quot;</span> <span class="attr">ng-bind</span>=<span class="string">&quot;item.title&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav navbar-nav navbar-right&quot;</span> <span class="attr">ng-hide</span>=<span class="string">&quot;authentication.user&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">ui-sref-active</span>=<span class="string">&quot;active&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">ui-sref</span>=<span class="string">&quot;authentication.signup&quot;</span>&gt;</span>Sign Up<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;divider-vertical&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">ui-sref-active</span>=<span class="string">&quot;active&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">ui-sref</span>=<span class="string">&quot;authentication.signin&quot;</span>&gt;</span>Sign In<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav navbar-nav navbar-right&quot;</span> <span class="attr">ng-show</span>=<span class="string">&quot;authentication.user&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;dropdown&quot;</span> <span class="attr">uib-dropdown</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;dropdown-toggle user-header-dropdown-toggle&quot;</span> <span class="attr">uib-dropdown-toggle</span> <span class="attr">role</span>=<span class="string">&quot;button&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">ng-src</span>=<span class="string">&quot;&#123;&#123;authentication.user.profileImageURL&#125;&#125;&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&#123;&#123;authentication.user.displayName&#125;&#125;&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">class</span>=<span class="string">&quot;header-profile-image&quot;</span>/&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">ng-bind</span>=<span class="string">&quot;authentication.user.displayName&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="tag">&lt;<span class="name">b</span> <span class="attr">class</span>=<span class="string">&quot;caret&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;dropdown-menu&quot;</span> <span class="attr">role</span>=<span class="string">&quot;menu&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span> <span class="attr">ui-sref-active</span>=<span class="string">&quot;active&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">ui-sref</span>=<span class="string">&quot;settings.profile&quot;</span>&gt;</span>Edit Profile<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span> <span class="attr">ui-sref-active</span>=<span class="string">&quot;active&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">ui-sref</span>=<span class="string">&quot;settings.picture&quot;</span>&gt;</span>Change Profile Picture<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span> <span class="attr">ui-sref-active</span>=<span class="string">&quot;active&quot;</span> <span class="attr">ng-show</span>=<span class="string">&quot;authentication.user.provider === &#x27;local&#x27;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">ui-sref</span>=<span class="string">&quot;settings.password&quot;</span>&gt;</span>Change Password<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!--li ui-sref-active=&quot;active&quot;&gt;</span></span><br><span class="line"><span class="comment">            &lt;a ui-sref=&quot;settings.accounts&quot;&gt;Manage Social Accounts&lt;/a&gt;</span></span><br><span class="line"><span class="comment">          &lt;/li--&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;divider&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/api/auth/signout&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_self&quot;</span>&gt;</span>Signout<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改CSS"><a href="#修改CSS" class="headerlink" title="修改CSS"></a>修改CSS</h2><p>为了让菜单看起来更自然些，这里修改的是 <code>core.css</code>，添加以下内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.dropdown-submenu</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dropdown-menu</span> &#123;</span><br><span class="line">    -webkit-<span class="attribute">border-radius</span>: <span class="number">0</span>;</span><br><span class="line">    -moz-<span class="attribute">border-radius</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dropdown-submenu</span> &gt; <span class="selector-class">.dropdown-menu</span> &#123;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: -<span class="number">6px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: -<span class="number">1px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dropdown-submenu</span><span class="selector-pseudo">:hover</span> &gt; <span class="selector-class">.dropdown-menu</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dropdown-submenu</span> &gt; <span class="selector-tag">a</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot; &quot;</span>;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">border-color</span>: transparent;</span><br><span class="line">    <span class="attribute">border-style</span>: solid;</span><br><span class="line">    <span class="attribute">border-width</span>: <span class="number">5px</span> <span class="number">0</span> <span class="number">5px</span> <span class="number">5px</span>;</span><br><span class="line">    <span class="attribute">border-left-color</span>: <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">5px</span> -<span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dropdown-submenu</span><span class="selector-pseudo">:hover</span> &gt; <span class="selector-tag">a</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">border-left-color</span>: <span class="number">#333</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dropdown-submenu</span><span class="selector-class">.pull-left</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dropdown-submenu</span><span class="selector-class">.pull-left</span> &gt; <span class="selector-class">.dropdown-menu</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">10px</span>;</span><br><span class="line">    -webkit-<span class="attribute">border-radius</span>: <span class="number">6px</span> <span class="number">0</span> <span class="number">6px</span> <span class="number">6px</span>;</span><br><span class="line">    -moz-<span class="attribute">border-radius</span>: <span class="number">6px</span> <span class="number">0</span> <span class="number">6px</span> <span class="number">6px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">6px</span> <span class="number">0</span> <span class="number">6px</span> <span class="number">6px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>3级菜单的定义方法与2级菜单一模一样，除了直接调用 <code>addSubMenuItemToSubMenu</code>  以外，还可以通过在2级菜单内定义 <code>items</code> 来实现添加子菜单，示例如下，高亮部分则为3级菜单：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Menus</span>.<span class="title function_">addMenuItem</span>(<span class="string">&#x27;topbar&#x27;</span>, &#123;</span><br><span class="line">            <span class="attr">title</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">            <span class="attr">state</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;dropdown&#x27;</span>,</span><br><span class="line">            <span class="attr">position</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">roles</span>: [<span class="string">&#x27;*&#x27;</span>],</span><br><span class="line">            <span class="attr">items</span>: [&#123;</span><br><span class="line">                <span class="attr">title</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                <span class="attr">state</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                <span class="attr">roles</span>: [<span class="string">&#x27;*&#x27;</span>]</span><br><span class="line">            &#125;, &#123;</span><br><span class="line">                <span class="attr">title</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                <span class="attr">state</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                <span class="attr">roles</span>: [<span class="string">&#x27;*&#x27;</span>],</span><br><span class="line">                <span class="attr">items</span>: [&#123;</span><br><span class="line">                    <span class="attr">title</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                    <span class="attr">state</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                    <span class="attr">roles</span>: [<span class="string">&#x27;*&#x27;</span>]</span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    <span class="attr">title</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                    <span class="attr">state</span>: <span class="string">&#x27;...&#x27;</span>,</span><br><span class="line">                    <span class="attr">roles</span>: [<span class="string">&#x27;*&#x27;</span>]</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现无限级"><a href="#实现无限级" class="headerlink" title="实现无限级"></a>实现无限级</h2><p>目前看来菜单层级的限制不是在于Service代码，而在于模板。如何在模板中让Angular做一个DFS搜索才是重点。Angular貌似没有提供类似的API，要做的话比较好的办法应该是自己写一个指令。以后有时间再来实现。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/mean-js-menu-service-extension/" title="MEAN.js Menu Service Extension">https://wxsm.space/2016/mean-js-menu-service-extension/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/angularjs/" rel="tag"># angularjs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/2048-game-base-on-jquery/" rel="prev" title="jQuery 写的 2048 小游戏">
+                  <i class="fa fa-angle-left"></i> jQuery 写的 2048 小游戏
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/ie-cache-issue/" rel="next" title="IE Cache Issue">
+                  IE Cache Issue <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/mean-js-menu-service-extension/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

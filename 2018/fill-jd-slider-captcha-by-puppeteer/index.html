@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="京东网页端登录有时候需要输入滑动验证码，就像这样：  在做自动签到脚本的时候遇到这个很不舒服，如果不处理的话就只能每次弹出浏览器手动登录，因此稍微研究了下。下面是一个非常简单，但成功率很高（达到80%）的自动识别并输入方案，使用 puppeteer 实现。 总体思路：通过图像特征识别出滑块缺口的位置，然后通过模拟用户点击将滑块拖动到该处。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Puppeteer 自动输入京东滑动验证码">
+<meta property="og:url" content="https://wxsm.space/2018/fill-jd-slider-captcha-by-puppeteer/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="京东网页端登录有时候需要输入滑动验证码，就像这样：  在做自动签到脚本的时候遇到这个很不舒服，如果不处理的话就只能每次弹出浏览器手动登录，因此稍微研究了下。下面是一个非常简单，但成功率很高（达到80%）的自动识别并输入方案，使用 puppeteer 实现。 总体思路：通过图像特征识别出滑块缺口的位置，然后通过模拟用户点击将滑块拖动到该处。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static.wxsm.space/blog/48596434-ff732280-e993-11e8-94db-2f82be82a1ab.png">
+<meta property="og:image" content="https://static.wxsm.space/blog/48612937-52b19900-e9c5-11e8-97c4-eab52883c540.png">
+<meta property="og:image" content="https://static.wxsm.space/blog/48612892-33b30700-e9c5-11e8-94d7-a6cc6ec30c87.png">
+<meta property="og:image" content="https://static.wxsm.space/blog/48613026-91dfea00-e9c5-11e8-988b-42d823a3699a.png">
+<meta property="article:published_time" content="2018-11-05T01:39:33.386Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.152Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="puppeteer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.wxsm.space/blog/48596434-ff732280-e993-11e8-94db-2f82be82a1ab.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2018/fill-jd-slider-captcha-by-puppeteer/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2018/fill-jd-slider-captcha-by-puppeteer/","path":"2018/fill-jd-slider-captcha-by-puppeteer/","title":"使用 Puppeteer 自动输入京东滑动验证码"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用 Puppeteer 自动输入京东滑动验证码 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2018/fill-jd-slider-captcha-by-puppeteer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用 Puppeteer 自动输入京东滑动验证码 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 Puppeteer 自动输入京东滑动验证码
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-05 09:39:33" itemprop="dateCreated datePublished" datetime="2018-11-05T09:39:33+08:00">2018-11-05</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2018/fill-jd-slider-captcha-by-puppeteer/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2018/fill-jd-slider-captcha-by-puppeteer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>京东网页端登录有时候需要输入滑动验证码，就像这样：</p>
+<p><img src="https://static.wxsm.space/blog/48596434-ff732280-e993-11e8-94db-2f82be82a1ab.png" alt="jd-verify"></p>
+<p>在做自动签到脚本的时候遇到这个很不舒服，如果不处理的话就只能每次弹出浏览器手动登录，因此稍微研究了下。下面是一个非常简单，但成功率很高（达到80%）的自动识别并输入方案，使用 puppeteer 实现。</p>
+<p><strong>总体思路：通过图像特征识别出滑块缺口的位置，然后通过模拟用户点击将滑块拖动到该处。</strong></p>
+<span id="more"></span>
+
+<p>首先，我们能够看到这个滑块缺口是一个黑色半透明的遮罩区域，通过代码分析并不能得到它的具体色值。因此只能自行比对尝试。通过肉眼测试与对比，可以得到这个遮罩的色值大约为 <code>rgba(0,0,0,0.65)</code></p>
+<p><img src="https://static.wxsm.space/blog/48612937-52b19900-e9c5-11e8-97c4-eab52883c540.png" alt="img"></p>
+<p>得到这个色值的目的是：通过判断相邻像素点 a, b 的色值之差，来决定像素点 b 的色值是否是像素点 a 的色值加上遮罩之后的结果，以此来推断遮罩所在的位置。</p>
+<p>下面介绍两个函数：</p>
+<ul>
+<li><code>combineRgba</code> rgba 色值相加，返回相加结果</li>
+<li><code>tolerance</code> rgba 色值比对，通过传入一个「容忍值」，返回颜色是否相似</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * combine rgba colors [r, g, b, a]</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> rgba1 底色</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> rgba2 遮罩色</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">combineRgba</span> (<span class="attr">rgba1</span>: <span class="built_in">number</span>[], <span class="attr">rgba2</span>: <span class="built_in">number</span>[]): <span class="built_in">number</span>[] &#123;</span><br><span class="line">  <span class="keyword">const</span> [r1, g1, b1, a1] = rgba1</span><br><span class="line">  <span class="keyword">const</span> [r2, g2, b2, a2] = rgba2</span><br><span class="line">  <span class="keyword">const</span> a = a1 + a2 - a1 * a2</span><br><span class="line">  <span class="keyword">const</span> r = (r1 * a1 + r2 * a2 - r1 * a1 * a2) / a</span><br><span class="line">  <span class="keyword">const</span> g = (g1 * a1 + g2 * a2 - g1 * a1 * a2) / a</span><br><span class="line">  <span class="keyword">const</span> b = (b1 * a1 + b2 * a2 - b1 * a1 * a2) / a</span><br><span class="line">  <span class="keyword">return</span> [r, g, b, a]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断两个颜色是否相似</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">rgba1</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">rgba2</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">t</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">tolerance</span> (<span class="attr">rgba1</span>: <span class="built_in">number</span>[], <span class="attr">rgba2</span>: <span class="built_in">number</span>[], <span class="attr">t</span>: <span class="built_in">number</span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [r1, g1, b1] = rgba1</span><br><span class="line">  <span class="keyword">const</span> [r2, g2, b2] = rgba2</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    r1 &gt; r2 - t &amp;&amp; r1 &lt; r2 + t</span><br><span class="line">    &amp;&amp; g1 &gt; g2 - t &amp;&amp; g1 &lt; g2 + t</span><br><span class="line">    &amp;&amp; b1 &gt; b2 - t &amp;&amp; b1 &lt; b2 + t</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以写出距离算法了，通过传入包含缺口的验证码图片的 base64 编码，以及图片的实际宽度，返回缺口位置 x 值。具体思路是：通过自左而右，自上而下的逐列像素分析，找出第一个跟上个像素的色值与遮罩色值相加后的结果相似的像素点，就认为是遮罩的 x 位置。</p>
+<p><img src="https://static.wxsm.space/blog/48612892-33b30700-e9c5-11e8-94d7-a6cc6ec30c87.png" alt="img"></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getVerifyPosition</span> (<span class="attr">base64</span>: <span class="built_in">string</span>, <span class="attr">actualWidth</span>: <span class="built_in">number</span>): <span class="title class_">Promise</span>&lt;<span class="built_in">number</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> canvas = <span class="title function_">createCanvas</span>(<span class="number">1000</span>, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">const</span> ctx = canvas.<span class="title function_">getContext</span>(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> img = <span class="keyword">new</span> <span class="title class_">Image</span>()</span><br><span class="line">    img.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> <span class="attr">width</span>: <span class="built_in">number</span> = img.<span class="property">naturalWidth</span></span><br><span class="line">      <span class="keyword">const</span> <span class="attr">height</span>: <span class="built_in">number</span> = img.<span class="property">naturalHeight</span></span><br><span class="line">      ctx.<span class="title function_">drawImage</span>(img, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">      <span class="keyword">const</span> <span class="attr">maskRgba</span>: <span class="built_in">number</span>[] = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.65</span>]</span><br><span class="line">      <span class="keyword">const</span> <span class="attr">t</span>: <span class="built_in">number</span> = <span class="number">10</span> <span class="comment">// 色差容忍值</span></span><br><span class="line">      <span class="keyword">let</span> prevPixelRgba = <span class="literal">null</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> x = <span class="number">0</span>; x &lt; width; x++) &#123;</span><br><span class="line">        <span class="comment">// 重新开始一列，清除上个像素的色值</span></span><br><span class="line">        prevPixelRgba = <span class="literal">null</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> y = <span class="number">0</span>; y &lt; height; y++) &#123;</span><br><span class="line">          <span class="keyword">const</span> rgba = ctx.<span class="title function_">getImageData</span>(x, y, <span class="number">1</span>, <span class="number">1</span>).<span class="property">data</span></span><br><span class="line">          <span class="keyword">if</span> (prevPixelRgba) &#123;</span><br><span class="line">            <span class="comment">// 所有原图中的 alpha 通道值都是1</span></span><br><span class="line">            prevPixelRgba[<span class="number">3</span>] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">const</span> maskedPrevPixel = <span class="title function_">combineRgba</span>(prevPixelRgba, maskRgba)</span><br><span class="line">            <span class="comment">// 只要找到了一个色值匹配的像素点则直接返回，因为是自上而下，自左往右的查找，第一个像素点已经满足&quot;最近&quot;的条件</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">tolerance</span>(maskedPrevPixel, rgba, t)) &#123;</span><br><span class="line">              <span class="title function_">resolve</span>(x * actualWidth / width)</span><br><span class="line">              <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            prevPixelRgba = rgba</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 没有找到任何符合条件的像素点</span></span><br><span class="line">      <span class="title function_">resolve</span>(<span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    img.<span class="property">onerror</span> = reject</span><br><span class="line">    img.<span class="property">src</span> = base64</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得到 x 位置后，就可以使用 puppeteer 操纵滑块来实现验证了：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 验证码图片（带缺口）</span></span><br><span class="line"><span class="keyword">const</span> img = <span class="keyword">await</span> page.$(<span class="string">&#x27;.JDJRV-bigimg &gt; img&#x27;</span>)</span><br><span class="line"><span class="comment">// 获取缺口左x坐标</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">distance</span>: <span class="built_in">number</span> = <span class="keyword">await</span> <span class="title function_">getVerifyPosition</span>(</span><br><span class="line">  <span class="keyword">await</span> page.evaluate(<span class="function"><span class="params">element</span> =&gt;</span> element.<span class="title function_">getAttribute</span>(<span class="string">&#x27;src&#x27;</span>), img),</span><br><span class="line">  <span class="keyword">await</span> page.evaluate(<span class="function"><span class="params">element</span> =&gt;</span> <span class="built_in">parseInt</span>(<span class="variable language_">window</span>.<span class="title function_">getComputedStyle</span>(element).<span class="property">width</span>), img)</span><br><span class="line">)</span><br><span class="line"><span class="comment">// 滑块</span></span><br><span class="line"><span class="keyword">const</span> dragBtn = <span class="keyword">await</span> page.$(<span class="string">&#x27;.JDJRV-slide-btn&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> dragBtnPosition = <span class="keyword">await</span> page.evaluate(<span class="function"><span class="params">element</span> =&gt;</span> &#123;</span><br><span class="line"><span class="comment">// 此处有 bug，无法直接返回 getBoundingClientRect()</span></span><br><span class="line">  <span class="keyword">const</span> &#123;x, y, width, height&#125; = element.<span class="title function_">getBoundingClientRect</span>()</span><br><span class="line">  <span class="keyword">return</span> &#123;x, y, width, height&#125;</span><br><span class="line">&#125;, dragBtn)</span><br><span class="line"><span class="comment">// 按下位置设置在滑块中心</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">x</span>: <span class="built_in">number</span> = dragBtnPosition.<span class="property">x</span> + dragBtnPosition.<span class="property">width</span> / <span class="number">2</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">y</span>: <span class="built_in">number</span> = dragBtnPosition.<span class="property">y</span> + dragBtnPosition.<span class="property">height</span> / <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (distance &gt; <span class="number">10</span>) &#123;</span><br><span class="line">  <span class="comment">// 如果距离够长，则将距离设置为二段（模拟人工操作）</span></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">distance1</span>: <span class="built_in">number</span> = distance - <span class="number">10</span></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">distance2</span>: <span class="built_in">number</span> = <span class="number">10</span></span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">move</span>(x, y)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">down</span>()</span><br><span class="line">  <span class="comment">// 第一次滑动</span></span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">move</span>(x + distance1, y, &#123;<span class="attr">steps</span>: <span class="number">30</span>&#125;)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">500</span>)</span><br><span class="line">  <span class="comment">// 第二次滑动</span></span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">move</span>(x + distance1 + distance2, y, &#123;<span class="attr">steps</span>: <span class="number">20</span>&#125;)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">500</span>)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">up</span>()</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 否则直接滑到相应位置</span></span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">move</span>(x, y)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">down</span>()</span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">move</span>(x + distance, y, &#123;<span class="attr">steps</span>: <span class="number">30</span>&#125;)</span><br><span class="line">  <span class="keyword">await</span> page.<span class="property">mouse</span>.<span class="title function_">up</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等待验证结果</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">waitFor</span>(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://static.wxsm.space/blog/48613026-91dfea00-e9c5-11e8-988b-42d823a3699a.png" alt="img"></p>
+<p>大概就这样。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2018/fill-jd-slider-captcha-by-puppeteer/" title="使用 Puppeteer 自动输入京东滑动验证码">https://wxsm.space/2018/fill-jd-slider-captcha-by-puppeteer/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+              <a href="/tags/puppeteer/" rel="tag"># puppeteer</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/react-node-starter/" rel="prev" title="React node starter">
+                  <i class="fa fa-angle-left"></i> React node starter
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/case-insensitive-auto-complete-in-oxs-terminal/" rel="next" title="Case insensitive auto-complete in OSX Terminal">
+                  Case insensitive auto-complete in OSX Terminal <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2018/fill-jd-slider-captcha-by-puppeteer/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

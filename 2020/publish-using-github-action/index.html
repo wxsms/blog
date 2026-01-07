@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="本文是一些 GitHub Actions 常用发布动作的总结。 强烈建议将所有 Publish actions 分开执行，不要集中到一个 Workflow 内。原因是如果其中一个动作因为某些原因失败了，GitHub 目前只能重启整个 Workflow，而如果 Workflow 内某个 Job 已经成功了，那么该 Job 下一次执行必然是失败（因为此类任务一般不能对同一个版本号执行两次，发布成功一次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Publish using GitHub Action">
+<meta property="og:url" content="https://wxsm.space/2020/publish-using-github-action/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="本文是一些 GitHub Actions 常用发布动作的总结。 强烈建议将所有 Publish actions 分开执行，不要集中到一个 Workflow 内。原因是如果其中一个动作因为某些原因失败了，GitHub 目前只能重启整个 Workflow，而如果 Workflow 内某个 Job 已经成功了，那么该 Job 下一次执行必然是失败（因为此类任务一般不能对同一个版本号执行两次，发布成功一次">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-02T00:25:10.612Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.171Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="github">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="npm">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2020/publish-using-github-action/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2020/publish-using-github-action/","path":"2020/publish-using-github-action/","title":"Publish using GitHub Action"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Publish using GitHub Action | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub-Pages"><span class="nav-number">1.</span> <span class="nav-text">GitHub Pages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub-Release"><span class="nav-number">2.</span> <span class="nav-text">GitHub Release</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NPM"><span class="nav-number">3.</span> <span class="nav-text">NPM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NPM-GitHub-Registry"><span class="nav-number">4.</span> <span class="nav-text">NPM GitHub Registry</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/publish-using-github-action/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Publish using GitHub Action | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Publish using GitHub Action
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-02 08:25:10" itemprop="dateCreated datePublished" datetime="2020-11-02T08:25:10+08:00">2020-11-02</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/publish-using-github-action/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/publish-using-github-action/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文是一些 GitHub Actions 常用发布动作的总结。</p>
+<p>强烈建议将所有 Publish actions 分开执行，不要集中到一个 Workflow 内。原因是如果其中一个动作因为某些原因失败了，GitHub 目前只能重启整个 Workflow，而如果 Workflow 内某个 Job 已经成功了，那么该 Job 下一次执行必然是失败（因为此类任务一般不能对同一个版本号执行两次，发布成功一次以后第二次尝试将会被拒绝发布），因此这一个提交的 Workflow 将永远不可能成功。</p>
+<p>需要注意的是，以下所提到的 <code>secrets.GITHUB_TOKEN</code> 均是 GitHub Action 内置的 Access Token，无需自行创建。而其它 secrets 则需要在 <code>项目主页</code> -&gt; <code>Settings</code> -&gt; <code>Secrets</code> 处创建。</p>
+<span id="more"></span>
+
+<h2 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h2><p>发布 GitHub Pages 使用的是 <a target="_blank" rel="noopener" href="https://github.com/crazy-max/ghaction-github-pages">crazy-max&#x2F;ghaction-github-pages</a> 这个 action：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># publish_pages.yaml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">CD</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">tags:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;v*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy_gh_pages:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="comment"># checkout &amp; yarn</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">c-hive/gha-yarn-cache@v1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">yarn</span> <span class="string">--frozen-lockfile</span></span><br><span class="line">      <span class="comment"># build</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">GitHub</span> <span class="string">Pages</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">crazy-max/ghaction-github-pages@v2.1.3</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">GITHUB_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">target_branch:</span> <span class="string">gh-pages</span></span><br><span class="line">          <span class="attr">build_dir:</span> <span class="string">dist</span></span><br><span class="line">          <span class="attr">jekyll:</span> <span class="literal">false</span> <span class="comment"># 禁用 GitHub 默认开启的 jekyll 构建</span></span><br><span class="line">          <span class="attr">fqdn:</span> <span class="string">some.domain.com</span> <span class="comment"># 自定义域名，需要时填写</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想要在 push 到分支时就直接 deploy，可以使用：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="GitHub-Release"><a href="#GitHub-Release" class="headerlink" title="GitHub Release"></a>GitHub Release</h2><p>发布 Release 包含几个动作：</p>
+<ol>
+<li>根据提交记录生成 Changelog，使用 <a target="_blank" rel="noopener" href="https://github.com/ScottBrenner/generate-changelog-action">ScottBrenner&#x2F;generate-changelog-action</a></li>
+<li>创建一个 Release，正文填写上一步得到的 Changelog，使用 <a target="_blank" rel="noopener" href="https://github.com/actions/create-release">actions&#x2F;create-release</a></li>
+<li>为 Release 附加需要的 assets，使用 <a target="_blank" rel="noopener" href="https://github.com/actions/upload-release-asset">actions&#x2F;upload-release-asset</a></li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># publish_release.yaml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">CD</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">tags:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;v*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy_release:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="comment"># checkout，由于 changelog 需要读取所有历史记录</span></span><br><span class="line">      <span class="comment"># 因此这里 `fetch-depth` 需要填 0，代表所有</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">fetch-depth:</span> <span class="number">0</span></span><br><span class="line">          <span class="attr">ref:</span> <span class="string">dev</span></span><br><span class="line">      <span class="comment"># yarn &amp; build</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">c-hive/gha-yarn-cache@v1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">yarn</span> <span class="string">--frozen-lockfile</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line">      <span class="comment"># 生成 changelog</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Changelog</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">scottbrenner/generate-changelog-action@master</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">Changelog</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">REPO:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.repository</span> <span class="string">&#125;&#125;</span></span><br><span class="line">      <span class="comment"># 创建 release</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Create</span> <span class="string">Release</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">create_release</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/create-release@v1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">GITHUB_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">tag_name:</span> <span class="string">$&#123;&#123;</span> <span class="string">github.ref</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">release_name:</span> <span class="string">Release</span> <span class="string">$&#123;&#123;</span> <span class="string">github.ref</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">body:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            $&#123;&#123; steps.Changelog.outputs.changelog &#125;&#125;</span></span><br><span class="line"><span class="string"></span>          <span class="attr">draft:</span> <span class="literal">false</span></span><br><span class="line">          <span class="attr">prerelease:</span> <span class="literal">false</span></span><br><span class="line">      <span class="comment"># 添加 assets</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Upload</span> <span class="string">Release</span> <span class="string">Asset</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">upload-release-asset</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-release-asset@v1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">GITHUB_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">upload_url:</span> <span class="string">$&#123;&#123;</span> <span class="string">steps.create_release.outputs.upload_url</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">asset_path:</span> <span class="string">./dist/some-js.min.js</span></span><br><span class="line">          <span class="attr">asset_name:</span> <span class="string">some-js.min.js</span></span><br><span class="line">          <span class="attr">asset_content_type:</span> <span class="string">text/javascript</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a>NPM</h2><p>发布 npm 有一个预定义的 action: <a target="_blank" rel="noopener" href="https://github.com/JS-DevTools/npm-publish">JS-DevTools&#x2F;npm-publish</a>，但是用过以后我觉得实际上没有自己敲命令行好用，因为它会做一些额外的不必要的动作，可能会导致发布出错。如：第一次发布时，它默认会检查历史包而报找不到 package 的错误，虽然它文档提示可以通过参数关闭该功能，但实测下来并不行。</p>
+<p>注：下面的 <code>NPM_TOKEN</code> 是需要自行配置的。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># publish_npm.yaml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">CD</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">tags:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;v*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy_npm:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">c-hive/gha-yarn-cache@v1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v1</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="number">12.</span><span class="string">x</span></span><br><span class="line">          <span class="attr">registry-url:</span> <span class="string">https://registry.npmjs.org</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">yarn</span> <span class="string">--frozen-lockfile</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line">      <span class="comment"># 发布</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Publish</span> <span class="string">NPM</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">publish</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">NODE_AUTH_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.NPM_TOKEN</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="NPM-GitHub-Registry"><a href="#NPM-GitHub-Registry" class="headerlink" title="NPM GitHub Registry"></a>NPM GitHub Registry</h2><p>GitHub Registry 与 NPM 不一样的是，它要求发布的包必须是以当前仓库所属的 username 为 scope 的。因此如果要同时发布 NPM 和 GitHub Registry，在执行此步骤时 <code>package.json</code> 需要做一点小更改：将包名改为 scoped 的。</p>
+<p>这里为求简便，使用了 <a target="_blank" rel="noopener" href="https://github.com/deef0000dragon1/json-edit-action">deef0000dragon1&#x2F;json-edit-action</a> 来执行替换。实际上熟悉 shell 命令的话一行代码也可以完成。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># publish_github.yaml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">CD</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">tags:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;v*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">publish_github:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v1</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="number">12</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="comment"># 将 package.json 中的 name 字段替换</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">change</span> <span class="string">package</span> <span class="string">name</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">deef0000dragon1/json-edit-action@v1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">KEY:</span> <span class="string">name</span></span><br><span class="line">          <span class="attr">VALUE:</span> <span class="string">&quot;@username/some-package&quot;</span></span><br><span class="line">          <span class="attr">FILE:</span> <span class="string">package.json</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">c-hive/gha-yarn-cache@v1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">yarn</span> <span class="string">--frozen-lockfile</span></span><br><span class="line">      <span class="comment"># 配置 npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">echo</span> <span class="string">//npm.pkg.github.com/:_authToken=$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span> <span class="string">&gt;&gt;</span> <span class="string">.npmrc</span></span><br><span class="line">      <span class="comment"># 发布</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">publish</span> <span class="string">--registry=https://npm.pkg.github.com</span></span><br></pre></td></tr></table></figure>
+
+<p>关于 <code>npmrc</code> 这一步，使用 <code>NODE_AUTH_TOKEN</code> 环境变量应该也可以达到相同目的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2020/publish-using-github-action/" title="Publish using GitHub Action">https://wxsm.space/2020/publish-using-github-action/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/github/" rel="tag"># github</a>
+              <a href="/tags/devops/" rel="tag"># devops</a>
+              <a href="/tags/npm/" rel="tag"># npm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/enable-soft-wrap-for-markdown-files-in-idea-by-default/" rel="prev" title="IDEA 为 Markdown 文件默认启用 SoftWrap">
+                  <i class="fa fa-angle-left"></i> IDEA 为 Markdown 文件默认启用 SoftWrap
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/integrate-renovate-with-gitlab/" rel="next" title="Integrate Renovate with GitLab">
+                  Integrate Renovate with GitLab <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2020/publish-using-github-action/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="项目地址：https:&#x2F;&#x2F;github.com&#x2F;wxsms&#x2F;zhihu-spider 简介：使用 Node.js 实现的一个简单的知乎爬虫，可以以一个用户为入口，爬取其账号下的一些基本信息，关注者，关注话题等。再通过关注者的 ID 继续爬取其他用户，以此循环。 实现功能：登录知乎（因为调用一些知乎 API 需要保存 session），解析页面，访问 AJAX API，保存到数据库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js Web Spider Note - 1">
+<meta property="og:url" content="https://wxsm.space/2016/node-js-web-spider-note-1/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="项目地址：https:&#x2F;&#x2F;github.com&#x2F;wxsms&#x2F;zhihu-spider 简介：使用 Node.js 实现的一个简单的知乎爬虫，可以以一个用户为入口，爬取其账号下的一些基本信息，关注者，关注话题等。再通过关注者的 ID 继续爬取其他用户，以此循环。 实现功能：登录知乎（因为调用一些知乎 API 需要保存 session），解析页面，访问 AJAX API，保存到数据库。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static.wxsm.space/blog/48595803-40b60300-e991-11e8-852f-e89da0452800.png">
+<meta property="og:image" content="https://static.wxsm.space/blog/48595805-414e9980-e991-11e8-80ae-b9a0ef4eb43e.png">
+<meta property="article:published_time" content="2016-09-10T15:12:05.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.167Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.wxsm.space/blog/48595803-40b60300-e991-11e8-852f-e89da0452800.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/node-js-web-spider-note-1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/node-js-web-spider-note-1/","path":"2016/node-js-web-spider-note-1/","title":"Node.js Web Spider Note - 1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Node.js Web Spider Note - 1 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="nav-number">2.</span> <span class="nav-text">技术栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%A7%A3%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">程序解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%9B%B8%E5%85%B3%E4%BB%A5%E5%8F%8A%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">配置相关以及通用模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97"><span class="nav-number">3.2.</span> <span class="nav-text">登录模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%AC%E8%99%AB%E6%A8%A1%E5%9D%97"><span class="nav-number">3.3.</span> <span class="nav-text">爬虫模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E6%A8%A1%E5%9D%97"><span class="nav-number">3.4.</span> <span class="nav-text">转换模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">3.5.</span> <span class="nav-text">Service</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E7%82%B9%E9%9A%BE%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">重点难点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95"><span class="nav-number">4.1.</span> <span class="nav-text">模拟登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%85%B3%E6%B3%A8"><span class="nav-number">4.2.</span> <span class="nav-text">获取关注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E5%B7%A5%E4%BD%9C"><span class="nav-number">4.3.</span> <span class="nav-text">持续工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">目前的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E7%8E%87"><span class="nav-number">5.1.</span> <span class="nav-text">效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="nav-number">5.2.</span> <span class="nav-text">稳定性</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/node-js-web-spider-note-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Node.js Web Spider Note - 1 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node.js Web Spider Note - 1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-09-10 23:12:05" itemprop="dateCreated datePublished" datetime="2016-09-10T23:12:05+08:00">2016-09-10</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/node-js-web-spider-note-1/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/node-js-web-spider-note-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/wxsms/zhihu-spider">https://github.com/wxsms/zhihu-spider</a></p>
+<p>简介：使用 Node.js 实现的一个简单的知乎爬虫，可以以一个用户为入口，爬取其账号下的一些基本信息，关注者，关注话题等。再通过关注者的 ID 继续爬取其他用户，以此循环。</p>
+<p>实现功能：登录知乎（因为调用一些知乎 API 需要保存 session），解析页面，访问 AJAX API，保存到数据库。</p>
+<span id="more"></span>
+
+<h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><p><img src="https://static.wxsm.space/blog/48595803-40b60300-e991-11e8-852f-e89da0452800.png"></p>
+<p>蓝色部分的任一流程出现失败或错误，程序都会直接返回到“从种子队列取出一个用户ID”这一步。因为作为一个完整的知乎用户来说，它应该是包含了个人信息，关注以及话题的，缺失一项会导致其失去很大部分的意义。</p>
+<h2 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h2><p>本程序以 Node.js 为实现核心（本机版本 v6.5.0），用到的依赖很少，如下：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;asyncawait&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.0.6&quot;</span><span class="punctuation">,</span> <span class="comment">//模拟ES7 async/await语法</span></span><br><span class="line">  <span class="attr">&quot;jquery&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^3.1.0&quot;</span><span class="punctuation">,</span> <span class="comment">//用来解析HTML</span></span><br><span class="line">  <span class="attr">&quot;jsdom&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^3.1.2&quot;</span><span class="punctuation">,</span> <span class="comment">//为HTML和jQuery模拟浏览器环境</span></span><br><span class="line">  <span class="attr">&quot;lodash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.15.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log4js&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^0.6.38&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;mocha&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^3.0.2&quot;</span><span class="punctuation">,</span> <span class="comment">//用于单元测试</span></span><br><span class="line">  <span class="attr">&quot;mongoose&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.6.0&quot;</span><span class="punctuation">,</span> </span><br><span class="line">  <span class="attr">&quot;superagent&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^2.2.0&quot;</span><span class="punctuation">,</span> <span class="comment">//请求发送</span></span><br><span class="line">  <span class="attr">&quot;superagent-promise&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.1.0&quot;</span> <span class="comment">//请求发送的Promise封装</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="程序解析"><a href="#程序解析" class="headerlink" title="程序解析"></a>程序解析</h2><p>程序源代码在代码仓库的 <code>src</code>  目录下，目录结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├─config</span><br><span class="line">├─constants</span><br><span class="line">├─http</span><br><span class="line">├─model</span><br><span class="line">├─parsers</span><br><span class="line">│  ├─follow</span><br><span class="line">│  ├─topic</span><br><span class="line">│  └─user</span><br><span class="line">├─services</span><br><span class="line">├─spiders</span><br><span class="line">└─utils</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置相关以及通用模块"><a href="#配置相关以及通用模块" class="headerlink" title="配置相关以及通用模块"></a>配置相关以及通用模块</h3><p><code>config</code>  目录主要放置一些程序的配置文件，比如用来登录知乎的用户名和密码，想要抓取的用户种子，数据库连接地址，以及 log 的配置。</p>
+<p><code>constants</code>  目录下是一些对知乎的特定配置，如 url 地址、规则，以及知乎 API 的一些信息，如表单、请求头格式等。</p>
+<p><code>util</code>  目录下目前是放置了一些数据库以及 log4js 的初始化方法，如自动扫描 models 加载以及创建 log 目录等，以便于在程序入口处调用。</p>
+<p><code>models</code>  则是 mongoose 的各种 schema了，用于持久化。</p>
+<h3 id="登录模块"><a href="#登录模块" class="headerlink" title="登录模块"></a>登录模块</h3><p>登录虽然不是爬虫的重点，但却是必不可少的前提。因为对于知乎网站来说，不登录的话只能看到单个用户的个人页面，想要再前往关注者页面就不可能了。这就造成一个问题：爬虫无法持续工作。</p>
+<p>因此，此模块的主要职责是，在爬虫运行的过程当中保证已登录状态。</p>
+<p>此模块放置在 <code>http/session</code>  中。</p>
+<h3 id="爬虫模块"><a href="#爬虫模块" class="headerlink" title="爬虫模块"></a>爬虫模块</h3><p>程序核心之一，同时也是最容易出现问题的地方（尤其是启用多线程以后），负责发送 Http 请求并接受响应。</p>
+<p>除了简单的单次请求以外，因为一些特定的原因，里面还涉及到了递归请求。</p>
+<h3 id="转换模块"><a href="#转换模块" class="headerlink" title="转换模块"></a>转换模块</h3><p>程序核心之一，负责将爬取回来的 HTML 文本、API 返回体等转换成 model 对象，没什么技术含量，体力活。</p>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>其实就是将单次爬取的整个流程定义封装好，供主程序调用。</p>
+<p>同时也负责爬取结果的储存，以及用户种子队列的管理。</p>
+<h2 id="重点难点"><a href="#重点难点" class="headerlink" title="重点难点"></a>重点难点</h2><h3 id="模拟登录"><a href="#模拟登录" class="headerlink" title="模拟登录"></a>模拟登录</h3><p>这次经历让我意识到什么都靠 Google 也有不行的时候，因为爬虫这东西，虽然肯定也有别人做过，但是基本上都过时了，人家网站早更新了，真刀真枪还是得靠自己。</p>
+<p>整个过程虽然简单，但是由于经验匮乏，还是走了不少弯路。最终总结出来的必须步骤如下：</p>
+<p><img src="https://static.wxsm.space/blog/48595805-414e9980-e991-11e8-80ae-b9a0ef4eb43e.png"></p>
+<p>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">login</span>(<span class="params">_user</span>) &#123;</span><br><span class="line">  user = _user;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">getCaptcha</span>()</span><br><span class="line">      .<span class="title function_">then</span>(resolveCaptcha)</span><br><span class="line">      .<span class="title function_">then</span>(getLoginCookie)</span><br><span class="line">      .<span class="title function_">then</span>(_getXsrfToken)</span><br><span class="line">      .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        logger.<span class="title function_">info</span>(<span class="string">&#x27;Login success!&#x27;</span>);</span><br><span class="line">        <span class="title function_">resolve</span>();</span><br><span class="line">      &#125;)</span><br><span class="line">      .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">reject</span>(<span class="string">&#x27;Login failed: &#x27;</span> + err);</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（目前并没有在所有地方都用上 async await，之后改过来）</p>
+<p>获取验证码很简单，但是要注意的是把 response 里面的 <code>set-cookie</code>  信息保存起来添加到一会要登录的请求上去，因为不这么做的话，知乎服务器不认为登录那一次请求跟这个验证码有什么关系。</p>
+<p>“解析验证码”这一步目前是这个程序最难看（难看，不是难）的地方，因为用的是土法炼钢：人眼解析。我尝试过用一些通用的验证码识别库去做自动化，但是正确率太低，而且知乎它的验证码有随机两套字体，反正好像训练起来也麻烦，所以就没继续研究下去了，毕竟不是爬虫主体，而且只需要在程序启动的时候输入一次即可。</p>
+<p>登录请求的模拟，可以在知乎网站上使用浏览器的开发控制台启用“任意 XHR 断点”来截获网站发送的真实登录请求以及服务器返回来进行伪造。实际上就是填一个表单 POST 出去，然后返回的时候把 response 里面的 <code>set-cookie</code>  信息保存起来添加到以后要使用的所有请求的 header 上去就行了，因为服务器它就是靠这一堆 cookie 值来判断客户端所处的会话。</p>
+<p>最后就是那个所谓的“秘钥”，网站上的名字叫 <code>xsrf</code> ，知乎在这里做了一些手脚。它在 set-cookie 中并没有提供这一串秘钥，但是如果我要请求它的 API，那么 cookie 里面就必须有这个键值对，明显网站是通过 JS 动态加进去的。然而我没有必要这么做，只需要在一开始的时候就把它拿到，然后以后每次请求都带上它就可以了。至于怎么拿也很简单，知乎每个页面都有的隐藏的输入框，里面的值就是。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">xsrfToken = $(<span class="string">&#x27;input[name=_xsrf]&#x27;</span>).<span class="title function_">val</span>();</span><br></pre></td></tr></table></figure>
+
+<p>这四步做完以后，程序就成功登录了。</p>
+<h3 id="获取关注"><a href="#获取关注" class="headerlink" title="获取关注"></a>获取关注</h3><p>去到知乎的关注者、已关注页面可以发现，内容是随着页面滚动逐步加载的，因此这里存在一个 API 可以使用，无需爬页面。使用浏览器开发者控制台，我们可以截取到 API 的详细信息，以下是我总结的一个：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="attr">userFollowers</span>: &#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="function">() =&gt;</span> <span class="string">&#x27;https://www.zhihu.com/node/ProfileFollowersListV2&#x27;</span>,</span><br><span class="line">    <span class="attr">pageSize</span>: <span class="function">() =&gt;</span> <span class="number">20</span>,</span><br><span class="line">    <span class="attr">form</span>: <span class="function">(<span class="params">hashId, offset</span>) =&gt;</span> &#123;</span><br><span class="line">      offset = <span class="keyword">typeof</span> offset === <span class="string">&#x27;undefined&#x27;</span> ? <span class="number">0</span> : offset;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;next&#x27;</span>,</span><br><span class="line">        <span class="attr">params</span>: <span class="string">`&#123;&quot;offset&quot;:<span class="subst">$&#123;offset&#125;</span>,&quot;order_by&quot;:&quot;created&quot;,&quot;hash_id&quot;:&quot;<span class="subst">$&#123;hashId&#125;</span>&quot;&#125;`</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">header</span>: <span class="function">(<span class="params">userName, token</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&#x27;X-Xsrftoken&#x27;</span>: token,</span><br><span class="line">        <span class="string">&#x27;X-Requested-With&#x27;</span>: <span class="string">&#x27;XMLHttpRequest&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded; charset=UTF-8&#x27;</span>,</span><br><span class="line">        <span class="title class_">Referer</span>: zhihu.<span class="property">url</span>.<span class="title function_">userFollowers</span>(userName)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>form 是 API 需要发送的表单，而 header 则是这次请求额外需要的 header（指包括登录获取的 header）。</p>
+<p>由于它这个是按 page 来的，每次请求最多只会返回 20 条记录，到底了就会返回空数组，因此我做了一个 Promise 递归来实现这个功能。另外，由于有的用户关注加起来上万条，全部遍历完实在是太慢（不知道会不会一去不回），所以我把抓取的总数限制在了 100 条。至于总数的这个数量，在其它地方可以获取到，不需要通过这里获取，所以无所谓。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">resolveByPage</span>(<span class="params">user, offset, apiObj</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> header = <span class="title class_">Object</span>.<span class="title function_">assign</span>(session.<span class="title function_">getHttpHeader</span>(), apiObj.<span class="title function_">header</span>(user.<span class="property">id</span>, session.<span class="title function_">getXsrfToken</span>()));</span><br><span class="line">  <span class="keyword">let</span> form = apiObj.<span class="title function_">form</span>(user.<span class="property">hashId</span>, offset);</span><br><span class="line">  <span class="comment">//No more than 100 (too slow)</span></span><br><span class="line">  <span class="keyword">if</span> (offset + apiObj.<span class="title function_">pageSize</span>() &gt; <span class="number">100</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>([]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> superagent</span><br><span class="line">    .<span class="title function_">post</span>(apiObj.<span class="title function_">url</span>())</span><br><span class="line">    .<span class="title function_">set</span>(header)</span><br><span class="line">    .<span class="title function_">send</span>(form)</span><br><span class="line">    .<span class="title function_">end</span>()</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> data = parser.<span class="title function_">fromJson</span>(res.<span class="property">text</span>);</span><br><span class="line">      <span class="keyword">if</span> (!data.<span class="property">list</span>.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> [];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">resolveByPage</span>(user, offset + apiObj.<span class="title function_">pageSize</span>(), apiObj)</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params">nextList</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> [].<span class="title function_">concat</span>(data.<span class="property">list</span>, nextList);</span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">catch</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> [];</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="持续工作"><a href="#持续工作" class="headerlink" title="持续工作"></a>持续工作</h3><p>爬虫如何持续工作这个问题一开始我是挺头疼的，就是说当一次任务结束以后，要如何自动开始下一次任务。由于全是异步操作，直接 while 1 肯定要炸。</p>
+<p>后来看到 async await 语法，终于写出了一个可工作的版本。（Node.js v6.5.0 还没有原生支持 async await，所以用到了一个库）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> next = <span class="title function_">async</span>(<span class="keyword">function</span> (<span class="params">threadId</span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> userId = <span class="title function_">await</span>(userQueueService.<span class="title function_">shift</span>());</span><br><span class="line">    logger.<span class="title function_">info</span>(<span class="string">`Thread <span class="subst">$&#123;threadId&#125;</span> working on user <span class="subst">$&#123;userId&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">let</span> user = <span class="title function_">await</span>(userService.<span class="title function_">resolveAndSave</span>(userId));</span><br><span class="line">    <span class="title function_">await</span>(userQueueService.<span class="title function_">unshiftAll</span>([].<span class="title function_">concat</span>(user.<span class="property">followers_sample</span>, user.<span class="property">followees_sample</span>)));</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err.<span class="property">name</span> === <span class="string">&#x27;MongoError&#x27;</span>) &#123;</span><br><span class="line">      err = err.<span class="property">message</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    logger.<span class="title function_">error</span>(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> thread = <span class="title function_">async</span>(<span class="keyword">function</span> (<span class="params">id</span>) &#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="title function_">await</span>(<span class="title function_">next</span>(id));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>程序执行到 <code>await</code>  关键字的地方就会阻塞，直到语句返回再继续。</p>
+<p>至于多线程，直接简单暴力：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> main = <span class="title function_">async</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">await</span>(userService.<span class="title function_">login</span>());</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    <span class="title function_">thread</span>(i)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这样，执行 main 方法，程序就有 5 个线程同时工作了。</p>
+<h2 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h2><h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p>5 条线程还是太慢，一小时大约能抓 1000 个用户的样子，但是我又不能再多开，再开线程请求数就爆了，各种报错、失败，得不偿失。</p>
+<p><del>我在想是不是能再开几个 Node.js 进程同时跑这个程序。质量不行数量来补。</del></p>
+<p>09&#x2F;12&#x2F;2016 更新：这个办法不行。请求数限制是在服务器端做出的。貌似无解。</p>
+<h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><p>这个是目前很头疼的问题。我发现程序在跑一个小时或者两个小时以后，5 条线程就只剩下一条或者两条还在工作，其它的都失踪了，或者干脆全都死在那里了。其实我知道它们没死，只不过不知道为什么卡住了。</p>
+<p>第一次发现的时候觉得有点逗，感觉就像自己生了五个孩子后来死剩两个一样。</p>
+<p>09&#x2F;12&#x2F;2016 更新：目前发现了一个原因，即有些知乎用户的个人主页被屏蔽了，导致解析失败，但是又没有 catch 导致线程无限挂住。解决这个以后问题依然存在，高度怀疑是因为 session 过期。</p>
+<p>09&#x2F;14&#x2F;2016 更新：果然是 session 过期的原因。在登录的表单中加入一个字段 <code>remember_me: true</code> 以后，线程死掉的问题就解决了！Excited！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/node-js-web-spider-note-1/" title="Node.js Web Spider Note - 1">https://wxsm.space/2016/node-js-web-spider-note-1/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/javascript-promise/" rel="prev" title="JavaScript Promise">
+                  <i class="fa fa-angle-left"></i> JavaScript Promise
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/wordpress-hole-record/" rel="next" title="WordPress 掉坑记录">
+                  WordPress 掉坑记录 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/node-js-web-spider-note-1/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="Cookie &amp; SessionHTTP 是一种无状态协议，服务器与客户端之间储存状态信息主要靠 Session，但是，Session 在浏览器关闭后就会失效，再次开启先前所储存的状态都会丢失，因此还需要借助 Cookie 一般来说，网络爬虫不是浏览器，因此，只能靠手动记住 Cookie 来与服务器“保持联系”。 CookieCookie 是 HTTP 协议的一部分，处理流程为：  服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js Web Spider Note - 2">
+<meta property="og:url" content="https://wxsm.space/2016/node-js-web-spider-note-2/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="Cookie &amp; SessionHTTP 是一种无状态协议，服务器与客户端之间储存状态信息主要靠 Session，但是，Session 在浏览器关闭后就会失效，再次开启先前所储存的状态都会丢失，因此还需要借助 Cookie 一般来说，网络爬虫不是浏览器，因此，只能靠手动记住 Cookie 来与服务器“保持联系”。 CookieCookie 是 HTTP 协议的一部分，处理流程为：  服务器">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-11-05T06:45:26.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.167Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/node-js-web-spider-note-2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/node-js-web-spider-note-2/","path":"2016/node-js-web-spider-note-2/","title":"Node.js Web Spider Note - 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Node.js Web Spider Note - 2 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie-Session"><span class="nav-number">1.</span> <span class="nav-text">Cookie &amp; Session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie"><span class="nav-number">1.1.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session"><span class="nav-number">1.2.</span> <span class="nav-text">Session</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AJAX-%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">AJAX 页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">请求分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%98%E9%92%A5%E5%A4%84%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">秘钥处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">表单处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E6%8B%9F"><span class="nav-number">4.</span> <span class="nav-text">浏览器模拟</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/node-js-web-spider-note-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Node.js Web Spider Note - 2 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node.js Web Spider Note - 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-05 14:45:26" itemprop="dateCreated datePublished" datetime="2016-11-05T14:45:26+08:00">2016-11-05</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/node-js-web-spider-note-2/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/node-js-web-spider-note-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Cookie-Session"><a href="#Cookie-Session" class="headerlink" title="Cookie &amp; Session"></a>Cookie &amp; Session</h2><p>HTTP 是一种无状态协议，服务器与客户端之间储存状态信息主要靠 Session，但是，Session 在浏览器关闭后就会失效，再次开启先前所储存的状态都会丢失，因此还需要借助 Cookie</p>
+<p>一般来说，网络爬虫不是浏览器，因此，只能靠手动记住 Cookie 来与服务器“保持联系”。</p>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>Cookie 是 HTTP 协议的一部分，处理流程为：</p>
+<ul>
+<li>服务器向客户端发送 cookie <ul>
+<li>通常使用 HTTP 协议规定的 set-cookie 头操作</li>
+<li>规范规定 cookie 的格式为 name &#x3D; value 格式，且必须包含这部分</li>
+</ul>
+</li>
+<li>浏览器将 cookie 保存</li>
+<li>每次请求浏览器都会将 cookie 发向服务器</li>
+</ul>
+<p>因此，爬虫要做的工作就是模拟浏览器，识别服务端发来的 Cookie 并保存，之后每次请求都带上 Cookie 头。</p>
+<p>在 Node.js 中有很多与 Cookie 处理相关的 package，就不再赘述。</p>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>Cookie 虽然方便，但是由于保存在客户端，可保存的长度有限，且可以被伪造。因此，为了解决这些问题，就有了 Session</p>
+<p>区别：</p>
+<ul>
+<li>Cookie 保存在客户端</li>
+<li>Session 保存在服务端</li>
+</ul>
+<p>Cookie 与 Session 储存的都是客户端与服务器之间的会话状态信息，它们之间主要靠一个秘钥来进行匹配，称之为 <code>SESSION_ID</code> ，如 express 中默认为 <code>connect.sid</code> 字段。只要浏览器发出的 SESSION_ID 与服务器储存的字段匹配上，那么服务器就将其认作为一个 Session，只要 SESSION_ID 的长度足够大，几乎是不可能被伪造的。因此，敏感信息储存在 Session 中要比 Cookie 安全得多。</p>
+<p>常见的 Session 存放媒介有：</p>
+<ul>
+<li>RAM</li>
+<li>Database</li>
+<li>Cache (e.g. Redis)</li>
+</ul>
+<p>Session 不是爬虫可以接触到的东西。</p>
+<h2 id="AJAX-页面"><a href="#AJAX-页面" class="headerlink" title="AJAX 页面"></a>AJAX 页面</h2><p>对于静态页面（服务端渲染），使用爬虫不需要考虑太多，把页面抓取下来解析即可。但对于客户端渲染，尤其是前后端完全分离的网站，一般不能直接获取页面（甚至没有必要获取页面），而是转而分析其实际请求内容。</p>
+<h3 id="请求分析"><a href="#请求分析" class="headerlink" title="请求分析"></a>请求分析</h3><p>通过一些请求拦截分析工具（如 Chrome 开发者工具）可以截获网站向服务器发送的所有请求以及相应的回复。</p>
+<p>包括（不限于）以下信息：</p>
+<ul>
+<li>请求地址</li>
+<li>请求方法（GET &#x2F; POST 等）</li>
+<li>所带参数</li>
+<li>请求头</li>
+</ul>
+<p>只要把信息尽数伪造，那么爬虫发出的请求照样可以从服务器取得正确的结果。</p>
+<h3 id="秘钥处理"><a href="#秘钥处理" class="headerlink" title="秘钥处理"></a>秘钥处理</h3><p>一些请求中会带有秘钥（token &#x2F; sid &#x2F; secret），可能随除了请求方法外的任一个位置发出，也可能都带有秘钥。更可能不止一个秘钥。</p>
+<p>理论上来说，正常客户端取得秘钥有两种方式：</p>
+<ul>
+<li>服务端提供</li>
+<li>客户端自行计算，由服务端校对</li>
+</ul>
+<p>对于服务端提供给客户端的秘钥，只要仔细分析 HTML 或服务端返回的 Cookie Header 就一定能发现。</p>
+<p>而对于客户端自行计算的秘钥则比较麻烦了，尤其是在 JS 代码加密、混淆的情况下。这种时候，只能自己去用开发者工具调试原始站点代码，找出加密代码段，并在爬虫中实现。这里面有许多技巧，如各种断点、单步调试等。</p>
+<h2 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h2><p>表单实际上也是 HTTP 请求，使用 GET &#x2F; POST 等方法即可模拟表单提交。然而这不是重点。重点是表单常常伴随着验证码而存在。</p>
+<p>验证码的识别暂未涉及。</p>
+<h2 id="浏览器模拟"><a href="#浏览器模拟" class="headerlink" title="浏览器模拟"></a>浏览器模拟</h2><p>爬虫的下下策才是使用浏览器完全模拟用户操作。实在是属于无奈之举。Nodejs 可以驱动 Chrome 与 Firefox 浏览器，存在相应的 Package，但是，更方便的是使用各种 E2E Testing 工具。</p>
+<p>比如 Night Watch JS：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line"> <span class="string">&#x27;Demo test Google&#x27;</span> : <span class="keyword">function</span> (<span class="params">client</span>) &#123;</span><br><span class="line"> client</span><br><span class="line"> .<span class="title function_">url</span>(<span class="string">&#x27;http://www.google.com&#x27;</span>)</span><br><span class="line"> .<span class="title function_">waitForElementVisible</span>(<span class="string">&#x27;body&#x27;</span>, <span class="number">1000</span>)</span><br><span class="line"> .<span class="property">assert</span>.<span class="title function_">title</span>(<span class="string">&#x27;Google&#x27;</span>)</span><br><span class="line"> .<span class="property">assert</span>.<span class="title function_">visible</span>(<span class="string">&#x27;input[type=text]&#x27;</span>)</span><br><span class="line"> .<span class="title function_">setValue</span>(<span class="string">&#x27;input[type=text]&#x27;</span>, <span class="string">&#x27;rembrandt van rijn&#x27;</span>)</span><br><span class="line"> .<span class="title function_">waitForElementVisible</span>(<span class="string">&#x27;button[name=btnG]&#x27;</span>, <span class="number">1000</span>)</span><br><span class="line"> .<span class="title function_">click</span>(<span class="string">&#x27;button[name=btnG]&#x27;</span>)</span><br><span class="line"> .<span class="title function_">pause</span>(<span class="number">1000</span>)</span><br><span class="line"> .<span class="property">assert</span>.<span class="title function_">containsText</span>(<span class="string">&#x27;ol#rso li:first-child&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Rembrandt - Wikipedia&#x27;</span>)</span><br><span class="line"> .<span class="title function_">end</span>();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这种模式下，Cookie &#x2F; Session &#x2F; 请求等各种细节都不用关心了。只需要按部就班地执行操作即可。模拟浏览器的代价是效率太低，内存开销大，但在某些特定需求情况下，却比一般爬虫要简单得多。</p>
+<p>&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/node-js-web-spider-note-2/" title="Node.js Web Spider Note - 2">https://wxsm.space/2016/node-js-web-spider-note-2/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/d3-note-basis/" rel="prev" title="D3 Note - Basis">
+                  <i class="fa fa-angle-left"></i> D3 Note - Basis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/webpack-hmr-not-work-in-idea/" rel="next" title="Webpack HMR Not Work in IDEA">
+                  Webpack HMR Not Work in IDEA <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/node-js-web-spider-note-2/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

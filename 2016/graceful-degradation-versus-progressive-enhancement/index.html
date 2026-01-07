@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="“渐进增强”与“优雅降级”是 Web 页面两种不同的开发理念，为了简单起见，先给出定义（By W3C）：  Graceful degradation Providing an alternative version of your functionality or making the user aware of shortcomings of a product as a safety meas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="“渐进增强”与“优雅降级”">
+<meta property="og:url" content="https://wxsm.space/2016/graceful-degradation-versus-progressive-enhancement/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="“渐进增强”与“优雅降级”是 Web 页面两种不同的开发理念，为了简单起见，先给出定义（By W3C）：  Graceful degradation Providing an alternative version of your functionality or making the user aware of shortcomings of a product as a safety meas">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-03-25T01:35:10.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.156Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/graceful-degradation-versus-progressive-enhancement/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/graceful-degradation-versus-progressive-enhancement/","path":"2016/graceful-degradation-versus-progressive-enhancement/","title":"“渐进增强”与“优雅降级”"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>“渐进增强”与“优雅降级” | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%B8%8D%E6%96%AD%E5%8F%98%E5%8C%96%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%AD%E5%BC%80%E5%8F%91"><span class="nav-number">1.</span> <span class="nav-text">在不断变化的环境中开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%80%85%E6%A6%82%E8%A7%88"><span class="nav-number">2.</span> <span class="nav-text">二者概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">一个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/graceful-degradation-versus-progressive-enhancement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="“渐进增强”与“优雅降级” | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          “渐进增强”与“优雅降级”
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-03-25 09:35:10" itemprop="dateCreated datePublished" datetime="2016-03-25T09:35:10+08:00">2016-03-25</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/graceful-degradation-versus-progressive-enhancement/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/graceful-degradation-versus-progressive-enhancement/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>“渐进增强”与“优雅降级”是 Web 页面两种不同的开发理念，为了简单起见，先给出定义（By W3C）：</p>
+<blockquote>
+<p>Graceful degradation Providing an alternative version of your functionality or making the user aware of shortcomings of a product as a safety measure to ensure that the product is usable. Progressive enhancement Starting with a baseline of usable functionality, then increasing the richness of the user experience step by step by testing for support for enhancements before applying them.</p>
+</blockquote>
+<p>翻译：“优雅降级”的目的是为你的功能模块提供一种替代方案，或者让用户意识到某种产品（浏览器）的缺陷来保证你的产品的可用性。“渐进增强”是在一个最基本的可用功能之上，通过在拓展功能前检测（浏览器的）支持性逐步地提升用户体验。</p>
+<p>这两种方案看起来好像没有什么太大区别，并且最终的结果貌似也是一样的。但是看完后面更多的解释和示例，就会更明白一些，其实这里面是真的有区别的。</p>
+<p>一些博文将其简单地归结为如下内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.transition</span> &#123;   <span class="comment">/*渐进增强写法*/</span></span><br><span class="line">  -webkit-<span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">     -moz-<span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">       -o-<span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">          <span class="attribute">transition</span>: all .<span class="number">5s</span>;  </span><br><span class="line">&#125; </span><br><span class="line"><span class="selector-class">.transition</span> &#123;   <span class="comment">/*优雅降级写法*/</span> </span><br><span class="line">          <span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">       -o-<span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">     -moz-<span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">  -webkit-<span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个解释是<strong>完全错误的</strong>。实际上任何情况下我们都应该使用前者的 CSS 写法。</p>
+<span id="more"></span>
+
+<h2 id="在不断变化的环境中开发"><a href="#在不断变化的环境中开发" class="headerlink" title="在不断变化的环境中开发"></a>在不断变化的环境中开发</h2><p>稍微接触过 Web 开发的同学都能发现，我们目前所面对的最大难题不是如何实现强大的功能，而是如何保证即使是不那么强大的功能也能够被所有（退一步说，大多数）用户正常地使用。</p>
+<blockquote>
+<p>The web was invented and defined to be used with any display device, in any language, anywhere you want. The only thing expected of end users is that they are using a browsing device that can reach out to the web and understand the protocols used to transmit information — http, https, ftp and so on.</p>
+</blockquote>
+<p>正是因为可以访问 Web 的设备、语言、环境等因素太多太复杂，在极大促进 Web 发展的同时，也导致了以上困境。我们开发者无法对用户所使用的设备有任何期待。因此，我们无法保证 Web 应用上的所有功能都能够正确运行。</p>
+<p>我们需要在未知中寻找出路，这就是“渐进增强”与“优雅降级”出现的原因。</p>
+<h2 id="二者概览"><a href="#二者概览" class="headerlink" title="二者概览"></a>二者概览</h2><p>上面有对二者有一个简单的定义，这里再作一些扩展。</p>
+<p><strong>优雅降级：</strong></p>
+<p>首先确保使用现代浏览器的用户能够获得最好的用户体验，然后为使用老旧浏览器的用户优雅降级。降级的结果可能会导致功能不再那么美好，但是，只要能够为用户保留住访问网站的最后一点价值就算是达到了目的。让他们至少能看到正常的页面。</p>
+<p><strong>渐进增强：</strong></p>
+<p>相似，但又不一样。首先为所有浏览器都提供一个能够正常渲染并工作的版本，然后为更高级的浏览器构建高级功能。</p>
+<p>换句话说，“优雅降级”是从复杂的现状开始，尝试去修复一些问题；而“渐进增强”则从最基础入手，为更好的环境提供扩展。“渐进增强”可以让你的基础更加牢固，并且始终保持向前看的姿态。</p>
+<h2 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h2><p>光说真的很难理解，我们来看个例子。（By W3C）</p>
+<p><strong>“打印此页”链接</strong></p>
+<p>有时候我们会想让用户可以点击一个链接或按钮以打印整个页面，于是拍脑袋就有了如下代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;printthis&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:window.print()&quot;</span>&gt;</span>Print this page<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这段语句在启用 JavaScript 并且支持 <code>print</code> 方法的浏览器中非常完美。然而，悲催的是，万一浏览器禁用了 JavaScript，或者根本就不支持，那么点击它就完全没有任何反应了。这就造成了一个问题，作为站点开发者，你写出这个链接就相当于向用户保证了这项功能，然而并没有，用户会感到困惑、被欺骗，并且责怪你提供了如此差的用户体验。</p>
+<p>为了减轻问题的严重程度，开发者通常会使用<strong>优雅降级</strong>的策略：</p>
+<p>告诉用户这个链接可能会不起作用，或者提供替代方案。一般来说我们会使用 <code>noscript</code> 元素来达到目的，就像这样：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;printthis&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:window.print()&quot;</span>&gt;</span>Print this page<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;scriptwarning&quot;</span>&gt;</span></span><br><span class="line">    Printing the page requires JavaScript to be enabled. </span><br><span class="line">    Please turn it on in your browser.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这就是优雅降级的一种体现 —— 我们告诉用户发生了错误并且如何去修复。但是，这有一个前提，用户必须是：</p>
+<ul>
+<li>知道什么是 JavaScript</li>
+<li>知道怎么启用它</li>
+<li>有权限去启用它</li>
+<li>愿意去启用它</li>
+</ul>
+<p>下面这种方式可能会更好些：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;printthis&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:window.print()&quot;</span>&gt;</span>Print this page<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;scriptwarning&quot;</span>&gt;</span></span><br><span class="line">    Print a copy of your confirmation. </span><br><span class="line">    Select the &quot;Print&quot; icon in your browser,</span><br><span class="line">    or select &quot;Print&quot; from the &quot;File&quot; menu.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样上面所说的问题就都解决了。然而它的前提是所有浏览器都提供了“打印”功能。并且，事实依然没有任何改变：我们提供了一些可能完全没用的功能，并且需要做出解释。实际上这个“打印此页”链接完全就是没有必要存在的。</p>
+<p>如果我们换一种方式，使用“<strong>渐进增强</strong>”法，则步骤如下。</p>
+<p>首先我们考虑是否有一种方式可以不用写脚本实现打印功能，事实上并没有，因此我们从一开始就不应该选择“链接”这种 HTML 元素来使用。如果一项功能依赖 JavaScript 来实现，那就应该用 button</p>
+<p>第二步，告诉用户去打印这个页面，就这么简单：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;printthis&quot;</span>&gt;</span>Thank you for your order. Please print this page for your records.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，这无论在什么情况下都一定是适用的。接下来，我们使用“循序渐进”的 JavaScript 来给支持此功能的浏览器添加一个打印按钮：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;printthis&quot;</span>&gt;</span>Thank you for your order. Please print this page for your records.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">if</span>(<span class="variable language_">document</span>.<span class="property">getElementById</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> pt = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;printthis&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">if</span>(pt &amp;&amp; <span class="keyword">typeof</span> <span class="variable language_">window</span>.<span class="property">print</span> === <span class="string">&#x27;function&#x27;</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">var</span> but = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;input&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      but.<span class="title function_">setAttribute</span>(<span class="string">&#x27;type&#x27;</span>,<span class="string">&#x27;button&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      but.<span class="title function_">setAttribute</span>(<span class="string">&#x27;value&#x27;</span>,<span class="string">&#x27;Print this now&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      but.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="title function_">print</span>();</span></span><br><span class="line"><span class="language-javascript">      &#125;;</span></span><br><span class="line"><span class="language-javascript">      pt.<span class="title function_">appendChild</span>(but);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;)();</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意到何为“循序渐进”了吗：</p>
+<ul>
+<li>使用自执行匿名函数包装法，不留下任何影响</li>
+<li>测试 DOM 方法的支持性，并且尝试获取节点</li>
+<li>测试节点是否存在，<code>window</code> 对象以及 <code>print</code> 方法是否存在</li>
+<li>如果全都没问题，我们就创建这个功能按钮</li>
+<li>把按钮添加到需要的位置上去</li>
+</ul>
+<p>我们永远不给用户提供不能工作的 UI —— 只在它真正能工作时才显示出来。</p>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p><strong>优雅降级</strong>适用场景：</p>
+<ul>
+<li>当你在改进一个旧项目但时间有限的时候</li>
+<li>当你没有足够的时间使用渐进增强法去完成项目的时候</li>
+<li>当你要做的产品比较特别，比如说对性能要求特别高的时候</li>
+<li>当你的项目必须要有一些基础功能的时候（地图，邮箱等）</li>
+</ul>
+<p>其余的所有情况下，<strong>渐进增强</strong>都能让用户与你都更开心：</p>
+<ul>
+<li>不管环境如何，你的产品都能工作</li>
+<li>当新技术或浏览器发布的时候，你只需在原有基础上扩展功能，而无需修改最基础的解决方案</li>
+<li>技术可以更“用得其所”，而不仅仅是为了实现功能</li>
+<li>维护方便</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>“渐进增强”与“优雅降级”最终都是为了实现一个目标：让所有用户都能够使用我们的产品。“渐进增强”方案看起来更优雅，但它需要更多的时间与资源去达成。“优雅降级”可以看成是现有产品的补丁：易于开发但难以维护。</p>
+<p>注：本文大部分内容来自 <a href="https://www.w3.org/wiki/Graceful_degradation_versus_progressive_enhancement" target="_blank">W3C</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/graceful-degradation-versus-progressive-enhancement/" title="“渐进增强”与“优雅降级”">https://wxsm.space/2016/graceful-degradation-versus-progressive-enhancement/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/css/" rel="tag"># css</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/baidu-submit-for-wordpress-update-0-1-0/" rel="prev" title="Baidu Submit for WordPress update 0.1.0">
+                  <i class="fa fa-angle-left"></i> Baidu Submit for WordPress update 0.1.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/bfc-theory-and-applications/" rel="next" title="BFC 原理及应用">
+                  BFC 原理及应用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/graceful-degradation-versus-progressive-enhancement/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

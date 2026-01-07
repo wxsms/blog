@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="etcd 是分布式系统中的一个重要基础中间件，为 K8s 等关键基础设施提供了底层的 KV 储存能力。摘自 Github 描述：  Distributed reliable key-value store for the most critical data of a distributed system.  由于业务需要，我项目中使用了 etcd 官方客户端 clientv3 及其源码仓库中提供">
+<meta property="og:type" content="article">
+<meta property="og:title" content="etcd 队列引发的问题一则及源码解析">
+<meta property="og:url" content="https://wxsm.space/2024/etcd-queue-problem/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="etcd 是分布式系统中的一个重要基础中间件，为 K8s 等关键基础设施提供了底层的 KV 储存能力。摘自 Github 描述：  Distributed reliable key-value store for the most critical data of a distributed system.  由于业务需要，我项目中使用了 etcd 官方客户端 clientv3 及其源码仓库中提供">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-12T07:14:16.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.152Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="go">
+<meta property="article:tag" content="etcd">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2024/etcd-queue-problem/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2024/etcd-queue-problem/","path":"2024/etcd-queue-problem/","title":"etcd 队列引发的问题一则及源码解析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>etcd 队列引发的问题一则及源码解析 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">问题背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%AE%9A%E4%BD%8D"><span class="nav-number">2.</span> <span class="nav-text">错误定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dequeue"><span class="nav-number">2.1.</span> <span class="nav-text">Dequeue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WaitPrefixEvents"><span class="nav-number">2.2.</span> <span class="nav-text">WaitPrefixEvents</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%A4%8D%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">问题复现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="nav-number">4.</span> <span class="nav-text">问题原因</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#etcd-%E7%9A%84%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6"><span class="nav-number">4.1.</span> <span class="nav-text">etcd 的授权机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Watch-API"><span class="nav-number">4.2.</span> <span class="nav-text">Watch API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-number">5.</span> <span class="nav-text">问题解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%B8%BA%E6%AF%8F%E6%AC%A1-Watch-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84-client"><span class="nav-number">5.1.</span> <span class="nav-text">方式一：为每次 Watch 创建新的 client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E4%BF%AE%E6%94%B9%E9%98%9F%E5%88%97%E6%BA%90%E7%A0%81%EF%BC%8C%E5%8F%AA%E5%9C%A8%E5%90%AF%E5%8A%A8%E6%97%B6-Watch"><span class="nav-number">5.2.</span> <span class="nav-text">方式二：修改队列源码，只在启动时 Watch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F%E6%94%B9%E4%B8%BA-TLS"><span class="nav-number">5.3.</span> <span class="nav-text">方式三：认证方式改为 TLS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etcd-%E9%98%9F%E5%88%97%E6%BA%90%E7%A0%81%E8%B5%8F%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">etcd 队列源码赏析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NewQueue"><span class="nav-number">6.1.</span> <span class="nav-text">NewQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enqueue"><span class="nav-number">6.2.</span> <span class="nav-text">Enqueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dequeue-1"><span class="nav-number">6.3.</span> <span class="nav-text">Dequeue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2024/etcd-queue-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="etcd 队列引发的问题一则及源码解析 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          etcd 队列引发的问题一则及源码解析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-12 15:14:16" itemprop="dateCreated datePublished" datetime="2024-01-12T15:14:16+08:00">2024-01-12</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2024/etcd-queue-problem/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/etcd-queue-problem/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>etcd 是分布式系统中的一个重要基础中间件，为 K8s 等关键基础设施提供了底层的 KV 储存能力。摘自 Github 描述：</p>
+<blockquote>
+<p>Distributed reliable key-value store for the most critical data of a distributed system.</p>
+</blockquote>
+<p>由于业务需要，我项目中使用了 etcd 官方客户端 clientv3 及其源码仓库中提供的队列实现（当时的版本为 3.5.11），并意外地发现了一系列问题，故事从这里开始。</p>
+<span id="more"></span>
+
+
+
+<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>在项目的本地开发过程中，我通过 docker 部署了一个 etcd 服务器，开发过程非常顺畅，没有遇到任何问题。但是将服务部署上测试环境，连接上测试环境的 etcd 后，发现服务运行一段时间后就会报如下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:&quot;2024-01-10T11:49:21.911042+0800&quot;,&quot;logger&quot;:&quot;etcd-client&quot;,&quot;caller&quot;:&quot;v3@v3.5.11/retry_interceptor.go:62&quot;,&quot;msg&quot;:&quot;retrying of unary invoker failed&quot;,&quot;target&quot;:&quot;etcd-endpoints://0xc0001ab500/127.0.0.1:2379&quot;,&quot;attempt&quot;:0,&quot;error&quot;:&quot;rpc error: code = Unauthenticated desc = etcdserver: invalid auth token&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以及如下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">panic: runtime error: invalid memory address or nil pointer dereference</span><br><span class="line">[signal 0xc0000005 code=0x0 addr=0x8 pc=0x1088656]</span><br><span class="line"></span><br><span class="line">goroutine 37 [running]:</span><br><span class="line">go.etcd.io/etcd/client/v3/experimental/recipes.(*Queue).Dequeue(0xc000380780)</span><br><span class="line">        xxx/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.11/experimental/recipes/queue.go:70 +0x136</span><br></pre></td></tr></table></figure>
+
+<p>由于协程内部没有做 recover，所以这个 panic 会导致 pod 崩溃重启，部分接口调用出错或超时。但由于在本地从来没有出现过该问题，所以初见崩溃时感觉有些诡异。</p>
+<h2 id="错误定位"><a href="#错误定位" class="headerlink" title="错误定位"></a>错误定位</h2><h3 id="Dequeue"><a href="#Dequeue" class="headerlink" title="Dequeue"></a>Dequeue</h3><p>通过上述日志可以发现，panic 是从 clientv3 内部的代码发出的。因此我们直接来到 Dequeue 方法中查看：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Dequeue returns Enqueue()&#x27;d elements in FIFO order. If the</span></span><br><span class="line"><span class="comment">// queue is empty, Dequeue blocks until elements are available.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *Queue)</span></span> Dequeue() (<span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	ev, err := WaitPrefixEvents(</span><br><span class="line">		q.client,</span><br><span class="line">		q.keyPrefix,</span><br><span class="line">		resp.Header.Revision,</span><br><span class="line">		[]mvccpb.Event_EventType&#123;mvccpb.PUT&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// L70</span></span><br><span class="line">	ok, err := deleteRevKey(q.client, <span class="type">string</span>(ev.Kv.Key), ev.Kv.ModRevision)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> q.Dequeue()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="type">string</span>(ev.Kv.Value), err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，在产生报错的 L70 处，它尝试将获取到的一个队列元素删除。如果删除成功了，则认为出队成功。如果说这里有可能出现 nil pointer，那么应该只可能是 <code>ev.Kv</code>，也就是说 <code>WaitPrefixEvents</code> 同时返回了值为 <code>nil</code> 的 <code>ev</code> 和 <code>err</code>。</p>
+<h3 id="WaitPrefixEvents"><a href="#WaitPrefixEvents" class="headerlink" title="WaitPrefixEvents"></a>WaitPrefixEvents</h3><p>继续进入 WaitPrefixEvents 查看：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">WaitPrefixEvents</span><span class="params">(c *clientv3.Client, prefix <span class="type">string</span>, rev <span class="type">int64</span>, evs []mvccpb.Event_EventType)</span></span> (*clientv3.Event, <span class="type">error</span>) &#123;</span><br><span class="line">	ctx, cancel := context.WithCancel(context.Background())</span><br><span class="line">	<span class="keyword">defer</span> cancel()</span><br><span class="line">	wc := c.Watch(ctx, prefix, clientv3.WithPrefix(), clientv3.WithRev(rev))</span><br><span class="line">	<span class="keyword">if</span> wc == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, ErrNoWatcher</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> waitEvents(wc, evs), <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">waitEvents</span><span class="params">(wc clientv3.WatchChan, evs []mvccpb.Event_EventType)</span></span> *clientv3.Event &#123;</span><br><span class="line">	i := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> wresp := <span class="keyword">range</span> wc &#123;</span><br><span class="line">		<span class="keyword">for</span> _, ev := <span class="keyword">range</span> wresp.Events &#123;</span><br><span class="line">			<span class="keyword">if</span> ev.Type == evs[i] &#123;</span><br><span class="line">				i++</span><br><span class="line">				<span class="keyword">if</span> i == <span class="built_in">len</span>(evs) &#123;</span><br><span class="line">					<span class="keyword">return</span> ev</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，它通过 etcd 的 Watch 功能来等待一个队列元素的 PUT 事件（在该场景下即添加）。那么它有可能同时返回值为 <code>nil</code> 的 <code>ev</code> 和 <code>err</code> 吗？很显然是有的：在 <code>waitEvents</code> 的最后一行，它返回了值为 nil 的 ev。也就是说，如果 <code>wc</code> 这个 channel 在被发送方 close 之前没有收到有效的 put event，那么这段代码就会返回 <code>nil</code>。</p>
+<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>在什么情况下 Watch channel 会被 close 呢？结合上面抛出的另一个错误来看：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:&quot;2024-01-10T11:49:21.911042+0800&quot;,&quot;logger&quot;:&quot;etcd-client&quot;,&quot;caller&quot;:&quot;v3@v3.5.11/retry_interceptor.go:62&quot;,&quot;msg&quot;:&quot;retrying of unary invoker failed&quot;,&quot;target&quot;:&quot;etcd-endpoints://0xc0001ab500/127.0.0.1:2379&quot;,&quot;attempt&quot;:0,&quot;error&quot;:&quot;rpc error: code = Unauthenticated desc = etcdserver: invalid auth token&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>合理推测：这应该与 etcd 的授权有关。这时候回看一下我本地开发环境与测试环境的区别：</p>
+<ol>
+<li>本地环境启动的 etcd 服务<strong>没有密码</strong>；</li>
+<li>测试环境的 etcd 服务使用了<strong>帐号密码认证</strong>。</li>
+</ol>
+<p>是否说明如果我在本地部署一个带<strong>帐号密码认证</strong>的服务则可以稳定复现该问题呢？</p>
+<p>首先，通过 docker 快速部署一个带有授权认证的 etcd 服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -e ETCD_ROOT_PASSWORD=root -e ETCD_AUTH_TOKEN_TTL=5 -p 2379:2379 --name etcd bitnami/etcd:3.5.5</span><br></pre></td></tr></table></figure>
+
+<p>在这个服务器中，我们：</p>
+<ol>
+<li>为 root 用户启用了密码，密码为 root。</li>
+<li>为了快速复现，设置了 token 的 ttl (time to live，即过期时间) 为 5 秒钟。</li>
+</ol>
+<p>然后，编写一段简单的客户端代码：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	clientv3 <span class="string">&quot;go.etcd.io/etcd/client/v3&quot;</span></span><br><span class="line">	recipe <span class="string">&quot;go.etcd.io/etcd/client/v3/experimental/recipes&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	cli, err := clientv3.New(clientv3.Config&#123;</span><br><span class="line">		Endpoints:   []<span class="type">string</span>&#123;<span class="string">&quot;http://127.0.0.1:2379&quot;</span>&#125;,</span><br><span class="line">		Username:    <span class="string">&quot;root&quot;</span>,</span><br><span class="line">		Password:    <span class="string">&quot;root&quot;</span>,</span><br><span class="line">		DialTimeout: <span class="number">5</span> * time.Second,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	queue := recipe.NewQueue(cli, <span class="string">&quot;/test&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> start(queue, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	time.Sleep(<span class="number">6</span> * time.Second)</span><br><span class="line">	<span class="keyword">go</span> start(queue, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	time.Sleep(<span class="number">10</span> * time.Second)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">start</span><span class="params">(q *recipe.Queue, idx <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;#%d start...\n&quot;</span>, idx)</span><br><span class="line">		item, err := q.Dequeue()</span><br><span class="line">		fmt.Printf(<span class="string">&quot;dequeue: %v, err: %v\n&quot;</span>, item, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在程序运行一段时间后将崩溃，控制台输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#1 start...</span><br><span class="line">#2 start...</span><br><span class="line">&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:&quot;2024-01-10T10:17:39.062521+0800&quot;,&quot;logger&quot;:&quot;etcd-client&quot;,&quot;caller&quot;:&quot;v3@v3.5.11/retry_interceptor.go:62&quot;,&quot;msg&quot;:&quot;retrying of unary invoker failed&quot;,&quot;target&quot;:&quot;etcd-endpoints://0xc0001f5500/127.0.0.1:2379&quot;,&quot;attempt&quot;:0,&quot;error&quot;:&quot;rpc error: code = Unauthenticated desc = etcdserver: invalid auth token&quot;&#125;</span><br><span class="line">panic: runtime error: invalid memory address or nil pointer dereference</span><br><span class="line">[signal 0xc0000005 code=0x0 addr=0x8 pc=0x1088656]</span><br><span class="line"></span><br><span class="line">goroutine 37 [running]:</span><br><span class="line">go.etcd.io/etcd/client/v3/experimental/recipes.(*Queue).Dequeue(0xc000380780)</span><br><span class="line">        C:/Users/G40NTC3/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.11/experimental/recipes/queue.go:70 +0x136</span><br><span class="line">main.start(0x0?, 0x0?)</span><br><span class="line">        E:/githome/backend/code-interpreter/sbscheduler/test/watchproblem/main.go:33 +0xcf</span><br><span class="line">created by main.main</span><br><span class="line">        E:/githome/backend/code-interpreter/sbscheduler/test/watchproblem/main.go:25 +0x245</span><br><span class="line"></span><br><span class="line">Process finished with the exit code 2</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 2 号协程出现了 panic，并且同时抛出了一个 <code>etcdserver: invalid auth token</code> 的 warning。与上述服务在测试环境出现的问题完全一致。</p>
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>很显然该问题的出现与两个因素有关：</p>
+<ol>
+<li>etcd 的授权机制</li>
+<li>Watch API</li>
+</ol>
+<h3 id="etcd-的授权机制"><a href="#etcd-的授权机制" class="headerlink" title="etcd 的授权机制"></a>etcd 的授权机制</h3><p>在 etcdv3 中，client 与 server 的连接方式出现了较大变化：从 v2 的简单 http1 json 调用升级为了基于 http2 的 gRPC 调用。 etcdv3 支持 4 种授权机制：</p>
+<ol>
+<li>无授权</li>
+<li>simple token</li>
+<li>JWT (JSON Web Token)</li>
+<li>TLS</li>
+</ol>
+<p>其中：</p>
+<ol>
+<li>无授权，顾名思义，没有授权，不存在 token 过期等问题</li>
+<li>simple token 和 JWT 都是基于用户名、密码下发 token 的策略，token 默认情况下 5 分钟会过期一次，过期需要向 server 重新授权获取</li>
+<li>TLS 是基于证书的授权认证，性能显著优于 token 的同时，不需要下发 token</li>
+</ol>
+<p>在本次问题过程中，测试环境的 etcd server 采用了用户名+密码的认证策略，因此存在 token 过期问题。但是一个巴掌拍不响：为什么 clientv3 的其它接口都没有因为 token 过期而出现异常，唯独 Watch 不行呢？</p>
+<h3 id="Watch-API"><a href="#Watch-API" class="headerlink" title="Watch API"></a>Watch API</h3><p>通过 <code>etch watch token</code> 关键词搜索，排名第一的结果已经直接找到答案：<a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/issues/12385">#12385 watch stream return “permission denied” if token expired</a>：</p>
+<p>简要过程描述：</p>
+<ol>
+<li>在 2020 年 10 月，有人提出了 etcd 的 watch stream 在 token 过期的时候会遇到 permission denied 的问题。这个问题是由于 clientv3 内部没有对 Watch 接口的 Token 过期错误进行处理和重试导致的。</li>
+<li>在 <a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/pull/14322/files">#14322</a> 中，有人为这个问题添加了一个重试机制，发布为 v3.5.6</li>
+<li>在 v3.5.7 中，上述 PR 被 <a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/pull/14995">#14995</a> 回滚了。理由是它在同时修改了 server 和 client 实现的前提下，改动方式过于脆弱（通过字符串比对的方式来比较错误类型）。</li>
+<li>在 <a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/issues/15058">#15058</a> 中，团队成员决定为 WatchResponse 添加一个基于 Code 的 cancel reason，但是这个 issue 还处于 open 状态，按照计划它将于 v3.6.0 的 server+client 中提供。</li>
+</ol>
+<p>在 <a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/pull/14995">#14995</a> 中，回滚者提到：</p>
+<blockquote>
+<p>It’s very easy for client application to workaround the issue.<br>The client just needs to create a new client each time before watching.</p>
+</blockquote>
+<p>所以，这个问题的答案是：</p>
+<ol>
+<li>没错，Watch API 目前确实不支持 token 过期的重试</li>
+<li>如果想要 work around，可以为每次 Watch 创建新的 client</li>
+<li>如果要彻底解决，需要等待 v3.6.0</li>
+</ol>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h3 id="方式一：为每次-Watch-创建新的-client"><a href="#方式一：为每次-Watch-创建新的-client" class="headerlink" title="方式一：为每次 Watch 创建新的 client"></a>方式一：为每次 Watch 创建新的 client</h3><p>按照 #14995 的说法（create a new client each time before watching），经过我的实践，答案是：这个做法不一定可行，取决于使用场景。</p>
+<p>其主要原因是，在创建一个新的 client 的过程中，client 和 server 需要进行一定的连接建立、授权认证等初始化工作，这些工作的耗时非常惊人，可能会达到几百毫秒。这样一来，如果我需要为进入服务器的每一个请求启动一个 watch 进程，那么每一个请求都可能会被拖慢几百毫秒。同时由于用户名+密码授权的过程耗费大量的 etcd server 计算性能，在请求量较大时，etcd server 可能会被频繁的授权工作拖累，出现耗时增加甚至崩溃的情况。</p>
+<p>因此，我觉得这并不是一个“very easy workaround”。</p>
+<h3 id="方式二：修改队列源码，只在启动时-Watch"><a href="#方式二：修改队列源码，只在启动时-Watch" class="headerlink" title="方式二：修改队列源码，只在启动时 Watch"></a>方式二：修改队列源码，只在启动时 Watch</h3><p>既然每次都创建新 client 不现实，那么很容易想到另一个办法：既然不能在服务运行的过程中动态 watch，那我在启动时只 watch 一次是不是就好了？答案是：确实可行。</p>
+<p>队列代码修改后，大致思路如下，我们使用一个 channel 来作为 Dequeue 时的通信手段，在程序启动时，先通过 get 获取到所有的元素，一个一个消费完后，启动 Watch 来观测后续其它元素的入队：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> DequeueResult <span class="keyword">struct</span> &#123;</span><br><span class="line">	result <span class="type">string</span></span><br><span class="line">	err    <span class="type">error</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Queue <span class="keyword">struct</span> &#123;</span><br><span class="line">	ctx      context.Context</span><br><span class="line">	prefix   <span class="type">string</span></span><br><span class="line">	cli      *clientv3.Client</span><br><span class="line">	dequeueC <span class="keyword">chan</span> DequeueResult</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewQueue</span><span class="params">(cli *clientv3.Client, prefix <span class="type">string</span>)</span></span> *Queue &#123;</span><br><span class="line">	q := &amp;Queue&#123;</span><br><span class="line">		ctx:      context.TODO(),</span><br><span class="line">		prefix:   prefix,</span><br><span class="line">		cli:      cli,</span><br><span class="line">		dequeueC: <span class="built_in">make</span>(<span class="keyword">chan</span> DequeueResult, <span class="number">1</span>),</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="comment">// 先清空队列</span></span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			resp, err := q.cli.Get(q.ctx, q.prefix, clientv3.WithFirstRev()...)</span><br><span class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">				q.dequeueC &lt;- DequeueResult&#123;result: <span class="string">&quot;&quot;</span>, err: err&#125;</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line">			kv, err := q.claimFirstKey(resp.Kvs)</span><br><span class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">				q.dequeueC &lt;- DequeueResult&#123;result: <span class="string">&quot;&quot;</span>, err: err&#125;</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> kv != <span class="literal">nil</span> &#123;</span><br><span class="line">				q.dequeueC &lt;- DequeueResult&#123;result: <span class="type">string</span>(kv.Value), err: <span class="literal">nil</span>&#125;</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> resp.More &#123;</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 开始watch</span></span><br><span class="line">		wc := q.cli.Watch(q.ctx, q.prefix, clientv3.WithPrefix())</span><br><span class="line">		<span class="keyword">for</span> wresp := <span class="keyword">range</span> wc &#123;</span><br><span class="line">			<span class="keyword">if</span> wresp.Canceled &#123;</span><br><span class="line">				log.WithField(<span class="string">&quot;error&quot;</span>, wresp.Err()).Fatal(<span class="string">&quot;dequeue watcher exit&quot;</span>)</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span> _, ev := <span class="keyword">range</span> wresp.Events &#123;</span><br><span class="line">				<span class="keyword">switch</span> ev.Type &#123;</span><br><span class="line">				<span class="keyword">case</span> mvccpb.PUT:</span><br><span class="line">					ok, err := q.deleteRevKey(<span class="type">string</span>(ev.Kv.Key), ev.Kv.ModRevision)</span><br><span class="line">					<span class="comment">//log.Debugln(&quot;dequeue&quot;, ok, err)</span></span><br><span class="line">					<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">						q.dequeueC &lt;- DequeueResult&#123;</span><br><span class="line">							result: <span class="string">&quot;&quot;</span>,</span><br><span class="line">							err:    err,</span><br><span class="line">						&#125;</span><br><span class="line">					&#125; <span class="keyword">else</span> <span class="keyword">if</span> ok &#123;</span><br><span class="line">						q.dequeueC &lt;- DequeueResult&#123;</span><br><span class="line">							result: <span class="type">string</span>(ev.Kv.Value),</span><br><span class="line">							err:    <span class="literal">nil</span>,</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> q</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *Queue)</span></span> Enqueue(val <span class="type">string</span>) <span class="type">error</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		newKey := fmt.Sprintf(<span class="string">&quot;%s/%v&quot;</span>, q.prefix, time.Now().UnixNano())</span><br><span class="line">		_, err := q.putNewKv(newKey, val, clientv3.NoLease)</span><br><span class="line">		<span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> !errors.Is(err, ErrKeyExists) &#123;</span><br><span class="line">			<span class="keyword">return</span> err</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *Queue)</span></span> Dequeue() (<span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	res := &lt;-q.dequeueC</span><br><span class="line">	<span class="keyword">return</span> res.result, res.err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然自己实现的队列能够解决问题，但是稳定性可能相比 clientv3 内部的实现会有些许欠缺。在可能的情况下还是希望尽量使用 clientv3 的实现。</p>
+<h3 id="方式三：认证方式改为-TLS"><a href="#方式三：认证方式改为-TLS" class="headerlink" title="方式三：认证方式改为 TLS"></a>方式三：认证方式改为 TLS</h3><p>上面的授权机制小节有提到，除了“无授权”、“用户名+密码”外，etcd 还提供另一种方式来进行授权，即“TLS 证书认证”。证书认证在稳定性、性能上都优于密码认证，同时因为它不需要下发 token，所以可以避免任何因为 token 失效而触发的问题。</p>
+<p>TLS 连接需要三个证书：CA、Client、Client Key，以下是一个使用 TLS 连接服务器的 client 例子：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">tlsInfo := transport.TLSInfo&#123;</span><br><span class="line">	CertFile:      <span class="string">&quot;client.pem&quot;</span>,</span><br><span class="line">	KeyFile:       <span class="string">&quot;client-key.pem&quot;</span>,</span><br><span class="line">	TrustedCAFile: <span class="string">&quot;ca.pem&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line">tlsConf, err := tlsInfo.ClientConfig()</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	log.Fatal(err)</span><br><span class="line">&#125;</span><br><span class="line">cli, err := clientv3.New(clientv3.Config&#123;</span><br><span class="line">	Endpoints:   strings.Split(c.Addr, <span class="string">&quot;;&quot;</span>),</span><br><span class="line">	TLS:         tlsConf,</span><br><span class="line">	DialTimeout: <span class="number">5</span> * time.Second,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>服务端修改为 TLS 认证后，只需要按上述方法同步修改客户端创建的过程即可，其它代码可以一行不动，完美！</p>
+<h2 id="etcd-队列源码赏析"><a href="#etcd-队列源码赏析" class="headerlink" title="etcd 队列源码赏析"></a>etcd 队列源码赏析</h2><p>抛开上面遇到的问题不谈，etcd clientv3 中实现的“多读多写”分布式队列还是很值得学习的。队列源码文件位于 <code>client/v3/experimental/recipes/queue.go</code>，其暴露的接口如下：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> recipe <span class="comment">// import &quot;go.etcd.io/etcd/client/v3/experimental/recipes&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Queue <span class="keyword">struct</span> &#123;</span><br><span class="line">        <span class="comment">// Has unexported fields.</span></span><br><span class="line">&#125;</span><br><span class="line">    Queue implements a multi-reader, multi-writer distributed queue.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewQueue</span><span class="params">(client *v3.Client, keyPrefix <span class="type">string</span>)</span></span> *Queue</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *Queue)</span></span> Dequeue() (<span class="type">string</span>, <span class="type">error</span>)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *Queue)</span></span> Enqueue(val <span class="type">string</span>) <span class="type">error</span></span><br></pre></td></tr></table></figure>
+
+<p>该 package 非常简洁，只暴露了三个函数：创建队列，出队和入队。下面一一解读。</p>
+<h3 id="NewQueue"><a href="#NewQueue" class="headerlink" title="NewQueue"></a>NewQueue</h3><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewQueue</span><span class="params">(client *v3.Client, keyPrefix <span class="type">string</span>)</span></span> *Queue &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;Queue&#123;client, context.TODO(), keyPrefix&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>NewQueue</code> 函数接收一个 client 实例指针和一个 <code>keyPrefix</code> 字符串（可以认为是队列名），返回一个队列实例指针。队列实例还额外创建了一个 <code>context</code> 实例，但是并没有允许使用者自定义该参数。这里貌似是一个值得商榷的点：从 <code>context.TODO</code> 也可以看出。正常来说，<code>context</code> 实例应该在调用 <code>Enqueue</code> 或 <code>Dequeue</code> 的时候单独传入，这样才能发挥它的预期作用（配置超时时间等）。</p>
+<h3 id="Enqueue"><a href="#Enqueue" class="headerlink" title="Enqueue"></a>Enqueue</h3><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *Queue)</span></span> Enqueue(val <span class="type">string</span>) <span class="type">error</span> &#123;</span><br><span class="line">	_, err := newUniqueKV(q.client, q.keyPrefix, val)</span><br><span class="line">	<span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Enqueue</code> 函数的实现非常简单：从 <code>newUniqueKV</code> 这个函数来看，是根据 <code>keyPrefix</code> 和 <code>value</code> 来创建了一个唯一的键值对。然而 etcd 要怎么在“多写”的环境下保证键的唯一性呢？继续深入 <code>newUniqueKV</code> 函数：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newUniqueKV</span><span class="params">(kv v3.KV, prefix <span class="type">string</span>, val <span class="type">string</span>)</span></span> (*RemoteKV, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		newKey := fmt.Sprintf(<span class="string">&quot;%s/%v&quot;</span>, prefix, time.Now().UnixNano())</span><br><span class="line">		rev, err := putNewKV(kv, newKey, val, v3.NoLease)</span><br><span class="line">		<span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> &amp;RemoteKV&#123;kv, newKey, rev, val&#125;, <span class="literal">nil</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> err != ErrKeyExists &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原来 <code>newUniqueKV</code> 是通过一个循环，不断尝试用 <code>prefix/时间戳</code> 为 key 去创建 KV：</p>
+<ol>
+<li>如果创建成功了，则返回键值对；</li>
+<li>如果出错了：<ol>
+<li>出现了 <code>ErrKeyExists</code> 错误，代表这个 key 已经被使用了，因此回到循环开始处继续尝试创建；</li>
+<li>出现了其它任意错误，返回错误信息。</li>
+</ol>
+</li>
+</ol>
+<p>这里其实还有一个知识点：etcd 的储存模式是 MVCC (Multi-Version Concurrency Control，即多版本并发控制)。也就是说，如果对同一个键进行多次写，etcd 本身并不会报 <code>ErrKeyExists</code> 错，而是会为这个 key 创建一个新的版本号和值。那么这里 <code>putNewKV</code> 要如何保证创建该 key 时它必须是不存在的呢？继续深入源码：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// putNewKV attempts to create the given key, only succeeding if the key did</span></span><br><span class="line"><span class="comment">// not yet exist.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">putNewKV</span><span class="params">(kv v3.KV, key, val <span class="type">string</span>, leaseID v3.LeaseID)</span></span> (<span class="type">int64</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	cmp := v3.Compare(v3.Version(key), <span class="string">&quot;=&quot;</span>, <span class="number">0</span>)</span><br><span class="line">	req := v3.OpPut(key, val, v3.WithLease(leaseID))</span><br><span class="line">	txnresp, err := kv.Txn(context.TODO()).If(cmp).Then(req).Commit()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> !txnresp.Succeeded &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>, ErrKeyExists</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> txnresp.Header.Revision, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先看注释：<code>putNewKV</code> 尝试创建一个 key，且只有在这个 key 不存在的情况下才会成功。</p>
+<p>这里其实利用了 etcd 提供的事务（<code>kv.Txn</code>）功能，etcd 设计了一套易读且强大的事务接口：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">cmp := v3.Compare(v3.Version(key), <span class="string">&quot;=&quot;</span>, <span class="number">0</span>)</span><br><span class="line">req := v3.OpPut(key, val, v3.WithLease(leaseID))</span><br><span class="line">txnresp, err := kv.Txn(context.TODO()).If(cmp).Then(req).Commit()</span><br></pre></td></tr></table></figure>
+
+<p>字面意义理解：如果 <code>cmp</code> 条件成立（<code>key</code> 的 <code>version</code> 为 <code>0</code>，即当前不存在这个 <code>key</code>），则执行 <code>req</code>（创建这个 <code>key</code>），然后提交（<code>Commit</code>）。结合 <code>newUniqueKV</code> 中的 <code>for</code> 循环来看，这其实是一把乐观锁。</p>
+<p><code>Enqueue</code> 函数到这里就结束了：该函数通过创建一个 <code>key</code> 来代表元素入队，同时通过乐观锁的方式，保证了多写的情况下一个 <code>key</code> 不会被重复入队。一个看似简单的函数，里面包含了很多知识点！</p>
+<h3 id="Dequeue-1"><a href="#Dequeue-1" class="headerlink" title="Dequeue"></a>Dequeue</h3><p><code>Dequeue</code> 是队列的另一个核心函数，同时也是本次实践中出现问题的函数。它的源码：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Dequeue returns Enqueue()&#x27;d elements in FIFO order. If the</span></span><br><span class="line"><span class="comment">// queue is empty, Dequeue blocks until elements are available.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q *Queue)</span></span> Dequeue() (<span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> fewer round trips by fetching more than one key</span></span><br><span class="line">	resp, err := q.client.Get(q.ctx, q.keyPrefix, v3.WithFirstRev()...)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	kv, err := claimFirstKey(q.client, resp.Kvs)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> kv != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="type">string</span>(kv.Value), <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> resp.More &#123;</span><br><span class="line">		<span class="comment">// missed some items, retry to read in more</span></span><br><span class="line">		<span class="keyword">return</span> q.Dequeue()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// nothing yet; wait on elements</span></span><br><span class="line">	ev, err := WaitPrefixEvents(</span><br><span class="line">		q.client,</span><br><span class="line">		q.keyPrefix,</span><br><span class="line">		resp.Header.Revision,</span><br><span class="line">		[]mvccpb.Event_EventType&#123;mvccpb.PUT&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	ok, err := deleteRevKey(q.client, <span class="type">string</span>(ev.Kv.Key), ev.Kv.ModRevision)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;&quot;</span>, err</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> q.Dequeue()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="type">string</span>(ev.Kv.Value), err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先看注释：<code>Dequeue</code> 会将入队的元素按 FIFO （先入先出）的顺序出队，如果当前没有可出队的元素则会阻塞直到出队成功。</p>
+<p>出队的流程总结：</p>
+<ol>
+<li>尝试通过 <code>keyPrefix</code> 为前缀获取一个元素，其中 <code>WithFirstRev</code> 指定获取最老的修订版本号（即最早入队的元素）；</li>
+<li>尝试“claim”获取到的这个 key，“claim”的方式即删除：<ol>
+<li>如果该客户端成功执行了删除，则认为出队成功，返回元素；</li>
+<li>如果没有成功删除（在“多读”的场景下，代表这个元素被其它客户端“claim”了），但还有更多元素可以获取，则递归调用自己，重复上述流程</li>
+</ol>
+</li>
+<li>如果即没有成功“claim”，也没有更多元素可以获取了，则启动一个 watch 进程，开始监听新创建的元素，同时函数在这里阻塞</li>
+<li>监听到新元素后，同样的，尝试将该元素删除：<ol>
+<li>如果成功删除，则认为出队成功，返回元素</li>
+<li>如果删除失败（在“多读”的场景下，代表这个元素被其它客户端出队了），则递归调用自己，重复上述流程</li>
+</ol>
+</li>
+</ol>
+<p><code>claimFirstKey</code> 中调用了 <code>deleteRevKey</code> 来删除元素，该函数同样利用了事务来确保不重复删除（不重复出队）：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// deleteRevKey deletes a key by revision, returning false if key is missing</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">deleteRevKey</span><span class="params">(kv v3.KV, key <span class="type">string</span>, rev <span class="type">int64</span>)</span></span> (<span class="type">bool</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	cmp := v3.Compare(v3.ModRevision(key), <span class="string">&quot;=&quot;</span>, rev)</span><br><span class="line">	req := v3.OpDelete(key)</span><br><span class="line">	txnresp, err := kv.Txn(context.TODO()).If(cmp).Then(req).Commit()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>, err</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> !txnresp.Succeeded &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样的，由于 MVCC 的特殊性，这里需要通过在删除前比较 key 的 <code>ModRevision</code> （即最新版本号），确保执行删除时该版本号没有发生变化，然后才执行删除。这是因为在 etcd 中，删除一个 key 并不会真正将它物理意义上的删除，而是在版本数据库中插入一条“删除”的记录，并且修改版本号。如果不做事务判断，则有可能出现重复删除（重复出队）的情况。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://etcd.io/docs/v3.2/learning/auth_design/">https://etcd.io/docs/v3.2/learning/auth_design/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/issues/12385">https://github.com/etcd-io/etcd/issues/12385</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/pull/14322">https://github.com/etcd-io/etcd/pull/14322</a></li>
+<li><a target="_blank" rel="noopener" href="https://etcd.io/docs/v3.2/op-guide/security/">https://etcd.io/docs/v3.2/op-guide/security/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/blob/main/client/v3/experimental/recipes/queue.go">https://github.com/etcd-io/etcd/blob/main/client/v3/experimental/recipes/queue.go</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2024/etcd-queue-problem/" title="etcd 队列引发的问题一则及源码解析">https://wxsm.space/2024/etcd-queue-problem/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/go/" rel="tag"># go</a>
+              <a href="/tags/etcd/" rel="tag"># etcd</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/go-pprof-note/" rel="prev" title="Go 语言性能调试与分析工具：pprof 用法简介">
+                  <i class="fa fa-angle-left"></i> Go 语言性能调试与分析工具：pprof 用法简介
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2024/etcd-queue-problem/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="b 站上的歌姬，很多歌只发布在 b 站。比如说直播时唱的歌，或者一些发布到正经音乐平台上会有版权问题的歌。然而，对于爱听歌的人来说，b 站的听歌体验实在是太差了，这里就不展开细说。 我习惯用网易云听歌。网易云虽然版权方面很惨，但有它一个很好用的功能：云盘。每个用户有 60G 的云盘容量，基本用不完，不管是什么歌，有没有版权，只要上传上去了就能随时随地听。因此，我的目标是，希望可以有一个自动化的工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="做了一个 b 站视频下载与 mp3 转换工具">
+<meta property="og:url" content="https://wxsm.space/2023/bv2mp3/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="b 站上的歌姬，很多歌只发布在 b 站。比如说直播时唱的歌，或者一些发布到正经音乐平台上会有版权问题的歌。然而，对于爱听歌的人来说，b 站的听歌体验实在是太差了，这里就不展开细说。 我习惯用网易云听歌。网易云虽然版权方面很惨，但有它一个很好用的功能：云盘。每个用户有 60G 的云盘容量，基本用不完，不管是什么歌，有没有版权，只要上传上去了就能随时随地听。因此，我的目标是，希望可以有一个自动化的工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/bv2mp3.png">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/84d3afb467a54e999e35e9acc4fa2206.png">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/1d085d07b0214fd6ad2c0ef871af2ae8.png">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/87679900c2fe4fce89f7d5bc113a0381.png">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/bd22e7fc1754481198b53856c0d119f8.png">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/d5ac4ae89b5c4827be79b324647af60c.jpg">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/4e382b83db7a4dd085e2d2087a774cec.jpg">
+<meta property="og:image" content="https://wxsm.space/2023/bv2mp3/2ed49043d3f046f28740ad1e415b810f.png">
+<meta property="article:published_time" content="2023-04-18T07:40:58.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.146Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="bilibili">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wxsm.space/2023/bv2mp3/bv2mp3.png">
+
+
+<link rel="canonical" href="https://wxsm.space/2023/bv2mp3/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2023/bv2mp3/","path":"2023/bv2mp3/","title":"做了一个 b 站视频下载与 mp3 转换工具"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>做了一个 b 站视频下载与 mp3 转换工具 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E8%BF%99%E4%B9%8B%E5%89%8D"><span class="nav-number">1.</span> <span class="nav-text">在这之前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E4%B8%BB%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">程序主框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%AC%E5%8F%96%E7%BD%91%E9%A1%B5"><span class="nav-number">2.1.</span> <span class="nav-text">爬取网页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">下载视频文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2mp3"><span class="nav-number">2.3.</span> <span class="nav-text">转换mp3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%86%E8%8A%82%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">细节优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E4%B8%8B%E8%BD%BD"><span class="nav-number">3.1.</span> <span class="nav-text">并行下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%95%E7%A4%BA%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">3.2.</span> <span class="nav-text">展示进度条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B1%E8%B4%A5%E9%87%8D%E8%AF%95"><span class="nav-number">3.3.</span> <span class="nav-text">失败重试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%BD%E5%90%8D"><span class="nav-number">3.4.</span> <span class="nav-text">自定义命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ffmpeg-%E4%BC%98%E5%8C%96"><span class="nav-number">3.5.</span> <span class="nav-text">ffmpeg 优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E4%BC%98%E5%8C%96"><span class="nav-number">3.6.</span> <span class="nav-text">并行优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ffmpeg-wasm-%E4%BC%98%E5%8C%96"><span class="nav-number">3.7.</span> <span class="nav-text">ffmpeg.wasm 优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="nav-number">4.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2023/bv2mp3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="做了一个 b 站视频下载与 mp3 转换工具 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          做了一个 b 站视频下载与 mp3 转换工具
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-18 15:40:58" itemprop="dateCreated datePublished" datetime="2023-04-18T15:40:58+08:00">2023-04-18</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2023/bv2mp3/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2023/bv2mp3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>b 站上的歌姬，很多歌只发布在 b 站。比如说直播时唱的歌，或者一些发布到正经音乐平台上会有版权问题的歌。然而，对于爱听歌的人来说，b 站的听歌体验实在是太差了，这里就不展开细说。</p>
+<p>我习惯用网易云听歌。网易云虽然版权方面很惨，但有它一个很好用的功能：云盘。每个用户有 60G 的云盘容量，基本用不完，不管是什么歌，有没有版权，只要上传上去了就能随时随地听。因此，我的目标是，希望可以有一个自动化的工具，帮我把 b 站上的歌以 mp3 的格式下载下来，让我可以上传到云盘，这样我就可以用网易云听歌了。</p>
+<p>综上所述，我就做了这么一个小工具：<a target="_blank" rel="noopener" href="https://github.com/wxsms/bilibili-video2mp3">bv2mp3</a> ，这是一个开源工具，完整的代码可以在代码仓库中找到。下面，我主要讲一下这个工具的实现思路以及优化过程。</p>
+<p><img src="/2023/bv2mp3/bv2mp3.png" alt="126f0ee04db59831d6a9820ac89c471.jpg"></p>
+<span id="more"></span>
+
+<h2 id="在这之前"><a href="#在这之前" class="headerlink" title="在这之前"></a>在这之前</h2><p>起初，我还是不愿意自己造轮子的，毕竟我觉得这应该是个非常 common 的需求，应该会有不少东西可以拿来直接用。</p>
+<p>最开始的时候，我尝试使用了网络上的一些随处可见的在线服务，搜索“b 站视频下载”可以找到很多相关的在线网站。此类服务通常来说是能用的，但是当需要下载的量一旦大起来以后，它就显得非常麻烦了。比如说它需要看广告，或者下载的质量参差不齐，并且需要下载后手动再转一次MP3，非常麻烦。</p>
+<p>在受够了此类工具以后，我开始转向一些付费工具。我找到了一款比较强大的“哔哩哔哩助手”浏览器插件。只要付费，它就能提供将视频直接下载为 mp3 的功能。并且可以直接在 b 站页面上操作，相对来讲比较好用。但是用了几个月下来以后，仍然觉得还不够好：</p>
+<ol>
+<li>首先，当然是因为它要付费；</li>
+<li>其次，我要下载的一般都是整个播放列表，而这款插件只能一次下载一个分集，这意味着我要将分集一个一个地打开，再一个一个地打开助手菜单，找到并点击MP3下载按钮；</li>
+<li>有时候，我甚至需要一次性下载多个播放列表，这种体验的痛苦就成倍增加了。</li>
+</ol>
+<p>总的来说，它虽然能用，但是用户体验依旧很原始。</p>
+<p>我想要的是：可以一次性下载整个列表里面的所有视频，甚至一次性下载多个列表，然后将他们批量转为 mp3 的工具。</p>
+<p>找了一圈 GitHub，虽然有类似的工具，但都不能完美契合我的需求。因此我决定：这次还是自己来吧！</p>
+<h2 id="程序主框架"><a href="#程序主框架" class="headerlink" title="程序主框架"></a>程序主框架</h2><p>我希望我做的工具可以尽可能地简单（无论是从使用还是开发层面）：</p>
+<ol>
+<li>它是高度定制化的，可以只为我服务（当然如果可以帮助到其它人就更好了）；</li>
+<li>它不需要界面，因为写界面是很麻烦的事情，只需要一个命令行就好了；</li>
+<li>它可以一键帮我完成上述所有事情：<ol>
+<li>下载一个或多个列表里面的所有视频</li>
+<li>将视频转为mp3</li>
+<li>拥有批量化自动命名、自动失败重试等其它基本功能</li>
+<li>上传到网易云盘这一步，由于没有找到网易云的可用接口，因此这一步仍需手动</li>
+</ol>
+</li>
+</ol>
+<p>从“尽可能地简单”为出发点，总体技术栈自然是选择我最熟悉的 Node.js，并且是 v16+，以此直接开启 <code>type=module</code>，舍弃 cjs 的裹脚布。</p>
+<p>然后，首选 tj 的 <a target="_blank" rel="noopener" href="https://github.com/tj/commander.js/">commander.js</a> 来实现命令行程序。</p>
+<p>那么，问题来了，将一个 b 站视频下载下来并且转为mp3，要分几步？</p>
+<h3 id="爬取网页"><a href="#爬取网页" class="headerlink" title="爬取网页"></a>爬取网页</h3><p>以 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wV411t7XQ">https://www.bilibili.com/video/BV1wV411t7XQ</a> 为例。这个列表里面共有 336 首歌，我需要把它们全部下载下来。</p>
+<p>点击列表中的视频，仔细观察可以发现，它们的 url 是有类似的模式的，比如：</p>
+<ul>
+<li>第一集是 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wV411t7XQ?p=1%EF%BC%8C%E6%88%96%E8%80%85%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%8A%A0">https://www.bilibili.com/video/BV1wV411t7XQ?p=1，或者如果不加</a> <code>p=1</code>，默认就是第一集</li>
+<li>第二集是 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wV411t7XQ?p=2">https://www.bilibili.com/video/BV1wV411t7XQ?p=2</a></li>
+<li>第三集是 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wV411t7XQ?p=3">https://www.bilibili.com/video/BV1wV411t7XQ?p=3</a></li>
+<li>以此类推…</li>
+</ul>
+<p>可以发现它们前面的格式都是一样的，区别只在后面的 <code>?p=x</code>。</p>
+<p>那么我需要做的事就是：</p>
+<ol>
+<li>程序接收一个链接</li>
+<li>找到链接里面共有多少集</li>
+<li>然后分别组装每一集的 url 并下载</li>
+</ol>
+<p>从国际惯例来讲，为了实现步骤2，我需要去爬取这个网页，解析里面的 HTML，找到跟集数有关的节点。但是 b 站是个特例，它有更方便的办法。它的 HTML 网页上挂载了一个 <code>__INITIAL_STATE__</code> 对象，下面就有准确的信息。</p>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="/2023/bv2mp3/84d3afb467a54e999e35e9acc4fa2206.png"></div><div class="group-picture-column"><img src="/2023/bv2mp3/1d085d07b0214fd6ad2c0ef871af2ae8.png"></div></div></div>
+
+<p>因此，这一步变得非常简单，只需要解析这个对象即可。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getDataByUrl</span>(<span class="params">url</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> agent.<span class="title function_">get</span>(url);</span><br><span class="line">  <span class="comment">// console.log(data)</span></span><br><span class="line">  <span class="keyword">const</span> initialStateStr = data.<span class="title function_">match</span>(<span class="regexp">/__INITIAL_STATE__=(.*?);/</span>)[<span class="number">1</span>];</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">JSON</span>.<span class="title function_">parse</span>(initialStateStr);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">getDataByUrl</span>(<span class="string">`https://www.bilibili.com/video/BV1wV411t7XQ`</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="property">videoData</span>.<span class="property">pages</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这样一来就拿到了这个列表的分集信息，接下来要解决下载问题。</p>
+<h3 id="下载视频文件"><a href="#下载视频文件" class="headerlink" title="下载视频文件"></a>下载视频文件</h3><p>之前的网页上没有找到视频下载地址的信息，因此这部分需要单独的接口。通过在 GitHub 上寻找类似项目得到了一个可用方案：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> params = <span class="string">`cid=<span class="subst">$&#123;cid&#125;</span>&amp;module=movie&amp;player=1&amp;quality=112&amp;ts=1`</span>;</span><br><span class="line"><span class="keyword">const</span> params =<span class="string">`appkey=iVGUTjsxvpLeuDCf&amp;cid=<span class="subst">$&#123;cid&#125;</span>&amp;otype=json&amp;qn=112&amp;quality=112&amp;type=`</span>;</span><br><span class="line"><span class="keyword">const</span> sign = crypto.<span class="title function_">createHash</span>(<span class="string">&quot;md5&quot;</span>).<span class="title function_">update</span>(params + <span class="string">&quot;[apikey]&quot;</span>).<span class="title function_">digest</span>(<span class="string">&quot;hex&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> playUrl = <span class="string">`https://interface.bilibili.com/v2/playurl?<span class="subst">$&#123;params&#125;</span>&amp;sign=<span class="subst">$&#123;sign&#125;</span>`</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其中这个 cid 在之前的 pages 变量中是存在的，然后需要将 <code>[apikey]</code> 替换为实际的 apikey（大家都把它放在仓库中了，我也不例外，取之 GitHub 用之 GitHub，反正不是我泄密的就不算泄密），并且用 md5 算法做签名。至于其它变量，不太明白它们的实际意义。</p>
+<p>这个工具主攻 mp3 转换，因此也不需要关心视频质量、水印等问题，突出一个能用就行。</p>
+<p>调用接口，可以得到一个 flv 的下载链接：</p>
+<p><img src="/2023/bv2mp3/87679900c2fe4fce89f7d5bc113a0381.png"></p>
+<p>然后就是简单粗暴的下载环节：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">agent</span>(&#123;</span><br><span class="line">   url,</span><br><span class="line">   <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">   <span class="attr">responseType</span>: <span class="string">&#x27;stream&#x27;</span>,</span><br><span class="line">   <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="comment">// 表示从第 0 个字节开始下载，直到最后一个字节，即完整的文件</span></span><br><span class="line">      <span class="title class_">Range</span>: <span class="string">`bytes=<span class="subst">$&#123;<span class="number">0</span>&#125;</span>-`</span>,</span><br><span class="line">      <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;PostmanRuntime/7.28.4&#x27;</span>, </span><br><span class="line">      <span class="comment">// 实际调用时发现该接口还需要加上 referer 才能正常调用</span></span><br><span class="line">      <span class="title class_">Referer</span>: <span class="string">&#x27;https://www.bilibili.com/&#x27;</span>,</span><br><span class="line">   &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">   .<span class="title function_">then</span>(<span class="function">(<span class="params">&#123; data, headers &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="keyword">const</span> writeStream = fs.<span class="title function_">createWriteStream</span>(filename);</span><br><span class="line">     <span class="keyword">const</span> total = <span class="built_in">parseInt</span>(headers[<span class="string">&#x27;content-length&#x27;</span>], <span class="number">10</span>);</span><br><span class="line">     <span class="comment">// 下载到的数据写入文件流</span></span><br><span class="line">     data.<span class="title function_">pipe</span>(writeStream);</span><br><span class="line">     data.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="comment">// todo 下载进度</span></span><br><span class="line">     &#125;);</span><br><span class="line">     data.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">       <span class="comment">// todo 下载结束</span></span><br><span class="line">     &#125;);</span><br><span class="line">     data.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="comment">// todo 下载出错</span></span><br><span class="line">     &#125;);</span><br><span class="line">   &#125;)</span><br><span class="line">   .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="comment">// todo 接口请求出错</span></span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="转换mp3"><a href="#转换mp3" class="headerlink" title="转换mp3"></a>转换mp3</h3><p>在最初的版本，我能直接想到的工具就是 <a target="_blank" rel="noopener" href="https://ffmpeg.org/">ffmpeg</a> ，代码里面简单粗暴地直接调用 ffmpeg：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; exec &#125; <span class="keyword">from</span> <span class="string">&#x27;child_process&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">flv2mp3</span> (filename) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> mp3 = filename.<span class="title function_">replace</span>(<span class="string">&#x27;.flv&#x27;</span>, <span class="string">&#x27;.mp3&#x27;</span>);</span><br><span class="line">    <span class="title function_">exec</span>(<span class="string">`ffmpeg -i <span class="subst">$&#123;filename&#125;</span>  -q:a 0 <span class="subst">$&#123;mp3&#125;</span>`</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="title function_">reject</span>(err);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="title function_">resolve</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这么做，能用。但是用起来不太舒心。因为我毕竟要先下载一个 C 语言版本的 ffmpeg，并且把它设置到系统 Path 中，这样程序才能正常调用到它。这个对我来说是个一次性的工作，倒也没啥，但是对于想要使用这个工具的其它用户来说就很可能劝退了。但是不管怎么说，主流程到现在已经结束了。我已经完成了下载整个视频列表并且转换成 mp3 的程序，它能正常工作了。</p>
+<p>但是，它现在还非常粗糙，需要在细节上做进一步的打磨。</p>
+<h2 id="细节优化"><a href="#细节优化" class="headerlink" title="细节优化"></a>细节优化</h2><h3 id="并行下载"><a href="#并行下载" class="headerlink" title="并行下载"></a>并行下载</h3><p>我最早想到的并行方案，是用 lodash.chunk 将视频分割成一个个的小块（如：10个视频一块），处理完一个块再处理下一个块。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> pageChunks = <span class="title function_">chunk</span>(pages, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> c <span class="keyword">of</span> pageChunks) &#123;</span><br><span class="line"> <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">all</span>(c.<span class="title function_">map</span>(download2mp3));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方法好处是确实能实现并行下载，并且实现起来非常简单。至于它存在的问题，后面还会提到。</p>
+<h3 id="展示进度条"><a href="#展示进度条" class="headerlink" title="展示进度条"></a>展示进度条</h3><p>进度条对于一个下载工具来说至关重要，尤其是并行下载多个任务的时候。好在我不用自己实现，即使是命令行界面也有优秀的现成工具：<a target="_blank" rel="noopener" href="https://github.com/visionmedia/node-progress">progress</a> 以及 <a target="_blank" rel="noopener" href="https://github.com/pitaj/multi-progress">multi-progress</a> 。</p>
+<p>而我只需要对它做一点简单的封装即可：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Progress</span> <span class="keyword">from</span> <span class="string">&#x27;multi-progress&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> multi = <span class="keyword">new</span> <span class="title class_">Progress</span>(process.<span class="property">stderr</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createProgressBar</span>(<span class="params">index, title, total</span>) &#123;</span><br><span class="line">   <span class="comment">// index 代表本次下载的序号</span></span><br><span class="line">   <span class="comment">// [:bar]是进度条本体</span></span><br><span class="line">   <span class="comment">// percent 进度百分比</span></span><br><span class="line">   <span class="comment">// eta 预估剩余时间</span></span><br><span class="line">   <span class="comment">// status 下载或转换进度</span></span><br><span class="line">   <span class="comment">// title 下载文件的标题</span></span><br><span class="line">  <span class="keyword">return</span> multi.<span class="title function_">newBar</span>(<span class="string">`<span class="subst">$&#123;index&#125;</span> [:bar] :percent :etas :status <span class="subst">$&#123;title&#125;</span>`</span>, &#123;</span><br><span class="line">    <span class="attr">complete</span>: <span class="string">&#x27;=&#x27;</span>,</span><br><span class="line">    <span class="attr">incomplete</span>: <span class="string">&#x27; &#x27;</span>,</span><br><span class="line">    <span class="attr">width</span>: <span class="number">30</span>,</span><br><span class="line">    <span class="attr">total</span>: total,</span><br><span class="line">    <span class="comment">// renderThrottle: 1000,</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">agent</span>(&#123;</span><br><span class="line">   url,</span><br><span class="line">   <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">   <span class="attr">responseType</span>: <span class="string">&#x27;stream&#x27;</span>,</span><br><span class="line">   <span class="attr">headers</span>: &#123;</span><br><span class="line">     <span class="title class_">Range</span>: <span class="string">`bytes=<span class="subst">$&#123;<span class="number">0</span>&#125;</span>-`</span>,</span><br><span class="line">     <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;PostmanRuntime/7.28.4&#x27;</span>,</span><br><span class="line">     <span class="title class_">Referer</span>: <span class="string">&#x27;https://www.bilibili.com/&#x27;</span>,</span><br><span class="line">   &#125;,</span><br><span class="line"> &#125;)</span><br><span class="line">   .<span class="title function_">then</span>(<span class="function">(<span class="params">&#123; data, headers &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="keyword">const</span> writeStream = fs.<span class="title function_">createWriteStream</span>(filename);</span><br><span class="line">     <span class="keyword">const</span> total = <span class="built_in">parseInt</span>(headers[<span class="string">&#x27;content-length&#x27;</span>], <span class="number">10</span>);</span><br><span class="line">     <span class="comment">// 创建一个进度条，给它总字节长度</span></span><br><span class="line">     <span class="keyword">const</span> bar = <span class="title function_">createProgressBar</span>(index, title, total);</span><br><span class="line">     data.<span class="title function_">pipe</span>(writeStream);</span><br><span class="line">     data.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="comment">// 下载进度，本次传输的 chunk 字节长度，进度条将自动计算百分比</span></span><br><span class="line">       bar.<span class="title function_">tick</span>(chunk.<span class="property">length</span>, &#123; <span class="attr">status</span>: <span class="string">&#x27;downloading&#x27;</span> &#125;);</span><br><span class="line">     &#125;);</span><br><span class="line">     data.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">       writeStream.<span class="title function_">close</span>();</span><br><span class="line">       <span class="comment">// 将 bar resolve 出去，后面还要用到</span></span><br><span class="line">       <span class="title function_">resolve</span>(bar);</span><br><span class="line">     &#125;);</span><br><span class="line">     data.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="comment">// 出错了，进度条到底吧那就</span></span><br><span class="line">       bar.<span class="title function_">tick</span>(total);</span><br><span class="line">       <span class="comment">// 显示下载出错</span></span><br><span class="line">       bar.<span class="title function_">tick</span>(&#123; <span class="attr">status</span>: <span class="string">&#x27;error&#x27;</span> &#125;);</span><br><span class="line">       writeStream.<span class="title function_">close</span>();</span><br><span class="line">       <span class="title function_">reject</span>(err);</span><br><span class="line">     &#125;);</span><br><span class="line">   &#125;)</span><br><span class="line">   .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="title function_">reject</span>(err);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="失败重试"><a href="#失败重试" class="headerlink" title="失败重试"></a>失败重试</h3><p>b 站的视频下载地址有一定的失败概率，因此做了一个简单粗暴的失败重试逻辑：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">download2mp3</span>(<span class="params">&#123; url, index &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> b;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 下载文件</span></span><br><span class="line">    <span class="keyword">const</span> &#123; filename, bar &#125; = <span class="keyword">await</span> <span class="title function_">download</span>(url, offsetIndex);</span><br><span class="line">    b = bar;</span><br><span class="line">    <span class="comment">// 开始转换了，设置一下进度条状态</span></span><br><span class="line">    bar.<span class="title function_">tick</span>(&#123; <span class="attr">status</span>: <span class="string">&#x27;converting&#x27;</span> &#125;);</span><br><span class="line">    <span class="comment">// 转换 mp3</span></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">flv2mp3</span>(filename);</span><br><span class="line">    <span class="comment">// 转换结束了，可以删掉下载的视频文件</span></span><br><span class="line">    <span class="keyword">await</span> fs.<span class="property">promises</span>.<span class="title function_">unlink</span>(filename);</span><br><span class="line">    <span class="comment">// 设置进度条状态为 done</span></span><br><span class="line">    bar.<span class="title function_">tick</span>(&#123; <span class="attr">status</span>: <span class="string">&#x27;done&#x27;</span> &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="comment">// 失败了</span></span><br><span class="line">    b?.<span class="title function_">tick</span>(&#123; <span class="attr">status</span>: <span class="string">&#x27;error&#x27;</span> &#125;);</span><br><span class="line">    <span class="comment">// 等待 2 秒后，重新开始下载+转换</span></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">2000</span>);</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">download2mp3</span>(&#123; url, index &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法永远不会抛错，只要出错了就一直重试下去。对于我这种脚本程序来说，非常好用。</p>
+<h3 id="自定义命名"><a href="#自定义命名" class="headerlink" title="自定义命名"></a>自定义命名</h3><p>我希望下载下来的文件可以按照我想要的规则去命名，这样不管是从哪里下载的文件，最后都不会显得杂乱无章。</p>
+<p>这个功能的实现部分参考了“哔哩哔哩助手”这个浏览器插件的做法，使用了 pattern 命名法：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getName</span>(<span class="params">index, title, author, date</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> argv = program.<span class="title function_">opts</span>();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    argv.<span class="property">naming</span></span><br><span class="line">      .<span class="title function_">replace</span>(<span class="string">&#x27;INDEX&#x27;</span>, index)</span><br><span class="line">      .<span class="title function_">replace</span>(<span class="string">&#x27;TITLE&#x27;</span>, title)</span><br><span class="line">      .<span class="title function_">replace</span>(<span class="string">&#x27;AUTHOR&#x27;</span>, author)</span><br><span class="line">      .<span class="title function_">replace</span>(<span class="string">&#x27;DATE&#x27;</span>, date)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个 <code>naming</code> 参数的默认值是 <code>TITLE-AUTHOR-DATE</code>，也就是 <code>视频标题-视频作者-视频上传日期</code>。它会将这个命名模式套用到具体的文件上。这个东西的用法是很灵活的。比如说，我希望我下载的文件要有序号，另外视频的上传者并不是演唱者，我希望显示演唱者。那么我常用的命名模式是 <code>INDEX-TITLE-yousa-DATE</code>。注意这里第三个坑位变成了 <code>yousa</code>，它并不在支持的 pattern 中，代表的含义就是它将固定为 <code>yousa</code>，不会再被替换了。</p>
+<h3 id="ffmpeg-优化"><a href="#ffmpeg-优化" class="headerlink" title="ffmpeg 优化"></a>ffmpeg 优化</h3><p>做开源软件的好处，除了得到用户的肯定外，我永远可以从别人那里学到新的东西，比如：</p>
+<p><img src="/2023/bv2mp3/bd22e7fc1754481198b53856c0d119f8.png"></p>
+<p>原来 ffmpeg 已经有了 wasm 版本：<a target="_blank" rel="noopener" href="https://github.com/ffmpegwasm/ffmpeg.wasm">ffmpeg.wasm</a> 。将 ffmpeg 替换为 ffmpeg.wasm 后，使用时使就不再需要预先安装 C 语言版本的 ffmpeg，也无需设置 path，用户体验可以得到大幅度的提升。</p>
+<p>修改后的转换代码（大概长这样）：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; fetchFile, createFFmpeg &#125; <span class="keyword">from</span> <span class="string">&#x27;@ffmpeg/ffmpeg&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; resolve &#125; <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">flv2mp3</span> (filename) &#123;</span><br><span class="line">  <span class="keyword">const</span> after = filename.<span class="title function_">replace</span>(<span class="string">&#x27;.flv&#x27;</span>, <span class="string">&#x27;.mp3&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> ffmpeg = <span class="title function_">createFFmpeg</span>(&#123; <span class="attr">log</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">  <span class="keyword">await</span> ffmpeg.<span class="title function_">load</span>();</span><br><span class="line">  ffmpeg.<span class="title function_">FS</span>(<span class="string">&#x27;writeFile&#x27;</span>, <span class="string">&#x27;before.flv&#x27;</span>, <span class="keyword">await</span> <span class="title function_">fetchFile</span>(<span class="title function_">resolve</span>(process.<span class="title function_">cwd</span>(), filename)));</span><br><span class="line">  <span class="comment">// ffmpeg -y -i $&#123;filename&#125; -q:a 0 $&#123;mp3&#125;</span></span><br><span class="line">  <span class="keyword">await</span> ffmpeg.<span class="title function_">run</span>(<span class="string">&#x27;-y&#x27;</span>, <span class="string">&#x27;-i&#x27;</span>, <span class="string">&#x27;before.flv&#x27;</span>, <span class="string">&#x27;-q:a&#x27;</span>, <span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;after.mp3&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> fs.<span class="property">promises</span>.<span class="title function_">writeFile</span>(<span class="title function_">resolve</span>(process.<span class="title function_">cwd</span>(), after), ffmpeg.<span class="title function_">FS</span>(<span class="string">&#x27;readFile&#x27;</span>, <span class="string">&#x27;after.mp3&#x27;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看起来很美好。但实际运行起来后，发现一个令人哭笑不得的问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Rejection (Error): ffmpeg.wasm can only run one command at a time</span><br></pre></td></tr></table></figure>
+
+<p>它一次居然只能跑一个命令！也就是说，它跟我的多线程下载并不能很好地兼容。当多个文件同时下载完成后，如果即刻开始多个转换，程序就报错了。因此我需要做一个流程控制：当转换正在进行的时候，其它下载完的视频文件需要先进入排队状态：mp3 转换的过程得一个一个来。</p>
+<p>根据上述思想修改一下 <code>flv2mp3</code>，用一个全局变量来控制同一时间只有一个任务能进来转换：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 将 ffmpeg 实例提到外面来，全局共用</span></span><br><span class="line"><span class="keyword">let</span> ffmpeg = <span class="title function_">createFFmpeg</span>(&#123; <span class="attr">log</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">ffmpeg.<span class="title function_">load</span>();</span><br><span class="line"><span class="keyword">let</span> isRunning = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">flv2mp3</span>(<span class="params">filename, bar</span>) &#123;</span><br><span class="line">  <span class="keyword">while</span> (!ffmpeg.<span class="title function_">isLoaded</span>() || isRunning) &#123;</span><br><span class="line">    <span class="comment">// 有其它任务正在进行中，那么就排队等待吧...</span></span><br><span class="line">    bar.<span class="title function_">tick</span>(&#123; <span class="attr">status</span>: <span class="string">&#x27;queueing&#x27;</span> &#125;);</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">1000</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  bar.<span class="title function_">tick</span>(&#123; <span class="attr">status</span>: <span class="string">&#x27;converting&#x27;</span> &#125;);</span><br><span class="line">  isRunning = <span class="literal">true</span>;</span><br><span class="line">  <span class="comment">// 这里是具体的转换任务...</span></span><br><span class="line">  isRunning = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然缺点有点夸张，但思考再三，我觉得跟 C 语言 ffmpeg 的使用体验比起来，这种方式还是更优一点。</p>
+<h3 id="并行优化"><a href="#并行优化" class="headerlink" title="并行优化"></a>并行优化</h3><p>前面有提到我一开始设计的并行方案：</p>
+<blockquote>
+<p>用 lodash.chunk 将视频分割成一个个的小块（如：10个视频一块），处理完一个块再处理下一个块</p>
+</blockquote>
+<p>这种办法好处是实现简单，但缺点也很明显：b 站似乎对每个下载地址做了限速，因此有时候一个块里面一两个文件特别大，其它文件都下载完了，它还在慢悠悠的下载，让人感到浪费生命。实际上，它可以立即开始余下的其它任务的，只要保证正在运行的总的任务数量不超过设定的数值即可。</p>
+<p>也许你会问：既然这么麻烦，为什么不全部同时开始下载呢？这个方式实际上我也试过，但是一旦同时下载的任务太多了（比如上面的一个链接，有 300 多个视频，更何况我们还能支持一次输入多个链接），下载的出错率会陡增。这样反而会导致效率急剧下降。因此是不可取的。</p>
+<p>为了解决这个问题，我将并行控制的代码又优化了一下，摒弃了 chunk 的做法：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 最大的进程数，默认为 10</span></span><br><span class="line"><span class="keyword">let</span> maxThreads = argv.<span class="property">threads</span>;</span><br><span class="line"><span class="comment">// 当前进行中的进程数</span></span><br><span class="line"><span class="keyword">let</span> currentThreads = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 已完成的任务数</span></span><br><span class="line"><span class="keyword">let</span> finished = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> page <span class="keyword">of</span> pages) &#123;</span><br><span class="line">    <span class="keyword">while</span> (currentThreads === maxThreads) &#123;</span><br><span class="line">      <span class="comment">// 运行中的线程数量已达最大值，先排会队吧</span></span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 开始新的线程</span></span><br><span class="line">    currentThreads += <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 注意这里不用 await 了</span></span><br><span class="line">    <span class="title function_">download2mp3</span>(page).<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 一个线程结束了</span></span><br><span class="line">      currentThreads -= <span class="number">1</span>;</span><br><span class="line">      finished += <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span> (finished === pages.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="comment">// 所有的任务都已完成，可以退出进程了</span></span><br><span class="line">        process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样一来，任务并行的效率得到了极大的提升：同时进行中的任务数量会始终保持在最接近允许的最大数量的水平。充分利用上电脑的带宽。</p>
+<h3 id="ffmpeg-wasm-优化"><a href="#ffmpeg-wasm-优化" class="headerlink" title="ffmpeg.wasm 优化"></a>ffmpeg.wasm 优化</h3><p>上面我们解决了 C 语言 ffmpeg 带来的不适，但是同时引入了新的问题：同时只能运行一个转换任务，其它的下载完的视频要排队。这个问题在并发问题得到优化后被极大地放大了：经常是所有文件都已下载完，却仍有一大批文件在等待转换。这让人感到非常痛苦：我写的程序不应该这么蠢的。</p>
+<p>因此，我又开始考虑这个问题的解决方案了：既然一个 ffmpeg.wasm 进程只能跑同时跑一个任务，那我为每个下载任务都单独开一个进程行不行？</p>
+<p>Node.js 提供了一个 <code>child_process.exec</code> 函数，可以用来运行一个命令行任务。在最初的版本中，调用 C 语言的 ffmpeg 的任务也是通过这个完成的。现在，我能否利用它来调用 ffmpeg.wasm 呢？</p>
+<p>先将 flv2mp3 的函数，抽离为一个独立的文件，在这个文件中直接运行转换：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 要转换的文件名</span></span><br><span class="line">  <span class="keyword">let</span> filename = process.<span class="property">argv</span>[<span class="number">2</span>];</span><br><span class="line">  <span class="keyword">let</span> ffmpeg = <span class="title function_">createFFmpeg</span>(&#123; <span class="attr">log</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">  <span class="keyword">await</span> ffmpeg.<span class="title function_">load</span>();</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 转换...</span></span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="comment">// 出错了</span></span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>然后改造原来的 flv2mp3 文件：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">flv2mp3</span>(<span class="params">filename</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">exec</span>(</span><br><span class="line">      <span class="string">`node <span class="subst">$&#123;join(__dirname, <span class="string">&#x27;_flv2mp3.js&#x27;</span>)&#125;</span> &quot;<span class="subst">$&#123;filename&#125;</span>&quot;`</span>,</span><br><span class="line">      &#123; <span class="attr">cwd</span>: process.<span class="title function_">cwd</span>() &#125;,</span><br><span class="line">      <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (error) &#123;</span><br><span class="line">          <span class="title function_">reject</span>(error);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">resolve</span>();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改造完后实测，这确实将该问题解决了。现在多个文件同时下载完后，也可以同时开始转换了！虽然同时开启多个转换进程后 CPU 的利用率会飙涨、风扇狂飙，但相比节约的时间来说，这都不是问题。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这个工具现在看起来很简单，并没有什么过人之处。但是我在实现它的时候还是花了非常多的时间去调试。比如说，在加上了进度条后，整个 stdout 都会被进度条占据，console API 难以再打印出错误信息。因此我只能给它设计了一套基于文件的日志系统用来 debug。又比如说，项目早期在下载文件的时候，程序经常莫名奇妙地、没有任何征兆地就退出了，我需要非常细心地去寻找每一个可能抛错的点，尽可能优雅地捕获所有错误。</p>
+<p>至今为止我已经用它下载了一千多首 yousa 的歌。这种自己开发工具来解决自己的问题，并且一步步地将它变得完美以及节约生命的愉快感真的是非常棒的。</p>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="/2023/bv2mp3/d5ac4ae89b5c4827be79b324647af60c.jpg" alt="126f0ee04db59831d6a9820ac89c471.jpg"></div><div class="group-picture-column"><img src="/2023/bv2mp3/4e382b83db7a4dd085e2d2087a774cec.jpg" alt="46ff0c8d1022eaf087e0e42b7cd0319.jpg"></div></div></div>
+
+<p>最后更开心的当然是，我做的工具同时也能给其它素不相识的人带来愉悦：</p>
+<p><img src="/2023/bv2mp3/2ed49043d3f046f28740ad1e415b810f.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2023/bv2mp3/" title="做了一个 b 站视频下载与 mp3 转换工具">https://wxsm.space/2023/bv2mp3/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+              <a href="/tags/bilibili/" rel="tag"># bilibili</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/a-static-file-docker-image-issue/" rel="prev" title="静态文件 Docker 镜像问题一则">
+                  <i class="fa fa-angle-left"></i> 静态文件 Docker 镜像问题一则
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/xiao-man/" rel="next" title="小满">
+                  小满 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2023/bv2mp3/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

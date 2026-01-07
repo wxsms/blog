@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="如果公司有专业运维，项目的部署上线过程一般来说开发者都不会接触到。但是很不幸，我所在的团队没有独立的运维团队，所以一切都得靠自己（与同事）。 以下都只是工作中逐步优化得到的经验总结，并且只以 Node.js 程序部署为例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动化部署: 从脚本到 K8s">
+<meta property="og:url" content="https://wxsm.space/2020/automatic-cd-from-shell-scripts-to-k8s/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="如果公司有专业运维，项目的部署上线过程一般来说开发者都不会接触到。但是很不幸，我所在的团队没有独立的运维团队，所以一切都得靠自己（与同事）。 以下都只是工作中逐步优化得到的经验总结，并且只以 Node.js 程序部署为例。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-20T18:31:34.371Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.146Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2020/automatic-cd-from-shell-scripts-to-k8s/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2020/automatic-cd-from-shell-scripts-to-k8s/","path":"2020/automatic-cd-from-shell-scripts-to-k8s/","title":"自动化部署: 从脚本到 K8s"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>自动化部署: 从脚本到 K8s | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E4%B8%8A%E7%BA%BF%E7%9A%84%E5%8E%9F%E5%A7%8B%E7%89%88%E6%9C%AC"><span class="nav-number">1.</span> <span class="nav-text">部署上线的原始版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-CI-%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%85%A8%E8%87%AA%E5%8A%A8%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">基于 CI 系统的全自动版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-1"><span class="nav-number">2.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82"><span class="nav-number">2.2.</span> <span class="nav-text">技术细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitlab-%E4%B8%8E-Agent-%E5%B9%B3%E5%8F%B0%E7%BB%93%E5%90%88%E7%9A%84%E5%8D%8A%E8%87%AA%E5%8A%A8%E7%89%88%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">Gitlab 与 Agent 平台结合的半自动版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-2"><span class="nav-number">3.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">3.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitlab-%E4%B8%8E-k8s-%E7%BB%93%E5%90%88%E7%9A%84%E5%85%A8%E8%87%AA%E5%8A%A8%E7%89%88%E6%9C%AC-v1"><span class="nav-number">4.</span> <span class="nav-text">Gitlab 与 k8s 结合的全自动版本 v1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-3"><span class="nav-number">4.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82-1"><span class="nav-number">4.2.</span> <span class="nav-text">技术细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-number">4.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitlab-%E4%B8%8E-k8s-%E7%BB%93%E5%90%88%E7%9A%84%E5%85%A8%E8%87%AA%E5%8A%A8%E7%89%88%E6%9C%AC-v2"><span class="nav-number">5.</span> <span class="nav-text">Gitlab 与 k8s 结合的全自动版本 v2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-4"><span class="nav-number">5.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82-2"><span class="nav-number">5.2.</span> <span class="nav-text">技术细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E2%80%9C%E9%80%90%E4%B8%AA%E5%8F%91%E9%80%81-kill-%E6%8C%87%E4%BB%A4%E2%80%9D"><span class="nav-number">5.2.1.</span> <span class="nav-text">关于“逐个发送 kill 指令”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E2%80%9C%E8%A7%A3%E6%B3%A8%E5%86%8C%E6%89%80%E6%9C%89%E5%90%8C%E5%90%8D%E6%9C%8D%E5%8A%A1%E2%80%9D%E4%B8%8E%E2%80%9C%E6%B3%A8%E5%86%8C%E8%87%AA%E5%B7%B1%E2%80%9D"><span class="nav-number">5.2.2.</span> <span class="nav-text">关于“解注册所有同名服务”与“注册自己”</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-4"><span class="nav-number">5.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitlab-%E4%B8%8E-k8s-%E7%BB%93%E5%90%88%E7%9A%84%E5%85%A8%E8%87%AA%E5%8A%A8%E7%89%88%E6%9C%AC-v3"><span class="nav-number">6.</span> <span class="nav-text">Gitlab 与 k8s 结合的全自动版本 v3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-5"><span class="nav-number">6.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82-3"><span class="nav-number">6.2.</span> <span class="nav-text">技术细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-5"><span class="nav-number">6.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/automatic-cd-from-shell-scripts-to-k8s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="自动化部署: 从脚本到 K8s | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自动化部署: 从脚本到 K8s
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-21 02:31:34" itemprop="dateCreated datePublished" datetime="2020-10-21T02:31:34+08:00">2020-10-21</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/automatic-cd-from-shell-scripts-to-k8s/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/automatic-cd-from-shell-scripts-to-k8s/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>如果公司有专业运维，项目的部署上线过程一般来说开发者都不会接触到。但是很不幸，我所在的团队没有独立的运维团队，所以一切都得靠自己（与同事）。</p>
+<p>以下都只是工作中逐步优化得到的经验总结，并且只以 Node.js 程序部署为例。</p>
+<span id="more"></span>
+
+<h2 id="部署上线的原始版本"><a href="#部署上线的原始版本" class="headerlink" title="部署上线的原始版本"></a>部署上线的原始版本</h2><h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p>举例：服务器使用 PM2 管理部署。纯手工操作：</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>整个过程耗时 10~30 分钟不等。</p>
+<p>优点：</p>
+<ol>
+<li>不依赖任何工具&#x2F;系统</li>
+<li>适用于任何分支</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>麻烦、耗时</li>
+<li>易出错</li>
+<li>无法持续部署</li>
+<li>多节点怎么办？</li>
+</ol>
+<h2 id="基于-CI-系统的全自动版本"><a href="#基于-CI-系统的全自动版本" class="headerlink" title="基于 CI 系统的全自动版本"></a>基于 CI 系统的全自动版本</h2><p>一般来说企业都会有一套 CI 系统，可能是传统的 Jenkins，也可能是 Gitlab CI &#x2F; Github Actions &#x2F; Travis CI &#x2F; Circle CI 等等。它们之间大同小异，都是通过某种方式写好若干份配置文件，当某些操作（如 git push）触发时以及满足某种条件（如当前分支为发布分支，或提交了 tag 等）执行某些任务。</p>
+<p>这里使用 Gitlab CI 举例，CI&#x2F;CD 通过 Gitlab Runner 完成，服务器使用 PM2 管理部署。</p>
+<h3 id="流程图-1"><a href="#流程图-1" class="headerlink" title="流程图"></a>流程图</h3><div id="flowchart-1" class="flow-chart"></div>
+
+<h3 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h3><p>配置文件 <code>.gitlab-ci.yml</code>:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="string">node</span></span><br><span class="line"></span><br><span class="line"><span class="attr">before_script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">yarn</span> <span class="string">--frozen-lockfile</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">test</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 代码测试</span></span><br><span class="line"><span class="attr">test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">lint</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 前端代码构建测试</span></span><br><span class="line"><span class="attr">build-frontend:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布 dev 环境，其他环境略</span></span><br><span class="line"><span class="attr">deploy-dev:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="comment"># 仅在 release-dev 分支上执行改任务</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">release-dev</span> </span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build:dev</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">scp</span> <span class="string">-r</span> <span class="string">.</span> <span class="string">user@host:~/path/to/deploy</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ssh</span> <span class="string">user@@host</span> <span class="string">&quot;</span></span><br><span class="line"><span class="string">        pm2 delete -s frontend || true &amp;&amp;</span></span><br><span class="line"><span class="string">        pm2 delete -s server || true &amp;&amp;</span></span><br><span class="line"><span class="string">        pm2 serve /path/to/deploy/frontend/ 8080 --name frontend &amp;&amp;</span></span><br><span class="line"><span class="string">        yarn --cwd /path/to/deploy/server/ &amp;&amp;</span></span><br><span class="line"><span class="string">        pm2 start /path/to/deploy/server/server.js --name server&quot;</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>优点：</p>
+<ol>
+<li>全过程仅依赖 Gitlab 与 Gitlab Runner （基于或不基于容器）</li>
+<li>全自动测试，提交到发布分支则全自动部署，测试失败的代码不会被部署</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>需要在 Gitlab 上配置远程机器的登录凭证（账号&#x2F;密码），或在 Runner 机器上配置 ssh key</li>
+<li>Runner 会拥有部署机器的访问权限</li>
+<li>多节点？运维？</li>
+</ol>
+<h2 id="Gitlab-与-Agent-平台结合的半自动版本"><a href="#Gitlab-与-Agent-平台结合的半自动版本" class="headerlink" title="Gitlab 与 Agent 平台结合的半自动版本"></a>Gitlab 与 Agent 平台结合的半自动版本</h2><p>为了解决上述 Runner 机器权限过高的问题，这个版本引入了 Agent 平台的概念。每个企业使用的平台可能有所区别，有可能是自研的（如我司），也有可能是外部提供的的（如「宝塔」）。但大体功能基本一致。</p>
+<p>该版本中：</p>
+<ol>
+<li>CI 通过 Gitlab Runner 完成。任务完成后会将代码打包，并放置于服务器上的某个位置，该位置通过 Nginx 暴露（仅对内）</li>
+<li>CD 通过 Agent 平台完成。Agent 从上一步暴露的地址中下载代码，解压缩并放置到指定位置，重启 PM2 服务</li>
+</ol>
+<h3 id="流程图-2"><a href="#流程图-2" class="headerlink" title="流程图"></a>流程图</h3><div id="flowchart-2" class="flow-chart"></div>
+
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>这一个版本中，CI 系统的配置简化了，去除部署部分的任务即可。至于 Agent 平台的配置方式，可能是一个完整的 bash 脚本，也可能是其它配置，就不在此展开了。</p>
+<p>优点：</p>
+<ol>
+<li>CI 过程全自动</li>
+<li>CI&#x2F;CD 权限解耦</li>
+<li>适用于各种分支</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>非线上发布过程也需要手动完成，麻烦</li>
+<li>严重依赖 Agent 平台</li>
+<li>运维？</li>
+</ol>
+<h2 id="Gitlab-与-k8s-结合的全自动版本-v1"><a href="#Gitlab-与-k8s-结合的全自动版本-v1" class="headerlink" title="Gitlab 与 k8s 结合的全自动版本 v1"></a>Gitlab 与 k8s 结合的全自动版本 v1</h2><p>k8s (kubernetes) 是一个容器集群部署管理系统。</p>
+<p>容器基础知识：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/get-started/overview/#docker-objects">镜像 Image</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/get-started/overview/#docker-objects">容器 Container</a></li>
+</ol>
+<p>k8s 基础知识：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/workloads/pods/">工作单元 pod</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/services-networking/service/">服务 service</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/concepts/architecture/nodes/">节点 node</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/tasks/manage-kubernetes-objects/kustomization/">Kustomize</a></li>
+</ol>
+<h3 id="流程图-3"><a href="#流程图-3" class="headerlink" title="流程图"></a>流程图</h3><div id="flowchart-3" class="flow-chart"></div>
+
+<h3 id="技术细节-1"><a href="#技术细节-1" class="headerlink" title="技术细节"></a>技术细节</h3><p><code>Dockerfile</code>:</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache --update nodejs nodejs-npm yarn</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> adduser -u 1000 -D app -h /data</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">USER</span> app</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">chown</span>=app start.sh /data/start.sh</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /data</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8000</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [ <span class="string">&quot;sh&quot;</span>, <span class="string">&quot;/data/start.sh&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>start.sh</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从文件服务器获取该版本包</span></span><br><span class="line">VERSION_DEPLOY_HTTPCODE=`curl -s <span class="string">&quot;https://xxx/<span class="variable">$&#123;VERSION&#125;</span>&quot;</span> -o pkg.tgz -w <span class="string">&quot;%&#123;http_code&#125;&quot;</span>`</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$VERSION_DEPLOY_HTTPCODE</span>&quot;</span> == <span class="string">&quot;200&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;using version: <span class="variable">$&#123;VERSION&#125;</span>&quot;</span></span><br><span class="line">    tar zxf pkg.tgz</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;version package not exist: <span class="variable">$&#123;VERSION&#125;</span>&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">sh deploy.sh</span><br></pre></td></tr></table></figure>
+
+
+<p>kill 实现：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// koa</span></span><br><span class="line">router.<span class="title function_">all</span>(<span class="string">&#x27;/api/kill&#x27;</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable constant_">IS_PROD</span>) &#123;</span><br><span class="line">    ctx.<span class="property">body</span> = <span class="string">&#x27;ok&#x27;</span></span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">next</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>优点：</p>
+<ol>
+<li>CI 过程全自动</li>
+<li>非线上环境 CD 全自动，线上环境 CD 手动指定版本，兼顾方便与安全</li>
+<li>无需配置远程机器权限</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>k8s 使用原始镜像启动 pod，拉取代码与安装依赖的过程非常耗时（每次启动都是全新镜像，无缓存）。</li>
+<li>CD 过程不确定性较多，存在代码文件服务器故障、依赖安装故障等风险。</li>
+<li>kill 指令发出后服务会暂时不可用。</li>
+<li>多节点？</li>
+</ol>
+<h2 id="Gitlab-与-k8s-结合的全自动版本-v2"><a href="#Gitlab-与-k8s-结合的全自动版本-v2" class="headerlink" title="Gitlab 与 k8s 结合的全自动版本 v2"></a>Gitlab 与 k8s 结合的全自动版本 v2</h2><p>为了解决上面的问题 3&#x2F;4，引入 <code>Consul</code> 对 CI&#x2F;CD 过程做出了改进。</p>
+<p>Consul 是为基础设施提供服务发现和服务配置的工具，包含多种功能，这次用到了其中两个功能：</p>
+<ol>
+<li>服务发现</li>
+<li>健康检查</li>
+</ol>
+<h3 id="流程图-4"><a href="#流程图-4" class="headerlink" title="流程图"></a>流程图</h3><div id="flowchart-4" class="flow-chart"></div>
+
+<h3 id="技术细节-2"><a href="#技术细节-2" class="headerlink" title="技术细节"></a>技术细节</h3><p>这个流程里面涉及到几个问题：</p>
+<h4 id="关于“逐个发送-kill-指令”"><a href="#关于“逐个发送-kill-指令”" class="headerlink" title="关于“逐个发送 kill 指令”"></a>关于“逐个发送 kill 指令”</h4><p>虽然通过 Consul 可以获取到所有运行中 pod 的 ip 及端口，但是如果集中发送 kill 命令仍然会造成服务不可用。目前我司服务端的 CI 就有这个问题，他们虽然每个 kill  会有一段固定时间的 sleep 间隔，但无法保证下一个 kill 发出时上个服务时候已重启完毕。</p>
+<p>为了解决这个问题，我写了一个脚本。</p>
+<p>流程：</p>
+<div id="flowchart-5" class="flow-chart"></div>
+
+<p>代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 此脚本在gitlab-runner中作为CI的最后一步执行</span></span><br><span class="line"><span class="comment"> * 在非线上环境中可以对容器进行逐个重启，尽量减少downtime</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 确保线上环境不执行此脚本</span></span><br><span class="line"><span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">request</span> (host, port, path) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>((<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> req = http.<span class="title function_">request</span>(&#123;</span><br><span class="line">      <span class="attr">hostname</span>: host,</span><br><span class="line">      <span class="attr">port</span>: port,</span><br><span class="line">      <span class="attr">path</span>: path,</span><br><span class="line">      <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">      <span class="attr">timeout</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">headers</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">      res.<span class="title function_">setEncoding</span>(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">      <span class="keyword">let</span> data = <span class="string">&#x27;&#x27;</span></span><br><span class="line">      res.<span class="title function_">on</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">        data += chunk</span><br><span class="line">      &#125;)</span><br><span class="line">      res.<span class="title function_">on</span>(<span class="string">&#x27;end&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(&#123;</span><br><span class="line">          <span class="attr">status</span>: res.<span class="property">statusCode</span>,</span><br><span class="line">          data</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    req.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>)</span><br><span class="line">      <span class="title function_">resolve</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">    req.<span class="title function_">end</span>()</span><br><span class="line">  &#125;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">sleep</span> (time) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(resolve, time)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 各环境的consul请求地址</span></span><br><span class="line">  <span class="comment">// 具体使用时需要填入指定 host 与 port</span></span><br><span class="line">  <span class="keyword">const</span> apiMap = &#123;</span><br><span class="line">    <span class="attr">development</span>: [<span class="string">&#x27;host&#x27;</span>, <span class="string">&#x27;port&#x27;</span>],</span><br><span class="line">    <span class="attr">qa</span>: [<span class="string">&#x27;host&#x27;</span>, <span class="string">&#x27;port&#x27;</span>],</span><br><span class="line">    <span class="attr">pp</span>: [<span class="string">&#x27;host&#x27;</span>, <span class="string">&#x27;port&#x27;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 从consul获取已注册pod列表</span></span><br><span class="line">  <span class="keyword">const</span> api = apiMap[process.<span class="property">env</span>.<span class="property">NODE_ENV</span>]</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">request</span>(api[<span class="number">0</span>], api[<span class="number">1</span>], api[<span class="number">2</span>])</span><br><span class="line">  <span class="keyword">if</span> (!res || !res.<span class="property">data</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;consul find service failed, exiting...&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;consul raw:&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(res.<span class="property">data</span>))</span><br><span class="line">  <span class="keyword">const</span> pods = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(res.<span class="property">data</span>).<span class="title function_">map</span>(<span class="function"><span class="params">v</span> =&gt;</span> [v.<span class="property">Service</span>.<span class="property">Address</span>, v.<span class="property">Service</span>.<span class="property">Port</span>])</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;consul services:&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(pods))</span><br><span class="line">  <span class="comment">// 循环杀进程</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; pods.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> pod = pods[i]</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;-------------&#x27;</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], pod[<span class="number">1</span>])</span><br><span class="line">    <span class="comment">// 重启一个pod</span></span><br><span class="line">    <span class="keyword">const</span> killRes = <span class="keyword">await</span> <span class="title function_">request</span>(pod[<span class="number">0</span>], pod[<span class="number">1</span>], <span class="string">`/api/kill`</span>)</span><br><span class="line">    <span class="keyword">if</span> (killRes &amp;&amp; killRes.<span class="property">status</span> === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="comment">// kill返回成功，这个节点原本是活着的才继续监测它的状态</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], <span class="string">&#x27;killed.&#x27;</span>)</span><br><span class="line">      <span class="keyword">if</span> (i === pods.<span class="property">length</span> - <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 已经杀完了最后一个pod，无需继续等待重启，直接退出</span></span><br><span class="line">        process.<span class="title function_">exit</span>(<span class="number">0</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">let</span> isServerUp = <span class="literal">false</span></span><br><span class="line">      <span class="comment">// let isFrontendUp = false</span></span><br><span class="line">      <span class="comment">// 每个pod最多检测12次（2分钟），超过时间则放弃，直接重启下一个pod</span></span><br><span class="line">      <span class="keyword">let</span> tryTimes = <span class="number">12</span></span><br><span class="line">      <span class="comment">// 循环检测是否重启成功</span></span><br><span class="line">      <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], <span class="string">&#x27;waiting for pod up...&#x27;</span>, tryTimes)</span><br><span class="line">        <span class="comment">// 每10秒检测一次</span></span><br><span class="line">        <span class="keyword">await</span> <span class="title function_">sleep</span>(<span class="number">10</span> * <span class="number">1000</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], <span class="string">&#x27;check if pod up...&#x27;</span>)</span><br><span class="line">        <span class="comment">// 如果返回200表示已服务已重新启动</span></span><br><span class="line">        <span class="keyword">const</span> serverRes = <span class="keyword">await</span> <span class="title function_">request</span>(pod[<span class="number">0</span>], pod[<span class="number">1</span>], <span class="string">`/api/health-check`</span>)</span><br><span class="line">        isServerUp = !!(serverRes &amp;&amp; serverRes.<span class="property">status</span> === <span class="number">200</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], <span class="string">&#x27;pod server up:&#x27;</span>, isServerUp)</span><br><span class="line">        <span class="comment">// 等待 k8s readinessProbe 开始，节点被认为已存活，则可以对外访问</span></span><br><span class="line">        <span class="keyword">if</span> (isServerUp) &#123;</span><br><span class="line">          <span class="keyword">const</span> waitSecondsStr = process.<span class="property">env</span>.<span class="property">WAIT_FOR_PROBE_SECONDS</span> || <span class="string">&#x27;10&#x27;</span></span><br><span class="line">          <span class="keyword">const</span> waitSeconds = <span class="built_in">parseInt</span>(waitSecondsStr)</span><br><span class="line">          <span class="keyword">if</span> (<span class="built_in">isNaN</span>(waitSeconds) || waitSeconds &gt;= <span class="number">120</span> || waitSeconds &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 最大等待120秒，超过视为参数错误</span></span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], <span class="string">`WAIT_FOR_PROBE_SECONDS is invalid, skip waiting for prob.`</span>)</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], <span class="string">`pod is up internally, but need to wait for live probe (<span class="subst">$&#123;waitSeconds&#125;</span>s)...`</span>)</span><br><span class="line">            <span class="keyword">await</span> <span class="title function_">sleep</span>(waitSeconds * <span class="number">1000</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">while</span> (!isServerUp &amp;&amp; --tryTimes &gt; <span class="number">0</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(pod[<span class="number">0</span>], <span class="string">&#x27;kill failed, skip.&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在 gitlab-ci 的最后一步执行此脚本：</p>
+<p><code>.gitlab-ci.yml</code>:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="attr">deploy-dev:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">release-dev</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./build.sh</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">NODE_ENV=development</span> <span class="string">SERVICE_NAME=some-name</span> <span class="string">npm_config_registry=http://private.registry.com</span> <span class="string">npx</span> <span class="string">restart-project-via-consul-script@latest</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="关于“解注册所有同名服务”与“注册自己”"><a href="#关于“解注册所有同名服务”与“注册自己”" class="headerlink" title="关于“解注册所有同名服务”与“注册自己”"></a>关于“解注册所有同名服务”与“注册自己”</h4><p>项目内部使用 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/consul">https://www.npmjs.com/package/consul</a> 来与 Consul 通信。</p>
+<p>需要“解注册所有同名服务”的原因：</p>
+<p>Consul 在注册服务时并没有类似“主键”的概念，一个 Consul 有多个 Agent，也就是说相同 ip、相同 id 的服务可能会在不同 Agent 上被注册多次，并且由于 pod 的 ip 是短暂的，每次重启 pod 获得的 ip 可能会有差异，因此如果不进行解注册就会导致从 Consul 上获得的服务与现实正在运行的不一致。</p>
+<p>流程：</p>
+<div id="flowchart-6" class="flow-chart"></div>
+
+<h3 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h3><p>优点：</p>
+<ol>
+<li>CI 过程全自动</li>
+<li>非线上环境 CD 全自动，线上环境CD手动指定版本，兼顾方便与安全</li>
+<li>无需配置远程机器权限</li>
+<li>支持多节点</li>
+<li>高可用性的重启</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>k8s 使用原始镜像启动 pod，拉取代码与安装依赖的过程非常耗时（每次启动都是全新镜像，无缓存）。</li>
+<li>CD 过程不确定性较多，存在代码文件服务器故障、依赖安装故障等风险。</li>
+</ol>
+<p>为什么会做成这个样子呢，因为我司的服务端使用 golang 是走的这一套流程，但是使用 golang 打包编译出的是一个二进制文件，镜像直接拉取就可以启动，不需要依赖安装等步骤。因此他们使用这种方式的缺点并不明显。但是对于 Nodejs 程序来说，这依然是一个较大缺陷。</p>
+<h2 id="Gitlab-与-k8s-结合的全自动版本-v3"><a href="#Gitlab-与-k8s-结合的全自动版本-v3" class="headerlink" title="Gitlab 与 k8s 结合的全自动版本 v3"></a>Gitlab 与 k8s 结合的全自动版本 v3</h2><p>为了解决上面的问题 1&#x2F;2，这个版本更改了代码部署到 k8s 的方式：使用完整的预构建镜像，而不是空白镜像。</p>
+<h3 id="流程图-5"><a href="#流程图-5" class="headerlink" title="流程图"></a>流程图</h3><div id="flowchart-7" class="flow-chart"></div>
+
+<h3 id="技术细节-3"><a href="#技术细节-3" class="headerlink" title="技术细节"></a>技术细节</h3><p><code>build.sh</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Process: 构建 Docker 镜像...&quot;</span></span><br><span class="line">docker build -t wohx-<span class="variable">$&#123;PROJECT_NAME&#125;</span>:<span class="variable">$&#123;COMMIT_SHA&#125;</span> .</span><br><span class="line">docker tag wohx-<span class="variable">$&#123;PROJECT_NAME&#125;</span>:<span class="variable">$&#123;COMMIT_SHA&#125;</span> private.registry.com/<span class="variable">$&#123;PROJECT_NAME&#125;</span>:<span class="variable">$&#123;COMMIT_SHA&#125;</span></span><br><span class="line">docker tag wohx-<span class="variable">$&#123;PROJECT_NAME&#125;</span>:<span class="variable">$&#123;COMMIT_SHA&#125;</span> private.registry.com/<span class="variable">$&#123;PROJECT_NAME&#125;</span>:<span class="variable">$&#123;BRANCH&#125;</span>-latest</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Process: 上传 Docker 镜像...&quot;</span></span><br><span class="line">docker push private.registry.com/<span class="variable">$&#123;PROJECT_NAME&#125;</span>:<span class="variable">$&#123;COMMIT_SHA&#125;</span></span><br><span class="line">docker push private.registry.com/<span class="variable">$&#123;PROJECT_NAME&#125;</span>:<span class="variable">$&#123;BRANCH&#125;</span>-latest</span><br></pre></td></tr></table></figure>
+
+<p><code>Dockerfile</code>:</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache --update nodejs nodejs-npm yarn</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> adduser -u 1000 -D app -h /data</span></span><br><span class="line"><span class="keyword">USER</span> app</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /data</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8000</span></span><br><span class="line"><span class="comment"># server 确保在 yarn.lock 与 package.json 没有改变的情况下，此层能被缓存</span></span><br><span class="line"><span class="comment"># frontend 的 node_modules 已在 .dockerignore 中忽略，无需关注</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mkdir</span> ./server &amp;&amp; <span class="built_in">mkdir</span> -p ./frontend/dist</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">chown</span>=app server/yarn.lock server/package.json ./server/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yarn --ignore-engines --cwd /data/server/</span></span><br><span class="line"><span class="comment"># 启动脚本</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">chown</span>=app ./start.sh ./</span></span><br><span class="line"><span class="comment"># server 源代码层</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">chown</span>=app ./server ./server/</span></span><br><span class="line"><span class="comment"># frontend dist 层</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">chown</span>=app ./frontend/dist ./frontend/dist</span></span><br><span class="line"><span class="comment"># entry</span></span><br><span class="line"><span class="comment"># CMD [ &quot;node&quot;, &quot;./server/server.js&quot; ]</span></span><br><span class="line"><span class="comment"># start.sh 允许 k8s 自定义启动逻辑</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [ <span class="string">&quot;sh&quot;</span>, <span class="string">&quot;/data/start.sh&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h3><p>优点：</p>
+<ol>
+<li>CI过程全自动</li>
+<li>非线上环境CD全自动，线上环境CD手动指定版本，兼顾方便与安全</li>
+<li>无需配置远程机器权限</li>
+<li>支持多节点</li>
+<li>高可用性的重启</li>
+<li>预构建的镜像，CD 阶段开箱即用，无任何依赖</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>为了使每个 pod 能够获得一个稳定的名称（用于在 Consul 中注册、解注册），部署类型使用了 Statefulset，因此带来了一些本来不需要的特性。<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.17.1/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地打包前端代码
+op2=>operation: 将：
+前端构建完毕的代码/服务端原始代码
+scp 或 sftp 命令上传到远程机器
+op3=>operation: ssh 登录远程机器
+op4=>operation: 解压缩到指定位置
+op5=>operation: 为服务端代码执行 npm install/yarn
+op6=>operation: pm2 restart/reload
+op7=>operation: 退出远程机器
+
+st->op1->op2->op3->op4->op5->op6->op7->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 通过 scp 将代码上传到远程机器
+op6=>operation: Gitlab 通过 ssh 登录上远程机器
+op7=>operation: Gitlab 在远程机器上执行 pm2 重启命令
+op8=>operation: Gitlab 退出远程机器
+cond1=>condition: 是否为发布分支？
+
+st(bottom)->op1(bottom)->op2(left)->op3(bottom)->cond1
+cond1(yes,right)->op4->op5->op6->op7->op8(left)->e
+cond1(no,bottom)->e</textarea><textarea id="flowchart-1-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script><textarea id="flowchart-2-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 更新文件服务器
+op6=>operation: 在 Agent 平台上点击发布
+op7=>operation: Agent 在指定机器上
+执行发布脚本：
+从文件服务器拉取最新代码，
+解压并执行重启命令
+op8=>operation: Agent 退出远程机器
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 立即发布？
+
+st->op1->op2->op3->cond1
+cond1(yes,bottom)->op4(bottom)->op5->cond2
+cond1(no,right)->e
+cond2(yes,bottom)->op6->op7->op8(right)->e
+cond2(no,right)->e</textarea><textarea id="flowchart-2-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-2-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-2-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-2", options);</script><textarea id="flowchart-3-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 更新文件服务器
+op6=>operation: 更改 k8s 相应配置
+使用指定 commit sha 发布
+op7=>operation: k8s 识别到配置更新
+重启指定服务
+op8=>operation: 向服务节点发送 kill 命令
+CI过程到此结束
+op9=>operation: k8s pod 收到命令，进程退出
+op10=>operation: k8s 自动重新拉起该 pod
+op11=>operation: pod 重新拉取名为 latest 的代码
+op15=>operation: pod 安装 nodejs 依赖
+op12=>operation: pod 启动 nodejs 进程
+完成重启
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 是否为线上发布分支？
+
+st->op1->op2->op3->cond1
+cond1(yes)->op4->op5->cond2
+cond1(no,right)->e
+cond2(yes,left)->op6->op7->e
+cond2(no,bottom)->op8->op9->op10->op11->op15->op12->e</textarea><textarea id="flowchart-3-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-3-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-3-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-3", options);</script><textarea id="flowchart-4-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op5=>operation: Gitlab 更新文件服务器
+op6=>operation: 更改 k8s 相应配置
+使用指定 commit sha 发布
+op7=>operation: k8s 识别到配置更新
+重启指定服务
+（滚动更新）
+op13=>operation: Gitlab 从 Consul 获取
+所有活着的节点
+op8=>operation: Gitlab 向服务节点列表
+逐个发送 kill 命令
+CI 过程到此结束
+op9=>operation: k8s pod 收到命令，进程退出
+op10=>operation: k8s 自动重新拉起该 pod
+op11=>operation: pod 重新拉取名为 latest 的代码
+op15=>operation: pod 安装 nodejs 依赖
+op14=>operation: pod 启动 nodejs 进程，并：
+以 pod name 为 id
+1. 从 Consul 解注册所有同名服务
+2. 向 Consul 注册自己
+op12=>operation: pod 完成重启
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 是否为线上发布分支？
+
+st->op1->op2->op3->cond1
+cond1(yes,bottom)->op4->op5->cond2
+cond1(no,right)->e
+cond2(yes,left)->op6->op7->e
+cond2(no,bottom)->op13->op8->op9->op10->op11->op15->op14->op12->e</textarea><textarea id="flowchart-4-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-4-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-4-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-4", options);</script><textarea id="flowchart-5-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 获取所有在 Consul 上注册了的节点
+op2=>operation: 从下标 0 开始
+循环发送 kill 指令
+op3=>operation: 等待并检测其重启完毕
+cond1=>condition: kill 指令返回成功？
+cond2=>condition: 检测成功且未超时？
+cond3=>condition: 该节点是最后一个？
+
+st->op1->op2->cond1
+cond1(no,right)->op2
+cond1(yes)->op3->cond2
+cond2(no,left)->op2
+cond2(yes)->cond3
+cond3(yes)->e
+cond3(no,right)->op2</textarea><textarea id="flowchart-5-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-5-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-5-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-5", options);</script><textarea id="flowchart-6-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 获取所有在 Consul 上注册了的节点
+op2=>operation: 找到所有同名服务
+op3=>operation: 从下标 0 开始，
+循环发送解注册请求
+op4=>operation: 向 Consul 注册自己
+cond1=>condition: 已全部解除？
+
+st->op1->op2->op3->cond1
+cond1(no)->op3
+cond1(yes)->op4->e</textarea><textarea id="flowchart-6-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-6-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-6-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-6", options);</script><textarea id="flowchart-7-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op1=>operation: 本地 git 代码提交
+op2=>operation: Gitlab 触发自动构建
+op3=>operation: Gitlab 执行代码测试
+op4=>operation: Gitlab 执行代码打包
+op15=>operation: Gitlab 根据 Dockerfile
+构建项目的完整镜像
+op16=>operation: Gitlab 将打好 tag 的
+镜像上传到私有云
+op6=>operation: 更改 k8s 相应配置
+使用指定 commit sha 发布
+op7=>operation: k8s 识别到配置更新
+重启指定服务
+（滚动更新）
+op13=>operation: Gitlab 从 Consul 获取
+所有活着的节点
+op8=>operation: Gitlab 向服务节点列表
+逐个发送 kill 命令
+CI 过程到此结束
+op9=>operation: k8s pod 收到命令，进程退出
+op10=>operation: k8s 使用已经构建完成的
+最新镜像自动重新拉起该 pod
+op14=>operation: pod 启动 nodejs 进程，并：
+以 pod name 为 id
+1. 从 Consul 解注册所有同名服务
+2. 向 Consul 注册自己
+op12=>operation: pod 完成重启
+cond1=>condition: 是否为发布分支？
+cond2=>condition: 是否为线上发布分支？
+
+st->op1->op2->op3->cond1
+cond1(yes,bottom)->op4->op15->op16->cond2
+cond1(no,right)->e
+cond2(yes,left)->op6->op7->e
+cond2(no,bottom)->op13->op8->op9->op10->op14->op12->e</textarea><textarea id="flowchart-7-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-7-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-7-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-7", options);</script></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2020/automatic-cd-from-shell-scripts-to-k8s/" title="自动化部署: 从脚本到 K8s">https://wxsm.space/2020/automatic-cd-from-shell-scripts-to-k8s/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/devops/" rel="tag"># devops</a>
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/cache-node-modules-in-github-actions/" rel="prev" title="Cache Yarn in Github Actions">
+                  <i class="fa fa-angle-left"></i> Cache Yarn in Github Actions
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/a-difficult-debug-note/" rel="next" title="记一次艰难的 Debug">
+                  记一次艰难的 Debug <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2020/automatic-cd-from-shell-scripts-to-k8s/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

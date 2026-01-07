@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="归档页就是一个包含站点所有已发布文章的列表页面，通常默认会根据发布时间来进行排序，然后可能会有一些分页排序页内搜索等功能。实现这个功能可以用Wordpress插件，当然也可以自己写代码，我一开始就是用了一款插件，觉得实现了功能还不错就没管它。后来想要做一些自定义的修改，比如插件是按月份分组然而我想改成年份，就稍微看了看它的代码。一看不得了，莫名地有一种总算见识到了什么叫又烂又臭的代码的感觉涌上心头">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WordPress 文章归档页面实现">
+<meta property="og:url" content="https://wxsm.space/2016/wordpress-archives-page-implementation/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="归档页就是一个包含站点所有已发布文章的列表页面，通常默认会根据发布时间来进行排序，然后可能会有一些分页排序页内搜索等功能。实现这个功能可以用Wordpress插件，当然也可以自己写代码，我一开始就是用了一款插件，觉得实现了功能还不错就没管它。后来想要做一些自定义的修改，比如插件是按月份分组然而我想改成年份，就稍微看了看它的代码。一看不得了，莫名地有一种总算见识到了什么叫又烂又臭的代码的感觉涌上心头">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-02-02T08:06:16.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.179Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="wordpress">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2016/wordpress-archives-page-implementation/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2016/wordpress-archives-page-implementation/","path":"2016/wordpress-archives-page-implementation/","title":"WordPress 文章归档页面实现"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>WordPress 文章归档页面实现 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%90%E6%A7%BD%E5%8C%BA"><span class="nav-number">1.</span> <span class="nav-text">吐槽区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B"><span class="nav-number">2.</span> <span class="nav-text">改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">使用方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/wordpress-archives-page-implementation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="WordPress 文章归档页面实现 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WordPress 文章归档页面实现
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-02 16:06:16" itemprop="dateCreated datePublished" datetime="2016-02-02T16:06:16+08:00">2016-02-02</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/wordpress-archives-page-implementation/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/wordpress-archives-page-implementation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>归档页就是一个包含站点所有已发布文章的列表页面，通常默认会根据发布时间来进行排序，然后可能会有一些分页排序页内搜索等功能。实现这个功能可以用Wordpress插件，当然也可以自己写代码，我一开始就是用了一款插件，觉得实现了功能还不错就没管它。后来想要做一些自定义的修改，比如插件是按月份分组然而我想改成年份，就稍微看了看它的代码。一看不得了，莫名地有一种总算见识到了什么叫又烂又臭的代码的感觉涌上心头，做了这么多年伸手党总算是被恶心到了，简直不能忍，于是琢磨着自己写一个简单的模板页，不用它了。</p>
+<span id="more"></span>
+
+<h2 id="吐槽区"><a href="#吐槽区" class="headerlink" title="吐槽区"></a>吐槽区</h2><p>首先来说说为什么这个插件的代码<strong>又烂又臭</strong>，在后面我再对它进行针对性的改进。哦对了它的名字叫<strong>Clean Archives Reloaded</strong>，作者叫<strong>Viper007Bond</strong>，来自美国俄勒冈州，没错就是点名批评，看来鬼佬的编码水平也不是普遍的高啊，这坨屎简直是开源界的耻辱。去到各搜索引擎搜索“Wordpress归档”关键字还有很多文章推荐使用该插件，看来大家都不太关心代码质量，只要能用就行。 该插件的主要设计思路如下：</p>
+<ol>
+<li>从WP数据库中抓取文章</li>
+<li>根据用户配置分组并排序</li>
+<li>组织并输出HTML到页面相关位置</li>
+</ol>
+<p>OK，就这么三步，实际上我们也只需要这么点东西。暂且不讨论步骤是否可以简化，我们先来看看它有着怎样的内心世界。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A direct query is used instead of get_posts() for memory reasons</span></span><br><span class="line"><span class="variable">$rawposts</span> = <span class="variable">$wpdb</span>-&gt;<span class="title function_ invoke__">get_results</span>( <span class="string">&quot;SELECT ID, post_date, post_date_gmt, comment_status, comment_count FROM <span class="subst">$wpdb</span>-&gt;posts WHERE post_status = &#x27;publish&#x27; AND post_type = &#x27;post&#x27; AND post_password = &#x27;&#x27;&quot;</span> );</span><br></pre></td></tr></table></figure>
+
+<p>这个是它的唯一一条SQL语句，可以看到作者为了给我们节省内存真是殚精竭力，本着够用就行的精神，放弃使用Wordpress自带的API，直接使用查询语句从数据库中查询出来了非常有限的一些字段。值得称赞。 按照插件的思路，紧接着就是分组啦：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Loop through each post and sort it into a structured array</span></span><br><span class="line"><span class="keyword">foreach</span>( <span class="variable">$rawposts</span> <span class="keyword">as</span> <span class="variable">$post</span> ) &#123;</span><br><span class="line">	<span class="variable">$posts</span>[ <span class="title function_ invoke__">mysql2date</span>( <span class="string">&#x27;Y.m&#x27;</span>, <span class="variable">$post</span>-&gt;post_date ) ][] = <span class="variable">$post</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$rawposts</span> = <span class="literal">null</span>; <span class="comment">// More memory cleanup</span></span><br></pre></td></tr></table></figure>
+
+<p>排序啦：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">( <span class="string">&#x27;new&#x27;</span> == <span class="variable">$atts</span>[<span class="string">&#x27;monthorder&#x27;</span>] ) ? <span class="title function_ invoke__">krsort</span>( <span class="variable">$posts</span> ) : <span class="title function_ invoke__">ksort</span>( <span class="variable">$posts</span> );</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sort the posts within each month based on $atts</span></span><br><span class="line"><span class="keyword">foreach</span>( <span class="variable">$posts</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$month</span> ) &#123;</span><br><span class="line">    <span class="variable">$sorter</span> = <span class="keyword">array</span>();</span><br><span class="line">    <span class="keyword">foreach</span> ( <span class="variable">$month</span> <span class="keyword">as</span> <span class="variable">$post</span> )</span><br><span class="line">        <span class="variable">$sorter</span>[] = <span class="variable">$post</span>-&gt;post_date_gmt;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sortorder</span> = ( <span class="string">&#x27;new&#x27;</span> == <span class="variable">$atts</span>[<span class="string">&#x27;postorder&#x27;</span>] ) ? SORT_DESC : SORT_ASC;</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">array_multisort</span>( <span class="variable">$sorter</span>, <span class="variable">$sortorder</span>, <span class="variable">$month</span> );</span><br><span class="line"></span><br><span class="line">    <span class="variable">$posts</span>[<span class="variable">$key</span>] = <span class="variable">$month</span>;</span><br><span class="line">    <span class="keyword">unset</span>(<span class="variable">$month</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分组的思路就是根据一篇文章的年以及月来将原本的一维数组重新组织到一个新的二维数组中去，以方便后面的循环。排序有点复杂，首先大局上它是能够根据配置按月份从新到旧或者反方向的排序，然后在每个月份里面也能够根据配置从新到旧或者反方向的排序，这个设定简直蛋疼，谁这么无聊正着排一遍在里面反着又排一遍，即折磨自己又折磨读者，不过存在即合理，这里也不说它。**我想吐槽的是，既然你都把SQL写出来了，你也知道至少要排一次序了，又何必费尽周章在查出来以后排呢，我们直接在SQL里面排不比这一大串代码优雅吗？不快速吗？不节省内存吗？此外，这个分组也是萌萌哒，我们就不能在SQL里面先把组给分好吗，非要写个循环来调用 **<code>mysql2date</code>，这样真的好吗？当然如果作者没有学过 <code>ORDER BY</code>，也不知道SQL都有各自的内置日期函数，这些也就算了。我们接着往下看。 接下来的步骤是组织HTML：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Generate the HTML</span></span><br><span class="line"><span class="variable">$html</span> = <span class="string">&#x27;&lt;div class=&quot;car-container&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span> ( <span class="number">1</span> == <span class="variable">$atts</span>[<span class="string">&#x27;usejs&#x27;</span>] ) <span class="variable">$html</span> .= <span class="string">&#x27; car-collapse&#x27;</span>;</span><br><span class="line"><span class="variable">$html</span> .= <span class="string">&#x27;&quot;&gt;&#x27;</span>. <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 此处省略n行</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$html</span> .= <span class="string">&quot;&lt;/ul&gt;\n&lt;/div&gt;\n&quot;</span>;</span><br><span class="line"><span class="keyword">return</span> <span class="variable">$html</span>;</span><br></pre></td></tr></table></figure>
+
+<p>看到这里我已经瞎了。。。尤其是高亮的那一行。。。省略的N行中充斥着的都是如此的代码。它还不止有 <code>. &quot;\n&quot;</code> 之流，在省略的内容中甚至连HTML的编码器缩进作者都保留得很好很好。WTF？？这TM都是些什么鬼？？作者的这些杠N和缩进是写给鬼看的吗？？？字符串拼凑各种内容这种事我自己不懂事的时候也干过不少也就不说了，但这作者这一种原汁原味的拼法真是我有屎以来见过的最特立独行的行为艺术。</p>
+<p>让我们接着来看生成HTML之中的一部分核心代码。显然其中会有一些循环用来生成列表，并且在每个内层循环之前应该输出一个标题之类的东西用来指示以下的内容属于哪一年哪一个月。代码如下：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$firstmonth</span> = <span class="literal">TRUE</span>;</span><br><span class="line"><span class="keyword">foreach</span>( <span class="variable">$posts</span> <span class="keyword">as</span> <span class="variable">$yearmonth</span> =&gt; <span class="variable">$posts</span> ) &#123;</span><br><span class="line">    <span class="keyword">list</span>( <span class="variable">$year</span>, <span class="variable">$month</span> ) = <span class="title function_ invoke__">explode</span>( <span class="string">&#x27;.&#x27;</span>, <span class="variable">$yearmonth</span> );</span><br><span class="line"></span><br><span class="line">    <span class="variable">$firstpost</span> = <span class="literal">TRUE</span>;</span><br><span class="line">    <span class="keyword">foreach</span>( <span class="variable">$posts</span> <span class="keyword">as</span> <span class="variable">$post</span> ) &#123;</span><br><span class="line">        <span class="keyword">if</span> ( <span class="literal">TRUE</span> == <span class="variable">$firstpost</span> ) &#123;</span><br><span class="line">            <span class="variable">$html</span> .= <span class="string">&#x27;	&lt;li&gt;&lt;span class=&quot;car-yearmonth&quot;&gt;&#x27;</span> . <span class="title function_ invoke__">sprintf</span>( <span class="title function_ invoke__">__</span>(<span class="string">&#x27;%1$s %2$d&#x27;</span>), <span class="variable">$wp_locale</span>-&gt;<span class="title function_ invoke__">get_month</span>(<span class="variable">$month</span>), <span class="variable">$year</span> );</span><br><span class="line">            <span class="keyword">if</span> ( <span class="string">&#x27;0&#x27;</span> != <span class="variable">$atts</span>[<span class="string">&#x27;postcount&#x27;</span>] ) <span class="variable">$html</span> .= <span class="string">&#x27; &lt;span title=&quot;&#x27;</span> . <span class="title function_ invoke__">__</span>(<span class="string">&#x27;Post Count&#x27;</span>, <span class="string">&#x27;clean-archives-reloaded&#x27;</span>) . <span class="string">&#x27;&quot;&gt;(&#x27;</span> . <span class="title function_ invoke__">count</span>(<span class="variable">$posts</span>) . <span class="string">&#x27;)&lt;/span&gt;&#x27;</span>;</span><br><span class="line">            <span class="variable">$html</span> .= <span class="string">&quot;&lt;/span&gt;\n		&lt;ul class=&#x27;car-monthlisting&#x27;&gt;\n&quot;</span>;</span><br><span class="line">            <span class="variable">$firstpost</span> = <span class="literal">FALSE</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&#x27;			&lt;li&gt;&#x27;</span> .  <span class="title function_ invoke__">mysql2date</span>( <span class="string">&#x27;d&#x27;</span>, <span class="variable">$post</span>-&gt;post_date ) . <span class="string">&#x27;: &lt;a href=&quot;&#x27;</span> . <span class="title function_ invoke__">get_permalink</span>( <span class="variable">$post</span>-&gt;ID ) . <span class="string">&#x27;&quot;&gt;&#x27;</span> . <span class="title function_ invoke__">get_the_title</span>( <span class="variable">$post</span>-&gt;ID ) . <span class="string">&#x27;&lt;/a&gt;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Unless comments are closed and there are no comments, show the comment count</span></span><br><span class="line">        <span class="keyword">if</span> ( <span class="string">&#x27;0&#x27;</span> != <span class="variable">$atts</span>[<span class="string">&#x27;commentcount&#x27;</span>] &amp;&amp; ( <span class="number">0</span> != <span class="variable">$post</span>-&gt;comment_count || <span class="string">&#x27;closed&#x27;</span> != <span class="variable">$post</span>-&gt;comment_status ) )</span><br><span class="line">            <span class="variable">$html</span> .= <span class="string">&#x27; &lt;span title=&quot;&#x27;</span> . <span class="title function_ invoke__">__</span>(<span class="string">&#x27;Comment Count&#x27;</span>, <span class="string">&#x27;clean-archives-reloaded&#x27;</span>) . <span class="string">&#x27;&quot;&gt;(&#x27;</span> . <span class="variable">$post</span>-&gt;comment_count . <span class="string">&#x27;)&lt;/span&gt;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&quot;&lt;/li&gt;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$html</span> .= <span class="string">&quot;		&lt;/ul&gt;\n	&lt;/li&gt;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第5-12行代码，第一眼看到的时候马上就能闻到一股弱者的气息。<strong>作者想要在循环开始之前先输出一个列表标题，所以想到了一个使用标志位的办法，但是我们明明可以直接在循环前面做这件事的，根本不需要这个萌萌哒标志位。</strong></p>
+<p>还有第14行。作者明明一直在标榜自己是如何节省时间节省内存的，结果在这里却使用了内置函数 <code>get_the_title</code> 以及 <code>get_permalink</code>，后者很正常，因为 wordpress 的文章链接是可以改变的，不能直接写死，必须查，那前者这个函数是做什么的呢？很明显，根据一篇文章的 ID 来获取它的标题。要如何根据 ID 来获取标题呢，我们能用算法算出来吗？显然不能，这里面显然需要一次数据库查询，至少也是一次缓存查询，而且它这个函数写在循环里面，我的天，这里面是多少条 SQL，你直接在一开始把 Title 也给查出来不就万事大吉了吗。。。</p>
+<p>插件的核心功能大概就到此为止，为了实现让用户可以点击收起与展开每个内层列表的功能，作者还添加了一些 JavaScript 代码，就不吐槽了吧，我已经好累了。</p>
+<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>赶紧把这插件删了，删个干净，然后我们来改代码。因为我并不需要配置什么什么的，也不需要什么JS，怎么个分组怎么个排序的需求很明确，所以直接 HARD CODE。原插件还有一个缓存查询出来的数据的功能，由于我已经用了更强大的缓存，直接将动态页面缓存成纯 HTML，所以也不需要。以上内容通通砍掉，核心代码就很简单了。 首先是 SQL 查询：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">global</span> <span class="variable">$wpdb</span>;</span><br><span class="line"><span class="variable">$rawposts</span> = <span class="variable">$wpdb</span>-&gt;<span class="title function_ invoke__">get_results</span>(<span class="string">&quot;SELECT ID, year(post_date) as post_year, post_date, post_date_gmt, post_title FROM <span class="subst">$wpdb</span>-&gt;posts WHERE post_status = &#x27;publish&#x27; AND post_type = &#x27;post&#x27; AND post_password = &#x27;&#x27; order by post_date_gmt desc&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里按照发布时间降序排序，为什么要用GMT时间而不直接用本地时间呢，我猜可能是为了防止我在这边发了一篇文章然后马上飞到美国又发一篇，可能会乱套吧，反正这么写更严谨，虽然不太可能发生。然后除了多选择一个post_title字段以外，还使用MySQL的一个内置函数选择了这篇文章发布时的年度，这样就不用在分组的时候使用N多遍 <code>mysql2date</code> 函数了。节省了大量步骤。 然后是分组：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">foreach</span> (<span class="variable">$rawposts</span> <span class="keyword">as</span> <span class="variable">$post</span>) &#123;</span><br><span class="line">    <span class="variable">$posts</span>[<span class="variable">$post</span>-&gt;post_year][] = <span class="variable">$post</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$rawposts</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<p>然后是HTML部分：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$html</span> = <span class="string">&#x27;&lt;div class=&quot;archives-container&quot;&gt;&lt;ul class=&quot;archives-list&quot;&gt;&#x27;</span>;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$posts</span> <span class="keyword">as</span> <span class="variable">$year</span> =&gt; <span class="variable">$posts_yearly</span>) &#123;</span><br><span class="line">    <span class="variable">$html</span> .= <span class="string">&#x27;&lt;li&gt;&lt;div class=&quot;archives-year&quot;&gt;&#x27;</span> . <span class="variable">$year</span> . <span class="string">&#x27;年&lt;/div&gt;&lt;ul class=&quot;archives-sublist&quot;&gt;&#x27;</span>;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$posts_yearly</span> <span class="keyword">as</span> <span class="variable">$post</span>) &#123;</span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&#x27;&lt;li&gt;&#x27;</span>;</span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&#x27;&lt;time datetime=&quot;&#x27;</span> . <span class="variable">$post</span>-&gt;post_date . <span class="string">&#x27;&quot;&gt;&#x27;</span> . <span class="title function_ invoke__">mysql2date</span>(<span class="string">&#x27;m月d日 D&#x27;</span>, <span class="variable">$post</span>-&gt;post_date, <span class="literal">true</span>) . <span class="string">&#x27;&lt;/time&gt;&#x27;</span>;</span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&#x27;&lt;a href=&quot;&#x27;</span> . <span class="title function_ invoke__">get_permalink</span>(<span class="variable">$post</span>-&gt;ID) . <span class="string">&#x27;&quot;&gt;&#x27;</span> . <span class="variable">$post</span>-&gt;post_title . <span class="string">&#x27;&lt;/a&gt;&#x27;</span>;</span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&quot;&lt;/li&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$html</span> .= <span class="string">&quot;&lt;/ul&gt;&lt;/li&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$html</span> .= <span class="string">&quot;&lt;/ul&gt;&lt;/div&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">return</span> <span class="variable">$html</span>;</span><br></pre></td></tr></table></figure>
+
+<p>两个字：简洁。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>我们复制一份主题目录下的 <code>page.php</code> 文件，然后重命名为 <code>template-archives.php</code>，主要是给它加上以上的代码并且调用之。 对于我正在使用的主题来说，文件内容如下：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Template Name: archives</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_PostList</span>(<span class="params"><span class="variable">$atts</span> = <span class="keyword">array</span>(<span class="params"></span>)</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> <span class="variable">$wpdb</span>;</span><br><span class="line">    <span class="variable">$rawposts</span> = <span class="variable">$wpdb</span>-&gt;<span class="title function_ invoke__">get_results</span>(<span class="string">&quot;SELECT ID, year(post_date) as post_year, post_date, post_title FROM <span class="subst">$wpdb</span>-&gt;posts WHERE post_status = &#x27;publish&#x27; AND post_type = &#x27;post&#x27; AND post_password = &#x27;&#x27; order by post_date desc&quot;</span>);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$rawposts</span> <span class="keyword">as</span> <span class="variable">$post</span>) &#123;</span><br><span class="line">        <span class="variable">$posts</span>[<span class="variable">$post</span>-&gt;post_year][] = <span class="variable">$post</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$rawposts</span> = <span class="literal">null</span>;</span><br><span class="line">    <span class="variable">$html</span> = <span class="string">&#x27;&lt;div class=&quot;archives-container&quot;&gt;&lt;ul class=&quot;archives-list&quot;&gt;&#x27;</span>;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$posts</span> <span class="keyword">as</span> <span class="variable">$year</span> =&gt; <span class="variable">$posts_yearly</span>) &#123;</span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&#x27;&lt;li&gt;&lt;div class=&quot;archives-year&quot;&gt;&#x27;</span> . <span class="variable">$year</span> . <span class="string">&#x27;年&lt;/div&gt;&lt;ul class=&quot;archives-sublist&quot;&gt;&#x27;</span>;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$posts_yearly</span> <span class="keyword">as</span> <span class="variable">$post</span>) &#123;</span><br><span class="line">            <span class="variable">$html</span> .= <span class="string">&#x27;&lt;li&gt;&#x27;</span>;</span><br><span class="line">            <span class="variable">$html</span> .= <span class="string">&#x27;&lt;time datetime=&quot;&#x27;</span> . <span class="variable">$post</span>-&gt;post_date . <span class="string">&#x27;&quot;&gt;&#x27;</span> . <span class="title function_ invoke__">mysql2date</span>(<span class="string">&#x27;m月d日 D&#x27;</span>, <span class="variable">$post</span>-&gt;post_date, <span class="literal">true</span>) . <span class="string">&#x27;&lt;/time&gt;&#x27;</span>;</span><br><span class="line">            <span class="variable">$html</span> .= <span class="string">&#x27;&lt;a href=&quot;&#x27;</span> . <span class="title function_ invoke__">get_permalink</span>(<span class="variable">$post</span>-&gt;ID) . <span class="string">&#x27;&quot;&gt;&#x27;</span> . <span class="variable">$post</span>-&gt;post_title . <span class="string">&#x27;&lt;/a&gt;&#x27;</span>;</span><br><span class="line">            <span class="variable">$html</span> .= <span class="string">&quot;&lt;/li&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$html</span> .= <span class="string">&quot;&lt;/ul&gt;&lt;/li&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$html</span> .= <span class="string">&quot;&lt;/ul&gt;&lt;/div&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$html</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_PostCount</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$num_posts</span> = <span class="title function_ invoke__">wp_count_posts</span>(<span class="string">&#x27;post&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">number_format_i18n</span>(<span class="variable">$num_posts</span>-&gt;publish);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">get_header</span>(); <span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line">    &lt;div id=<span class="string">&quot;primary&quot;</span> <span class="class"><span class="keyword">class</span>=&quot;<span class="title">content</span>-<span class="title">area</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">main</span> <span class="title">id</span>=&quot;<span class="title">main</span>&quot; <span class="title">class</span>=&quot;<span class="title">site</span>-<span class="title">main</span>&quot; <span class="title">role</span>=&quot;<span class="title">main</span>&quot;&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">            &lt;<span class="title">article</span> &lt;?<span class="title">php</span> <span class="title">post_class</span>(); ?&gt;&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">header</span> <span class="title">class</span>=&quot;<span class="title">entry</span>-<span class="title">header</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">h1</span> <span class="title">class</span>=&quot;<span class="title">entry</span>-<span class="title">title</span>&quot;&gt;&lt;?<span class="title">php</span> <span class="title">the_title</span>(); ?&gt;&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">header</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;!-- .<span class="title">entry</span>-<span class="title">header</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">                &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">entry</span>-<span class="title">content</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                    &lt;?<span class="title">php</span></span></span><br><span class="line"><span class="class">                    <span class="title">echo</span> <span class="title">_PostList</span>();</span></span><br><span class="line"><span class="class">                    ?&gt;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;!-- .<span class="title">entry</span>-<span class="title">content</span> --&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">article</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;!-- #<span class="title">post</span>-## --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        &lt;/<span class="title">main</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;!-- #<span class="title">main</span> --&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;!-- #<span class="title">primary</span> --&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;?<span class="title">php</span> <span class="title">get_sidebar</span>(); ?&gt;</span></span><br><span class="line"><span class="class">&lt;?<span class="title">php</span> <span class="title">get_footer</span>(); ?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后我们把它上传到主机的主题目录下，来到wordpress管理控制台新建一个page，模板选择 <code>archives</code>，什么也不用输入（可以加个标题），保存，就可以看到效果了。当然这里没有涉及到CSS样式，可以在主题的 <code>style.css</code> 中自定义，也可以直接写在 <code>template-archives.php</code> 内，爱写哪写哪。本站使用的CSS如下所示：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.archives-year</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#777</span>;</span><br><span class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#e8e8e8</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">40px</span> <span class="number">0</span> <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">7px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.archives-list</span> &#123;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">20px</span> <span class="number">0</span><span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.archives-sublist</span> &#123;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">90%</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">0</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.archives-sublist</span> <span class="selector-tag">li</span> <span class="selector-tag">time</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#777</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">140px</span>;</span><br><span class="line">    <span class="attribute">min-width</span>: <span class="number">140px</span>;</span><br><span class="line">    <span class="attribute">max-width</span>: <span class="number">140px</span>;</span><br><span class="line">    <span class="attribute">display</span>: table-cell;</span><br><span class="line">    <span class="attribute">vertical-align</span>: top;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.archives-sublist</span> <span class="selector-tag">li</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: table-cell;</span><br><span class="line">    <span class="attribute">vertical-align</span>: top;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://anubarak.com/archives/">点此查看实际效果</a> （可能因为网站更新而不符合）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2016/wordpress-archives-page-implementation/" title="WordPress 文章归档页面实现">https://wxsm.space/2016/wordpress-archives-page-implementation/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+              <a href="/tags/wordpress/" rel="tag"># wordpress</a>
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/angular-router-note/" rel="prev" title="Angular Router 学习笔记">
+                  <i class="fa fa-angle-left"></i> Angular Router 学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/using-idea-to-config-ftp-auto-deployment/" rel="next" title="使用 IDEA 配置自动同步到FTP服务器">
+                  使用 IDEA 配置自动同步到FTP服务器 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2016/wordpress-archives-page-implementation/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

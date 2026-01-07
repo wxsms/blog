@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="5 月份休完陪产假，再回到公司，发现原本的小组已经整体重组，只有我一人还在工位上了。后来跟 TL 聊了一下，最后反正就是几个选项，要么跟着原来的同事一起去新的部门继续写前端，要么就做点别的事情。 当时我还是挺头疼的，主要是那会事情太多了，一是小满还在月子里，二是新房子还在装修，三是那段时间身体状态有一点波动（其实主要可能还是因为这个）。继续搞前端肯定是最稳的，但是我自己其实已经有点厌倦了，属于是看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务端开发一月记">
+<meta property="og:url" content="https://wxsm.space/2023/1-month-of-backend-dev/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="5 月份休完陪产假，再回到公司，发现原本的小组已经整体重组，只有我一人还在工位上了。后来跟 TL 聊了一下，最后反正就是几个选项，要么跟着原来的同事一起去新的部门继续写前端，要么就做点别的事情。 当时我还是挺头疼的，主要是那会事情太多了，一是小满还在月子里，二是新房子还在装修，三是那段时间身体状态有一点波动（其实主要可能还是因为这个）。继续搞前端肯定是最稳的，但是我自己其实已经有点厌倦了，属于是看">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-21T08:23:19.000Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.144Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="go">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/2023/1-month-of-backend-dev/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wxsm.space/2023/1-month-of-backend-dev/","path":"2023/1-month-of-backend-dev/","title":"服务端开发一月记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>服务端开发一月记 | wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="nav-number">1.</span> <span class="nav-text">技术栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">学习方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E4%BD%93%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">开发体验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">我的工作</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2023/1-month-of-backend-dev/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="服务端开发一月记 | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          服务端开发一月记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-21 16:23:19" itemprop="dateCreated datePublished" datetime="2023-07-21T16:23:19+08:00">2023-07-21</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2023/1-month-of-backend-dev/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2023/1-month-of-backend-dev/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>5 月份休完陪产假，再回到公司，发现原本的小组已经整体重组，只有我一人还在工位上了。后来跟 TL 聊了一下，最后反正就是几个选项，要么跟着原来的同事一起去新的部门继续写前端，要么就做点别的事情。</p>
+<p>当时我还是挺头疼的，主要是那会事情太多了，一是小满还在月子里，二是新房子还在装修，三是那段时间身体状态有一点波动（其实主要可能还是因为这个）。继续搞前端肯定是最稳的，但是我自己其实已经有点厌倦了，属于是看到前端代码就已经有点不耐烦的程度。但是对前端以外的东西又还是很感兴趣，偶尔自己写点非前端的玩意都会感到很愉快。犹豫再三，也是跟朋友家人都聊了一下，最后选择了转成服务端开发。（其实当时还有一个可能是 C++ 客户端的方向，但是因为太过陌生，加上前面说的那些现实情况，实在是有点绷不住）</p>
+<p>其实我在刚毕业那会做过一段时间（半年左右？）的 Java 开发，但是那段时间基本上来说还是处于比较懵的状态，也没学到什么东西，加上后来很快就转型（基本上）全职前端，Java 服务端就荒废了。现在也算是一个从头来过。</p>
+<p>到现在 7 月份，大概算下来时间过去一个多月了，也简单说下转型后的感想。</p>
+<span id="more"></span>
+
+<h2 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h2><p>小组主要使用的语言大概是 Go 和 Python。Web 服务来说是 Go 居多，但是由于是在一个跟 AI 业务相关的小组，所以 Python 服务也不少。这一个多月下来 Go 的工作量大概占八成，python 二成的样子。</p>
+<p>至于别的目前暂时就还没有接触太多，也只是粗略了解了一下业务项目的整个开发发布流程以及链条上的各种工具，还没有来得及深入学习。</p>
+<h2 id="学习方式"><a href="#学习方式" class="headerlink" title="学习方式"></a>学习方式</h2><p>我大概在两年前的时候找同事借过一门视频课，学过一次 go 语言（算是入门）。但是到了要用的时候，年久失修，感觉大部分都已经还给老师了。周围同事朋友问了一圈，有个同事推荐了一个网站的课程，看了下各种知识的覆盖面还算可以，也没想太多，就花了四位数充了个年会（这大概是我毕业后对自己最大的一笔投资）。</p>
+<p>充值后我就马不停蹄地开始学 Tony Bai 老师的《Go 语言第一课》，说实话这门课确实写得很好，绝对的物超所值。学习的过程中新的需求也很快就安排到了我这里来，我基本是在边学边做的情况下学完了这门课。Go 语言这门课一个星期差不多就肝完了。学完了 Go 语言后，我就打算根据工作需要，按部就班地把所有基本知识都过一遍，包括数据库、消息队列、缓存，等等。由于工作并不空闲，下班后也经常要带娃或者游戏肝日常，每天如果能学个一两章、两三章，我觉得也是不错的。</p>
+<p>当然我毕竟因为花了四位数的钱，我必须对得起这笔开销。于是在学完这门课程后，就用刚学的 Go 语言写了一个命令行工具，它可以帮我把一门课程完整地下载到本地（包括文字里的图片！）并保存为 Markdown 格式，这样我就可以不用受年费会员的时间限制，提前下载好所有感兴趣的课程，无限期地学习了。项目地址<a target="_blank" rel="noopener" href="https://github.com/wxsms/geekbang-downloader">在这里</a>（当然，这不是一个盗版工具，要使用它的前提是使用者有年会帐号）。</p>
+<h2 id="开发体验"><a href="#开发体验" class="headerlink" title="开发体验"></a>开发体验</h2><p>以下内容为练习时间一个半月的菜鸟程序员的一家之言。先说结论：Go 语言的开发体验明显优于 JavaScript，但服务端开发的心智模型远比前端复杂，并不是一句 CRUD 可以概括的。</p>
+<p>为什么说体验明显优于 JavaScript 呢，首先毫无疑问 JS 是一门历史包袱很重的语言，即使发展到今天已经做了很多优化，但依然属于是带着脚镣跳舞，没有办法随心所欲。但 Go 不一样，它比较新。另外 Go 语言的哲学是“简单”，这种哲学内涵也体现在它语言设计的方方面面。举几个例子：</p>
+<ol>
+<li>首先 Go 是强类型，你可能会说 TypeScript 也是强类型，但 TS 的类型体操太复杂了，Go 语言的强类型跟它相比属于是非常简单的那种，首先这一点就能够给开发体验带来质的飞跃</li>
+<li>包含了很多 JavaScript 的优点，比如闭包、第一公民函数、值类型&amp;引用类型</li>
+<li>也包含了一些 TypeScript 的优点，比如类型自动推断，类型后置</li>
+<li>文件夹即包，同包内不需要写 import，跨包不需要写 export，大写属性即默认 export</li>
+<li>没有 class，没有继承，只有 ducktype</li>
+<li>……</li>
+</ol>
+<p>至于为什么说心智模型复杂呢，主要还是在多线程处理这件事情上。</p>
+<p>前端这个领域（包括 Node.js 等一系列 JS runtime），再复杂的模块也是单个线程，代码都是线性执行的，不存在资源抢占。浏览器就不用说了，即使是 Node.js 中也没有“锁”的概念（主要是指线程锁）。Node.js 最多就是开个 Cluster 模式，多启动几个线程占满 CPU，但是每个线程之间都是独立的，完全没有交集。所以写 JS 代码的时候完全不用考虑资源抢占，一路莽到底。</p>
+<p>（不过话说回来我也是现在才意识到 Node.js 到底有多牛：这家伙居然能用一条线程实现那么高的吞吐量！）</p>
+<p>但是 Go 不一样：包括 Go 在内的众多服务端技术，它们有多线程（在 Go 中则是线程更轻量级的“协程 goroutine”）。任何一个变量，哪怕是一个 int，一个 bool，只要涉及到多线程读写，就会有问题。要么传统方案“加锁”，要么使用 Go 独有的 channel 方式。总之就是绕不开这个话题。</p>
+<p>另外说到 channel，相比“锁”，这确实是一种很有意思的设计，也给 Go 语言增加了一些趣味。将本来复杂且易错的“锁”替换成了另一种更为直观的心智模型。这也算是一种强大的体验优化。</p>
+<p>至于 Python 的体验，感觉跟写 Node.js 大差不差，以及大家永远都在吐槽的性能问题，这个就没什么好说的。</p>
+<h2 id="我的工作"><a href="#我的工作" class="headerlink" title="我的工作"></a>我的工作</h2><p>由于我所在的小组不是重业务组，属于是 AI 研究团队，工作更多是各类配合 AI 同学的基础设施建设和维护，当然也会有一部分 AI 相关的业务。所以到现在为止我甚至还没写过正经的 CRUD。</p>
+<p>目前接手过的工作，比如说从零开始开发某个微服务项目（Go 或 Python）并部署上线，配置网关和 K8S，开发一些实用脚本，给某个 Web 服务添加一些功能，维护某个内部使用的数据工具，以及开发它的 Go 语言版 sdk等。比较杂。有时候新的工作来了，当我没有理解它要怎么做的时候也会比较焦虑（毕竟转行）。但是在这些过程中，我还是比较快乐的，包括编码的过程都很快乐。我有很强的动力去重构我写的或者前人写的代码，可能会在不断的删代码写代码、删代码写代码循环中度过好几天，并在这过程中从各个方面反复地体验一门新语言的设计艺术，试图寻找一件事情最最优雅的解决方案。这跟两个月前写前端的时候完全不一样。感觉我又回到了大三大四那段学习前端技术的时间的充满热情、废寝忘食的状态。</p>
+<p>总的来说，我还是喜欢编码这件事情的。在一个方向上呆久了可能会有点腻，但对于编码本身的兴趣目前来说依然没有任何变化。很高兴我有勇气做出了这个转行的决定，希望两年后可以成长为一个不那么菜的后端工程师，顺便多赚点钱。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="wxsm 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="wxsm 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>wxsm
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://wxsm.space/2023/1-month-of-backend-dev/" title="服务端开发一月记">https://wxsm.space/2023/1-month-of-backend-dev/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/go/" rel="tag"># go</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/xiao-man/" rel="prev" title="小满">
+                  <i class="fa fa-angle-left"></i> 小满
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/go-pprof-note/" rel="next" title="Go 语言性能调试与分析工具：pprof 用法简介">
+                  Go 语言性能调试与分析工具：pprof 用法简介 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/2023/1-month-of-backend-dev/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta name="description" content="我九零后码农一枚。在珠海上学，在珠海打工。 JetBrains 系列产品忠实用户。 克罗恩病患者，详见这篇文章。 这个网站这个网站主要用作我的个人文章记录，比如一些技术文章、生活随想或日常琐事。 写文章&#x2F;博客的习惯已经很多年了，但是小时候写的文章，现在感觉很多都已经不再适合拿出来看，因此这里保留的大概是从上大学以后写的文章。 网站程序开源：https:&#x2F;&#x2F;github.com&#x2F;wxsms">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于">
+<meta property="og:url" content="https://wxsm.space/about/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:description" content="我九零后码农一枚。在珠海上学，在珠海打工。 JetBrains 系列产品忠实用户。 克罗恩病患者，详见这篇文章。 这个网站这个网站主要用作我的个人文章记录，比如一些技术文章、生活随想或日常琐事。 写文章&#x2F;博客的习惯已经很多年了，但是小时候写的文章，现在感觉很多都已经不再适合拿出来看，因此这里保留的大概是从上大学以后写的文章。 网站程序开源：https:&#x2F;&#x2F;github.com&#x2F;wxsms">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/geekbang-downloader">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/vite-plugin-libcss">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/bilibili-video2mp3">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/food-diary">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/vuepress-theme-mini">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/vue-md-loader">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green">
+<meta property="og:image" content="https://badgen.net/github/stars/uiv-lib/uiv">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/daily-signer">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/zhihu-spider">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/zh-bus-realtime">
+<meta property="og:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey">
+<meta property="og:image" content="https://badgen.net/github/stars/wxsms/jquery-2048">
+<meta property="article:published_time" content="2026-01-07T09:32:51.196Z">
+<meta property="article:modified_time" content="2026-01-07T09:32:51.196Z">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="blog,javascript,nodejs,vue,react,php,python,golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green">
+
+
+<link rel="canonical" href="https://wxsm.space/about/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"https://wxsm.space/about/index.html","path":"about/index.html","title":"关于"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>关于 | wxsm's pace
+</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wxsm's pace</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">关于
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="我"><a href="#我" class="headerlink" title="我"></a>我</h2><p>九零后码农一枚。在珠海上学，在珠海打工。</p>
+<p>JetBrains 系列产品忠实用户。</p>
+<p>克罗恩病患者，详见<a href="/2019/my-crohns-disease-and-treatment-records/" title="克罗恩病患病与治疗记录">这篇文章</a>。</p>
+<h2 id="这个网站"><a href="#这个网站" class="headerlink" title="这个网站"></a>这个网站</h2><p>这个网站主要用作我的个人文章记录，比如一些技术文章、生活随想或日常琐事。</p>
+<p>写文章&#x2F;博客的习惯已经很多年了，但是小时候写的文章，现在感觉很多都已经不再适合拿出来看，因此这里保留的大概是从上大学以后写的文章。</p>
+<p>网站程序开源：<a target="_blank" rel="noopener" href="https://github.com/wxsms/blog">https://github.com/wxsms/blog</a>，托管在 GitHub Pages。CDN 使用的是 CloudFlare 的免费版本。</p>
+<h2 id="我的一些开源项目"><a href="#我的一些开源项目" class="headerlink" title="我的一些开源项目"></a>我的一些开源项目</h2><div class="note info"><p>按开发时间倒序排列。</p>
+</div>
+
+<table>
+<thead>
+<tr>
+<th align="center">项目名</th>
+<th align="center">GitHub</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">geekbang-downloader</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/geekbang-downloader">wxsms&#x2F;geekbang-downloader</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green"> <img src="https://badgen.net/github/stars/wxsms/geekbang-downloader"></td>
+<td>一款用 Go 语言编写的极客时间图文课程下载器，支持将课程作为 markdown 下载到本地（包括图片）。</td>
+</tr>
+<tr>
+<td align="center">vite-plugin-libcss</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/vite-plugin-libcss">wxsms&#x2F;vite-plugin-libcss</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green"> <img src="https://badgen.net/github/stars/wxsms/vite-plugin-libcss"></td>
+<td>一个 Vite 插件，可以在 lib 模式下将 css 插入到 js 文件中去。</td>
+</tr>
+<tr>
+<td align="center">bv2mp3</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/bilibili-video2mp3">wxsms&#x2F;bilibili-video2mp3</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green"> <img src="https://badgen.net/github/stars/wxsms/bilibili-video2mp3"></td>
+<td>一款基于 Node.js 的 bilibili 视频下载器，并且可以利用 ffmpeg 将下载的视频自动转为 mp3。详见<a href="/2023/bv2mp3/" title="做了一个 b 站视频下载与 mp3 转换工具">这篇博文</a>。</td>
+</tr>
+<tr>
+<td align="center">IBD 日记</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/food-diary">wxsms&#x2F;food-diary</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey"> <img src="https://badgen.net/github/stars/wxsms/food-diary"></td>
+<td>一个微信小程序，可以帮助 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Inflammatory_bowel_disease">IBD</a> 病人记录每日饮食、状况与用药记录。最多的时候一天大概有五六十个独立用户。遗憾的是微信在几年后取消了免费云计算套餐，因此它就下架了。</td>
+</tr>
+<tr>
+<td align="center">vuepress-theme-mini</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/vuepress-theme-mini">wxsms&#x2F;vuepress-theme-mini</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey"> <img src="https://badgen.net/github/stars/wxsms/vuepress-theme-mini"></td>
+<td>为 VuePress 开发的一个非常轻量级的博客主题，它继承自默认主题，添加了一个首页和一个文章归档页，以及集成了一套评论系统。</td>
+</tr>
+<tr>
+<td align="center">vue-md-loader</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/vue-md-loader">wxsms&#x2F;vue-md-loader</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green"> <img src="https://badgen.net/github/stars/wxsms/vue-md-loader"></td>
+<td>一个 webpack loader，可以将 Markdown 以及其内部的代码块转换为 Vue 组件。开发背景见<a href="/2017/better-documents/" title="Better Documents">这篇博文</a>。</td>
+</tr>
+<tr>
+<td align="center">uiv</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/uiv-lib/uiv">uiv-lib&#x2F;uiv</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E6%AD%A3%E5%B8%B8/green"> <img src="https://badgen.net/github/stars/uiv-lib/uiv"></td>
+<td>一个 Vue 2 实现的 Bootstrap 3 组件库，当时的情况详见<a href="/2017/uiv-release/" title="基于 Vue 2 与 Bootstrap 3 的组件库 uiv 发布啦">这篇博文</a>。同时它也是我第一个花了好几年时间认真在做的开源项目。</td>
+</tr>
+<tr>
+<td align="center">daily-signer</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/daily-signer">wxsms&#x2F;daily-signer</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey"> <img src="https://badgen.net/github/stars/wxsms/daily-signer"></td>
+<td>一个用 Node.js 编写的日常签到助手，可以完成某东、V2EX 的一些签到任务。甚至能自动破解某东的滑动输入验证码。</td>
+</tr>
+<tr>
+<td align="center">zhihu-spider</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/zhihu-spider">wxsms&#x2F;zhihu-spider</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey"> <img src="https://badgen.net/github/stars/wxsms/zhihu-spider"></td>
+<td>一个用 Node.js 编写的知乎爬虫。</td>
+</tr>
+<tr>
+<td align="center">珠海公交巴士实时地图</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/zh-bus-realtime">wxsms&#x2F;zh-bus-realtime</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey"> <img src="https://badgen.net/github/stars/wxsms/zh-bus-realtime"></td>
+<td>可以同时监视任意条线路，并且能够在瓦片地图上显示它们的实时位置。可以记住我的常用线路，需要时完成一键查询。</td>
+</tr>
+<tr>
+<td align="center">jquery-2048</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/wxsms/jquery-2048">wxsms&#x2F;jquery-2048</a> <img src="https://badgen.net/badge/%E7%BB%B4%E6%8A%A4%E7%8A%B6%E6%80%81/%E5%81%9C%E6%9B%B4/grey"> <img src="https://badgen.net/github/stars/wxsms/jquery-2048"></td>
+<td>2048 小游戏 by jQuery。</td>
+</tr>
+</tbody></table>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/about/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
