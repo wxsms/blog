@@ -19,7 +19,7 @@
     "hexo-generator-archive": "2.0.0",
     "hexo-generator-category": "2.0.0",
     "hexo-generator-cname": "0.3.0",
-    "hexo-generator-feed": "3.0.0",
+    "hexo-generator-feed": "4.0.0",
     "hexo-generator-index": "3.0.0",
     "hexo-generator-searchdb": "1.5.0",
     "hexo-generator-sitemap": "3.0.1",
