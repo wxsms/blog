@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="wxsm&#39;s pace">
+<meta property="og:url" content="https://wxsm.space/page/12/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="blog,javascript,nodejs,vue,react,php,python,golang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/page/12/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/12/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wxsm's pace</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/some-oddities-about-javascript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/some-oddities-about-javascript/" class="post-title-link" itemprop="url">JavaScript 的一些古怪之处</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-15 16:47:27" itemprop="dateCreated datePublished" datetime="2016-02-15T16:47:27+08:00">2016-02-15</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/some-oddities-about-javascript/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/some-oddities-about-javascript/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>大概一年前在看一本介绍JavaScript与jQuery的书籍之时看到了这么一个有趣的章节，当时印象挺深刻的。现在突然回想起来了这回事，于是就重新翻出来做了个笔记。作者将这些材料归结为两类：神奇的知识点以及WTF。这里去除了与浏览器有关的部分，因为那些和JavaScript本身并没有关联。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/some-oddities-about-javascript/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/css-triangle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/css-triangle/" class="post-title-link" itemprop="url">CSS 绘制三角形</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-15 10:58:33" itemprop="dateCreated datePublished" datetime="2016-02-15T10:58:33+08:00">2016-02-15</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/css-triangle/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/css-triangle/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>关于如何使用CSS中的border属性绘制各式各样的三角形。下面有一个国外友人制作的动画，对其原理进行了直观的阐释，我简单地做了点翻译。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/css-triangle/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/untitled-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/untitled-2/" class="post-title-link" itemprop="url">无题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-13 02:37:20" itemprop="dateCreated datePublished" datetime="2016-02-13T02:37:20+08:00">2016-02-13</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/untitled-2/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/untitled-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>年廿七回家，到今天是第七天。这么快就已经过去了整整一周，马上又要回珠海上班了。</p>
+<p>回家这么多天来，今天是第一次在家吃晚饭。一直都在亲戚朋友家过节，自己家冷冷清清的时间比较多。因为自己家里没有老人，只有我和爸妈一家三口，所以大概只能往外跑吧。我们很少在广东过年，只是今年可能是因为我的身体还不太好，妈妈也比较累，所以就不想回江西了。其实过节在哪里都无所谓啦，大家在一起开心就好。倒是不能去看看年事已高的奶奶觉得很忧伤。妈妈看起来又老了一些，是照顾我的那段时间太劳累了。</p>
+<p>今年印象比较深的是，大家都喜欢在茶余饭后玩红包了。尤其是除夕晚上的时候，开着电视，但其实没多少时间去看，大家都忙着摇摇摇咻咻咻，完事以后继续关注下一轮的时刻，至于春晚什么的，谁管呢。当然老人还是在看。腾讯老大给的一块几毛就图个乐（一块几毛是说微信，至于QQ真是太小气了），但这里要吐槽一下支付宝，我一直以为它要么会大量放出稀有卡，要么会给集齐四张卡的同学一些安慰奖，结果也是呵呵，于是我毫不犹豫地就把除了家人以外的加起来的好友都删了。这游戏在春晚打了那么硬的广告，结果让全国99%的玩家都吃了个闭门羹，这么有种也是没谁了。老人一直在问为什么会有奇怪的声音，他们在年夜饭的过程中反而不太受到关注。</p>
+<p>老人们有时候会问什么时候结婚的事，我都是回答说还早。两个人在一起的压力有时候真要比一个人要大得多，毕竟一个人生活不用考虑什么时候能买房，反正都是自己住。珠海的房价一天比一天高，然而刚工作半年的我也只能看着它高。</p>
+<p>和小伙伴们谈起工作的时候，发现自己果然是最闲的。突然感觉没有赚加班费的机会也是一件挺忧伤的事。手术的伤依然是还没有好，总是觉得有这个问题在生活中处处都受到了限制。过两天又要回到那个以断网为常态并且每晚跳三四次闸的地方去住，再次回家又不知道是什么时候。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/using-idea-to-config-ftp-auto-deployment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/using-idea-to-config-ftp-auto-deployment/" class="post-title-link" itemprop="url">使用 IDEA 配置自动同步到FTP服务器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-03 16:45:27" itemprop="dateCreated datePublished" datetime="2016-02-03T16:45:27+08:00">2016-02-03</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/using-idea-to-config-ftp-auto-deployment/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/using-idea-to-config-ftp-auto-deployment/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用虚拟主机的时候经常会想到一个问题，就是改了代码以后还要手动上传到服务器上，非常麻烦，且不利于保持本地开发代码与服务器上运行代码之间的同步，容易出错。今天突然想着能不能用IDE来完成类似自动同步的事情，如果可以的话开发效率自然是大幅度提高。拜强大到没朋友的IDEA所赐，结果非常可观。</p>
+<p>首先确保安装好IDEA，测试用IDEA版本为15.0.1，然后我们从FTP服务器上copy一份代码到本地，并创建好存放目录。此时代码应该是完全同步的。以上为准备工作。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/using-idea-to-config-ftp-auto-deployment/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/wordpress-archives-page-implementation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/wordpress-archives-page-implementation/" class="post-title-link" itemprop="url">WordPress 文章归档页面实现</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-02 16:06:16" itemprop="dateCreated datePublished" datetime="2016-02-02T16:06:16+08:00">2016-02-02</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/wordpress-archives-page-implementation/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/wordpress-archives-page-implementation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>归档页就是一个包含站点所有已发布文章的列表页面，通常默认会根据发布时间来进行排序，然后可能会有一些分页排序页内搜索等功能。实现这个功能可以用Wordpress插件，当然也可以自己写代码，我一开始就是用了一款插件，觉得实现了功能还不错就没管它。后来想要做一些自定义的修改，比如插件是按月份分组然而我想改成年份，就稍微看了看它的代码。一看不得了，莫名地有一种总算见识到了什么叫又烂又臭的代码的感觉涌上心头，做了这么多年伸手党总算是被恶心到了，简直不能忍，于是琢磨着自己写一个简单的模板页，不用它了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/wordpress-archives-page-implementation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/angular-router-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/angular-router-note/" class="post-title-link" itemprop="url">Angular Router 学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-02-01 17:21:59" itemprop="dateCreated datePublished" datetime="2016-02-01T17:21:59+08:00">2016-02-01</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/angular-router-note/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/angular-router-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用Angular Router可以很方便地构建SPA应用，同时它支持深度链接，支持各种浏览器操作（前进、后退、收藏等），非常有趣。使用过类似模块就会觉得它要比传统的路由方式，比如服务端的Forward，Redirect以及一般的JavaScript Redirect等，好用得多。特别是用户体验这一块，上升了很大的档次。</p>
+<p>就在不久前我还开发了一个使用iframe与jQuery的SPA项目，当时由于是老板提供的所有前端页面所以也没多想。现在学过了Angular Router真是有些不堪回首的感觉。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/angular-router-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/bootstrap-file-input-in-firefox/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/bootstrap-file-input-in-firefox/" class="post-title-link" itemprop="url">Bootstrap file input in Firefox</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-01-22 09:20:46" itemprop="dateCreated datePublished" datetime="2016-01-22T09:20:46+08:00">2016-01-22</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/bootstrap-file-input-in-firefox/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/bootstrap-file-input-in-firefox/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>默认的Bootstrap文件上传框在Chrome&#x2F;Firefox&#x2F;IE上的表现都不一样，如下所示。 代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/bootstrap-file-input-in-firefox/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/2015-annual-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/2015-annual-summary/" class="post-title-link" itemprop="url">2015年度总结</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-01-12 16:08:16" itemprop="dateCreated datePublished" datetime="2016-01-12T16:08:16+08:00">2016-01-12</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/2015-annual-summary/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/2015-annual-summary/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>2015对我来说是有喜有悲的一年。我还清楚地记得十一个月前刚过完年的时候，在上班的第一天迟到了，然后收到同事哥哥姐姐们的一桌子红包的情景，然而不知不觉就已经过去这么久了。最近生活和工作上都遇到了一点瓶颈，中午无聊的时候翻看了一下这一年下来的邮件，于是就想写点东西。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/2015-annual-summary/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/ie-cache-issue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/ie-cache-issue/" class="post-title-link" itemprop="url">IE Cache Issue</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-01-06 17:12:47" itemprop="dateCreated datePublished" datetime="2016-01-06T17:12:47+08:00">2016-01-06</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/ie-cache-issue/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/ie-cache-issue/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>昨天发现了一个奇怪的问题，一个Web Application Update Entity的功能，在Chrome&#x2F;Firefox上测试都正常运行，到了IE 11上就不行了，主要表现就是Update成功以后再次读取记录会读取出Update之前的值。功能逻辑就是一些简单的通过RESTful API来执行CRUD操作的Ajax调用。在IE上用控制台仔细调试一番后，发现在打开控制台的时候居然能表现正常，而关掉以后就立刻不行，这明显就是IE爸爸不走寻常路，把API也Cache下来了。于是就有了以下的解决方案。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/ie-cache-issue/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/mean-js-menu-service-extension/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/mean-js-menu-service-extension/" class="post-title-link" itemprop="url">MEAN.js Menu Service Extension</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-01-05 17:34:47" itemprop="dateCreated datePublished" datetime="2016-01-05T17:34:47+08:00">2016-01-05</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/mean-js-menu-service-extension/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/mean-js-menu-service-extension/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>MEAN.js解决方案只提供了1级&#x2F;2级菜单栏的service支持，最近项目中需要用到第3级菜单，所以需要进行一个小的功能扩展。一开始我以为可以很容易地做到无限级，真正做起来以后发现并没有那么简单，所以目前通过这个办法只能达到第3级。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/mean-js-menu-service-extension/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/page/12/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

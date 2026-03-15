@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="wxsm&#39;s pace">
+<meta property="og:url" content="https://wxsm.space/page/3/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="blog,javascript,nodejs,vue,react,php,python,golang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/page/3/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/3/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wxsm's pace</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2021/2021-spring-festival/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/2021-spring-festival/" class="post-title-link" itemprop="url">2021 春节</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-18 05:01:23" itemprop="dateCreated datePublished" datetime="2021-02-18T05:01:23+08:00">2021-02-18</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/2021-spring-festival/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2021/2021-spring-festival/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>今年疫情原因，本来不是很想回家过年的，想着工作累了，在珠海（中山）做几天废人也不错。但是现在回想起来，虽然家里比较小也比较无聊，逢年过节还是应该回家看看。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/2021-spring-festival/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2021/4-examples-of-mongodb-aggregate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/4-examples-of-mongodb-aggregate/" class="post-title-link" itemprop="url">MongoDB Aggregate 4 例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-17 09:05:48" itemprop="dateCreated datePublished" datetime="2021-02-17T09:05:48+08:00">2021-02-17</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/4-examples-of-mongodb-aggregate/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2021/4-examples-of-mongodb-aggregate/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>有数据格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: &quot;745&quot;,</span><br><span class="line">  &quot;knownName&quot;: &#123;</span><br><span class="line">    &quot;en&quot;: &quot;A. Michael Spence&quot;,</span><br><span class="line">    &quot;se&quot;: &quot;A. Michael Spence&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;familyName&quot;: &#123;</span><br><span class="line">    // 结构同上，下同</span><br><span class="line">    // ..</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;orgName&quot;: &#123;</span><br><span class="line">    // orgName 当获奖者为组织时出现</span><br><span class="line">    // ..</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;gender&quot;: &quot;male&quot;,</span><br><span class="line">  &quot;nobelPrizes&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;awardYear&quot;: &quot;2001&quot;,</span><br><span class="line">      // ...</span><br><span class="line">      &quot;affiliations&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;name&quot;: &#123;</span><br><span class="line">            &quot;en&quot;: &quot;Stanford University&quot;,</span><br><span class="line">            // ...</span><br><span class="line">          &#125;,</span><br><span class="line">          &quot;city&quot;: &#123;</span><br><span class="line">            // ...</span><br><span class="line">          &#125;,</span><br><span class="line">          &quot;country&quot;: &#123;</span><br><span class="line">            // ...</span><br><span class="line">          &#125;,</span><br><span class="line">          // ...</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想要实现：</p>
+<ol>
+<li>查找名为 <code>CERN</code> 的 <code>affiliation</code> 的所在国家</li>
+<li>查找获奖次数大于等于 5 次的 <code>familyName</code></li>
+<li>查找 <code>University of California</code> 的不同所在位置总数</li>
+<li>查找至少一个诺贝尔奖授予组织而非个人的年份总数</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/4-examples-of-mongodb-aggregate/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/auto-changelog-with-gitlab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/auto-changelog-with-gitlab/" class="post-title-link" itemprop="url">Auto Changelog with GitLab</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-19 02:43:53" itemprop="dateCreated datePublished" datetime="2020-11-19T02:43:53+08:00">2020-11-19</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/auto-changelog-with-gitlab/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/auto-changelog-with-gitlab/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>上一篇博文 <a href="/posts/2020-11-09-integrate-renovate-with-gitlab.html">Integrate Renovate with GitLab</a> 中介绍了为私有代码仓库与私有源提供依赖自动检测更新并发起 Merge Request 的方式。Renovate 可以自动通过 Release Notes 获取到版本之间的更新日志，并在 MR 中展示，这为执行合并的评审人提供了极大的便利。</p>
+<p>接下来需要解决另一个问题：如何为分散在各处的私有依赖自动生成更新日志？</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/auto-changelog-with-gitlab/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/integrate-renovate-with-gitlab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/integrate-renovate-with-gitlab/" class="post-title-link" itemprop="url">Integrate Renovate with GitLab</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-09 12:49:56" itemprop="dateCreated datePublished" datetime="2020-11-09T12:49:56+08:00">2020-11-09</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/integrate-renovate-with-gitlab/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/integrate-renovate-with-gitlab/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>企业项目群中往往会有部分代码逻辑需要公用，将其抽离作为公共包发布到私有源的做法是比较优雅的解决方式。但是这么做的话后期需要面临一个问题：<strong>当一个公共依赖包的使用者数量逐渐庞大的时候，如何保证当此包发布新版本时，所有使用者都能尽可能快地得到更新？</strong></p>
+<p>传统的解决方案：</p>
+<ol>
+<li>手工对所有项目逐个升级。这种办法相当繁琐，且容易产生遗漏，当项目数量足够庞大的时候，发布一次将会是相当痛苦的体验；</li>
+<li>在依赖安装时指定版本为 <code>latest</code>。这种办法虽然能保证每次安装时都能得到最新版本，但是却有诸多弊端，如：<ol>
+<li>无法保证依赖的安全性，有可能一次更新不慎造成大面积的瘫痪；</li>
+<li>对「依赖锁」不友好，如 <code>yarn.lock</code> 等。</li>
+</ol>
+</li>
+</ol>
+<p>因此，如何使这个过程变得优雅，是一个亟待解决的问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/integrate-renovate-with-gitlab/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/publish-using-github-action/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/publish-using-github-action/" class="post-title-link" itemprop="url">Publish using GitHub Action</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-02 08:25:10" itemprop="dateCreated datePublished" datetime="2020-11-02T08:25:10+08:00">2020-11-02</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/publish-using-github-action/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/publish-using-github-action/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文是一些 GitHub Actions 常用发布动作的总结。</p>
+<p>强烈建议将所有 Publish actions 分开执行，不要集中到一个 Workflow 内。原因是如果其中一个动作因为某些原因失败了，GitHub 目前只能重启整个 Workflow，而如果 Workflow 内某个 Job 已经成功了，那么该 Job 下一次执行必然是失败（因为此类任务一般不能对同一个版本号执行两次，发布成功一次以后第二次尝试将会被拒绝发布），因此这一个提交的 Workflow 将永远不可能成功。</p>
+<p>需要注意的是，以下所提到的 <code>secrets.GITHUB_TOKEN</code> 均是 GitHub Action 内置的 Access Token，无需自行创建。而其它 secrets 则需要在 <code>项目主页</code> -&gt; <code>Settings</code> -&gt; <code>Secrets</code> 处创建。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/publish-using-github-action/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/enable-soft-wrap-for-markdown-files-in-idea-by-default/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/enable-soft-wrap-for-markdown-files-in-idea-by-default/" class="post-title-link" itemprop="url">IDEA 为 Markdown 文件默认启用 SoftWrap</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-26 03:23:49" itemprop="dateCreated datePublished" datetime="2020-10-26T03:23:49+08:00">2020-10-26</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/enable-soft-wrap-for-markdown-files-in-idea-by-default/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/enable-soft-wrap-for-markdown-files-in-idea-by-default/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>应该 JetBrains 家的所有 IDE 都有这个配置。习惯了用 Markdown 写博客的人每次都要手动点一下 SoftWrap 挺烦的。后来发现了一个配置可以帮我省去这一步：</p>
+<p>打开设置，找到：<code>Editor</code> &gt; <code>General</code> &gt; <code>Soft Wraps</code>，将 <code>Soft-wrap files</code> 选项勾上即可。IDE 默认已经填上了 <code>*.md; *.txt; *.rst; *.adoc</code>，因此不需要再做别的事情。</p>
+<p><img src="/2020/enable-soft-wrap-for-markdown-files-in-idea-by-default/98069913-fc341280-1e9a-11eb-82d4-2dbaa96672bd.png" alt="image"></p>
+<p>这样一来，每次只要打开以上格式的文件，编辑器就会自动开启 SoftWrap，一劳永逸。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/a-difficult-debug-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/a-difficult-debug-note/" class="post-title-link" itemprop="url">记一次艰难的 Debug</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-25 04:08:13" itemprop="dateCreated datePublished" datetime="2020-10-25T04:08:13+08:00">2020-10-25</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/a-difficult-debug-note/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/a-difficult-debug-note/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这是一次关于本博客的 Debug 经历，过程非常曲折。关键词：<strong>Vue &#x2F; SSR &#x2F; 错配</strong>。</p>
+<p>不知道从哪篇博文开始，博客在直接从内页打开时，或者在内页刷新浏览器时，会报以下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">app.73b8bd4d.js:8</span><br><span class="line">DOMException: Failed to execute &#x27;appendChild&#x27; on &#x27;Node&#x27;: </span><br><span class="line">This node type does not support this method.</span><br></pre></td></tr></table></figure>
+
+<p>该错误：</p>
+<ol>
+<li>只会在 build 模式出现；</li>
+<li>只会在发布上 GitHub Pages 后出现；</li>
+<li>只会在某些博文中出现；</li>
+<li>只会在直接从链接进入该博文，或者在该博文页面刷新时出现。</li>
+</ol>
+<p>该错误带来的影响，<strong>会导致页面上的所有 JavaScript 功能全部失效</strong>，具体来说是与 Vue.js 相关的功能。如：导航链接（因为使用了 Vue-Router），评论框，一些依赖于 Vue.js 的 VuePress 插件，等等。</p>
+<p><img src="/2020/a-difficult-debug-note/97097835-c465e780-16b0-11eb-8d93-ac2cee64895b.png" alt="screenshot"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/a-difficult-debug-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/automatic-cd-from-shell-scripts-to-k8s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/automatic-cd-from-shell-scripts-to-k8s/" class="post-title-link" itemprop="url">自动化部署: 从脚本到 K8s</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-21 02:31:34" itemprop="dateCreated datePublished" datetime="2020-10-21T02:31:34+08:00">2020-10-21</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/automatic-cd-from-shell-scripts-to-k8s/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/automatic-cd-from-shell-scripts-to-k8s/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>如果公司有专业运维，项目的部署上线过程一般来说开发者都不会接触到。但是很不幸，我所在的团队没有独立的运维团队，所以一切都得靠自己（与同事）。</p>
+<p>以下都只是工作中逐步优化得到的经验总结，并且只以 Node.js 程序部署为例。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/automatic-cd-from-shell-scripts-to-k8s/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/cache-node-modules-in-github-actions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/cache-node-modules-in-github-actions/" class="post-title-link" itemprop="url">Cache Yarn in Github Actions</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-12 05:46:53" itemprop="dateCreated datePublished" datetime="2020-10-12T05:46:53+08:00">2020-10-12</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/cache-node-modules-in-github-actions/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/cache-node-modules-in-github-actions/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在 CI 中缓存安装下来的依赖项是提速的关键，<a target="_blank" rel="noopener" href="https://docs.github.com/en/free-pro-team@latest/actions/guides/caching-dependencies-to-speed-up-workflows">Github Actions 官方文档</a> 提供了如下方案 (NPM)：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/cache-node-modules-in-github-actions/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2020/upgrade-webpack-of-vue-cli-projects-from-3-to-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/upgrade-webpack-of-vue-cli-projects-from-3-to-4/" class="post-title-link" itemprop="url">Upgrade Webpack of Vue-Cli Projects from 3 to 4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-10 08:59:49" itemprop="dateCreated datePublished" datetime="2020-10-10T08:59:49+08:00">2020-10-10</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2020/upgrade-webpack-of-vue-cli-projects-from-3-to-4/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2020/upgrade-webpack-of-vue-cli-projects-from-3-to-4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><p>Change webpack related devDependencies versions:</p>
+<ol>
+<li><code>webpack</code> to <code>^4</code></li>
+<li><code>webpack-dev-server</code> to <code>^3</code></li>
+<li>Add <code>webpack-cli</code></li>
+<li>Replace <code>extract-text-webpack-plugin</code> with <code>mini-css-extract-plugin</code></li>
+<li>Replace <code>uglifyjs-webpack-plugin</code> with <code>terser-webpack-plugin</code></li>
+</ol>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> </span><br><span class="line">    <span class="attr">&quot;mini-css-extract-plugin&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;terser-webpack-plugin&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;webpack&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;webpack-cli&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^3&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;webpack-dev-server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^3&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="webpack-base-conf-js"><a href="#webpack-base-conf-js" class="headerlink" title="webpack.base.conf.js"></a>webpack.base.conf.js</h2><p>Add <code>mode</code> option.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">mode</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;production&#x27;</span> : <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">  <span class="attr">context</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;../&#x27;</span>),</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="webpack-prod-conf-js"><a href="#webpack-prod-conf-js" class="headerlink" title="webpack.prod.conf.js"></a>webpack.prod.conf.js</h2><ol>
+<li>Add <code>performance</code> and <code>optimization</code> option</li>
+<li>Replace <code>ExtractTextPlugin</code> with <code>MiniCssExtractPlugin</code></li>
+<li>Remove <code>UglifyJsPlugin</code> and all <code>webpack.optimize.CommonsChunkPlugin</code></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">MiniCssExtractPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;mini-css-extract-plugin&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">TerserPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;terser-webpack-plugin&#x27;</span>);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">const</span> webpackConfig = <span class="title function_">merge</span>(baseWebpackConfig, &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">performance</span>: &#123;</span><br><span class="line">    <span class="attr">hints</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">optimization</span>: &#123;</span><br><span class="line">    <span class="attr">runtimeChunk</span>: &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;manifest&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">minimizer</span>: [</span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">TerserPlugin</span>(),</span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">OptimizeCSSPlugin</span>(&#123;</span><br><span class="line">        <span class="attr">cssProcessorOptions</span>: config.<span class="property">build</span>.<span class="property">productionSourceMap</span></span><br><span class="line">          ? &#123; <span class="attr">safe</span>: <span class="literal">true</span>, <span class="attr">map</span>: &#123; <span class="attr">inline</span>: <span class="literal">false</span> &#125; &#125;</span><br><span class="line">          : &#123; <span class="attr">safe</span>: <span class="literal">true</span> &#125;</span><br><span class="line">      &#125;),</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">      <span class="attr">chunks</span>: <span class="string">&#x27;async&#x27;</span>,</span><br><span class="line">      <span class="attr">minSize</span>: <span class="number">30000</span>,</span><br><span class="line">      <span class="attr">minChunks</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">maxAsyncRequests</span>: <span class="number">5</span>,</span><br><span class="line">      <span class="attr">maxInitialRequests</span>: <span class="number">3</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">        <span class="attr">vendors</span>: &#123;</span><br><span class="line">          <span class="attr">test</span>: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">          <span class="attr">name</span>: <span class="string">&#x27;vendor&#x27;</span>,</span><br><span class="line">          <span class="attr">chunks</span>: <span class="string">&#x27;initial&#x27;</span>,</span><br><span class="line">          <span class="attr">priority</span>: -<span class="number">10</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="comment">// new UglifyJsPlugin(&#123;</span></span><br><span class="line">    <span class="comment">//   uglifyOptions: &#123;</span></span><br><span class="line">    <span class="comment">//     compress: &#123;</span></span><br><span class="line">    <span class="comment">//       warnings: false</span></span><br><span class="line">    <span class="comment">//       &#125;</span></span><br><span class="line">    <span class="comment">//     &#125;,</span></span><br><span class="line">    <span class="comment">//    sourceMap: config.build.productionSourceMap,</span></span><br><span class="line">    <span class="comment">//    parallel: true</span></span><br><span class="line">    <span class="comment">//  &#125;),</span></span><br><span class="line">    <span class="comment">// new ExtractTextPlugin(&#123;</span></span><br><span class="line">    <span class="comment">//   filename: utils.assetsPath(&#x27;css/[name].[contenthash].css&#x27;),</span></span><br><span class="line">    <span class="comment">//   // Setting the following option to `false` will not extract CSS from codesplit chunks.</span></span><br><span class="line">    <span class="comment">//   // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.</span></span><br><span class="line">    <span class="comment">//   // It&#x27;s currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it&#x27;s `false`,</span></span><br><span class="line">    <span class="comment">//   // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110</span></span><br><span class="line">    <span class="comment">//   allChunks: true,</span></span><br><span class="line">    <span class="comment">// &#125;),</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">MiniCssExtractPlugin</span>(&#123;</span><br><span class="line">      <span class="attr">filename</span>: utils.<span class="title function_">assetsPath</span>(<span class="string">&#x27;css/[name].css&#x27;</span>),</span><br><span class="line">      <span class="attr">chunkFilename</span>: utils.<span class="title function_">assetsPath</span>(<span class="string">&#x27;css/[name].[contenthash].css&#x27;</span>)</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="comment">// split vendor js into its own file</span></span><br><span class="line">    <span class="comment">// new webpack.optimize.CommonsChunkPlugin(&#123;</span></span><br><span class="line">    <span class="comment">//   name: &#x27;vendor&#x27;,</span></span><br><span class="line">    <span class="comment">//   minChunks (module) &#123;</span></span><br><span class="line">    <span class="comment">//     // any required modules inside node_modules are extracted to vendor</span></span><br><span class="line">    <span class="comment">//     return (</span></span><br><span class="line">    <span class="comment">//       module.resource &amp;&amp;</span></span><br><span class="line">    <span class="comment">//       /\.js$/.test(module.resource) &amp;&amp;</span></span><br><span class="line">    <span class="comment">//       module.resource.indexOf(</span></span><br><span class="line">    <span class="comment">//         path.join(__dirname, &#x27;../node_modules&#x27;)</span></span><br><span class="line">    <span class="comment">//       ) === 0</span></span><br><span class="line">    <span class="comment">//     )</span></span><br><span class="line">    <span class="comment">//   &#125;</span></span><br><span class="line">    <span class="comment">// &#125;),</span></span><br><span class="line">    <span class="comment">// extract webpack runtime and module manifest to its own file in order to</span></span><br><span class="line">    <span class="comment">// prevent vendor hash from being updated whenever app bundle is updated</span></span><br><span class="line">    <span class="comment">// new webpack.optimize.CommonsChunkPlugin(&#123;</span></span><br><span class="line">    <span class="comment">//   name: &#x27;manifest&#x27;,</span></span><br><span class="line">    <span class="comment">//   minChunks: Infinity</span></span><br><span class="line">    <span class="comment">// &#125;),</span></span><br><span class="line">    <span class="comment">// This instance extracts shared chunks from code splitted chunks and bundles them</span></span><br><span class="line">    <span class="comment">// in a separate chunk, similar to the vendor chunk</span></span><br><span class="line">    <span class="comment">// see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk</span></span><br><span class="line">    <span class="comment">// new webpack.optimize.CommonsChunkPlugin(&#123;</span></span><br><span class="line">    <span class="comment">//   name: &#x27;app&#x27;,</span></span><br><span class="line">    <span class="comment">//   async: &#x27;vendor-async&#x27;,</span></span><br><span class="line">    <span class="comment">//   children: true,</span></span><br><span class="line">    <span class="comment">//   minChunks: 3</span></span><br><span class="line">    <span class="comment">// &#125;),</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>That’s it, enjoy. 🎉</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/page/3/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

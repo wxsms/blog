@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="ekuL5J7xK1IdFtP13v3KxpuGKnYS1oCT9PvZdjYm8Eg">
+  <meta name="baidu-site-verification" content="WrnmKQXx4O">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wxsm.space","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"tomorrow-night"},"prism":{"light":"prism-darcula","dark":"prism-darcula"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/config.min.js" defer></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="wxsm&#39;s pace">
+<meta property="og:url" content="https://wxsm.space/page/9/index.html">
+<meta property="og:site_name" content="wxsm&#39;s pace">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="wxsm">
+<meta property="article:tag" content="blog,javascript,nodejs,vue,react,php,python,golang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wxsm.space/page/9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/9/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>wxsm's pace</title>
+  
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-102731925-1","only_pageview":true,"measure_protocol_api_secret":null}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/analytics/google-analytics.min.js" defer></script>
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/utils.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/sidebar.min.js" defer></script><script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/next-boot.min.js" defer></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/search/local-search.min.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.bootcdn.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/tags/mermaid.min.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="https://cdn.bootcdn.net/ajax/libs/hexo-theme-next/8.27.0/third-party/math/mathjax.min.js" defer></script>
+
+
+<link rel="dns-prefetch" href="https://blog-api.wxsm.space">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="wxsm's pace" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wxsm's pace</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section">标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section">归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wxsm"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wxsm</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wxsms" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wxsms" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/wxsm/" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;wxsm&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-steam fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/5771529/wxsm" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;5771529&#x2F;wxsm" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxsms@foxmail.com" title="E-Mail → mailto:wxsms@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.bootcdn.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://zexo.dev/" title="https:&#x2F;&#x2F;zexo.dev" rel="noopener" target="_blank">Aquariuslt blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://lz5z.com/" title="https:&#x2F;&#x2F;lz5z.com" rel="noopener" target="_blank">Lz's blog</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://coldstone.fun/" title="https:&#x2F;&#x2F;coldstone.fun&#x2F;" rel="noopener" target="_blank">冷石的博客</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/d3-note-interpolate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/d3-note-interpolate/" class="post-title-link" itemprop="url">D3 Note - Interpolate</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-12-05 14:17:00" itemprop="dateCreated datePublished" datetime="2016-12-05T14:17:00+08:00">2016-12-05</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/d3-note-interpolate/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/d3-note-interpolate/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><code>d3-interpolate</code> 是 D3 的核心模块之一，与比例尺有些类似，<code>interpolate</code> （插值）所做的也是一些数值映射的工作。区别是，<code>interpolate</code> 的定义域始终是 <strong>0 ~ 1</strong>，并且始终为线性的。所以，更多时候它用来与 D3 的一些其他模组集成使用（如 transition, scale 等）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/d3-note-interpolate/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/d3-note-scale/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/d3-note-scale/" class="post-title-link" itemprop="url">D3 Note - Scale</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-22 09:00:00" itemprop="dateCreated datePublished" datetime="2016-11-22T09:00:00+08:00">2016-11-22</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/d3-note-scale/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/d3-note-scale/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>之前做的柱状图例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = [<span class="number">250</span>, <span class="number">210</span>, <span class="number">170</span>, <span class="number">100</span>, <span class="number">190</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> rectWidth = <span class="number">25</span></span><br><span class="line"></span><br><span class="line">svg.<span class="title function_">selectAll</span>(<span class="string">&#x27;rect&#x27;</span>)</span><br><span class="line"> .<span class="title function_">data</span>(data)</span><br><span class="line"> .<span class="title function_">enter</span>()</span><br><span class="line"> .<span class="title function_">append</span>(<span class="string">&#x27;rect&#x27;</span>)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;y&#x27;</span>, <span class="function">(<span class="params">d, i</span>) =&gt;</span> height - d)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;x&#x27;</span>, <span class="function">(<span class="params">d, i</span>) =&gt;</span> i * rectWidth)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;height&#x27;</span>, <span class="function"><span class="params">d</span> =&gt;</span> d)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;width&#x27;</span>, rectWidth - <span class="number">2</span>)</span><br><span class="line"> .<span class="title function_">attr</span>(<span class="string">&#x27;fill&#x27;</span>, <span class="string">&#x27;steelblue&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>有一个严重的问题，就是没有比例尺的概念，柱状图的高度完全由数据转换成像素值来模拟。这明显是不科学的：如果数据的值过小或过大，作出来的图就会很奇怪，同时也无法做到非线性的映射。</p>
+<p>就跟地图需要比例尺一样，绝大多数的数据图表也需要比例尺。</p>
+<blockquote>
+<p>Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation.</p>
+</blockquote>
+<p><strong>比例尺 - Scale - “将某个维度的抽象数据做可视化映射”</strong></p>
+<p>至于可视化映射的具体实现，<code>d3-scale</code> 模块提供了许多方案，大致可以分为两类：</p>
+<ul>
+<li>Continuous Scales（连续映射）</li>
+<li>Ordinal Scales（散点映射）</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/d3-note-scale/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/static-blog-built-with-vue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/static-blog-built-with-vue/" class="post-title-link" itemprop="url">Static Blog Built with Vue</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-16 16:55:00" itemprop="dateCreated datePublished" datetime="2016-11-16T16:55:00+08:00">2016-11-16</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/static-blog-built-with-vue/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/static-blog-built-with-vue/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>博客再次迁移，这次是从 Wordpress 转向静态博客（自建）。</p>
+<p>技术栈:</p>
+<ul>
+<li>前端：vue + vue-router + vuex + bootstrap + webpack</li>
+<li>服务端：没有</li>
+<li>数据库：没有</li>
+</ul>
+<p>整站打包后，一次加载所有资源（HTML + CSS + JS + DATA）300K 不到（gzip 后 80K+），秒速渲染，与先前真的是天差地别。</p>
+<p>图片资源从本地服务器搬迁到免费云。 写作使用 Markdown，从此 IDE 写博客不是梦。</p>
+<p>代码地址：<a target="_blank" rel="noopener" href="https://github.com/wxsms/wxsms.github.io/tree/src">https://github.com/wxsms/wxsms.github.io/tree/src</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/d3-note-enter-update-and-exit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/d3-note-enter-update-and-exit/" class="post-title-link" itemprop="url">D3 Note - Enter, Update and Exit</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-10 11:43:10" itemprop="dateCreated datePublished" datetime="2016-11-10T11:43:10+08:00">2016-11-10</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/d3-note-enter-update-and-exit/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/d3-note-enter-update-and-exit/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在 D3 的使用过程中，我们见得最多的应当是类似如下的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> div = d3.<span class="title function_">select</span>(<span class="string">&#x27;body&#x27;</span>)</span><br><span class="line">  .<span class="title function_">selectAll</span>(<span class="string">&#x27;p&#x27;</span>)</span><br><span class="line">  .<span class="title function_">data</span>([<span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">12</span>, <span class="number">15</span>])</span><br><span class="line">  .<span class="title function_">enter</span>()</span><br><span class="line">  .<span class="title function_">append</span>(<span class="string">&#x27;p&#x27;</span>)</span><br><span class="line">  .<span class="title function_">text</span>(<span class="function"><span class="params">d</span> =&gt;</span> d);</span><br></pre></td></tr></table></figure>
+
+<p>将得到：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>6<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>9<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>12<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>15<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>光看代码完全不能理解 D3 到底做了些什么，其实这里关键是 <code>enter</code> 的使用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/d3-note-enter-update-and-exit/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/webpack-hmr-not-work-in-idea/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/webpack-hmr-not-work-in-idea/" class="post-title-link" itemprop="url">Webpack HMR Not Work in IDEA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-07 09:44:41" itemprop="dateCreated datePublished" datetime="2016-11-07T09:44:41+08:00">2016-11-07</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/webpack-hmr-not-work-in-idea/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/webpack-hmr-not-work-in-idea/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li>goto ‘File | Settings | Appearance &amp; Behavior | System Settings’;</li>
+<li>uncheck ‘Use save write’ option</li>
+</ol>
+<p><img src="https://static.wxsm.space/blog/48595804-414e9980-e991-11e8-9582-113c7048e340.jpg"></p>
+<p>Problem solved.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/node-js-web-spider-note-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/node-js-web-spider-note-2/" class="post-title-link" itemprop="url">Node.js Web Spider Note - 2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-05 14:45:26" itemprop="dateCreated datePublished" datetime="2016-11-05T14:45:26+08:00">2016-11-05</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/node-js-web-spider-note-2/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/node-js-web-spider-note-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Cookie-Session"><a href="#Cookie-Session" class="headerlink" title="Cookie &amp; Session"></a>Cookie &amp; Session</h2><p>HTTP 是一种无状态协议，服务器与客户端之间储存状态信息主要靠 Session，但是，Session 在浏览器关闭后就会失效，再次开启先前所储存的状态都会丢失，因此还需要借助 Cookie</p>
+<p>一般来说，网络爬虫不是浏览器，因此，只能靠手动记住 Cookie 来与服务器“保持联系”。</p>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>Cookie 是 HTTP 协议的一部分，处理流程为：</p>
+<ul>
+<li>服务器向客户端发送 cookie <ul>
+<li>通常使用 HTTP 协议规定的 set-cookie 头操作</li>
+<li>规范规定 cookie 的格式为 name &#x3D; value 格式，且必须包含这部分</li>
+</ul>
+</li>
+<li>浏览器将 cookie 保存</li>
+<li>每次请求浏览器都会将 cookie 发向服务器</li>
+</ul>
+<p>因此，爬虫要做的工作就是模拟浏览器，识别服务端发来的 Cookie 并保存，之后每次请求都带上 Cookie 头。</p>
+<p>在 Node.js 中有很多与 Cookie 处理相关的 package，就不再赘述。</p>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>Cookie 虽然方便，但是由于保存在客户端，可保存的长度有限，且可以被伪造。因此，为了解决这些问题，就有了 Session</p>
+<p>区别：</p>
+<ul>
+<li>Cookie 保存在客户端</li>
+<li>Session 保存在服务端</li>
+</ul>
+<p>Cookie 与 Session 储存的都是客户端与服务器之间的会话状态信息，它们之间主要靠一个秘钥来进行匹配，称之为 <code>SESSION_ID</code> ，如 express 中默认为 <code>connect.sid</code> 字段。只要浏览器发出的 SESSION_ID 与服务器储存的字段匹配上，那么服务器就将其认作为一个 Session，只要 SESSION_ID 的长度足够大，几乎是不可能被伪造的。因此，敏感信息储存在 Session 中要比 Cookie 安全得多。</p>
+<p>常见的 Session 存放媒介有：</p>
+<ul>
+<li>RAM</li>
+<li>Database</li>
+<li>Cache (e.g. Redis)</li>
+</ul>
+<p>Session 不是爬虫可以接触到的东西。</p>
+<h2 id="AJAX-页面"><a href="#AJAX-页面" class="headerlink" title="AJAX 页面"></a>AJAX 页面</h2><p>对于静态页面（服务端渲染），使用爬虫不需要考虑太多，把页面抓取下来解析即可。但对于客户端渲染，尤其是前后端完全分离的网站，一般不能直接获取页面（甚至没有必要获取页面），而是转而分析其实际请求内容。</p>
+<h3 id="请求分析"><a href="#请求分析" class="headerlink" title="请求分析"></a>请求分析</h3><p>通过一些请求拦截分析工具（如 Chrome 开发者工具）可以截获网站向服务器发送的所有请求以及相应的回复。</p>
+<p>包括（不限于）以下信息：</p>
+<ul>
+<li>请求地址</li>
+<li>请求方法（GET &#x2F; POST 等）</li>
+<li>所带参数</li>
+<li>请求头</li>
+</ul>
+<p>只要把信息尽数伪造，那么爬虫发出的请求照样可以从服务器取得正确的结果。</p>
+<h3 id="秘钥处理"><a href="#秘钥处理" class="headerlink" title="秘钥处理"></a>秘钥处理</h3><p>一些请求中会带有秘钥（token &#x2F; sid &#x2F; secret），可能随除了请求方法外的任一个位置发出，也可能都带有秘钥。更可能不止一个秘钥。</p>
+<p>理论上来说，正常客户端取得秘钥有两种方式：</p>
+<ul>
+<li>服务端提供</li>
+<li>客户端自行计算，由服务端校对</li>
+</ul>
+<p>对于服务端提供给客户端的秘钥，只要仔细分析 HTML 或服务端返回的 Cookie Header 就一定能发现。</p>
+<p>而对于客户端自行计算的秘钥则比较麻烦了，尤其是在 JS 代码加密、混淆的情况下。这种时候，只能自己去用开发者工具调试原始站点代码，找出加密代码段，并在爬虫中实现。这里面有许多技巧，如各种断点、单步调试等。</p>
+<h2 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h2><p>表单实际上也是 HTTP 请求，使用 GET &#x2F; POST 等方法即可模拟表单提交。然而这不是重点。重点是表单常常伴随着验证码而存在。</p>
+<p>验证码的识别暂未涉及。</p>
+<h2 id="浏览器模拟"><a href="#浏览器模拟" class="headerlink" title="浏览器模拟"></a>浏览器模拟</h2><p>爬虫的下下策才是使用浏览器完全模拟用户操作。实在是属于无奈之举。Nodejs 可以驱动 Chrome 与 Firefox 浏览器，存在相应的 Package，但是，更方便的是使用各种 E2E Testing 工具。</p>
+<p>比如 Night Watch JS：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line"> <span class="string">&#x27;Demo test Google&#x27;</span> : <span class="keyword">function</span> (<span class="params">client</span>) &#123;</span><br><span class="line"> client</span><br><span class="line"> .<span class="title function_">url</span>(<span class="string">&#x27;http://www.google.com&#x27;</span>)</span><br><span class="line"> .<span class="title function_">waitForElementVisible</span>(<span class="string">&#x27;body&#x27;</span>, <span class="number">1000</span>)</span><br><span class="line"> .<span class="property">assert</span>.<span class="title function_">title</span>(<span class="string">&#x27;Google&#x27;</span>)</span><br><span class="line"> .<span class="property">assert</span>.<span class="title function_">visible</span>(<span class="string">&#x27;input[type=text]&#x27;</span>)</span><br><span class="line"> .<span class="title function_">setValue</span>(<span class="string">&#x27;input[type=text]&#x27;</span>, <span class="string">&#x27;rembrandt van rijn&#x27;</span>)</span><br><span class="line"> .<span class="title function_">waitForElementVisible</span>(<span class="string">&#x27;button[name=btnG]&#x27;</span>, <span class="number">1000</span>)</span><br><span class="line"> .<span class="title function_">click</span>(<span class="string">&#x27;button[name=btnG]&#x27;</span>)</span><br><span class="line"> .<span class="title function_">pause</span>(<span class="number">1000</span>)</span><br><span class="line"> .<span class="property">assert</span>.<span class="title function_">containsText</span>(<span class="string">&#x27;ol#rso li:first-child&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Rembrandt - Wikipedia&#x27;</span>)</span><br><span class="line"> .<span class="title function_">end</span>();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这种模式下，Cookie &#x2F; Session &#x2F; 请求等各种细节都不用关心了。只需要按部就班地执行操作即可。模拟浏览器的代价是效率太低，内存开销大，但在某些特定需求情况下，却比一般爬虫要简单得多。</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/d3-note-basis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/d3-note-basis/" class="post-title-link" itemprop="url">D3 Note - Basis</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-10-25 10:40:44" itemprop="dateCreated datePublished" datetime="2016-10-25T10:40:44+08:00">2016-10-25</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/d3-note-basis/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/d3-note-basis/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>D3 (Data-Driven Documents) 是一个 JavaScript Library，用来做 Web 端的数据可视化实现以及各种绘图。</p>
+<blockquote>
+<p><strong>D3.js</strong> is a JavaScript library for manipulating documents based on data. <strong>D3</strong> helps you bring data to life using HTML, SVG, and CSS.</p>
+</blockquote>
+<p>学习 D3 需要很多预备知识：</p>
+<ol>
+<li>HTML &#x2F; DOM</li>
+<li>CSS</li>
+<li>JavaScript (better with jQuery)</li>
+<li>SVG</li>
+</ol>
+<p>HTML &#x2F; CSS 不必多说，因为 D3 含有大量链式操作函数以及选择器等，因此如果有 jQuery 基础将轻松很多。此外，由于一般采用 SVG 方式进行绘图，所以 SVG 基础知识也需要掌握。</p>
+<p>虽然必须的预备知识如此之多，但 D3 的定位其实是 Web 前端绘图的底层工具，所谓底层，即是操作复杂而功能强大者。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/d3-note-basis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/wordpress-hole-record/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/wordpress-hole-record/" class="post-title-link" itemprop="url">WordPress 掉坑记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-09-20 15:14:47" itemprop="dateCreated datePublished" datetime="2016-09-20T15:14:47+08:00">2016-09-20</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/wordpress-hole-record/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/wordpress-hole-record/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>忍无可忍，长期更新。</p>
+<p>（其实我很想自己重新做一个 blog，但是太麻烦，也没什么实践价值了，无非 CRUD，而且维护起来很容易忽略 blog 本身的目的所在）</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/wordpress-hole-record/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/node-js-web-spider-note-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/node-js-web-spider-note-1/" class="post-title-link" itemprop="url">Node.js Web Spider Note - 1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-09-10 23:12:05" itemprop="dateCreated datePublished" datetime="2016-09-10T23:12:05+08:00">2016-09-10</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/node-js-web-spider-note-1/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/node-js-web-spider-note-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/wxsms/zhihu-spider">https://github.com/wxsms/zhihu-spider</a></p>
+<p>简介：使用 Node.js 实现的一个简单的知乎爬虫，可以以一个用户为入口，爬取其账号下的一些基本信息，关注者，关注话题等。再通过关注者的 ID 继续爬取其他用户，以此循环。</p>
+<p>实现功能：登录知乎（因为调用一些知乎 API 需要保存 session），解析页面，访问 AJAX API，保存到数据库。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/node-js-web-spider-note-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wxsm.space/2016/javascript-promise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wxsm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | wxsm's pace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/javascript-promise/" class="post-title-link" itemprop="url">JavaScript Promise</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-09-05 17:27:26" itemprop="dateCreated datePublished" datetime="2016-09-05T17:27:26+08:00">2016-09-05</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2016/javascript-promise/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2016/javascript-promise/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>知乎上有一个黑 JavaScript 的段子，大概是说：</p>
+<blockquote>
+<p>N 年后，外星人截获了 NASA 发射的飞行器并破解其源代码，翻到最后发现好几页的 }}}}}}……</p>
+</blockquote>
+<p>这是因为 NASA 近年发射过使用 JavaScript 编程的飞行器，而 Node.js 环境下的 JavaScript 有个臭名昭著的特色：Callback hell（回调地狱的意思）</p>
+<p>JavaScript Promise 是一种用来取代超长回调嵌套编程风格（特指 Node.js）的解决方案。</p>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">getAsync</span>(<span class="string">&quot;/api/something&quot;</span>, <span class="function">(<span class="params">error, result</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(error)&#123;</span><br><span class="line">        <span class="comment">//error</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//success</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>将可以写作：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> promise = <span class="title function_">getAsyncPromise</span>(<span class="string">&quot;/api/something&quot;</span>); </span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//success</span></span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//error</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>乍一看好像并没有什么区别，依然是回调。但最近在做的一个东西让我明白，Promise 的目的不是为了干掉回调函数，而是为了干掉嵌套回调函数。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/javascript-promise/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/10/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wxsm</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://blog-api.wxsm.space","cssUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css","commentCount":true,"pageview":false,"avatar":"retro","pageSize":10,"visitor":false,"comment_count":false,"requiredFields":[],"libUrl":"https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.js","uploadImage":false,"copyright":true,"dark":"auto","el":"#waline","comment":true,"path":"/page/9/"}</script>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.min.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
