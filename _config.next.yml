@@ -356,9 +356,9 @@ codeblock:
   # All available themes: https://theme-next.js.org/highlight/
   theme:
     light: default
-    # tomorrow-night was removed in highlight.js 11.x; tomorrow-night-blue
-    # exists in both 10.x and 11.x
-    dark: tomorrow-night-blue
+    # tomorrow-night was removed in highlight.js 11.x; hybrid uses the
+    # identical Tomorrow Night palette and exists in both hljs 10.x and 11.x
+    dark: hybrid
   prism:
     light: prism-darcula
     dark: prism-darcula
