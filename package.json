@@ -10,7 +10,7 @@
     "lint": "zhlint source/_posts/**/*.md"
   },
   "hexo": {
-    "version": "7.3.0"
+    "version": "8.1.2"
   },
   "dependencies": {
     "@waline/hexo-next": "3.0.1",
