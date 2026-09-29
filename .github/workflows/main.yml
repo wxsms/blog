@@ -16,8 +16,6 @@ jobs:
           fetch-depth: 0
           ref: master
       - uses: pnpm/action-setup@v4.4.0
-        with:
-
       - run: pnpm i --frozen-lockfile
       - name: Build
         run: pnpm run build
