@@ -33,5 +33,6 @@
   "devDependencies": {
     "recursive-readdir": "2.2.3",
     "yaml-front-matter": "4.1.1"
-  }
+  },
+  "packageManager": "pnpm@12.3.4"
 }
