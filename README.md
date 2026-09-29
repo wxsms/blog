@@ -1,3 +1,3 @@
 Just another personal blog.
 
-[https://wxsm.space](https://wxsm.space)
+[https://wxsms.github.io/blog/](https://wxsms.github.io/blog/)
