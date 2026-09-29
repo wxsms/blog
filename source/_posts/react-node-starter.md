@@ -12,7 +12,7 @@ tags: [javascript, react, nodejs]
 * 热重载
 * 用户注册、登录
 
-![](https://static.wxsm.space/blog/46710580-0ca53f00-cc7b-11e8-8328-f49e0a14c601.png)
+<!-- 原图已丢失 (static.wxsm.space/blog/46710580-0ca53f00-cc7b-11e8-8328-f49e0a14c601.png) -->
 
 麻雀虽小，五脏俱全。下面记录搭建过程。
 

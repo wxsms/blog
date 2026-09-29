@@ -6,7 +6,7 @@ tags: [vue,bootstrap]
 
 一点微小的工作。
 
-Demo: [https://uiv.wxsm.space](https://uiv.wxsm.space)
+Demo: [https://wxsms.github.io/uiv/](https://wxsms.github.io/uiv/)
 
 Github: [https://github.com/wxsms/uiv](https://github.com/wxsms/uiv)
 

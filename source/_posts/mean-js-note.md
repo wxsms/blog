@@ -4,7 +4,7 @@ date: 2015-12-10T16:35:33+00:00
 tags: [mongodb,angularjs,nodejs,express]
 ---
 
-![](https://static.wxsm.space/blog/48595806-414e9980-e991-11e8-8e9c-1922fa56a501.png)
+![](/images/blog/48595806-414e9980-e991-11e8-8e9c-1922fa56a501.png)
 
 之前一直以为 MEAN 只是一个概念上的东西，表示以 [Mongodb](http://mongodb.org/) [Express](http://expressjs.com/) [AngularJs](http://angularjs.org/) [NodeJs](http://nodejs.org/) 为基础的全栈应用开发模式。这几天在公司接手相应项目的时候发现已经有人做出来并且维护着一些这样的 App 结构体，用过以后觉得还不错。[MEANJS](https://github.com/meanjs/mean) 是一个开源的 JavaScript 全栈应用解决方案，主要用到的技术自然就是以上提到的那些。使用成熟的解决方案可以使自己的项目更加易于开发以及维护，等等好处就不再赘述。
 
